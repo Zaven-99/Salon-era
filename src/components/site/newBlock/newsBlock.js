@@ -59,6 +59,7 @@ const NewsBlock = () => {
 
   return (
     <section className={styles["news-card"]}>
+      <h1>Новости</h1>
       <ul className={styles["news-list__inner"]}>
         {news.map((newsItem, index) => (
           <li className={styles["news-item"]} key={index}>

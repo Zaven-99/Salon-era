@@ -224,11 +224,32 @@ textarea{
 }
 .user-avatar{
     height: $hg-50;
+    width: $wd-50;
+    object-fit: cover;
     border-radius: $br-50p;
 }
 .barber-item{
     font-size: $fz-20 !important;
     font-weight: initial !important;
+}
+.feedBack-block{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.change-feedback{
+    background-color: #00000099;
+    font-family: "Open Sans", sans-serif;
+    width: max-content;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 3px;
+    border-radius: 2px;
+}
+.change-feedback:hover{
+    transform: scale(1.05);
 }
  
 @media(max-width:1000px){

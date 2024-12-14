@@ -19,6 +19,8 @@ const ChooseABarbers = () => {
   const [feedbackBarber, setFeedbackBarber] = useState(null);
   const [feedbackText, setFeedbackText] = useState("");
   const [feedbacks, setFeedbacks] = useState([]);
+  const [editFeedbackId, setEditFeedbackId] = useState(null);
+  const [editedFeedback, setEditedFeedback] = useState({});
   const [ratings, setRatings] = useState({});
   const [feedbackLimit, setFeedbackLimit] = useState(5);
 
@@ -118,20 +120,22 @@ const ChooseABarbers = () => {
   const handleSubmitFeedback = async () => {
     setLoading(true);
 
-    const feedBackData = {
-      id_client_from: clientId,
-      id_client_to: selectedBarber.id,
-      text: feedbackText,
-      value: ratings[selectedBarber.id],
-    };
+    const formData = new FormData();
+
+    formData.append(
+      "clientData",
+      JSON.stringify({
+        id_client_from: clientId,
+        id_client_to: selectedBarber.id,
+        text: feedbackText,
+        value: ratings[selectedBarber.id],
+      })
+    );
 
     try {
       const response = await fetch(`http://95.163.84.228:6533/feedbacks`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(feedBackData),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -149,6 +153,48 @@ const ChooseABarbers = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSave = async (id) => {
+    setLoading(true);
+
+    const feedbackToUpdate = { ...editedFeedback, id };
+
+    const formData = new FormData();
+
+    formData.append(
+      "clientData",
+      JSON.stringify({
+        ...feedbackToUpdate,
+      })
+    );
+    try {
+      const response = await fetch(
+        `http://95.163.84.228:6533/feedbacks/update`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) throw new Error("Ошибка при сохранении услуги");
+
+      setFeedbacks((prevFeedback) =>
+        prevFeedback.map((feedback) =>
+          feedback.id === id ? editedFeedback : feedback
+        )
+      );
+      setEditFeedbackId(null);
+      setEditedFeedback({});
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = (feedBack) => {
+    setEditFeedbackId(feedBack.id);
+    setEditedFeedback(feedBack);
   };
 
   const getAverageRating = (barberId) => {
@@ -292,9 +338,49 @@ const ChooseABarbers = () => {
                                 <strong>{user.firstName}</strong>&nbsp;
                                 <strong>{user.lastName}</strong>
                               </p>
-                              <p className={styles["user-feedback__text"]}>
-                                {feedback.text}
-                              </p>
+                              <div className={styles["feedBack-block"]}>
+                                <p className={styles["user-feedback__text"]}>
+                                  {feedback.id === editFeedbackId ? (
+                                    <textarea
+                                      value={editedFeedback.text}
+                                      onChange={(e) =>
+                                        setEditedFeedback({
+                                          ...editedFeedback,
+                                          text: e.target.value,
+                                        })
+                                      }
+                                    />
+                                  ) : (
+                                    feedback.text
+                                  )}
+                                </p>
+                                {feedback.id === editFeedbackId ? (
+                                  <div
+                                    className={styles["feedBack-button__block"]}
+                                  >
+                                    <CustomButton
+                                      type="button"
+                                      onClick={() => handleSave(feedback.id)}
+                                      className={styles["post-feedback"]}
+                                    >
+                                      Сохранить
+                                    </CustomButton>
+                                    <CustomButton
+                                      type="button"
+                                      onClick={() => setEditFeedbackId(null)}
+                                      className={styles["post-feedback"]}
+                                    >
+                                      Отмена
+                                    </CustomButton>
+                                  </div>
+                                ) : (
+                                  <CustomButton
+                                    className={styles["change-feedback"]}
+                                    label="изменить"
+                                    onClick={() => handleEdit(feedback)}
+                                  />
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
