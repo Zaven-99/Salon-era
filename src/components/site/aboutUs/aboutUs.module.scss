@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+.aboutUs{
+    color: black;
+	text-align: center;
+	font-size: $fz-20;
+    font-weight: $light;
+    width: $wd-1000;
+    line-height: $wd-50;
+    margin: $sp-50 auto;
+}
+ 
+
+@media(max-width:1070px){
+    .aboutUs{
+    width: $wd-600;
+}
+}
+
+@media(max-width:700px){
+    .aboutUs{
+        font-size: $fz-10;
+        line-height: $sp-15;
+    }
+}
+@media(max-width:650px){
+    .aboutUs{
+    width: $wd-400;
+}
+}
+
+ 

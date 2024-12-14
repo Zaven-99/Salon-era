@@ -1,0 +1,123 @@
+@import '../styles/variables.scss';
+
+
+.menu-toggle{
+	display: none;
+	transition: 0.7s;
+	width: $wd-45;
+	height: $hg-45;
+}
+ 
+.item1{
+	background-color: black;
+    width: $wd-50;
+    height: $hg-2;
+	margin-top: $sp-10;
+}
+.item2{
+	background-color: black;
+    width: $wd-50;
+    height: $hg-2;
+	margin-top: $sp-10;
+}
+.item3{
+	background-color: black;
+    width: $wd-50;
+    height: $hg-2;
+	margin-top: $sp-10;
+}
+
+.item1.transformation{
+	transform: rotate(45deg) translate(16.5px , 17px);
+	transition: 0.3s;
+	background-color:white;
+	width: $wd-30;
+}
+.item2.transformation{
+	opacity: 0;
+	transition: 0.3s;
+}
+.item3.transformation{
+	transform: rotate(-45deg) translate(-0.5px ,-0.5px);
+	transition: 0.3s;
+	background-color:white;
+	width: $wd-30;
+}
+.menu-toggle.transformation{
+	transform: translate(45px, -35px);
+	transition: 0.7s;
+    z-index: 2;
+	position: fixed;
+}
+
+/*media*/
+
+@media (max-width: 960px) {
+   
+  .menu-toggle{
+	display: block;
+	position: absolute;
+	left: $sp-50;
+  }
+   
+}
+ 
+ 
+
+@media(max-width: 450px){
+	 .menu-toggle{
+	left: $sp-20;
+  }
+  
+   
+  
+}
+@media(max-width: 350px){
+	
+ 
+  .item1{
+	width: $wd-50;
+	
+  }
+  .item2{
+	width: $wd-50;
+	
+
+  }
+  .item3{
+	width: $wd-50;
+	
+
+  }
+ 
+	 
+}
+ 
+ @media(max-width: 330px){
+	
+ 
+  .item1{
+	width: $wd-35;
+	
+  }
+  .item2{
+	width: $wd-35;
+	
+
+  }
+  .item3{
+	width: $wd-35;
+	
+
+  }
+ 
+	 
+}
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 

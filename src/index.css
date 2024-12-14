@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar{
+	  width: 3px;  
+    height: 3px;
+	 
+}
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* Цвет ползунка */
+    border-radius: 2px; /* Скругление углов */
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Цвет ползунка при наведении */
+}
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Цвет фона трека */
+    border-radius: 6px; /* Скругление углов */
+}
+
+video::-webkit-media-controls-volume-slider {
+  display: none !important;
+}
+
+video::-webkit-media-controls-mute-button {
+  display: none !important;
+}
+ 

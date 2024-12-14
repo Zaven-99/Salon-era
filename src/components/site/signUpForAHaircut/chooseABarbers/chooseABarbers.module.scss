@@ -1,0 +1,259 @@
+@import '../../../styles/variables.scss';
+
+
+.choose-a__barbers{
+    padding: $sp-10;
+    margin: 0px $sp-150;
+}
+.barbers{
+	cursor: pointer;
+	align-items:end;
+	gap: $sp-15;
+	padding: $sp-15;
+	background:$bg-white;
+	border-radius:$br-4;
+	margin-bottom: $sp-5;
+}
+.barbers:hover{
+	transform: scale(1.01);
+	transition: .2s;
+	box-shadow: $shadow-small;
+}
+ 
+.barbers p {
+	color: black;
+	margin-top: $sp-10;
+	font-size: $fz-16;
+	font-weight: $light;
+}
+.back{
+	cursor: pointer;
+    text-align: center;
+	padding: $sp-15;
+    background: $bg-white;
+    margin-bottom: $sp-10;
+    border-radius: $br-4;
+	width: $wd-100;
+}
+.back:hover{
+	transform: scale(1.01);
+	transition: .2s;
+	opacity: .8;
+	box-shadow: $shadow-small;
+
+}
+.wrapper{
+	display: flex;
+    justify-content: space-between;
+    width: $wd-100p;
+}
+ 
+.exclamation img{
+	width: $wd-25 !important ;
+	
+}
+.exclamation img:hover{
+	transform: scale(1.3);
+    transition: .3s;
+	
+}
+ .selectedBarber {
+  display: flex;
+  flex-wrap: wrap; 
+  background-color: #00000030;
+  border: $sp-2 solid $bg-white;  
+  padding: $sp-10;
+  border-radius: $br-4;
+}
+.navigate-button__container button{
+	background-color: #00aaff;
+    font-family: "Open Sans", sans-serif;
+    font-size: $fz-20;
+    font-weight: 300;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+}
+.navigate-button__container button:hover{
+	transition: .2s;
+	transform: scale(1.02);
+	opacity: .8;
+}
+.wrapper{
+	display: flex;
+	justify-content: space-between;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  
+}
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  z-index: 15; 
+  position: relative;
+  padding: $sp-20;
+  max-width: $wd-500;
+  width: $wd-100;
+  animation:bounce-in .5s;
+  margin: $sp-10;
+  text-align: center;
+   
+}
+
+@keyframes bounce-in {
+    0%{
+        opacity: 0; 
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.modal-content button{
+	text-align: center;
+    cursor: pointer;
+    background: $bg-grey;
+    padding: $sp-10 $sp-10;
+    border-radius: $br-8;
+}
+.feedBack{
+    height: max-content;
+    background-color:white;
+    width: $wd-100p;
+    padding: $sp-15;
+    border-radius:$br-5;
+}
+.feedBackField{
+    height: max-content;
+   
+}
+ 
+textarea{
+    resize: none;
+    outline: none;
+    display: flex;
+    border:none;
+    border-bottom:$br-1 solid;
+    width: $wd-100p;
+    margin-top: $sp-20;
+}
+.post-feedback{
+    background-color: #00aaff;
+    font-family: "Open Sans", sans-serif;
+    width: max-content;
+    color: white;
+    font-size: $fz-20;
+    font-weight: $light;
+    padding: $sp-10;
+    border-radius: $br-4;
+}
+.feedBack-button__block{
+    display: flex;
+    justify-content: end;
+    margin-top: $sp-10;
+    gap: $sp-20;
+}
+.disabled {
+  background-color: #cccccc;
+  border-color: #999999;
+  color: #666666;
+  cursor: not-allowed;
+}
+.load-more{
+    background-color: #00aaff;
+    font-family: "Open Sans", sans-serif;
+    color: white;
+    width: max-content;
+    font-size: $fz-10;
+    font-weight: $light;
+    padding: $sp-10;
+    border-radius: $br-4;
+    margin-top: $sp-10;
+}
+.user-feedback__block{
+    display: flex;
+    margin-top: $sp-10;
+;
+    align-items: baseline;
+    gap: $sp-10;
+}
+.user-feedback__firstName{
+    margin: 0;
+}
+.user-feedback__text{
+    margin: 0 !important;
+}
+.feedBack-estimation{
+    margin-top: $sp-50;
+}
+.open{
+    animation:bounce-in .8s;
+}
+.close{
+    animation: bounce-out .8s forwards;
+}
+
+.about-barber{
+    display: flex;
+    align-items:center;
+    gap: $sp-30;
+    line-height: $sp-30;
+}
+.barber-avatar{
+    object-fit: cover;
+    width:$wd-150 ;
+    height: $hg-150;
+    border-radius:$br-50p;
+}
+.user-avatar{
+    height: $hg-50;
+    border-radius: $br-50p;
+}
+.barber-item{
+    font-size: $fz-20 !important;
+    font-weight: initial !important;
+}
+ 
+@media(max-width:1000px){
+	 
+	.barber-avatar{
+        width: $wd-100;
+        height: $hg-100;
+    }
+    .barber-item{
+        font-size: $fz-10 !important;
+        line-height: $sp-10;
+    }
+    .choose-a__barbers{
+    margin: 0;
+    }
+    .signUpForAHaircut{
+        font-size: $fz-30
+    }
+    .typeOfPrice{
+        font-size: $fz-30
+    }
+    .exclamation{
+        width: $wd-15;
+    }
+}
+ 
+ 
+ 

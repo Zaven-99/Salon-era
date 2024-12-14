@@ -1,0 +1,101 @@
+@import '../../styles/variables.scss';
+
+
+.myRecords{
+	height: $hg-100vh;
+}
+.records-list p{
+    width: $wd-300;
+}
+
+.records-list__item{
+	display: flex;
+	align-items:center;
+    background: aliceblue;
+    justify-content: space-between;
+	margin-top: $sp-20;
+	border-radius:$br-5;
+    margin: $sp-10 $sp-20 $sp-10 $sp-20;
+    padding: $sp-10 $sp-25 $sp-10 $sp-60;
+}
+.cancel{
+	color: black;
+    font-weight: 300;
+    font-family: "Open Sans", sans-serif;
+    background-color: salmon;
+    font-size: $fz-12;
+    padding: $sp-10;
+    box-shadow: $shadow-small;
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.status{
+    display: flex;
+    align-items:center;
+}
+.empty{
+    font-weight: 300;
+    color: black;
+    text-align: center;
+    font-size: $fz-20;
+}
+.total{
+    text-align: end;
+    padding-right: $sp-70;
+}
+
+.created{
+    color: white;
+    text-align: center;
+    background: green;
+    padding: $sp-5;
+    width: $wd-130;
+                    
+}
+.canceled{
+    color: white;
+    text-align: center;
+    background: salmon;
+    padding: $sp-5;
+    width: $sp-130;
+}
+.closed{
+    color: white;
+    background: gray;
+    text-align: center;
+    padding: $sp-5;
+    width: $sp-130;
+}
+@media(max-width:1400px){
+    .records-list{
+        display: flex;
+        flex-wrap: wrap;
+        align-items:center;
+       
+    }
+    .records-list__item{
+        display: block;
+        padding: $sp-10;
+        line-height: $sp-35;
+    }
+    .status div{
+        width: max-content ;
+        font-size: $sp-15 ;
+        padding: $sp-2;
+    }
+}
+@media(max-width:1400px){
+    .records-list{
+       justify-content: center;
+       
+    }
+     .cancel{
+        width: $sp-100p;
+     }
+}
+@media(max-width:720px){
+    .total{
+      text-align: center;
+      padding-right: 0;
+    }
+}

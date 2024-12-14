@@ -1,0 +1,269 @@
+@import '../../../styles/variables.scss';
+
+.service-field{
+    padding: $sp-20;
+    height: $hg-100vh;
+}
+.services{
+	display: flex;
+	justify-content: center;
+}
+.message{
+	text-align: center;
+	font-family: "Open Sans", sans-serif;
+	color: salmon;
+	margin-top: $sp-50;
+    font-size: $fz-20;
+    font-weight: $medium;
+}
+.service-item{
+    cursor: pointer;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eaeef4;
+    padding: $sp-15;
+    margin-bottom: $sp-5;
+    border-radius:$br-4;
+    gap: $sp-10;
+    margin: $sp-10;
+ 
+}
+strong {
+	font-size: $fz-14;
+}
+.service-item p {
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $light;
+}
+.service-item:hover{
+	 
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.service-item p {
+	color: black;
+    font-family: $font;
+    font-size: $fz-14;
+    font-weight: $light;
+}
+
+.gender{
+	padding-left: $sp-10;
+}
+.category{
+	padding-left: $sp-10;
+
+}
+.delete-service{
+    background-color: salmon;
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $light;
+    padding: $sp-10;
+    height: $hg-50;
+    box-shadow: $shadow-small;
+    border-radius:$br-4;
+    width: $wd-150;
+}
+.delete-service:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+
+
+.edit-service{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $light;
+    padding: $sp-10;
+    height: $hg-50;
+    box-shadow: $shadow-small;
+    background-color: rgba(15, 210, 15, 0.573);
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.edit-service:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+
+.save-service{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $light;
+	padding:$sp-10;
+	height: $hg-50;
+	box-shadow: $shadow-small;
+	background-color: rgba(15, 210, 15, 0.573);
+	border-radius: $br-4;
+	width: $wd-150;
+
+}
+.save-service:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.cancel{
+	color: black;
+	background-color:salmon;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $light;
+	padding:$sp-10;
+	height:$hg-50;
+	box-shadow:$shadow-small;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+
+.cancel:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+ 
+.duration{
+	width: 100%;
+    max-width: 100%;
+    min-width: 0px;
+    padding: 0.706rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.412rem;
+    color: var(--input-text);
+    border-radius: var(--input-border-radius, 0.2rem);
+    border-width: var(--input-border-width, 0.01rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    margin-top: 5px;
+}
+ 
+.btn-block{
+	display: flex;
+    justify-content: space-between;
+    margin-top: $sp-50;
+}
+.button-block{
+    display: flex;
+    gap: $sp-20;
+}
+.cancelDelete-employee{
+    color: black;
+	background-color: rgba(15, 210, 15, 0.573);
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $light;
+	padding:$sp-10;
+	height: $hg-50;
+	box-shadow: $shadow-small;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+.delete-employee{
+    color: black;
+	background-color:salmon;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $light;
+	padding:$sp-10;
+	height:$hg-50;
+	box-shadow:$shadow-small;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  overflow-y: scroll;
+  
+}
+
+.modal-content {
+  background: #eaeef4;
+  border-radius: $br-8;
+  padding: $sp-50;
+  position: relative;
+  max-width: $wd-500;
+  width: $wd-500;
+  height: $hg-270;
+  z-index: 15; 
+  animation:bounce-in .5s;
+  text-align: center;
+  box-shadow:$shadow-small;
+
+}
+@keyframes bounce-in {
+    0%{
+        opacity: 0; 
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media(max-width:1400px){
+    .service-item{
+        display: block;
+        justify-content: center;
+        width: $wd-300;
+    }
+    .service-list__inner{
+        display: flex;
+        align-items:center;
+        flex-wrap: wrap;
+    }
+    li div{
+        font-size: $fz-15;
+        line-height: $sp-25;
+    }
+    
+}
+
+
+
+@media(max-width:500px){
+     .service-item{
+       margin: $sp-20 auto;
+    }
+    .employee{
+        font-size: $fz-35;
+    }
+    .modal-content{
+        width: $wd-400;
+    }
+    .btn-block{
+        gap: $sp-15;
+    }
+}

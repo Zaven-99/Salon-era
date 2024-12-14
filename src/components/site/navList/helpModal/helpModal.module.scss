@@ -1,0 +1,66 @@
+@import '../../../styles/variables.scss';
+
+
+.help{
+    background: $bg-white;
+    border-radius: $br-8;
+    border:$br-1 solid;
+    padding: $sp-20;
+    max-width: $wd-300;
+    width: $wd-100p;
+    z-index: 17;
+    position: absolute;
+    top: -$sp-215;
+    right: $sp-0;
+    animation:bounce-in .5s;
+}
+@keyframes bounce-in {
+    0%{
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100% {
+       opacity: 1;
+       transform: translateY(0);
+    }
+}
+.help h2{
+    font-size: $fz-14;
+    font-weight:$extra-bold;
+    text-align: start;
+
+}
+.help-item{
+    font-size: $fz-14;
+    text-align: start;
+}
+
+@media(max-width:540px){
+    .help-description h2{
+        font-size: $fz-12 !important;
+    }
+    .help-description li{
+        font-size: $fz-10 !important;
+    }
+    .help{
+        top: -140px;
+    }
+}
+@media(max-width:362px){
+     
+    .help{
+        top: -155px;
+    }
+}
+@media(max-width:320px){
+     
+    .help{
+        top: -168px;
+    }
+}
+@media(max-width:280px){
+     
+    .help{
+        top: -185px;
+    }
+}

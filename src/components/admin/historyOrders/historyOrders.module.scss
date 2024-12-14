@@ -1,0 +1,148 @@
+@import '../../styles/variables.scss';
+
+
+ 
+@keyframes bounce-in {
+    0%{
+        opacity: 0; 
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.record-item{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  padding: $sp-15;
+  background: #eaeef4;
+  margin-bottom: $sp-5;
+  border-radius: $br-4;
+	margin: $sp-10 $sp-50 $sp-10 $sp-50;
+}
+.date{
+  margin-left: $sp-50;
+}
+ 
+
+.order-created{
+	background-color:rgba(200, 200, 15, 0.76);
+  text-align: center;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
+	border-radius:$br-4;
+  width:$wd-125;
+}
+.order-closed{
+	background-color:rgb(186, 178, 177);
+  text-align: center;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius:$br-4;
+  width:$wd-125;
+}
+.order-canceled{
+  background-color:salmon;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius:$br-4;
+  width:$wd-125;
+}
+.order-accept{
+	background-color:$buttonAccept-color;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius:$br-4;
+  width:$wd-125;
+  text-align: center;
+}
+.load-more{
+    margin: $sp-0 auto;
+    display: flex;
+    justify-content: center;
+    padding: $sp-10;
+    background: rgba(132, 127, 122, 0.365);
+}
+.dataPicker{
+  cursor: pointer;
+  text-align: center;
+  margin-left: $sp-50;
+  border-radius: $br-2;
+  border: $br-1 solid;
+  padding: $sp-2;
+  box-shadow: $shadow-small;
+}
+.message{
+  text-align: center;
+	color: salmon;
+	font-family: "Open Sans", sans-serif;
+	margin-top: $sp-50;
+  font-size: $fz-20;
+  font-weight: $medium;
+}
+.delete{
+  color: black;
+  background-color: salmon;
+  font-family: "Open Sans", sans-serif;
+  font-size: $fz-12;
+  font-weight: $light;
+  padding: $sp-10;
+  height: $hg-50;
+  box-shadow: $shadow-small;
+  border-radius: $br-4;
+  width: $wd-150;
+}
+.wrapper{
+  display: flex;
+  align-items:center;
+  gap: $sp-15;
+}
+
+@media(max-width:1400px){
+  .record-list{
+    display: flex;
+    align-items:center;
+    flex-wrap: wrap;
+  }
+  .record-item{
+        display: block;
+        width: $wd-300;
+     }
+     li div {
+        font-size: $fz-20;
+     }
+     .wrapper{
+      display: block;
+     }
+     .order-closed{
+      width: auto;
+     }
+     .order-canceled{
+      width: auto;
+     }
+     .order-created{
+      width: auto;
+     }
+     .order-accept{
+      width: auto;
+     }
+     .delete{
+      margin-top:$sp-15;
+      width: $wd-100p;
+     }
+     .datePicker{
+       margin-top: $sp-15;
+    }
+}
+
+@media(max-width:500px){
+    .history-orders{
+    font-size: $fz-40;
+    }
+    
+}

@@ -1,0 +1,95 @@
+@import '../../styles/variables.scss';
+ 
+.employee-field{
+  padding: $sp-20;
+  height: $hg-100vh;
+}
+.employee-field_inner{
+  width: $wd-100p;
+  margin: $sp-5 auto;
+}
+.add-employee{
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  transition: background 0.3s;
+  background-color: #b5b5b5;
+  width: $wd-200;
+  margin-top: $sp-35;
+  padding: $sp-15 ;
+  margin-left: $sp-10;
+  border-radius:$br-4;
+}
+.accept-add__employee{
+    width: $wd-200;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: background 0.3s;
+    background-color: #b5b5b5;
+    margin-top: $sp-35;
+    padding: $sp-15;
+    border-radius:$br-4;
+}
+ .registration{
+    margin-bottom: $sp-15;
+ }
+ 
+
+.error{
+	color:salmon;
+    font-size: $fz-13;
+    font-family: $font;
+}
+ 
+ 
+ 
+ .position{
+    width: $wd-100p;
+    max-width: $wd-100p;
+    padding: 0.706rem;
+    font-style: normal;
+    font-weight: $regular;
+    font-size: 1rem;
+    line-height: 1.412rem;
+    color: var(--input-text);
+    border-radius: var(--input-border-radius, 0.2rem);
+    border-width: var(--input-border-width, 0.01rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    margin-top: 5px;
+ }
+.password-input{
+    position: relative;
+ }
+ 
+.error-message{
+    color:rgba(255, 25, 0, 0.861);
+    font-size: $fz-13;
+}
+ 
+ 
+@keyframes bounce-in {
+    0%{
+        opacity: 0; 
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

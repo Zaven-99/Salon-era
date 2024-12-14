@@ -1,0 +1,211 @@
+@import '../../../styles/variables.scss';
+
+
+ 
+.error-message{
+  font-size: $fz-16;
+  color: #d22020ad;
+  margin: $sp-10 0px;
+  font-weight: $light;
+}
+
+.date-sign__up{
+	font-family: $font;
+  font-size: $fz-20;
+  font-weight: $medium;
+  padding: $sp-5;
+ 
+}
+.slots-block{
+  display: flex;
+  flex-wrap: wrap;
+  margin: $sp-20 0;
+  width: $wd-300;
+  gap: $sp-5;
+
+}
+
+.select{
+  cursor: pointer;
+  background: #e6e6e6;
+  color: black;
+  width: max-content;
+  border-radius: $br-5;
+  padding: $sp-5 $sp-10;
+  font-size: $fz-20;
+  font-weight: $light;
+}
+.select:hover{
+  transform: scale(1.05);
+  transition: 0.2s;
+  background: #00aaff3e;
+
+}
+.selected{
+  background: #00aaff;
+  cursor: pointer;
+  width: max-content;
+  transform: scale(1.01);
+  transition: 0.2s;
+  color: black;
+  opacity: 0.8;
+  border-radius: $br-5;
+  padding: $sp-5 $sp-10;
+  box-shadow: $shadow-small;
+  font-size: $fz-20;
+  font-weight: $light;
+}
+.dataSelected{
+  color: black;
+  margin-bottom: $sp-10;
+  font-size: $fz-20;
+  font-weight: $light;
+  padding: $sp-5;
+  border-radius: $br-4;
+   
+}
+ .toMain{
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: $sp-10 $sp-20;
+    border-radius: $br-5;
+    font-size: $fz-16;
+  }
+ 
+.empty-slots{
+  color: black;
+  font-size: $fz-20;
+  font-weight: $light;
+  padding: $sp-5;
+  border-radius: $br-4;
+}
+ 
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: $sp-20;
+  border-radius: $br-10;
+  
+}
+
+ 
+.calendar {
+  margin: 0 auto;
+  background-color: white;
+  max-width:$wd-350;
+  border-radius: $br-10;
+  box-shadow: $shadow-small;
+}
+
+ 
+.react-calendar__navigation {
+  background-color: #2b2d42;
+  color: #fff;
+  padding: $sp-10 0;
+  border-radius: $br-5;
+}
+
+ 
+.react-calendar__navigation button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: $fz-18;
+}
+
+ 
+.react-calendar__tile {
+  color: #333;
+  transition: background-color 0.3s ease;
+  padding: $sp-10;
+  font-size: $fz-14;
+  border-radius: $br-5;
+}
+
+ 
+.sign-up_to__haircut {
+  background-color: #00aaff;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  color: white;
+  border: none;
+  padding: $sp-10 $sp-20;
+  border-radius: $br-5;
+  font-size: $fz-20;
+  font-weight: 300
+}
+.sign-up_to__haircut:hover{
+  transform: scale(1.05);
+  transition: 0.05s;
+}
+
+.sign-up_to__haircut:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+ 
+.dataSelected {
+  color: #555;
+  font-size: $fz-16;
+  margin-top: $sp-10;
+}
+
+.empty-slots {
+  color: #999;
+  text-align: center;
+  font-size: $fz-14;
+}
+.btn-block{
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  overflow-y: scroll;
+  
+}
+
+.modal-content {
+  z-index: 15; 
+  background: white;
+  position: relative;
+  border-radius: $br-8;
+  padding: $sp-20;
+  max-width: $wd-500;
+  width: $wd-100p;
+  animation:bounce-in .5s;
+  margin: $sp-10;
+  text-align: center;
+}
+
+@media(max-width:500px){
+	  .calendar-container{
+      width: $wd-100p;
+    }
+    .type-of__price{
+      font-size: $fz-20;
+    }
+    .signUpForAHaircut{
+      font-size: $fz-20;
+
+    }
+	  
+}

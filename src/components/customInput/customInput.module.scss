@@ -1,0 +1,95 @@
+  @import '../styles/variables.scss';
+
+.input-container__inner{
+    position: relative;
+}
+.input-item{
+	width: $wd-100p;
+    max-width: $wd-100p;
+    min-width: 0px;
+    padding: 0.506rem;
+    font-style: normal;
+    font-weight: $regular;
+    border-radius: var(--input-border-radius, 0.2rem);
+    border-width: var(--input-border-width, 0.01rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    margin-top:5px;
+    background-color:#b8b8b8;
+    
+}
+.clear-input{
+    appearance: none;
+    opacity: 1;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    color: var(--icon-primary-background);
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    background-color: transparent !important;
+    right: $sp-30;
+    top: $sp-16;                
+	width: $wd-15;
+	height: $hg-15;
+}
+
+.show-password{
+    position: absolute;
+    right: $sp-60;
+    top: $sp-12;
+  
+}
+.help img{
+    position: absolute;
+    width: $wd-13;
+    height: $hg-13;
+    top: $sp-17;
+    right: $sp-12;
+}
+
+.gender{
+    margin-top: $sp-15;
+
+}
+ 
+.custom-radio {
+    display: flex;
+    align-items: center;
+    margin-top: $sp-10;
+}
+.custom-radio input[type="radio"] {
+    appearance: none;
+    width: $wd-20;
+    height: $hg-20;
+    border: $br-2 solid #000;
+    border-radius: $br-2; 
+    margin-right: $sp-8;
+    cursor: pointer;
+}
+
+.custom-radio input[type="radio"]:checked {
+    background-color: #000; 
+}
+.error{
+    background-color: rgba(255, 0, 0, 0.1) !important;
+}
+ 
+.error-gender{
+    color:salmon;
+    font-size: fz-13;
+    font-family: $font;
+}
+.active{
+    border:1px solid green !important;
+    background:rgba(0, 153, 0, 0.096) !important
+}

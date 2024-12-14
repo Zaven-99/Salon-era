@@ -1,0 +1,67 @@
+@import '../styles/variables.scss';
+
+
+.menu-side{
+	 background-color:rgba(23, 23, 23, 0.877);
+	 position: fixed;
+	 left: 0;
+	 top:0;
+	 z-index: 1;
+	 justify-content: center;
+     display: flex;
+	 transition: transform 0.3s ease-in-out;
+	 transform: translateX(-$sp-100p);  
+	 width: $wd-150;
+	 height: $hg-100vh;
+ }
+ .menu-side.open {
+  transform: translateX(0); 
+}
+ .menu-side_navList{
+	margin-top: $sp-50;
+ }
+ .menu-side_navList__item{
+	color:white;
+	font-size: $fz-20 !important;
+	font-weight: $light;
+	padding: $sp-5;
+	border-radius: $br-4;
+ }
+
+.menu-side_navList__item:hover{
+	background-color:rgb(93, 90, 90)
+}
+.close-menuSide img{
+    position: absolute;
+	width: $wd-25;
+    right: $sp-15;
+    top: $sp-15;
+    background-color: $bg-white;
+}
+.addressInMenuSide{
+	display: none;
+	color: $bg-white;
+	font-size: $fz-14;
+	font-weight: $light;
+	padding: $sp-5;
+	border-radius: $br-4;
+}
+
+/*media*/
+
+@media(max-width: 1250px){
+	 
+	.addressInMenuSide{
+		display: block;
+	}
+	 
+	 
+}
+
+@media(max-width:450px){
+	.menu-side{
+	width: 130px;
+	 
+  }
+   
+}

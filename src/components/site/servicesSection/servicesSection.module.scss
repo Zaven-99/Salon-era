@@ -1,0 +1,60 @@
+@import '../../styles/variables.scss';
+
+.services{
+	display: flex;
+	flex-wrap: wrap;
+ 	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: $sp-30;
+}
+.services-item{
+	width: $wd-250;
+	height: $hg-230;
+	background-color: rgb(0,0,0,0.05);
+	padding: $sp-20;
+	margin-top: $sp-50;
+	border-radius: $br-4;
+}
+.about-services{
+	text-align: start;
+	color: black;
+	width: $wd-100p;
+	margin-top:$sp-30;
+	font-size: $fz-14;
+	font-weight: $light;
+}
+
+.logo{
+	display: flex;
+	width: $wd-50;
+	margin: $sp-0 auto;
+	margin-top: $sp-50;
+}
+h1{
+	color: black;
+	text-align: center;
+	font-size: $fz-50;
+	font-weight: $light;
+	margin-top: $sp-50;
+}
+
+.icon {
+	width: $wd-50;
+}
+
+ 
+ 
+@media(max-width:630px){
+	.popular-serivces{
+		font-size: $fz-30;
+	}
+	.services-item{
+		width: 180px;
+		height: 180px;
+
+	}
+	.about-services{
+		font-size: 9px;
+	}
+}

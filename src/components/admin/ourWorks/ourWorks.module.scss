@@ -1,0 +1,90 @@
+@import '../../styles/variables.scss';
+
+
+.our-works{
+    padding: $sp-20;
+}
+
+.message{
+	text-align: center;
+	margin-top: 50px;
+	font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+	color: salmon;
+}
+.addWork{
+	width: 200px;
+    position: relative;
+    cursor: pointer;
+    padding: var(--padding-main-button);
+    margin-top: 1rem;
+    font-style: normal;
+    font-weight: var(--font-weight-main-button);
+    font-size: var(--font-size-main-button);
+    line-height: var(--line-height-main-button);
+    border-radius: var(--button-border-radius, 4px);
+    border: var(--button-border);
+    outline: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    transition: background 0.3s;
+    box-shadow: var(--button-box-shadow, none);
+    --button-text-color: var(--button-text-primary);
+    color: var(--button-text-color);
+    background: var(--button-primary-background);
+    -webkit-tap-highlight-color: transparent;
+    background-color: black;
+    background-color: #b5b5b5;
+    margin-top: 35px;
+    padding: 15px;
+    margin-left: 10px;
+}
+.accept-add__work{
+    width: 200px;
+    position: relative;
+    cursor: pointer;
+    padding: var(--padding-main-button);
+    margin-top: 1rem;
+    font-style: normal;
+    font-weight: var(--font-weight-main-button);
+    font-size: var(--font-size-main-button);
+    line-height: var(--line-height-main-button);
+    border-radius: var(--button-border-radius, 4px);
+    border: var(--button-border);
+    outline: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    transition: background 0.3s;
+    box-shadow: var(--button-box-shadow, none);
+    --button-text-color: var(--button-text-primary);
+    color: var(--button-text-color);
+    background: var(--button-primary-background);
+    -webkit-tap-highlight-color: transparent;
+    background-color: black;
+    background-color: #b5b5b5;
+    padding: 15px;
+}
+.category{
+    width: 100%;
+    max-width: 100%;
+    padding: 0.706rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.412rem;
+    color: var(--input-text);
+    border-radius: var(--input-border-radius, 0.2rem);
+    border-width: var(--input-border-width, 0.01rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    margin-top: 5px;
+}

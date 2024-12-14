@@ -1,0 +1,110 @@
+  @import '../../styles/variables.scss';
+
+
+ .registration{
+    margin-bottom: $sp-15;
+ }
+ 
+
+.error{
+	color:salmon;
+    font-size: $fz-13;
+    font-family: $font;
+}
+ 
+.signUp-btn{
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    background-color: #b5b5b5;
+    width: $wd-100p;
+    margin-top: $sp-35;
+    padding: $sp-15;
+    
+}
+.signUp-btn:hover{
+    transform: scale(1.01);
+    transition: .2s;
+    box-shadow: $shadow-small;
+}
+ 
+.password-input{
+    position: relative;
+ }
+ 
+.error-message{
+    color:rgba(255, 25, 0, 0.881);
+    font-size: $fz-12;
+}
+ 
+ 
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: $sp-15;   
+}
+
+.avatarImage {
+  width: $wd-50;   
+  height: $hg-50;  
+  border-radius: $br-50p;   
+  object-fit: cover;   
+}
+.avatar img{
+	width: $wd-50;
+	border-radius: $br-50p;
+}
+.preview-block{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+}
+.delete-Image__Preview{
+    color: black;
+    font-family: "Open Sans", sans-serif;
+    background-color: rgba(255, 93, 75, 0.715);
+    font-size: $fz-12;
+    font-weight: $light;
+    padding: $sp-10;
+    height: $hg-50;
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.privacy-policy{
+    display: flex;
+    align-items:center;
+    gap: $sp-3;
+    margin-top: $sp-5;
+}
+.text{
+    color:black;
+    font-size: $fz-10;
+}
+.policy{
+    color:black;
+    text-decoration: underline !important;
+    font-size: $fz-10;
+}
+.policy:hover{
+    opacity: .8;
+}
+.agree input[type="radio"]{
+    appearance: none;
+    cursor: pointer;
+    width: $wd-20;
+    height:$hg-20;
+    border: $br-2 solid #000;
+    border-radius: $br-2;
+    margin-right: $sp-8;
+}
+.error{
+    font-size: $fz-10;
+}
+ 
+
+.agree input[type="radio"]:checked {
+    background-color: #000; 
+}

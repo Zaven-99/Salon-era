@@ -1,0 +1,33 @@
+
+@import '../styles/variables.scss';
+
+ .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  overflow-y: scroll;
+  
+}
+.modal-content {
+  z-index: 15; 
+  text-align: center;
+  position: relative;
+  background: $bg-white;
+  border-radius: $br-8;
+  padding: $sp-20;
+  max-width: $wd-500;
+  width: $wd-150;
+  animation:bounce-in .5s;
+  margin: $sp-10;
+   
+}
+.GIF{
+	border-radius:50%;
+}

@@ -1,0 +1,22 @@
+.custom-select__style{
+	width: 100%;
+    max-width: 100%;
+    min-width: 0px;
+    padding: 0.706rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.412rem;
+    color: var(--input-text);
+    border-radius: var(--input-border-radius, 0.2rem);
+    border-width: var(--input-border-width, 0.01rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    margin-top: 5px;
+}

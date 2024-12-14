@@ -1,0 +1,130 @@
+ @import '../../styles/variables.scss';
+
+
+ .logIn{
+    margin-bottom: $sp-15;
+ }
+.signUp-btn{
+	cursor:pointer;
+	display: flex;
+    justify-content: end;
+}
+.forgot-your-btn{
+    cursor:pointer;
+     
+}
+.back-btn{
+	cursor:pointer;
+}
+.form-control{
+	background-color:white;
+    position: relative;
+    margin-bottom: $sp-5;
+ 
+}
+.form-control_invalid{
+    background-color:salmon;
+	border-radius: $br-1;
+    position: relative;
+}
+
+.input-item{
+	width: $wd-100p;
+    max-width: $wd-100p;
+    min-width: 0px;
+    padding: $sp-2;
+    font-style: normal;
+    font-weight: $regular;
+    font-size: $fz-1rem;
+    line-height: 1.412rem;
+    color: var(--input-text);
+    border-radius: $br-2;
+    border-width: var(--input-border-width, 0.1rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    position: relative;
+}
+.reset{
+    appearance: none;
+    opacity: 1;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: absolute;
+    right: $sp-30;
+    top: $sp-15;
+    color: var(--icon-primary-background);
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    border: 0px;
+    padding: 0px;
+    background-color: transparent !important;
+	width: $wd-15;
+	height: $wd-15;
+}
+.error-message{
+	color:salmon;
+    font-size: $fz-14;
+    font-family: $font;
+}
+.show-password{
+    position: absolute;
+    right: $sp-60;
+    top: $sp-12;
+}
+.help img{
+    width: $wd-12;
+    height: $hg-12;
+    position: absolute;
+    top: $sp-15;
+    right: $sp-12;
+}
+.signIn-btn{
+    width: $wd-100p;
+    position: relative;
+    cursor: pointer;
+    padding: var(--padding-main-button);
+    margin-top: 1rem;
+    font-style: normal;
+    font-weight: var(--font-weight-main-button);
+    font-size: var(--font-size-main-button);
+    line-height: var(--line-height-main-button);
+    border-radius: var(--button-border-radius, 4px);
+    border: var(--button-border);
+    outline: none;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    transition: background 0.3s;
+    box-shadow: var(--button-box-shadow, none);
+    --button-text-color: var(--button-text-primary);
+    color: var(--button-text-color);
+    background: var(--button-primary-background);
+    -webkit-tap-highlight-color: transparent;
+    background-color:black;
+    background-color: #b5b5b5;
+    margin: 0 auto;
+    margin-top: 35px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.signIn-btn:hover{
+    transform: scale(1.01);
+	transition: .2s;
+	box-shadow: $shadow-small;
+}
+
+
+.alternative-choice{
+    display: flex;
+    justify-content: space-between;
+}

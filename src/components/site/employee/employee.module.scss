@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.logo{
+	display: flex;
+	margin: 0 auto;
+	width: $wd-50;
+	margin-top:$sp-50;
+}
+.ours-professionals{
+	color: black;
+	text-align: center;
+	font-size: $fz-50;
+	font-weight: $light;
+	margin-top: $sp-50;
+}
+.employees{
+	display: flex;
+	flex-wrap: wrap;
+	align-items:center;
+	justify-content: center;
+	background-color: rgb(0,0,0,0.05);
+	gap: $sp-50;
+	margin-top: $sp-50;
+	padding: $sp-50;
+	border-radius: $sp-5;
+}
+ .employee{
+	text-align: center;
+ }
+.employee p {
+	color: black;
+	text-align: center;
+	margin-top: $sp-10;
+	font-size: $sp-15;
+	font-weight: $light;
+}
+.employee-img{
+    object-fit: cover;
+	width: $wd-300;
+    height: $hg-300;
+	border-radius:$br-50p;
+}
+
+ 
+@media(max-width:800px){
+	 .barber-img{
+		width: $wd-200;
+		height: $hg-200;
+		 
+	 }
+}
+@media(max-width:700px){
+	.ours-professionals{
+		font-size: $fz-35;
+	}
+}
+@media(max-width:550px){
+	 .barber-img{
+		width: $wd-150;
+		height: $hg-150;
+		 
+	 }
+}
+@media(max-width:515px){
+	 .barber-img{
+		width: $wd-100;
+		height: $hg-100;
+		 
+	 }
+}

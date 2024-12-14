@@ -1,0 +1,158 @@
+@import '../../styles/variables.scss';
+
+
+.contact-info{
+	margin-top: $sp-50;
+}
+.logo{
+    display: flex;
+    margin: 0 auto;
+	width: $wd-50;
+    margin-top: $sp-50;
+}
+.work-time__block{
+	display: flex;
+	align-items:center;
+	justify-content: space-around;
+	margin-top: $sp-50;
+}
+.scissors{
+	width: $wd-100;
+}
+.work-time{
+	color: black;
+	text-align:center;
+	background-color:rgb(0,0,0,0.05);
+	width: $wd-300;
+	font-size: $fz-14;
+	font-weight:$light;
+	padding: $sp-20;
+	border-radius:$br-4;
+}
+.tel{
+	color: black;
+	text-align:center;
+	background-color:rgb(0,0,0,0.05);
+	width: $wd-300;
+	font-size: $fz-14;
+	font-weight: $light;
+	padding: $sp-20;
+	border-radius:$br-4;
+}
+.tel:hover{
+	transform: scale(1.01);
+	transition: .2s;
+	opacity: .8;
+	box-shadow: $shadow-small;
+}
+.footer{
+	margin-bottom: $sp-100;
+}
+.wrapper img {
+	width: $wd-50;
+	border-radius:$br-20p;
+}
+.wrapper img:hover {
+	transform: scale(1.01);
+	transition: .2s;
+	opacity: .8;
+	box-shadow: $shadow-small;
+}
+.wrapper{
+	display: flex;
+    align-items: center;
+    justify-content: space-around;
+	margin-top: $sp-50;
+}
+
+.copyright{
+	font-weight: 300;
+	font-size: $fz-10;
+}
+.social-img{
+	display: flex;
+	gap: $sp-15;
+}
+.policy{
+	color: black;
+    font-weight: 300;
+	padding: $sp-10;
+	border-radius: $br-5;
+}
+.policy:hover{
+	transform: scale(1.01);
+	transition: .2s;
+	opacity: .8;
+	box-shadow: $shadow-small;
+
+}
+
+@media(max-width:860px){
+	 .contact-info{
+		font-size: $fz-30;
+	 }
+}
+
+@media(max-width:800px){
+	 .tel{
+		width: $wd-150;
+	 }
+	 .work-time{
+		width: $wd-150;
+	 }
+}
+@media(max-width:605px){
+	 .policy{
+		font-size: $fz-10;
+	 }
+}
+ @media(max-width:520px){
+	 .tel{
+	
+		font-size: $fz-10;
+	 }
+	 .work-time{
+		font-size: $fz-10;
+	 }
+	 .contact-info{
+		font-size: $fz-20;
+	 }
+}
+ @media(max-width:440px){
+	 .tel{
+		width: $wd-120;
+		font-size: $fz-10;
+		padding: $sp-15;
+
+	 }
+	 .work-time{
+ 
+		width: $wd-120;
+		font-size: $fz-10;
+		padding: $sp-15;
+
+	 }
+}
+@media(max-width:440px){
+	 .tel{
+		width: $wd-100;
+		font-size: $fz-10;
+		padding: $sp-10;
+
+	 }
+	 .work-time{
+ 
+		width: $wd-100;
+		font-size: $fz-10;
+		padding: $sp-10;
+
+	 }
+}
+  @media(max-width:350px){
+	 
+	 .contact-info{
+		font-size: $fz-15;
+	 }
+}
+ 
+ 
