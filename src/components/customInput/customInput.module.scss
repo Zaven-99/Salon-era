@@ -93,3 +93,71 @@
     border:1px solid green !important;
     background:rgba(0, 153, 0, 0.096) !important
 }
+
+ .help{
+    cursor: pointer;
+ }
+
+ /* Стили для контейнера */
+.custom-input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-input-container:hover {
+  border-color: #007bff;
+  background-color: #f0f8ff;
+}
+
+/* Активное состояние */
+.custom-input-container.active {
+  border-color: #007bff;
+  background-color: #e6f7ff;
+}
+
+/* Стили для скрытого input */
+.custom-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Скрываем input, но оставляем его кликабельным */
+  cursor: pointer;
+}
+
+/* Стили для label */
+.custom-input-label {
+  display: block;
+  position: relative;
+  font-size: 14px;
+  color: #555;
+  pointer-events: none; /* Отключаем возможность взаимодействовать с label */
+  transition: all 0.3s ease;
+}
+
+/* При фокусе на input меняем цвет */
+.custom-input:focus + .custom-input-label,
+.custom-input:not(:placeholder-shown) + .custom-input-label {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.custom-input:focus + .custom-input-label {
+  color: #0056b3;
+}
+
+/* Стили для отображения имени выбранного файла */
+.custom-input-container .file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+  word-wrap: break-word;
+}

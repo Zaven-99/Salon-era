@@ -53,7 +53,7 @@ const Slider = ({ children }) => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [pageWidth, pages.length]); // Убрали offset, так как функция теперь внутри
+  }, [pageWidth, pages.length]);  
 
   return (
     <div className={styles["main-container"]}>

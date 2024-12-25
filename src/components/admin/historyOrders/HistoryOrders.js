@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./historyOrders.module.scss";
- import CustomButton from "../../customButton/CustomButton";
+import CustomButton from "../../customButton/CustomButton";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ru } from "date-fns/locale";
@@ -80,61 +80,6 @@ const HistoryOrders = () => {
     }));
   };
 
-  const fetchDelete = async (id) => {
-    setLoading(true);
-    setError(null);
-
-    const orderExists = orders.some((order) => order.record.id === id);
-    if (!orderExists) {
-      setError(`Заказ с ID ${id} не найден.`);
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://95.163.84.228:6533/records?id=${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (response.status === 204) {
-        setOrders((prevOrders) =>
-          prevOrders.filter((order) => order.record.id !== id)
-        );
-        setGroupedOrders((prevGroupedOrders) => {
-          const updatedGroupedOrders = { ...prevGroupedOrders };
-          Object.keys(updatedGroupedOrders).forEach((date) => {
-            updatedGroupedOrders[date] = updatedGroupedOrders[date].filter(
-              (order) => order.record.id !== id
-            );
-          });
-          return updatedGroupedOrders;
-        });
-      } else if (response.ok) {
-        setOrders((prevOrders) =>
-          prevOrders.filter((order) => order.record.id !== id)
-        );
-        setGroupedOrders((prevGroupedOrders) => {
-          const updatedGroupedOrders = { ...prevGroupedOrders };
-          Object.keys(updatedGroupedOrders).forEach((date) => {
-            updatedGroupedOrders[date] = updatedGroupedOrders[date].filter(
-              (order) => order.record.id !== id
-            );
-          });
-          return updatedGroupedOrders;
-        });
-      } else {
-        throw new Error(`Ошибка при удалении: HTTP status ${response.status}`);
-      }
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const filterOrdersByDate = () => {
     if (!selectedDate) {
       return groupedOrders;
@@ -151,8 +96,8 @@ const HistoryOrders = () => {
     return filteredGroupedOrders;
   };
 
-  if(loading){
-    <Spinner/>
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
@@ -232,28 +177,23 @@ const HistoryOrders = () => {
                         </div>
                         <div className={styles.wrapper}>
                           <strong>Статус:</strong>
-                          {order.record.status === "Заказ закрыт" ? (
+                          {order.record.status === 500 ? (
                             <div className={styles[`order-closed`]}>
-                              {order.record.status}
+                              Заказ закрыт
                             </div>
-                          ) : order.record.status === "Заказ отменен" ? (
+                          ) : order.record.status === 400 ? (
                             <div className={styles[`order-canceled`]}>
-                              {order.record.status}
+                              Заказ отменен
                             </div>
-                          ) : order.record.status === "Заказ создан" ? (
+                          ) : order.record.status === 0 ? (
                             <div className={styles[`order-created`]}>
-                              {order.record.status}
+                              Заказ создан
                             </div>
-                          ) : order.record.status === "Заказ принят" ? (
+                          ) : order.record.status === 100 ? (
                             <div className={styles[`order-accept`]}>
-                              {order.record.status}
+                              Заказ принят
                             </div>
                           ) : null}
-                          <CustomButton
-                            label="Удалить"
-                            onClick={() => fetchDelete(order.record.id)}
-                            className={styles.delete}
-                          />
                         </div>
                       </li>
                     ))}

@@ -74,7 +74,7 @@ const CustomInput = React.forwardRef(
             <input
               className={`${styles["input-item"]} ${
                 error ? styles.error : ""
-              } ${!error && inputValue.length > 0 ? styles.active : ""}`}
+              } ${!error && inputValue.length > 0 ? styles.active : ""} `}
               placeholder={label}
               type={inputType}
               name={name}

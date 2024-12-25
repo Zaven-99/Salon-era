@@ -50,11 +50,11 @@ img{
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow: $shadow-small;
-    background-color: salmon;
+    background-color: #fe5440;
     border-radius: $br-4;
     width: $wd-150;
 }
@@ -67,11 +67,11 @@ img{
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow: $shadow-small;
-    background-color: rgba(15, 210, 15, 0.573);;
+    background-color: rgb(15 210 15);
     border-radius: $br-4;
     width: $wd-150;
 }
@@ -84,11 +84,11 @@ img{
 	color: black;
     font-family:$font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow: $shadow-small;
-    background-color: rgba(15, 210, 15, 0.573);
+    background-color: rgb(15 210 15);
     border-radius: $br-4;
     width: $wd-150;
 }
@@ -102,11 +102,11 @@ img{
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
 	box-shadow: $shadow-small;
-	background-color: rgba(15, 210, 15, 0.573);
+	background-color: rgb(15 210 15);
 	border-radius: $br-4;
 	width: $wd-150;
 
@@ -120,11 +120,11 @@ img{
 	color: black;
     font-family:  $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
 	box-shadow: $shadow-small;
-	background-color:salmon;
+	background-color:#fe5440;
 	border-radius: $br-4;
 	width: $wd-150;
 }
@@ -184,13 +184,14 @@ img{
     appearance: none !important;
     margin-top: 5px;
      
-    
+ 
  }
 .employee-item__inner{
-    display: flex;
-    align-items:center;
-    flex-wrap: wrap;
-}
+    width: 100%;
+ }
+ .employee-item__inner div {
+    font-size:12px
+ }
 .btn-block{
     display: flex;
     justify-content: space-between;

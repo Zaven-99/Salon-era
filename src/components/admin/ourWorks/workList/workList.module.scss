@@ -68,43 +68,62 @@
   color: black;
   font-family: $font;
   font-size: $fz-12;
-  font-weight: $light;
+  font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
 	box-shadow: $shadow-small;
-	background-color: rgba(15, 210, 15, 0.573);
+	background-color: rgb(15 210 15);
 	border-radius: $br-4;
 	width: $wd-150;
+}
+.cancelDelete-work:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }
 .acceptDelete-work{
 	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $light;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
 	box-shadow: $shadow-small;
-	background-color:salmon;
+	background-color:#fe5440;
 	border-radius: $br-4;
 	width: $wd-150;
 }
- .btn-block{
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
+.acceptDelete-work:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.btn-block{
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
 
  }
 .delete-work{
   color: black;
-  font-family: $font;
-  font-size: $fz-12;
-  font-weight: $light;
-	padding:$sp-10;
-	height:$hg-50;
-	box-shadow:$shadow-small;
-	background-color:salmon;
-	border-radius: $br-4;
-	width: 100%;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px;
+  height: 50px;
+  box-shadow: 0 8px 16px -8px;
+  background-color: #fe5440;
+  border-radius: 4px;
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto;
+  width: 150px;
+}
+.delete-work:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }
 

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './menuSideBtn.module.scss'
+import styles from "./menuSideBtn.module.scss";
 
 const MenuBtn = ({ isMenuOpen, toggleMenu }) => {
   return (

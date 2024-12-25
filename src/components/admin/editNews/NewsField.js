@@ -8,6 +8,7 @@ import ImagePreview from "../../imagePreview/ImagePreview";
 import NewsList from "./newsList/NewsList";
 
 import styles from "./newsField.module.scss";
+import Spinner from "../../spinner/Spinner";
 
 const News = () => {
   const {
@@ -70,7 +71,6 @@ const News = () => {
     } catch (error) {
     } finally {
       setLoading(false);
-      window.location.reload();
     }
   };
 
@@ -98,6 +98,10 @@ const News = () => {
   const deletImagePreview = () => {
     setImagePreview(null);
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className={styles["news-field"]}>
@@ -169,8 +173,6 @@ const News = () => {
         </Modal>
       )}
       <NewsList
-        loading={loading}
-        setLoading={setLoading}
         news={news}
         setNews={setNews}
         toggleOpenSignInForm={toggleOpenSignInForm}

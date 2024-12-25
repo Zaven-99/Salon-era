@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../../../use-auth/use-auth";
 import {
   addService,
   removeService,
@@ -13,12 +12,10 @@ import styles from "./chooseAService.module.scss";
 
 const ChooseAService = () => {
   const [services, setServices] = useState([]);
-  const [filteredServices, setFilteredServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-  const { gender } = useAuth();
   const dispatch = useDispatch();
 
   const getDurationText = (duration) => {
@@ -38,6 +35,7 @@ const ChooseAService = () => {
   const selectedServices = useSelector(
     (state) => state.service.selectedServices
   );
+   
   const selectedServicesCount = selectedServices.length;
 
   const toggleChooseService = (service) => {
@@ -66,16 +64,23 @@ const ChooseAService = () => {
     fetchServices();
   }, []);
 
-  useEffect(() => {
-    const filtered = services.filter((service) => service.gender === gender);
-    setFilteredServices(filtered);
-  }, [gender, services]);
+  const groupedServices = services.reduce((acc, service) => {
+    if (!acc[service.category]) {
+      acc[service.category] = {};
+    }
 
-  const groupedServices = filteredServices.reduce((acc, service) => {
-    if (!acc[service.category]) acc[service.category] = [];
-    acc[service.category].push(service);
+    if (!acc[service.category][service.gender]) {
+      acc[service.category][service.gender] = [];
+    }
+
+    acc[service.category][service.gender].push(service);
+
     return acc;
   }, {});
+
+  if (error) {
+    return <div className={styles.error}>Ошибка: {error}</div>;
+  }
 
   if (loading) {
     return <Spinner />;
@@ -84,9 +89,7 @@ const ChooseAService = () => {
   return (
     <section>
       <h1 className={styles.signUpForAHaircut}>Записаться</h1>
-      <h1 className={styles["type-of__Price"]}>
-        {gender === 0 ? "Женский прайс лист" : "Мужской прайс лист"}
-      </h1>
+      <h1>Прайс лист</h1>
       <div className={styles["sign-up_for__haircut"]}>
         <div className={styles["selected-services__container"]}>
           {selectedServicesCount > 0 && (
@@ -109,35 +112,51 @@ const ChooseAService = () => {
               <h2 className={styles.category}>{category}</h2>
 
               <div className={styles.wrapper}>
-                {groupedServices[category].map((item) => (
-                  <div className={styles["priceList-inner"]} key={item.id}>
-                    <div
-                      onClick={() => toggleChooseService(item)}
-                      className={`${styles["priceList-inner_item"]} ${
-                        selectedServices.some((s) => s.id === item.id)
-                          ? styles.selectedService
-                          : ""
-                      }`}
-                    >
-                      <p>Название:{item.name}</p>
-                      <p>
-                        {item.description && <>Описание: {item.description}</>}
-                      </p>
-                      <p>Продолжительность: {getDurationText(item.duration)}</p>
-                      <div>
-                        Цена:
-                        {item.priceMax === null
-                          ? `${item.priceLow} руб.`
-                          : `${item.priceLow} - ${item.priceMax} руб.`}
-                        {item.priceLow && item.priceMax && (
-                          <div className={styles.clarify}>
-                            Уточни у сотрудника!
+                {Object.keys(groupedServices[category]).map((genderKey) => {
+                  const genderValue = Number(genderKey);
+
+                  return (
+                    <div key={genderValue}>
+                      {groupedServices[category][genderValue].map((item) => (
+                        <div
+                          className={styles["priceList-inner"]}
+                          key={item.id}
+                        >
+                          <div
+                            onClick={() => toggleChooseService(item)}
+                            className={`${styles["priceList-inner_item"]} ${
+                              selectedServices.some((s) => s.id === item.id)
+                                ? styles.selectedService
+                                : ""
+                            }`}
+                          >
+                            <p>Название: {item.name}</p>
+                            <p>
+                              {item.description && (
+                                <>Описание: {item.description}</>
+                              )}
+                            </p>
+                            <p>
+                              Продолжительность:{" "}
+                              {getDurationText(item.duration)}
+                            </p>
+                            <div>
+                              Цена:{" "}
+                              {item.priceMax === null
+                                ? `${item.priceLow} руб.`
+                                : `${item.priceLow} - ${item.priceMax} руб.`}
+                              {item.priceLow && item.priceMax && (
+                                <div className={styles.clarify}>
+                                  Уточни у сотрудника!
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      ))}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ))}

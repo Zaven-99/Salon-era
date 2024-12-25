@@ -12,7 +12,6 @@ import "react-calendar/dist/Calendar.css";
 import styles from "./chooseDate.module.scss";
 
 const ChooseDate = () => {
-  const { gender } = useAuth();
   const { id: clientId } = useAuth();
   const [date, setDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(null);
@@ -27,6 +26,7 @@ const ChooseDate = () => {
   const selectedServices = useSelector(
     (state) => state.service.selectedServices
   );
+
   const selectedBarber = useSelector((state) => state.barber.selectedBarber);
 
   const handleDateChange = (newDate) => {
@@ -134,7 +134,7 @@ const ChooseDate = () => {
         id_client_to: selectedBarber.id,
         id_service: selectedService.id,
         number: "",
-        status: "Заказ создан",
+        status: 0,
         dateRecord: formattedDateTimeForServer(),
       })
     );
@@ -170,11 +170,7 @@ const ChooseDate = () => {
     return (
       <div className={styles["choose-date"]}>
         <h1 className={styles.signUpForAHaircut}>Записаться</h1>
-        {gender === 0 ? (
-          <h1>Женский прайс лист</h1>
-        ) : (
-          <h1>Мужской прайс лист</h1>
-        )}
+
         <div className={styles["calendar-container"]}>
           <div>
             <div className={styles["btn-block"]}>
@@ -209,7 +205,12 @@ const ChooseDate = () => {
           <p className={styles["date-sign__up"]}>
             Вы записались на {selectedTime.toLocaleString()}
           </p>
-          <CustomButton onClick={handleOkClick} label="Принять" type="button" />
+          <CustomButton
+            className={styles["accept"]}
+            onClick={handleOkClick}
+            label="Принять"
+            type="button"
+          />
         </div>
       </div>
     );
@@ -222,11 +223,6 @@ const ChooseDate = () => {
   return (
     <div className={styles["choose-date"]}>
       <h1 className={styles.signUpForAHaircut}>Записаться</h1>
-      {gender === 0 ? (
-        <h1 className={styles["type-of__price"]}>Женский прайс лист</h1>
-      ) : (
-        <h1 className={styles["type-of__price"]}>Мужской прайс лист</h1>
-      )}
       <div className={styles["calendar-container"]}>
         <div>
           <div className={styles["btn-block"]}>

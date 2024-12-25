@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../../use-auth/use-auth";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
 import CustomButton from "../../../customButton/CustomButton";
@@ -12,8 +11,6 @@ import CustomSelect from "../../../customSelect/CustomSelect";
 const ServiceList = ({
   services,
   setServices,
-  setLoading,
-  loading,
   toggleCloseSignInForm,
   toggleOpenSignInForm,
 }) => {
@@ -41,10 +38,9 @@ const ServiceList = ({
   const [editedService, setEditedService] = useState({});
   const [confirmDeleteService, setConfirmDeleteService] = useState(false);
   const [serviceToDelete, setServiceToDelete] = useState(null);
-  const [filteredServices, setFilteredServices] = useState([]);
   const [activeInput, setActiveInput] = useState("");
-
-  const { gender } = useAuth();
+  const [loading, setLoading] = useState(false);
+  
 
   const genderMap = { 0: "Женский", 1: "Мужской" };
   const durationMap = [
@@ -68,7 +64,6 @@ const ServiceList = ({
       if (!response.ok) throw new Error("Ошибка при получении услуг");
       const data = await response.json();
       setServices(data);
-      setFilteredServices(data.filter((service) => service.gender === gender));
     } catch (error) {
       setError("Ошибка при загрузке услуг");
     } finally {
@@ -81,12 +76,6 @@ const ServiceList = ({
       await fetchServices();
     })();
   }, []);
-
-  useEffect(() => {
-    setFilteredServices(
-      services.filter((service) => service.gender === gender)
-    );
-  }, [gender, services]);
 
   const handleDelete = async (id) => {
     setLoading(true);
@@ -103,6 +92,7 @@ const ServiceList = ({
     } catch (error) {
     } finally {
       setLoading(false);
+      document.body.style.overflow = "scroll";
     }
   };
 
@@ -298,11 +288,21 @@ const ServiceList = ({
                             })}
                           />
 
-                          <CustomSelect
+                          <Controller
                             name="duration"
-                            edited={editedService.duration}
-                            handleChange={handleChange}
-                            map={durationMap}
+                            control={control}
+                            rules={{ required: "Это поле обязательно" }}
+                            render={({ field }) => (
+                              <CustomSelect
+                                {...field}
+                                name="duration"
+                                handleChange={handleChange}
+                                edited={editedService.duration}
+                                control={control}
+                                map={durationMap}
+                                rules={{ required: "Это поле обязательно" }}
+                              />
+                            )}
                           />
 
                           <CustomInput
@@ -332,11 +332,11 @@ const ServiceList = ({
                       </Modal>
                     ) : (
                       <>
-                        <div>
+                        <div className={styles["service-item__inner"]}>
                           <strong>Название услуги:</strong>
                           <div>{service.name}</div>
                         </div>
-                        <div>
+                        <div className={styles["service-item__inner"]}>
                           <strong>Цена:</strong>{" "}
                           <div>
                             {service.priceMax === null
@@ -344,15 +344,15 @@ const ServiceList = ({
                               : `${service.priceLow} - ${service.priceMax} руб.`}
                           </div>
                         </div>
-                        <div>
+                        <div className={styles["service-item__inner"]}>
                           <strong>Описание:</strong>{" "}
                           <div>{service.description}</div>
                         </div>
-                        <div>
+                        <div className={styles["service-item__inner"]}>
                           <strong>Продолжительность:</strong>{" "}
                           <div>{getDurationText(service.duration)}</div>
                         </div>
-                        <div>
+                        <div className={styles["service-item__inner"]}>
                           <strong>Пол:</strong>
                           <div> {getGenderText(service.gender)}</div>
                         </div>

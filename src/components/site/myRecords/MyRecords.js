@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../use-auth/use-auth";
 import CustomButton from "../../customButton/CustomButton";
-import Spinner from '../../spinner/Spinner';
+import Spinner from "../../spinner/Spinner";
 
 import styles from "./myRecords.module.scss";
 
@@ -42,9 +42,14 @@ const MyRecords = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [clientId]);
+ useEffect(() => {
+     fetchData();
+     const interval = setInterval(() => {
+       fetchData();
+     }, 10000);
+ 
+     return () => clearInterval(interval);
+   }, [clientId]);
 
   const cancelOrder = async (order) => {
     setLoading(true);
@@ -111,9 +116,7 @@ const MyRecords = () => {
   const total = totalAllOrders - totalCancelledOrders;
 
   if (loading) {
-    return (
-       <Spinner />
-    );
+    return <Spinner />;
   }
 
   return (
@@ -125,55 +128,65 @@ const MyRecords = () => {
 
       {order.length > 0 ? (
         <ul className={styles["records-list"]}>
-          {order.map((order) => {
+          {order.map((order, index) => {
             if (!order?.record) {
               return (
-                <li key={order.id} className={styles["records-list__item"]}>
+                <li key={index} className={styles["records-list__item"]}>
                   <p>Ошибка: отсутствует информация о заказе</p>
                 </li>
               );
             }
 
             return (
-              <li key={order.id} className={styles["records-list__item"]}>
-                <p>
-                  <strong>Номер заказа:</strong> {order.record.number}
-                </p>
-                <p>
+              <li key={index} className={styles["records-list__item"]}>
+                <div>
+                  <strong>Номер заказа:</strong>{" "}
+                  <span>{order.record.number}</span>
+                </div>
+                <div>
                   <strong>Парикмахер:</strong>
                   <span>{order.clientTo?.firstName}&nbsp;</span>
                   <span>{order.clientTo?.lastName}</span>
-                </p>
-
-                {order.record?.status === "Заказ создан" ? (
+                </div>
+                {order.record?.status === 0 ? (
                   <div className={styles.status}>
                     <strong>Статус:</strong>
-                    <div className={styles.created}>{order.record?.status}</div>
+                    <span className={styles.created}>
+                      Заказ создан
+                    </span>
                   </div>
-                ) : order.record?.status === "Заказ отменен" ? (
+                ) : order.record?.status === 400 ? (
                   <div className={styles.status}>
                     <strong>Статус:</strong>{" "}
-                    <div className={styles.canceled}>
-                      {order.record?.status}
-                    </div>
+                    <span className={styles.canceled}>
+                      Заказ отменен
+                    </span>
+                  </div>
+                ) : order.record?.status === 100 ? (
+                  <div className={styles.status}>
+                    <strong>Статус:</strong>{" "}
+                    <span className={styles.accept}>
+                      Заказ принят
+                    </span>
                   </div>
                 ) : (
                   <div className={styles.status}>
                     <strong>Статус:</strong>{" "}
-                    <div className={styles.closed}>{order.record?.status}</div>
+                    <span className={styles.closed}>
+                      Заказ закрыт
+                    </span>
                   </div>
                 )}
-
-                <p>
+                <div>
                   <strong>Дата заказа:</strong>
-                  {formatDate(order.record.dateRecord)}
-                </p>
-                <p>
+                  <span>{formatDate(order.record.dateRecord)}</span>
+                </div>
+
+                <div>
                   <strong>Стоимость:</strong>
-                  {order.service?.priceLow} руб.
-                </p>
-                {order.record?.status !== "Заказ отменен" &&
-                order.record?.status !== "Заказ принят" ? (
+                  <span>{order.service?.priceLow} руб.</span>
+                </div>
+                {order.record?.status === 0 ? (
                   <CustomButton
                     label="Отменить"
                     onClick={() => cancelOrder(order)}

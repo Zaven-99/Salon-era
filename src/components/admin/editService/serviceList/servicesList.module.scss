@@ -49,7 +49,9 @@ strong {
     font-size: $fz-14;
     font-weight: $light;
 }
-
+.service-item__inner{
+    width: 100%;
+}
 .gender{
 	padding-left: $sp-10;
 }
@@ -58,11 +60,11 @@ strong {
 
 }
 .delete-service{
-    background-color: salmon;
+    background-color: #fe5440;
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow: $shadow-small;
@@ -80,11 +82,11 @@ strong {
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow: $shadow-small;
-    background-color: rgba(15, 210, 15, 0.573);
+    background-color: rgb(15 210 15);
     border-radius: $br-4;
     width: $wd-150;
 }
@@ -98,11 +100,11 @@ strong {
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
 	box-shadow: $shadow-small;
-	background-color: rgba(15, 210, 15, 0.573);
+	background-color: rgb(15 210 15);
 	border-radius: $br-4;
 	width: $wd-150;
 
@@ -114,10 +116,10 @@ strong {
 }
 .cancel{
 	color: black;
-	background-color:salmon;
+	background-color:#fe5440;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
 	padding:$sp-10;
 	height:$hg-50;
 	box-shadow:$shadow-small;
@@ -165,10 +167,10 @@ strong {
 }
 .cancelDelete-employee{
     color: black;
-	background-color: rgba(15, 210, 15, 0.573);
+	background-color: rgb(15 210 15);
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
 	box-shadow: $shadow-small;
@@ -177,10 +179,10 @@ strong {
 }
 .delete-employee{
     color: black;
-	background-color:salmon;
+	background-color:#fe5440;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
 	padding:$sp-10;
 	height:$hg-50;
 	box-shadow:$shadow-small;

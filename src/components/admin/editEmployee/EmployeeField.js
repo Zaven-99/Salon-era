@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import CustomButton from "../../customButton/CustomButton";
 import CustomInput from "../../customInput/CustomInput";
 import EmployeeList from "./employeeList/EmployeeList";
@@ -8,6 +8,7 @@ import CustomSelect from "../../customSelect/CustomSelect";
 
 import styles from "./employeeField.module.scss";
 import ImagePreview from "../../imagePreview/ImagePreview";
+import Spinner from "../../spinner/Spinner";
 
 const EmployeeField = () => {
   const {
@@ -27,6 +28,7 @@ const EmployeeField = () => {
       confirmPassword: "",
       email: "",
       phone: "",
+      position: "1",
       dateWorkIn: "",
       gender: "",
       imageLink: "",
@@ -150,7 +152,6 @@ const EmployeeField = () => {
     } finally {
       setLoading(false);
       deletImagePreview();
-      window.location.reload();
     }
   };
 
@@ -178,6 +179,10 @@ const EmployeeField = () => {
   const deletImagePreview = () => {
     setImagePreview(null);
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className={styles["employee-field"]}>
@@ -342,11 +347,17 @@ const EmployeeField = () => {
               })}
             />
 
-            <CustomSelect
+            <Controller
               name="position"
-              map={positionMap}
-              register={register}
-              required
+              control={control}
+              render={({ field }) => (
+                <CustomSelect
+                  {...field}
+                  name="position"
+                  control={control}
+                  map={positionMap}
+                />
+              )}
             />
 
             <ImagePreview

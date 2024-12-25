@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import styles from "./ourWorks.module.scss";
 import CustomButton from "../../customButton/CustomButton";
@@ -8,11 +8,12 @@ import CustomInput from "../../customInput/CustomInput";
 import ImagePreview from "../../imagePreview/ImagePreview";
 import WorkList from "./workList/WorkList";
 import CustomSelect from "../../customSelect/CustomSelect";
+import Spinner from "../../spinner/Spinner";
 
 const OurWorks = () => {
   const {
-    register,
     handleSubmit,
+    control,
     reset,
     formState: { errors },
   } = useForm({
@@ -23,7 +24,6 @@ const OurWorks = () => {
   });
 
   const [works, setWorks] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(false);
   const [addWorks, setAddWorks] = useState(false);
   const [activeInput, setActiveInput] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
@@ -105,19 +105,23 @@ const OurWorks = () => {
       console.error("Ошибка отправки:", error);
     } finally {
       setLoading(false);
-      window.location.reload();
     }
   };
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className={styles["our-works"]}>
       <CustomButton
-        className={styles.addWork}
+        className={styles['add-work']}
         label="Добавить работу"
         onClick={toggleOpenSignInForm}
       />
       <h1>Работы</h1>
-      {!works.length > 0 && <p className={styles["message"]}>Добавьте работы!</p>}
+      {!works.length > 0 && (
+        <p className={styles["message"]}>Добавьте работы!</p>
+      )}
       {addWorks && (
         <Modal
           toggleOpenSignInForm={toggleOpenSignInForm}
@@ -125,11 +129,17 @@ const OurWorks = () => {
         >
           <h2>Добавить работу</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <CustomSelect
+            <Controller
               name="category"
-              map={categoryMap}
-              register={register}
-              required
+              control={control}
+              render={({ field }) => (
+                <CustomSelect
+                  {...field}
+                  name="category"
+                  control={control}
+                  map={categoryMap}
+                />
+              )}
             />
 
             <ImagePreview
@@ -153,13 +163,7 @@ const OurWorks = () => {
         </Modal>
       )}
 
-      <WorkList
-        setWorks={setWorks}
-        works={works}
-        categoryMap={categoryMap}
-        loading={loading}
-        setLoading={setLoading}
-      />
+      <WorkList setWorks={setWorks} works={works} categoryMap={categoryMap} />
     </div>
   );
 };

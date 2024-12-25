@@ -6,6 +6,7 @@
 	transition: 0.7s;
 	width: $wd-45;
 	height: $hg-45;
+	
 }
  
 .item1{
@@ -46,10 +47,10 @@
 .menu-toggle.transformation{
 	transform: translate(45px, -35px);
 	transition: 0.7s;
-    z-index: 2;
+    z-index: 12;
 	position: fixed;
 }
-
+ 
 /*media*/
 
 @media (max-width: 960px) {

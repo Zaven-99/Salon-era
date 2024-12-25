@@ -8,8 +8,6 @@ import CustomInput from "../../../customInput/CustomInput";
 import ImagePreview from "../../../imagePreview/ImagePreview";
 
 const NewsList = ({
-  loading,
-  setLoading,
   news,
   setNews,
   toggleOpenSignInForm,
@@ -33,6 +31,7 @@ const NewsList = ({
   const [activeInput, setActiveInput] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchNews = async () => {
     setLoading(true);
@@ -94,7 +93,6 @@ const NewsList = ({
       console.error("Ошибка:", error);
     } finally {
       setLoading(false);
-      // window.location.reload();
     }
   };
 
@@ -259,7 +257,7 @@ const NewsList = ({
                       onClick={() => showMessageDeleteNews(news.id)}
                     />
                     <CustomButton
-                      className={styles["cancel"]}
+                      className={styles["cancel-delete__news"]}
                       type="button"
                       label="Отменить"
                       onClick={() => setNewsId(null)}
@@ -280,7 +278,7 @@ const NewsList = ({
                             onClick={() => handleDelete(news.id)}
                           />
                           <CustomButton
-                            className={styles["cancel-delete__news"]}
+                            className={styles["cancel-delete"]}
                             type="button"
                             label="Отменить"
                             onClick={closeMessageDeleteNews}

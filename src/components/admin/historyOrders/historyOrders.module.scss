@@ -87,10 +87,10 @@
 }
 .delete{
   color: black;
-  background-color: salmon;
+  background-color: #fe5440;
   font-family: "Open Sans", sans-serif;
   font-size: $fz-12;
-  font-weight: $light;
+  font-weight: $regular;
   padding: $sp-10;
   height: $hg-50;
   box-shadow: $shadow-small;
@@ -101,6 +101,9 @@
   display: flex;
   align-items:center;
   gap: $sp-15;
+}
+.record-item__inner{
+  width: 250px;
 }
 
 @media(max-width:1400px){

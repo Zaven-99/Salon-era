@@ -5,17 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../use-auth/use-auth";
 import { useDispatch } from "react-redux";
 import MenuSideBtn from "../../menuSideBtn/MenuSideBtn";
-import MenuSide from '../../menuSide/MenuSide';
+import MenuSide from "../../menuSide/MenuSide";
 
 import styles from "./headerAdminPanel.module.scss";
- 
+
 const HeaderAdminPanel = () => {
   const [loading, setLoading] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showOtherModal, setShowOtherModal] = useState(false);
   const [orders, setOrders] = useState([]);
   const [prevOrderCount, setPrevOrderCount] = useState(0);
-  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clientType } = useAuth();
@@ -58,7 +57,7 @@ const HeaderAdminPanel = () => {
       }
       setPrevOrderCount(data.length);
     } catch (error) {
-      setError(error.message);
+      console.log(error.message);
     } finally {
       setLoading(false);
     }
@@ -73,22 +72,18 @@ const HeaderAdminPanel = () => {
     return () => clearInterval(interval);
   }, []);
 
-   
-
   const createdOrders = orders.filter(
     (order) => order.record.status === "Заказ создан"
   ).length;
 
-
- const menuItems = [
-   { path: "/adminPanel/orders", label: "Заказы" },
-   { path: "/adminPanel/history-orders", label: "История заказов" },
-   { path: "/adminPanel/employee", label: "Сотрудники" },
-   { path: "/adminPanel/services", label: "Услуги" },
-   { path: "/adminPanel/our-works", label: "Работы" },
-   { path: "/adminPanel/news", label: "Новости" },
- ];
-
+  const menuItems = [
+    { path: "/adminPanel/orders", label: "Заказы" },
+    { path: "/adminPanel/history-orders", label: "История заказов" },
+    { path: "/adminPanel/employee", label: "Сотрудники" },
+    { path: "/adminPanel/services", label: "Услуги" },
+    { path: "/adminPanel/our-works", label: "Работы" },
+    { path: "/adminPanel/news", label: "Новости" },
+  ];
 
   return (
     <div className={styles["header-admin__panel"]}>

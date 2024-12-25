@@ -12,17 +12,13 @@ import Spinner from "../../spinner/Spinner";
 
 import styles from "./signInForm.module.scss";
 
-const SignInForm = ({
-  toggleCloseSignInForm,
-  toggleShowMessage,
-  setLoading,
-  loading,
-}) => {
+const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
   const [showFormSignUp, setShowFormSignUp] = useState(false);
   const [showRecoverPasswordForm, setRecoverPasswordForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
-  const [errorMessages, setErrorMessages] = useState(false);
+  const [errorMessages, setErrorMessages] = useState({});
   const [activeInput, setActiveInput] = useState("");
 
   const dispatch = useDispatch();
@@ -52,7 +48,9 @@ const SignInForm = ({
     setRecoverPasswordForm(!showRecoverPasswordForm);
   };
 
-  const onSubmit = async (formValues) => {
+  const onSubmit = async (formValues, e) => {
+    e.preventDefault();
+    setLoading(true);
     const formData = {
       ...formValues,
     };
@@ -117,18 +115,15 @@ const SignInForm = ({
     } catch (error) {
       const errorData = JSON.parse(error.message);
       const status = errorData.status;
-
-      if (status === 441) {
-        setErrorMessages((prev) => ({
-          ...prev,
-          login: `Пользователь с логином ${formValues.login} уже существует`,
-        }));
-      } else if (status === 404) {
+      console.error("Ошибка при запросе:", errorMessages);
+      if (status === 404) {
         setErrorMessages((prev) => ({
           ...prev,
           login: `Неверный логин или пароль`,
         }));
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -151,6 +146,7 @@ const SignInForm = ({
             setActiveInput={setActiveInput}
             {...register("login", { required: "Это поле обязательно." })}
           />
+
           <CustomInput
             label="Введите пароль"
             type={showPassword ? "text" : "password"}
@@ -203,7 +199,6 @@ const SignInForm = ({
           <SignUpForm
             toggleCloseSignInForm={toggleCloseSignInForm}
             toggleShowMessage={toggleShowMessage}
-            setLoading={setLoading}
             activeInput={activeInput}
             setActiveInput={setActiveInput}
           />
@@ -212,6 +207,8 @@ const SignInForm = ({
           <RecoverPasswordForm
             activeInput={activeInput}
             setActiveInput={setActiveInput}
+            toggleHelpModal={toggleHelpModal}
+            showHelpModal={showHelpModal}
           />
         )}
       </div>

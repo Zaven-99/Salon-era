@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ru } from "date-fns/locale";
-import CustomButton from "../../customButton/CustomButton";
-import Spinner from '../../spinner/Spinner.js'
 
+import CustomButton from "../../customButton/CustomButton";
+import Spinner from "../../spinner/Spinner.js";
 
 import styles from "./order.module.scss";
 
@@ -51,9 +51,7 @@ const Orders = () => {
 
       setFilteredOrders(
         data.filter(
-          (order) =>
-            order.record.status !== "Заказ отменен" &&
-            order.record.status !== "Заказ закрыт"
+          (order) => order.record.status !== 400 && order.record.status !== 500
         )
       );
     } catch (error) {
@@ -74,10 +72,7 @@ const Orders = () => {
 
   const groupOrdersByDate = (orders) => {
     return orders.reduce((acc, order) => {
-      if (
-        order.record.status !== "Заказ отменен" &&
-        order.record.status !== "Заказ закрыт"
-      ) {
+      if (order.record.status !== 400 && order.record.status !== 500) {
         const date = formatDate(order.record.dateRecord).split(",")[0];
         if (!acc[date]) {
           acc[date] = [];
@@ -115,9 +110,7 @@ const Orders = () => {
   const filterOrdersByDate = (date) => {
     if (!date) {
       const filtered = orders.filter(
-        (order) =>
-          order.record.status !== "Заказ отменен" &&
-          order.record.status !== "Заказ закрыт"
+        (order) => order.record.status !== 400 && order.record.status !== 500
       );
       setFilteredOrders(filtered);
     } else {
@@ -125,8 +118,8 @@ const Orders = () => {
       const filtered = orders.filter((order) => {
         return (
           formatDate(order.record.dateRecord).split(",")[0] === formattedDate &&
-          order.record.status !== "Заказ отменен" &&
-          order.record.status !== "Заказ закрыт"
+          order.record.status !== 400 &&
+          order.record.status !== 500
         );
       });
       setFilteredOrders(filtered);
@@ -140,7 +133,7 @@ const Orders = () => {
       "clientData",
       JSON.stringify({
         id: order.record.id,
-        status: "Заказ принят",
+        status: 100,
       })
     );
 
@@ -176,7 +169,7 @@ const Orders = () => {
       "clientData",
       JSON.stringify({
         id: order.record.id,
-        status: "Заказ закрыт",
+        status: 500,
       })
     );
 
@@ -212,7 +205,7 @@ const Orders = () => {
       "clientData",
       JSON.stringify({
         id: order.record.id,
-        status: "Заказ отменен",
+        status: 400,
       })
     );
 
@@ -244,8 +237,8 @@ const Orders = () => {
 
   const groupedOrders = groupOrdersByDate(filteredOrders);
 
-  if(loading){
-    <Spinner/>
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
@@ -330,26 +323,24 @@ const Orders = () => {
                   </div>
                   <div className={styles["record-item__inner"]}>
                     <strong>Статус:</strong>
-                    {order.record.status === "Заказ создан" ? (
+                    {order.record.status === 0 ? (
                       <div className={styles["order-created"]}>
-                        {order.record.status}
+                        Заказ создан
                       </div>
                     ) : (
-                      <div className={styles["order-accept"]}>
-                        {order.record.status}
-                      </div>
+                      <div className={styles["order-accept"]}>Заказ принят</div>
                     )}
                   </div>
-                  {order.record.status === "Заказ создан" ? (
+                  {order.record.status === 0 ? (
                     <div className={styles["btn-block"]}>
                       <CustomButton
-                        label="Принять"
+                        label="Принять заказ"
                         onClick={() => acceptOrder(order)}
                         className={styles.accept}
                         type="submit"
                       />
                       <CustomButton
-                        label="Отменить"
+                        label="Отменить заказ"
                         onClick={() => cancelOrder(order)}
                         className={styles.cancel}
                         type="submit"
@@ -364,7 +355,7 @@ const Orders = () => {
                         type="submit"
                       />
                       <CustomButton
-                        label="Отменить"
+                        label="Отменить заказ"
                         onClick={() => cancelOrder(order)}
                         className={styles.cancel}
                         type="submit"

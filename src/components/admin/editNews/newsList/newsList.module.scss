@@ -38,7 +38,7 @@
 .news-item p {
 	color: black;
   font-family: $font;
-  font-size: $fz-12;
+  font-size: $fz-15;
   font-weight: $light;
 }
 .news-img{
@@ -54,11 +54,11 @@
 	color: black;
   font-family: $font;
   font-size: $fz-12;
-  font-weight: $light;
+  font-weight: $regular;
   padding: $sp-10;
   height: $hg-50;
   box-shadow: $shadow-small;
-  background-color: salmon;
+  background-color: #fe5440;
   border-radius: $br-4;
   width: $wd-150;
 }
@@ -69,32 +69,38 @@
 }
 .cancel-delete__news{
 	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $light;
-    padding: $sp-10;
-    height: $hg-50;
-    box-shadow: $shadow-small;
-    background-color: rgba(15, 210, 15, 0.573);;
-    border-radius: $br-4;
-    width: $wd-150;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  box-shadow: $shadow-small;
+  background-color: #fe5440;
+  border-radius: $br-4;
+  width: $wd-150;
 }
+ 
 .cancel-delete__news:hover{
 	transform: scale(1.02);
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-.edit-news{
+.save-news{
 	color: black;
-    font-family:$font;
-    font-size: $fz-12;
-    font-weight: $light;
-    padding: $sp-10;
-    height: $hg-50;
-    box-shadow: $shadow-small;
-    background-color: rgba(15, 210, 15, 0.573);
-    border-radius: $br-4;
-    width: $wd-150;
+  font-family:$font;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  box-shadow: $shadow-small;
+  background-color: rgb(15 210 15);
+  border-radius: $br-4;
+  width: $wd-150;
+}
+.save-news:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }
 .edit-news:hover{
 	transform: scale(1.02);
@@ -102,44 +108,24 @@
 	transition: .2s;
 }
 
-.save-news{
-	color: black;
-  font-family: $font;
-  font-size: $fz-12;
-  font-weight: $light;
-	padding:$sp-10;
-	height: $hg-50;
-	box-shadow: $shadow-small;
-	background-color: rgba(15, 210, 15, 0.573);
-	border-radius: $br-4;
-	width: $wd-150;
-
-}
-.save-news:hover{
-	transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
-.cancel{
+.cancel-delete{
 	color: black;
   font-family:  $font;
   font-size: $fz-12;
-  font-weight: $light;
+  font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
 	box-shadow: $shadow-small;
-	background-color:salmon;
+	background-color:rgb(15 210 15);
 	border-radius: $br-4;
 	width: $wd-150;
 }
 
-.cancel:hover{
+.cancel-delete:hover{
 	transform: scale(1.02);
 	box-shadow:$shadow-small;
 	transition: .2s;
 }
- 
- 
  
 .button-block{
 	display: flex;

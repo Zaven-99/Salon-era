@@ -13,9 +13,7 @@
 	cursor: pointer;
 }
 .user-menu:hover{
-	transform: scale(1.01);
 	transition: .2s;
-	opacity: .8;
 	box-shadow: $shadow-small;
 }
 
@@ -58,33 +56,112 @@
 .user-menu{
 	    margin: $sp-0 $sp-20;
 }
+.notifications-block{
+	position: relative;
+}
+.notifications{
+	width: 330px;
+    position: absolute;
+    background: #efeff1;
+    text-align: center;
+    z-index: 10;
+    right: -150px;
+    top: 40px;
+	padding: 15px 10px ;
+	box-shadow: $shadow-small;
+	border-radius:5px;
+	border:transparent;
+	animation:bounce-in .5s;
+}
+@keyframes bounce-in {
+    0%{
+        opacity: 0;
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.notifications-img{
+	width: 30px;
+}
+ 
+.order-count{
+	color:black;
+	font-weight: $semiBold;
+	border-radius:50%;
+	padding: 5px;
+	display: flex;
+	align-items:center;
+	position: absolute;
+    top: 0;
+    right: -5px;
+    background: #fe5440;
+    height: 20px;
+}
 
+.created{
+	background:rgba(200, 200, 15, 0.76);
+	padding: 2px 5px 2px 5px;
+	border-radius: 4px;
+}
+.accepted{
+	background-color: rgba(15, 210, 15, 0.573);
+    padding: 2px 5px 2px 5px;
+    border-radius: 4px;
+}
+.accepted{
+	background-color: rgba(15, 210, 15, 0.573);
+    padding: 2px 5px 2px 5px;
+    border-radius: 4px;
+}
+.canceled{
+	background-color: salmon;
+    padding: 2px 5px 2px 5px;
+	border-radius: 4px;
+}
+.closed{
+	background-color: rgb(186, 178, 177);
+    padding: 2px 5px 2px 5px;
+	border-radius: 4px;
+}
+.all-notifications{
+	color: white;
+    background-color: #00aaff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 7px;
+    border-radius: 4px;
+	margin-top: 10px;
+}
+.notifications-item p {
+	padding: 10px 5px;
+	box-shadow:0px 1px 3px -2px;
+	border-radius: 2px;
+}
 @media(max-width:930px){
 	.user-menu{
 		width: $wd-250;
-		 
 	}
 	
 	.logOut{
 		font-size: $fz-14;
 	}
 }
-@media(max-width:690px){
+ 
+@media(max-width:650px){
 	
-	 
-	.avatar img{
-		width: 40px;
-		height: 40px;
-		object-fit: cover;
-	}
-	 
+	 .notifications{
+		right: -75px;
+	 }
 }
 
-@media(max-width:490px){
-	 
-	 
-	.logOut{
-		font-size:$fz-12;
-	}
-}
  

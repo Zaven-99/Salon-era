@@ -23,8 +23,9 @@ const ChooseABarbers = () => {
   const [editedFeedback, setEditedFeedback] = useState({});
   const [ratings, setRatings] = useState({});
   const [feedbackLimit, setFeedbackLimit] = useState(5);
+  const [width, setWidth] = useState("auto");
 
-  const { gender, id: clientId } = useAuth();
+  const { id: clientId } = useAuth();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,10 +37,32 @@ const ChooseABarbers = () => {
     4: "Бровист",
   };
 
+  const handleChange = (e) => {
+    const newText = e.target.value;
+
+    setEditedFeedback({
+      ...editedFeedback,
+      text: newText,
+    });
+
+    const span = document.createElement("span");
+    span.style.visibility = "hidden";
+    span.style.whiteSpace = "pre-wrap";
+    span.textContent = newText;
+
+    document.body.appendChild(span);
+    const textWidth = span.offsetWidth + 10;
+    document.body.removeChild(span);
+
+    setWidth(`${textWidth}px`);
+  };
+
   const getPositionText = (position) => positionMap[position];
 
   const selectedBarber = useSelector((state) => state.barber.selectedBarber);
-
+  const selectedServices = useSelector(
+    (state) => state.service.selectedServices
+  );
   const handleClickPrev = () => {
     navigate("/");
   };
@@ -102,13 +125,19 @@ const ChooseABarbers = () => {
     }));
   };
 
-  const filteredBarbers = useMemo(
-    () =>
-      clients.filter(
-        (barber) => barber.gender === gender && barber.clientType === "employee"
-      ),
-    [clients, gender]
-  );
+  const filteredBarbers = useMemo(() => {
+    return clients.filter((barber) => {
+      const isMaleServiceSelected = selectedServices.some(
+        (service) => service.gender === 1
+      );
+
+      if (isMaleServiceSelected) {
+        return barber.clientType === "employee" && barber.position === "2";
+      }
+
+      return barber.clientType === "employee" && barber.position !== "2";
+    });
+  }, [clients, selectedServices]);
 
   const handleFeedbackChange = (e) => {
     setFeedbackText(e.target.value);
@@ -238,11 +267,8 @@ const ChooseABarbers = () => {
   return (
     <section>
       <h1 className={styles.signUpForAHaircut}>Записаться</h1>
-      {gender === 0 ? (
-        <h1 className={styles["typeOfPrice"]}>Женский прайс лист</h1>
-      ) : (
-        <h1 className={styles["typeOfPrice"]}>Мужской прайс лист</h1>
-      )}
+
+      <h1>Специалисты</h1>
       <div className={styles["choose-a__barbers"]}>
         <div className={styles["wrapper"]}>
           <div className={styles.back} onClick={handleClickPrev}>
@@ -342,13 +368,10 @@ const ChooseABarbers = () => {
                                 <p className={styles["user-feedback__text"]}>
                                   {feedback.id === editFeedbackId ? (
                                     <textarea
+                                      className={styles["edit-feedback"]}
                                       value={editedFeedback.text}
-                                      onChange={(e) =>
-                                        setEditedFeedback({
-                                          ...editedFeedback,
-                                          text: e.target.value,
-                                        })
-                                      }
+                                      onChange={handleChange}
+                                      style={{ width }}
                                     />
                                   ) : (
                                     feedback.text
@@ -361,14 +384,14 @@ const ChooseABarbers = () => {
                                     <CustomButton
                                       type="button"
                                       onClick={() => handleSave(feedback.id)}
-                                      className={styles["post-feedback"]}
+                                      className={styles["change-feedback"]}
                                     >
                                       Сохранить
                                     </CustomButton>
                                     <CustomButton
                                       type="button"
                                       onClick={() => setEditFeedbackId(null)}
-                                      className={styles["post-feedback"]}
+                                      className={styles["change-feedback"]}
                                     >
                                       Отмена
                                     </CustomButton>

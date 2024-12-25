@@ -63,13 +63,13 @@ const NavList = ({
         ) : (
           <UserMenu openProfile={openProfile} />
         )}
+
         {showProfile && (
           <div>
             <Profile
               closeProfile={closeProfile}
               logOut={logOut}
               isClosing={isClosing}
-              
             />
           </div>
         )}

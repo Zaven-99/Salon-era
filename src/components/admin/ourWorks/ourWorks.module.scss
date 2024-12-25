@@ -6,66 +6,47 @@
 }
 
 .message{
-	text-align: center;
-	margin-top: 50px;
-	font-family: "Open Sans", sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     font-weight: 500;
-	color: salmon;
+    color: salmon;
 }
-.addWork{
-	width: 200px;
-    position: relative;
-    cursor: pointer;
-    padding: var(--padding-main-button);
-    margin-top: 1rem;
-    font-style: normal;
-    font-weight: var(--font-weight-main-button);
-    font-size: var(--font-size-main-button);
-    line-height: var(--line-height-main-button);
-    border-radius: var(--button-border-radius, 4px);
-    border: var(--button-border);
-    outline: none;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    transition: background 0.3s;
-    box-shadow: var(--button-box-shadow, none);
-    --button-text-color: var(--button-text-primary);
-    color: var(--button-text-color);
-    background: var(--button-primary-background);
-    -webkit-tap-highlight-color: transparent;
-    background-color: black;
-    background-color: #b5b5b5;
-    margin-top: 35px;
-    padding: 15px;
-    margin-left: 10px;
+.add-work{
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  transition: background 0.3s;
+  background-color: #b5b5b5;
+  width: $wd-200;
+  margin-top: $sp-35;
+  padding: $sp-15 ;
+  margin-left: $sp-10;
+  border-radius:$br-4;
+}
+.add-work:hover{
+transform: scale(1.02);
+box-shadow: $shadow-small;
+transition: .2s;
 }
 .accept-add__work{
-    width: 200px;
-    position: relative;
-    cursor: pointer;
-    padding: var(--padding-main-button);
-    margin-top: 1rem;
-    font-style: normal;
-    font-weight: var(--font-weight-main-button);
-    font-size: var(--font-size-main-button);
-    line-height: var(--line-height-main-button);
-    border-radius: var(--button-border-radius, 4px);
-    border: var(--button-border);
-    outline: none;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    transition: background 0.3s;
-    box-shadow: var(--button-box-shadow, none);
-    --button-text-color: var(--button-text-primary);
-    color: var(--button-text-color);
-    background: var(--button-primary-background);
-    -webkit-tap-highlight-color: transparent;
-    background-color: black;
-    background-color: #b5b5b5;
-    padding: 15px;
+   position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  transition: background 0.3s;
+  background-color: #b5b5b5;
+  width: $wd-200;
+  margin-top: $sp-35;
+  padding: $sp-15 ;
+  border-radius:$br-4;
+}
+.accept-add__work:hover{
+    transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }
 .category{
     width: 100%;

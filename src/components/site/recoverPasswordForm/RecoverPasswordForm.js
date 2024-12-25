@@ -5,7 +5,12 @@ import CustomInput from "../../customInput/CustomInput";
 import styles from "./recoverPassword.module.scss";
 import Spinner from "../../spinner/Spinner";
 
-const RecoverPasswordForm = ({ activeInput, setActiveInput }) => {
+const RecoverPasswordForm = ({
+  activeInput,
+  setActiveInput,
+  toggleHelpModal,
+  showHelpModal,
+}) => {
   const {
     register,
     handleSubmit,
@@ -95,7 +100,7 @@ const RecoverPasswordForm = ({ activeInput, setActiveInput }) => {
         }
       }
     } catch (error) {
-      setErrorMessage("Произошла ошибка.");
+      setErrorMessage(`Пользователь с ${data.email} не существует`);
       console.error(error);
     } finally {
       setLoading(false);
@@ -170,6 +175,8 @@ const RecoverPasswordForm = ({ activeInput, setActiveInput }) => {
               error={errors.password}
               isActive={activeInput === "password"}
               setActiveInput={setActiveInput}
+              toggleHelpModal={toggleHelpModal}
+              showHelpModal={showHelpModal}
               {...register("password", {
                 required: "Это поле обязательно.",
                 minLength: {
@@ -207,6 +214,7 @@ const RecoverPasswordForm = ({ activeInput, setActiveInput }) => {
               isActive={activeInput === "confirmPassword"}
               setActiveInput={setActiveInput}
               {...register("confirmPassword", {
+                required: "Это поле обязательно.",
                 validate: (value) =>
                   value === password || "Пароли не совпадают",
               })}

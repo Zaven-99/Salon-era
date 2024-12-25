@@ -128,7 +128,6 @@ if (loading) {
             <SignIn
               toggleCloseSignInForm={toggleCloseSignInForm}
               toggleShowMessage={toggleShowMessage}
-              setLoading={setLoading}
               logOut={logOut}
             />
           </Modal>

@@ -24,6 +24,22 @@
   animation:bounce-in .5s;
   margin: $sp-10;
 }
+@keyframes bounce-in {
+    0%{
+        opacity: 0;
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
 .profile-content.close {
   animation: bounce-out .5s forwards;
@@ -54,22 +70,7 @@
 	box-shadow: $shadow-small;
 }
 
-@keyframes bounce-in {
-    0%{
-        opacity: 0;
-    }
-    100% {
-       opacity: 1;
-    }
-}
-@keyframes bounce-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
+
 
 .my-records{
   text-align: center;

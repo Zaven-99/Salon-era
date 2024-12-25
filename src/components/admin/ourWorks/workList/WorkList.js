@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import CustomButton from "../../../customButton/CustomButton";
 
 import styles from "./workList.module.scss";
+import Spinner from '../../../spinner/Spinner';
 
-const WorkList = ({ setWorks, setLoading, categoryMap }) => {
+const WorkList = ({ setWorks, categoryMap }) => {
   const [groupedWorks, setGroupedWorks] = useState({});
   const [workToDelete, setWorkToDelete] = useState(null);
   const [confirmDeleteWork, setConfirmDeleteWork] = useState(false);
+  const [loading, setLoading] = useState(false);
+  
 
   const getCategpryText = (category) => {
     if (category >= 1 && category <= categoryMap.length) {
@@ -44,12 +47,14 @@ const WorkList = ({ setWorks, setLoading, categoryMap }) => {
   };
 
   useEffect(() => {
-    fetchWorks();
-  }, []);
+     (async () => {
+       await fetchWorks();
+     })();
+   }, []);
 
   const handleDelete = async (id) => {
-    if (workToDelete === null) return;
     setLoading(true);
+    if (workToDelete === null) return;
     try {
       const response = await fetch(
         `http://95.163.84.228:6533/stockfiles?id=${id}`,
@@ -57,11 +62,13 @@ const WorkList = ({ setWorks, setLoading, categoryMap }) => {
       );
       if (!response.ok) throw new Error("Ошибка при удалении услуги");
       setWorks((prevWorks) => prevWorks.filter((work) => work.id !== id));
+      closeMessageDeleteWork()
     } catch (error) {
     } finally {
       setLoading(false);
       window.location.reload();
-    }
+      
+     }
   };
 
   const showMessageDeleteWork = (id) => {
@@ -75,6 +82,10 @@ const WorkList = ({ setWorks, setLoading, categoryMap }) => {
     setConfirmDeleteWork(false);
     document.body.style.overflow = "scroll";
   };
+
+  if(loading){
+    return <Spinner/>
+  }
 
   return (
     <div className={styles['work-list']}>

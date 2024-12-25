@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
+import Spinner from "../../spinner/Spinner";
 import CustomInput from "../../customInput/CustomInput";
 import CustomButton from "../../customButton/CustomButton";
 
@@ -10,7 +11,6 @@ import styles from "./signUpForm.module.scss";
 import ImagePreview from "../../imagePreview/ImagePreview";
 
 const SignUpForm = ({
-  setLoading,
   toggleCloseSignInForm,
   toggleShowMessage,
   activeInput,
@@ -40,6 +40,7 @@ const SignUpForm = ({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -74,7 +75,6 @@ const SignUpForm = ({
 
   const onSubmit = async (formValues, e) => {
     e.preventDefault();
-    setLoading(true);
 
     const { confirmPassword, gender, patronymic, ...dataToSend } = formValues;
 
@@ -199,6 +199,10 @@ const SignUpForm = ({
     setImagePreview(null);
   };
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -300,6 +304,7 @@ const SignUpForm = ({
           setActiveInput={setActiveInput}
           autoComplete="new-password"
           {...register("confirmPassword", {
+            required: "Это поле обязательно.",
             validate: (value) => value === password || "Пароли не совпадают",
           })}
         />
@@ -367,11 +372,7 @@ const SignUpForm = ({
           disabled={!policy}
         />
       </form>
-      {error && (
-        <p className={styles["error"]}>
-          Вы должны согласиться с политикой конфиденциальности
-        </p>
-      )}
+      {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}
       <div className={styles["privacy-policy"]}>
         <label className={styles["agree"]}>
           <input
@@ -380,11 +381,14 @@ const SignUpForm = ({
             type="radio"
             checked={policy}
             onChange={handlePolicyChange}
+            {...register("policy", {
+              required: "Вы должны согласиться с политикой конфиденциальности",
+            })}
           />
         </label>
 
         <span className={styles.text}>Я согласен с политикой</span>
-        <NavLink className={styles.policy} target="_blank">
+        <NavLink to="/privacy-policy" className={styles.policy} target="_blank">
           конфиденциальности
         </NavLink>
       </div>

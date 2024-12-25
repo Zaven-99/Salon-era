@@ -2,7 +2,7 @@
 
 
 .help{
-    background: $bg-white;
+    background: #f6f6f6;
     border-radius: $br-8;
     border:$br-1 solid;
     padding: $sp-20;
@@ -43,24 +43,30 @@
         font-size: $fz-10 !important;
     }
     .help{
-        top: -140px;
+        top: -$sp-150;
     }
 }
 @media(max-width:362px){
      
     .help{
-        top: -155px;
+        top: -164px;
     }
 }
 @media(max-width:320px){
      
     .help{
-        top: -168px;
+        top: -178px;
     }
 }
-@media(max-width:280px){
+@media(max-width:309px){
      
     .help{
-        top: -185px;
+        top: -196px;
+    }
+}
+@media(max-width:281px){
+     
+    .help{
+        top: -213px;
     }
 }

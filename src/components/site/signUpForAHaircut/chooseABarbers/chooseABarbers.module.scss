@@ -251,7 +251,10 @@ textarea{
 .change-feedback:hover{
     transform: scale(1.05);
 }
- 
+ .edit-feedback{
+    height: $hg-25;
+    margin: 0;
+ }
 @media(max-width:1000px){
 	 
 	.barber-avatar{

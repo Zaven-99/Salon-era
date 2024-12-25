@@ -21,6 +21,11 @@
   margin-left: $sp-10;
   border-radius:$br-4;
 }
+.add-employee:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
 .accept-add__employee{
     width: $wd-200;
     position: relative;
@@ -32,6 +37,11 @@
     margin-top: $sp-35;
     padding: $sp-15;
     border-radius:$br-4;
+}
+.accept-add__employee:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }
  .registration{
     margin-bottom: $sp-15;

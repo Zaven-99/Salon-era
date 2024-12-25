@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import ServiceList from "./serviceList/ServiceList";
 import Modal from "../../modal/Modal";
@@ -8,6 +8,7 @@ import CustomInput from "../../customInput/CustomInput";
 import CustomSelect from "../../customSelect/CustomSelect";
 
 import styles from "./servicesField.module.scss";
+import Spinner from "../../spinner/Spinner";
 
 const ServiceField = () => {
   const {
@@ -44,6 +45,7 @@ const ServiceField = () => {
   const [loading, setLoading] = useState(false);
   const [addService, setAddService] = useState(false);
   const [activeInput, setActiveInput] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const toggleOpenSignInForm = () => {
     setAddService(true);
@@ -84,14 +86,19 @@ const ServiceField = () => {
       toggleCloseSignInForm();
       reset();
     } catch (error) {
+      setLoading(false);
+      setErrorMessage(true);
     } finally {
       setLoading(false);
-      window.location.reload();
     }
   };
+  if(loading){
+    return <Spinner/>
+  }
 
   return (
     <div className={styles["service-field"]}>
+      {errorMessage && <>Что-то не так...</>}
       <CustomButton
         className={styles["add-service"]}
         label="Добавить услугу"
@@ -181,12 +188,21 @@ const ServiceField = () => {
               setActiveInput={setActiveInput}
             />
 
-            <CustomSelect
+            <Controller
               name="duration"
-              map={durationMap}
-              register={register}
-              required
+              control={control}
+              rules={{ required: "Это поле обязательно" }}
+              render={({ field }) => (
+                <CustomSelect
+                  {...field}
+                  control={control}
+                  name="duration"
+                  map={durationMap}
+                  rules={{ required: "Это поле обязательно" }}
+                />
+              )}
             />
+
             <CustomInput
               label="Пол"
               type="radio"
@@ -206,8 +222,6 @@ const ServiceField = () => {
       <ServiceList
         services={services}
         setServices={setServices}
-        loading={loading}
-        setLoading={setLoading}
         toggleCloseSignInForm={toggleCloseSignInForm}
         toggleOpenSignInForm={toggleOpenSignInForm}
       />

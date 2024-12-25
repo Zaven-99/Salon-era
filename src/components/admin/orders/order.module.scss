@@ -15,11 +15,11 @@
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow: $shadow-small;
-    background-color: $buttonAccept-color;
+    background-color: rgb(15 210 15);
     border-radius: $br-4;
     width: $wd-150;
 }
@@ -32,11 +32,11 @@
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow:$shadow-small;
-    background-color: salmon;
+    background-color: #fe5440;
     border-radius: $br-4;
     width: $wd-150;
 }
@@ -60,7 +60,7 @@
     text-align: center;
 }
 .order-canceled{
-    background-color:salmon;
+    background-color:#fe5440;
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius:$br-4;
     width:$wd-125;
@@ -68,7 +68,7 @@
 
 }
 .order-closed{
-    background-color: rgb(186, 178, 177);
+    background-color: rgb(15 210 15);
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius:$br-4;
     width:$wd-125;
@@ -78,7 +78,7 @@
     color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
     box-shadow: $shadow-small;
@@ -112,7 +112,7 @@
 }
 .message{
     text-align: center;
-	color: salmon;
+	color: #fe5440;
 	font-family: "Open Sans", sans-serif;
 	margin-top: $sp-50;
     font-size: $fz-20;
