@@ -9,6 +9,8 @@ import Spinner from "../../../spinner/Spinner";
 import ImagePreview from "../../../imagePreview/ImagePreview";
 import CustomSelect from "../../../customSelect/CustomSelect";
 
+import avatarImg from "../../../../img/icons/avatar.png";
+
 const EmployeeList = ({
   employee,
   setEmployee,
@@ -452,11 +454,21 @@ const EmployeeList = ({
                 ) : (
                   <>
                     <div className={styles["employee-item__inner"]}>
-                      <img
-                        className={styles["image-employee"]}
-                        src={employee.imageLink}
-                        alt=""
-                      />
+                      {employee.imageLink ? (
+                        <img
+                          className={styles["image-employee"]}
+                          src={employee.imageLink}
+                          alt=""
+                        />
+                      ) : (
+                        <>
+                          <img
+                            className={styles["image-employee"]}
+                            src={avatarImg}
+                            alt=""
+                          />
+                        </>
+                      )}
                     </div>
                     <div className={styles["employee-item__inner"]}>
                       <strong>Имя:</strong>

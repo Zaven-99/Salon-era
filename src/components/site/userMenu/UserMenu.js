@@ -3,11 +3,11 @@ import styles from "./userMenu.module.scss";
 import { useAuth } from "../../../use-auth/use-auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/userSlice";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
 import avatar from "../../../img/icons/avatar.png";
 import notification from "../../../img/icons/notifications.png";
-import CustomButton from '../../customButton/CustomButton';
+import CustomButton from "../../customButton/CustomButton";
 
 const UserMenu = ({ openProfile }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -49,7 +49,6 @@ const UserMenu = ({ openProfile }) => {
           );
 
           if (response.ok) {
-           
             const index = updatedOrders.findIndex(
               (item) => item.record.id === orderItem.record.id
             );
@@ -64,7 +63,7 @@ const UserMenu = ({ openProfile }) => {
           }
         }
       }
-      setOrder(updatedOrders); 
+      setOrder(updatedOrders);
     } catch (error) {
       console.log(error.message || "Неизвестная ошибка");
     }
@@ -102,8 +101,24 @@ const UserMenu = ({ openProfile }) => {
       fetchData();
     }, 5000);
 
-    return () => clearInterval(interval);
-  }, [id]);
+    const handleOutsideClick = (event) => {
+      if (
+        isOpenNotification &&
+        !document
+          .querySelector(`.${styles.notifications}`)
+          .contains(event.target)
+      ) {
+        setIsOpenNotification(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [id, isOpenNotification]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -221,37 +236,42 @@ const UserMenu = ({ openProfile }) => {
           src={notification}
           alt=""
         />
-        <div className={styles["order-count"]}>{statusViewedCount}</div>
+        {statusViewedCount > 0 ? (
+          <div className={styles["order-count"]}>{statusViewedCount}</div>
+        ) : (
+          ""
+        )}
+
         {isOpenNotification && (
-          <ul className={`${isOpenNotification ? styles.notifications : ''}`}>
+          <ul className={`${isOpenNotification ? styles.notifications : ""}`}>
             {statusViewedCount > 0 ? (
               order.map((item, index) => (
                 <li className={styles["notifications-item"]} key={index}>
                   {!item.record.statusViewed && (
                     <>
                       {item.record.status === 0 && (
-                        <p>
-                          Заказ с номером {item.record.number}{" "}
-                          <span className={styles.created}>создан</span>
-                        </p>
+                        <div className={styles["notifications-item__inner"]}>
+                          Заказ с номером {item.record.number}
+                          <div className={styles.created}>создан</div>
+                        </div>
                       )}
                       {item.record.status === 100 && (
-                        <p>
+                        <div className={styles["notifications-item__inner"]}>
                           Заказ с номером {item.record.number}{" "}
-                          <span className={styles.accepted}>принят</span>
-                        </p>
+                          <div className={styles.accepted}>принят</div>
+                        </div>
                       )}
                       {item.record.status === 400 && (
-                        <p>
+                        <div className={styles["notifications-item__inner"]}>
                           Заказ с номером {item.record.number}{" "}
-                          <span className={styles.canceled}>отменен</span>
-                        </p>
+                          <div className={styles.canceled}>отменен</div>
+                        </div>
                       )}
                       {item.record.status === 500 && (
-                        <p>
+                        <div className={styles["notifications-item__inner"]}>
                           Заказ с номером {item.record.number}{" "}
-                          <span className={styles.closed}>закрыт</span>
-                        </p>
+                          <div className={styles.closed}>закрыт</div>
+                        </div>
                       )}
                     </>
                   )}

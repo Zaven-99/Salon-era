@@ -141,12 +141,26 @@
     padding: 7px;
     border-radius: 4px;
 	margin-top: 10px;
+	width: 50%;
 }
-.notifications-item p {
+.all-notifications:hover{
+	transform: scale(1.01);
+    transition: 0.2s;
+    opacity: 0.8;
+    box-shadow: 0 8px 16px -8px;
+}
+.notifications-item__inner{
+	display: flex;
+	align-items:center;
+	gap: 10px;
 	padding: 10px 5px;
 	box-shadow:0px 1px 3px -2px;
-	border-radius: 2px;
 }
+.notifications-item__inner div {
+	border-radius: 2px;
+	width: 75px;
+}
+ 
 @media(max-width:930px){
 	.user-menu{
 		width: $wd-250;
