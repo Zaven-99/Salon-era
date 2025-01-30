@@ -28,8 +28,9 @@
 	margin-top: $sp-10;
 }
 
+ 
 .item1.transformation{
-	transform: rotate(45deg) translate(16.5px , 17px);
+	transform: rotate(45deg) translate(25.5px , 2px);
 	transition: 0.3s;
 	background-color:white;
 	width: $wd-30;
@@ -39,7 +40,7 @@
 	transition: 0.3s;
 }
 .item3.transformation{
-	transform: rotate(-45deg) translate(-0.5px ,-0.5px);
+	transform: rotate(-45deg) translate(14.5px ,8.5px);
 	transition: 0.3s;
 	background-color:white;
 	width: $wd-30;
@@ -65,38 +66,22 @@
  
  
 
-@media(max-width: 450px){
+@media(max-width: 530px){
 	 .menu-toggle{
 	left: $sp-20;
   }
-  
-   
-  
+
 }
-@media(max-width: 350px){
-	
- 
-  .item1{
-	width: $wd-50;
-	
+@media(max-width: 400px){
+	 .menu-toggle{
+	left: $sp-10;
   }
-  .item2{
-	width: $wd-50;
-	
 
-  }
-  .item3{
-	width: $wd-50;
-	
-
-  }
- 
-	 
 }
  
- @media(max-width: 330px){
-	
  
+ @media(max-width: 435px){
+	
   .item1{
 	width: $wd-35;
 	

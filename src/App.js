@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "./store/slices/userSlice";
 import { Route, Routes } from "react-router-dom";
@@ -19,8 +19,24 @@ import PrivacyPolicyPage from "./pages/privacyPolicyPage/PrivacyPolicyPage";
 
 import "./App.css";
 import "./components/styles/reset.css";
-function App() {
+import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelPage";
+ function App() {
   const dispatch = useDispatch();
+  const [openSignInForm, setOpenSignInForm] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const toggleOpenSignInForm = () => {
+    setOpenSignInForm(true);
+    document.body.style.overflow = "hidden";
+    setIsClosing(false);
+  };
+  const toggleCloseSignInForm = () => {
+    document.body.style.overflow = "scroll";
+    setTimeout(() => {
+      setOpenSignInForm(false);
+    }, 100);
+    setIsClosing(true);
+  };
 
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
@@ -32,13 +48,91 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<MainPage />} index />
-        <Route path="/ourWorks" element={<OurWorksPage />} />
-        <Route path="/aboutUs" element={<AboutUsPage />} />
-        <Route path="/my-orders" element={<MyRecordsPage />} />
-        <Route path="/select-barbers" element={<BarbersPage />} />
-        <Route path="/select-barbers/select-date" element={<DatePage />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route
+          path="/"
+          element={
+            <MainPage
+              openSignInForm={openSignInForm}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              toggleOpenSignInForm={toggleOpenSignInForm}
+              toggleCloseSignInForm={toggleCloseSignInForm}
+            />
+          }
+          index
+        />
+        <Route
+          path="/ourWorks"
+          element={
+            <OurWorksPage
+              openSignInForm={openSignInForm}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              toggleOpenSignInForm={toggleOpenSignInForm}
+              toggleCloseSignInForm={toggleCloseSignInForm}
+            />
+          }
+        />
+        <Route
+          path="/aboutUs"
+          element={
+            <AboutUsPage
+              openSignInForm={openSignInForm}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              toggleOpenSignInForm={toggleOpenSignInForm}
+              toggleCloseSignInForm={toggleCloseSignInForm}
+            />
+          }
+        />
+        <Route
+          path="/my-orders"
+          element={
+            <MyRecordsPage
+              openSignInForm={openSignInForm}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              toggleOpenSignInForm={toggleOpenSignInForm}
+              toggleCloseSignInForm={toggleCloseSignInForm}
+            />
+          }
+        />
+        <Route
+          path="/select-barbers"
+          element={
+            <BarbersPage
+              openSignInForm={openSignInForm}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              toggleOpenSignInForm={toggleOpenSignInForm}
+              toggleCloseSignInForm={toggleCloseSignInForm}
+            />
+          }
+        />
+        <Route
+          path="/select-barbers/select-date"
+          element={
+            <DatePage
+              openSignInForm={openSignInForm}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              toggleOpenSignInForm={toggleOpenSignInForm}
+              toggleCloseSignInForm={toggleCloseSignInForm}
+            />
+          }
+        />
+        <Route
+          path="/privacy-policy"
+          element={
+            <PrivacyPolicyPage
+              openSignInForm={openSignInForm}
+              isClosing={isClosing}
+              setIsClosing={setIsClosing}
+              toggleOpenSignInForm={toggleOpenSignInForm}
+              toggleCloseSignInForm={toggleCloseSignInForm}
+            />
+          }
+        />
         <Route path="/adminPanel/orders" element={<OrdersAdminPanelPage />} />
         <Route path="/adminPanel/news" element={<NewsAdminPanelPage />} />
 
@@ -66,6 +160,8 @@ function App() {
           path="/adminPanel/our-works"
           element={<OurWorksAdminPanelPage />}
         />
+
+        <Route path="/adminPanel/slides" element={<SlidesAdminPanelPage />} />
       </Routes>
     </div>
   );

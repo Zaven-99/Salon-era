@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Spinner from "../../../spinner/Spinner";
 import CustomButton from "../../../customButton/CustomButton";
-import styles from "./newsList.module.scss";
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
+
+import styles from "./newsList.module.scss";
 import ImagePreview from "../../../imagePreview/ImagePreview";
 
 const NewsList = ({
@@ -36,7 +37,7 @@ const NewsList = ({
   const fetchNews = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/news/all");
+      const response = await fetch("https://api.salon-era.ru/news/all");
 
       if (!response.ok) throw new Error("Ошибка при получении новостей");
       const data = await response.json();
@@ -54,6 +55,10 @@ const NewsList = ({
       await fetchNews();
     })();
   }, []);
+
+  if (!news.length) {
+    return <p className={styles.message}>Список новостей пуст.</p>;
+  }
 
   const handleSave = async (id) => {
     setLoading(true);
@@ -74,7 +79,7 @@ const NewsList = ({
     }
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/news/update`, {
+      const response = await fetch(`https://api.salon-era.ru/news/update`, {
         method: "POST",
         body: formData,
       });
@@ -101,7 +106,7 @@ const NewsList = ({
     setLoading(true);
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/news?id=${id}`, {
+      const response = await fetch(`https://api.salon-era.ru/news?id=${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Ошибка при удалении новости");
@@ -112,6 +117,7 @@ const NewsList = ({
       console.error("Ошибка при удалении новости:", error);
     } finally {
       setLoading(false);
+      document.body.style.overflow = "scroll";
     }
   };
 
@@ -197,15 +203,15 @@ const NewsList = ({
           <li
             onClick={() => handleEdit(news)}
             key={index}
-            className={styles["news-item"]}
+            className={styles["news-list__item"]}
           >
             {newsId === news.id ? (
               <Modal
                 toggleOpenSignInForm={toggleOpenSignInForm}
                 toggleCloseSignInForm={toggleCloseSignInForm}
-                setEmployeeId={setNewsId}
+                setNewsId={setNewsId}
               >
-                <h2>Редактировать новость</h2>
+                <h2>Редактировать</h2>
                 <>
                   <CustomInput
                     label="Введите Название новости:"

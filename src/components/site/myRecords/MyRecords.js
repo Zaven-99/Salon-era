@@ -14,7 +14,7 @@ const MyRecords = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/records/all", {
+      const response = await fetch("https://api.salon-era.ru/records/all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const MyRecords = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`http error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -42,14 +42,14 @@ const MyRecords = () => {
     }
   };
 
- useEffect(() => {
-     fetchData();
-     const interval = setInterval(() => {
-       fetchData();
-     }, 10000);
- 
-     return () => clearInterval(interval);
-   }, [clientId]);
+  useEffect(() => {
+    fetchData();
+    //  const interval = setInterval(() => {
+    //    fetchData();
+    //  }, 10000);
+
+    //  return () => clearInterval(interval);
+  }, [clientId]);
 
   const cancelOrder = async (order) => {
     setLoading(true);
@@ -63,12 +63,12 @@ const MyRecords = () => {
       "clientData",
       JSON.stringify({
         id: order.record.id,
-        status: "Заказ отменен",
+        status: 400,
       })
     );
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/records/update`, {
+      const response = await fetch(`https://api.salon-era.ru/records/update`, {
         method: "POST",
         body: formData,
       });
@@ -110,7 +110,7 @@ const MyRecords = () => {
   );
 
   const totalCancelledOrders = order
-    .filter((orderItem) => orderItem.record?.status === "Заказ отменен")
+    .filter((orderItem) => orderItem.record?.status === 400)
     .reduce((acc, current) => acc + (current.service?.priceLow || 0), 0);
 
   const total = totalAllOrders - totalCancelledOrders;
@@ -151,30 +151,22 @@ const MyRecords = () => {
                 {order.record?.status === 0 ? (
                   <div className={styles.status}>
                     <strong>Статус:</strong>
-                    <span className={styles.created}>
-                      Заказ создан
-                    </span>
+                    <span className={styles.created}>Заказ создан</span>
                   </div>
                 ) : order.record?.status === 400 ? (
                   <div className={styles.status}>
                     <strong>Статус:</strong>{" "}
-                    <span className={styles.canceled}>
-                      Заказ отменен
-                    </span>
+                    <span className={styles.canceled}>Заказ отменен</span>
                   </div>
                 ) : order.record?.status === 100 ? (
                   <div className={styles.status}>
                     <strong>Статус:</strong>{" "}
-                    <span className={styles.accept}>
-                      Заказ принят
-                    </span>
+                    <span className={styles.accept}>Заказ принят</span>
                   </div>
                 ) : (
                   <div className={styles.status}>
                     <strong>Статус:</strong>{" "}
-                    <span className={styles.closed}>
-                      Заказ закрыт
-                    </span>
+                    <span className={styles.closed}>Заказ закрыт</span>
                   </div>
                 )}
                 <div>

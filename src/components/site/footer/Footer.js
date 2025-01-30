@@ -17,7 +17,7 @@ const Footer = () => {
       </h1>
       <div className={styles["work-time__block"]}>
         <p className={styles["work-time"]}>
-          Работаем каждый день с 10 до 20:00
+          Работаем каждый день с 10:00 до 20:00
         </p>
         <img className={styles.scissors} src={scissors} alt="" />
         <a className={styles.tel} href="tel:+79153030990">

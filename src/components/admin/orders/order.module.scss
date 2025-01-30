@@ -1,6 +1,8 @@
 @import '../../styles/variables.scss';
 
-
+.orders-today{
+  margin-bottom:$sp-20;
+}
 .record-item{
 	display: flex;
 	justify-content: space-between;
@@ -162,9 +164,4 @@
     }
 }
 
-@media(max-width:500px){
-    .orders-today{
-    font-size: $fz-40;
-    }
-    
-}
+ 

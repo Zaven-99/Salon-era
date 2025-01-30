@@ -4,7 +4,7 @@
 .myRecords{
 	height: $hg-100vh;
 }
-.records-list p{
+.records-list div{
     width: $wd-300;
 }
 
@@ -42,7 +42,7 @@
 }
 .total{
     text-align: end;
-    padding-right: $sp-70;
+    padding-right: $sp-30;
 }
 
 .created{
@@ -109,5 +109,10 @@
     .total{
       text-align: center;
       padding-right: 0;
+    }
+}
+@media(max-width:400px){
+    .total{
+      font-size: $fz-15;
     }
 }

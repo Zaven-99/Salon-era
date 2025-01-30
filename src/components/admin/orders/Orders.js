@@ -32,7 +32,7 @@ const Orders = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/records/all", {
+      const response = await fetch("https://api.salon-era.ru/records/all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const Orders = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Ошибка HTTP! статус: ${response.status}`);
+        throw new Error(`Ошибка http! статус: ${response.status}`);
       }
 
       const data = await response.json();
@@ -138,7 +138,7 @@ const Orders = () => {
     );
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/records/update`, {
+      const response = await fetch(`https://api.salon-era.ru/records/update`, {
         method: "POST",
         body: formData,
       });
@@ -146,7 +146,7 @@ const Orders = () => {
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `Ошибка HTTP! статус: ${response.status}, сообщение: ${errorText}`
+          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
         );
       }
 
@@ -174,7 +174,7 @@ const Orders = () => {
     );
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/records/update`, {
+      const response = await fetch(`https://api.salon-era.ru/records/update`, {
         method: "POST",
         body: formData,
       });
@@ -182,7 +182,7 @@ const Orders = () => {
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `Ошибка HTTP! статус: ${response.status}, сообщение: ${errorText}`
+          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
         );
       }
 
@@ -210,7 +210,7 @@ const Orders = () => {
     );
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/records/update`, {
+      const response = await fetch(`https://api.salon-era.ru/records/update`, {
         method: "POST",
 
         body: formData,
@@ -219,7 +219,7 @@ const Orders = () => {
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `Ошибка HTTP! статус: ${response.status}, сообщение: ${errorText}`
+          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
         );
       }
       const updatedOrder = await response.json();

@@ -6,22 +6,22 @@ const PrivacyPolicy = () => {
   return (
     <div className={styles["privacy-policy"]}>
       <header>
-        <h1>Политика конфиденциальности</h1>
+        <h1 className={styles.title}>Политика конфиденциальности</h1>
       </header>
 
-      <section>
+      <section className={styles.section}>
         <h2>1. Введение</h2>
         <p className={styles["privacy-paragraph"]}>
           Настоящая Политика конфиденциальности (далее — «Политика») объясняет,
           как мы, <strong>ЭРА</strong>, обрабатываем и защищаем персональные
           данные наших клиентов, которые предоставляются через наш веб-сайт,
-          доступный по адресу <strong>https://www.salon-era.ru/</strong>. Мы
-          придаем большое значение защите ваших персональных данных и соблюдаем
-          все применимые законы о защите данных.
+          доступный по адресу <strong>www.salon-era.ru</strong>. Мы придаем
+          большое значение защите ваших персональных данных и соблюдаем все
+          применимые законы о защите данных.
         </p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>2. Сбор персональных данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы можем собирать следующие персональные данные:
@@ -48,7 +48,7 @@ const PrivacyPolicy = () => {
         </ul>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>3. Цели обработки персональных данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы обрабатываем ваши персональные данные для следующих целей:
@@ -74,7 +74,7 @@ const PrivacyPolicy = () => {
         </ul>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>4. Хранение данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Ваши персональные данные хранятся в течение необходимого срока для
@@ -83,7 +83,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>5. Раскрытие данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы не передаем ваши персональные данные третьим лицам, за исключением
@@ -93,7 +93,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>6. Защита данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы применяем различные меры безопасности для защиты ваших персональных
@@ -104,7 +104,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>7. Ваши права</h2>
         <p className={styles["privacy-paragraph"]}>Вы имеете право:</p>
         <ul>
@@ -129,7 +129,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>8. Использование cookies</h2>
         <p className={styles["privacy-paragraph"]}>
           Наш сайт использует cookies для улучшения работы сайта и анализа
@@ -139,7 +139,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h2>9. Изменения в Политике конфиденциальности</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы оставляем за собой право в любое время изменять или обновлять

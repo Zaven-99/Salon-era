@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 import CustomButton from "../../customButton/CustomButton";
 import Modal from "../../modal/Modal";
 import CustomInput from "../../customInput/CustomInput";
-import ImagePreview from "../../imagePreview/ImagePreview";
 import NewsList from "./newsList/NewsList";
-
-import styles from "./newsField.module.scss";
 import Spinner from "../../spinner/Spinner";
+
+import ImagePreview from "../../imagePreview/ImagePreview";
+import styles from "./newsField.module.scss";
 
 const News = () => {
   const {
@@ -40,7 +40,7 @@ const News = () => {
   const formSubmitHandler = async (formValues) => {
     setLoading(true);
     const formData = new FormData();
-    console.log(formValues);
+
     formData.append(
       "clientData",
       JSON.stringify({
@@ -55,14 +55,14 @@ const News = () => {
     }
 
     try {
-      const response = await fetch("http://95.163.84.228:6533/news", {
+      const response = await fetch("https://api.salon-era.ru/news", {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
         const errorData = await response.text();
-        throw new Error(errorData || "Ошибка при добавлении услуги");
+        throw new Error(errorData || "Ошибка при добавлении новости");
       }
 
       setNews((prevNews) => [...prevNews, formData]);
@@ -116,7 +116,7 @@ const News = () => {
           toggleCloseSignInForm={toggleCloseSignInForm}
           toggleOpenSignInForm={toggleOpenSignInForm}
         >
-          <h2>Добавить Услугу</h2>
+          <h2>Добавить новости</h2>
           <form
             className={styles["news-field__inner"]}
             onSubmit={handleSubmit(formSubmitHandler)}

@@ -24,8 +24,7 @@
 }
 .priceList-inner_item p {
   font-family: "Open Sans", sans-serif;
-  font-size: 15px;
-  font-weight: 300;
+  font-size: $fz-15;
   width: $wd-350;
 }
  
@@ -56,7 +55,8 @@
 	justify-content: end;
   position: absolute;
 	gap: $sp-50;
-  right: $sp-160;
+  right: $sp-10;
+  top: $sp-90;
 }
 .services-count{
   color: black;
@@ -121,41 +121,48 @@
   border-radius: $br-4;
 }
 .next-to__barber{
-  color: white;
-	background-color:#00aaff;
-	font-family: $font;
-	font-size: $fz-20;
-  font-weight: $light;
-  padding: $sp-10;
-  border-radius: $br-4;
+ background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: $sp-10 $sp-20;
+    border-radius: $br-4;
+    font-size: $fz-16;
 }
 .clarify{
   color:rgb(228 15 15 / 93%)
 }
+.sign-up_for__haircut{
+  position: relative;
+}
+.gender{
+  font-size: $fz-45;
+  font-weight: $light;
+}
+ .price-list{
+  margin-top: $sp-20;
+ }
  
 @media(max-width:1400px){
   .sign-up_for__haircut{
     margin: 50px 100px;
   }
-  .button-wrapper{
-    margin-right: -50px;
-  }
+   
 }
 @media(max-width:1300px){
   .sign-up_for__haircut{
-    margin: 50px 50px;
+    margin: $sp-50 $sp-50;
   }
-  .button-wrapper{
-    margin-right: -100px;
-  }
+  
 }
 @media(max-width:1200px){
   .sign-up_for__haircut{
-    margin: 50px 0;
+    margin: $sp-50 0;
   }
-  .button-wrapper{
-    margin-right: -150px;
-  }
+  
 }
 
 @media(max-width:1000px){
@@ -166,23 +173,14 @@
     width: $wd-100p; 
     flex-shrink: 0;  
    }
-   .button-wrapper{
-    margin-right: 0;
-  }
-   
+  
     
    .sign-up_for__haircut{
 	  margin: 0;
     }
-    .selected-services__container{
-       
-      position: absolute;
-      right: $sp-12;
-  }
+   
    
 }
- 
- 
  
 @media(max-width:635px){
 	  
@@ -190,7 +188,7 @@
         font-size: $fz-30;
       }
       .next-to__barber{
-        font-size: $fz-10;
+        font-size: $fz-15;
       }
       .category{
         font-size: $fz-20;
@@ -199,12 +197,17 @@
 }
 @media(max-width:425px){
 	  
-       
+       .gender{
+        font-size: $fz-35;
+       }
       .next-to__barber{
-        font-size: $fz-10;
+        font-size: $fz-12;
       }
       .category{
         font-size: $fz-15;
         margin-bottom: $sp-20;
+      }
+      .selected-services__container{
+        top: $sp-75;
       }
 }

@@ -27,13 +27,16 @@
 	font-weight: $light;
 }
 .back{
-	cursor: pointer;
+	background-color: $bg-white;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
     text-align: center;
-	padding: $sp-15;
-    background: $bg-white;
-    margin-bottom: $sp-10;
-    border-radius: $br-4;
-	width: $wd-100;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
 }
 .back:hover{
 	transform: scale(1.01);
@@ -45,7 +48,9 @@
 .wrapper{
 	display: flex;
     justify-content: space-between;
+    align-items: center;
     width: $wd-100p;
+    margin-bottom: $sp-10;
 }
  
 .exclamation img{
@@ -67,12 +72,15 @@
 }
 .navigate-button__container button{
 	background-color: #00aaff;
-    font-family: "Open Sans", sans-serif;
-    font-size: $fz-20;
-    font-weight: 300;
     color: white;
-    padding: 10px;
-    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: $sp-10 $sp-20;
+    border-radius: $br-4;
+    font-size: $fz-16;
 }
 .navigate-button__container button:hover{
 	transition: .2s;
@@ -98,7 +106,7 @@
 }
 .modal-content {
   background: white;
-  border-radius: 8px;
+  border-radius: $br-8;
   z-index: 15; 
   position: relative;
   padding: $sp-20;
@@ -153,16 +161,22 @@ textarea{
     border-bottom:$br-1 solid;
     width: $wd-100p;
     margin-top: $sp-20;
+    border-radius: 0;
+    min-height: $sp-25;
+    transition: width 0.2s ease, height 0.2s ease;
+    position: relative;
 }
 .post-feedback{
     background-color: #00aaff;
-    font-family: "Open Sans", sans-serif;
-    width: max-content;
     color: white;
-    font-size: $fz-20;
-    font-weight: $light;
-    padding: $sp-10;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: $sp-10 $sp-20;
     border-radius: $br-4;
+    font-size: $fz-16;
 }
 .feedBack-button__block{
     display: flex;
@@ -170,12 +184,28 @@ textarea{
     margin-top: $sp-10;
     gap: $sp-20;
 }
+.feedBack-form{
+    margin-top: 80px;
+}
+ .feedback-text{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;;
+ }
+.cancel{
+    left: 100px;
+}
+.delete{
+    left: 180px;
+    background-color:salmon !important;
+}
 .disabled {
   background-color: #cccccc;
   border-color: #999999;
   color: #666666;
   cursor: not-allowed;
 }
+ 
 .load-more{
     background-color: #00aaff;
     font-family: "Open Sans", sans-serif;
@@ -189,20 +219,26 @@ textarea{
 }
 .user-feedback__block{
     display: flex;
-    margin-top: $sp-10;
-;
+    margin-top: $sp-40; 
     align-items: baseline;
     gap: $sp-10;
+}
+.user-feedback__block__inner{
+    width: 100%;
 }
 .user-feedback__firstName{
     margin: 0;
 }
 .user-feedback__text{
-    margin: 0 !important;
+    margin: 0 0 10px 0;
+    // width: 240px;
+    word-wrap: break-word ;      
+    overflow-wrap: break-word;  
 }
 .feedBack-estimation{
     margin-top: $sp-50;
 }
+ 
 .open{
     animation:bounce-in .8s;
 }
@@ -223,8 +259,7 @@ textarea{
     border-radius:$br-50p;
 }
 .user-avatar{
-    height: $hg-50;
-    width: $wd-50;
+     
     object-fit: cover;
     border-radius: $br-50p;
 }
@@ -233,10 +268,11 @@ textarea{
     font-weight: initial !important;
 }
 .feedBack-block{
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-    gap: 20px;
+     
+    position: relative;
+}
+.change-button__block{
+    position: absolute;
 }
 .change-feedback{
     background-color: #00000099;
@@ -247,13 +283,13 @@ textarea{
     font-weight: 400;
     padding: 3px;
     border-radius: 2px;
+    position: absolute;
 }
 .change-feedback:hover{
     transform: scale(1.05);
 }
  .edit-feedback{
-    height: $hg-25;
-    margin: 0;
+    margin: 0 0 15px 0;
  }
 @media(max-width:1000px){
 	 
@@ -262,11 +298,11 @@ textarea{
         height: $hg-100;
     }
     .barber-item{
-        font-size: $fz-10 !important;
-        line-height: $sp-10;
+        font-size: $fz-20 ;
+        line-height: $sp-20;
     }
     .choose-a__barbers{
-    margin: 0;
+        margin: 0;
     }
     .signUpForAHaircut{
         font-size: $fz-30
@@ -274,10 +310,48 @@ textarea{
     .typeOfPrice{
         font-size: $fz-30
     }
-    .exclamation{
-        width: $wd-15;
-    }
+    
 }
- 
- 
+ @media(max-width:590px){
+	 
+	 .barber-avatar{
+        width: 80px;
+        height: 80px
+     }
+    .barber-item{
+        font-size: $fz-15 !important ;
+        line-height: $sp-15;
+    }
+     
+    
+}
+  @media(max-width:445px){
+	 
+	 .barber-avatar{
+        width: 80px;
+        height: 80px
+     }
+    .barber-item{
+        font-size: $fz-13 !important ;
+    }
+     .post-feedback{
+        font-size: 12px;
+     }
+    
+}
+ @media(max-width:425px){
+	 
+	 .barber-avatar{
+        width: 60px;
+        height: 60px
+     }
+     .navigate-button__container button{
+        font-size: 12px;
+     }
+     .back{
+        font-size: 12px;
+     }
+     
+    
+}
  

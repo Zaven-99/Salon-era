@@ -6,13 +6,25 @@ import ChooseDate from "../../components/site/signUpForAHaircut/ChooseDate/Choos
 import NewsBlock from '../../components/site/newBlock/newsBlock'
 
 
-const DatePage = () => {
-	return (
+const DatePage = ({
+  openSignInForm,
+  isClosing,
+  setIsClosing,
+  toggleOpenSignInForm,
+  toggleCloseSignInForm,
+}) => {
+  return (
     <div>
-      <Header />
-      <ServicesSection/>
-	    <ChooseDate/>
-      <NewsBlock/>
+      <Header
+        openSignInForm={openSignInForm}
+        isClosing={isClosing}
+        setIsClosing={setIsClosing}
+        toggleOpenSignInForm={toggleOpenSignInForm}
+        toggleCloseSignInForm={toggleCloseSignInForm}
+      />
+      <ServicesSection />
+      <ChooseDate />
+      <NewsBlock />
       <Footer />
     </div>
   );

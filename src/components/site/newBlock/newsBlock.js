@@ -10,7 +10,7 @@ const NewsBlock = () => {
   const fetchNews = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/news/all");
+      const response = await fetch("https://api.salon-era.ru/news/all");
 
       if (!response.ok) throw new Error("Ошибка при получении новостей");
       const data = await response.json();

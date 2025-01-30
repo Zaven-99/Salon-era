@@ -1,6 +1,8 @@
 @import '../../styles/variables.scss';
 
-
+.history-orders{
+  margin-bottom:$sp-20;
+}
  
 @keyframes bounce-in {
     0%{
@@ -40,6 +42,7 @@
 	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
 	border-radius:$br-4;
   width:$wd-125;
+  text-align: center;
 }
 .order-closed{
 	background-color:rgb(186, 178, 177);
@@ -47,12 +50,14 @@
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius:$br-4;
   width:$wd-125;
+  text-align: center;
 }
 .order-canceled{
   background-color:salmon;
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius:$br-4;
   width:$wd-125;
+  text-align: center;
 }
 .order-accept{
 	background-color:$buttonAccept-color;
@@ -143,9 +148,4 @@
     }
 }
 
-@media(max-width:500px){
-    .history-orders{
-    font-size: $fz-40;
-    }
-    
-}
+ 

@@ -3,7 +3,7 @@
 .header-top{
 	display: flex;
 	justify-content: space-between;
-	padding: 20px 20px;
+	padding: 5px 5px;
 }
  
 .navigation{
@@ -123,6 +123,15 @@
 	border-radius:$br-4;
 	box-shadow: $shadow-small;
   }
+  
+}
+@media (max-width: 450px) {
+   .status{
+	font-size: $sp-12;
+   }
+   .logOut{
+	font-size: $sp-12;
+   }
   
 }
  

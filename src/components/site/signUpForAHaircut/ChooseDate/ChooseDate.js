@@ -48,7 +48,7 @@ const ChooseDate = () => {
 
     try {
       const response = await fetch(
-        `http://95.163.84.228:6533/clients/timeslot/${selectedBarber.id}/${sumDuration}`,
+        `https://api.salon-era.ru/clients/timeslot/${selectedBarber.id}/${sumDuration}`,
         {
           method: "GET",
           headers: {
@@ -140,7 +140,7 @@ const ChooseDate = () => {
     );
 
     try {
-      const response = await fetch("http://95.163.84.228:6533/records", {
+      const response = await fetch("https://api.salon-era.ru/records", {
         method: "POST",
         body: formData,
       });

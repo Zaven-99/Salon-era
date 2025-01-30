@@ -19,7 +19,7 @@ const HistoryOrders = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/records/all", {
+      const response = await fetch("https://api.salon-era.ru/records/all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ const HistoryOrders = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`https error! status: ${response.status}`);
       }
 
       const data = await response.json();

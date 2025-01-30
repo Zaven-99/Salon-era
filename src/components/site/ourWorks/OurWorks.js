@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ourWorks.module.scss";
 import logo from "../../../img/logo.png";
-import Spinner from '../../spinner/Spinner';
+import Spinner from "../../spinner/Spinner";
 
 const OurWorks = () => {
   const [activeCategory, setActiveCategory] = useState("Мужские стрижки");
   const [works, setWorks] = useState([]);
   const [groupedWorks, setGroupedWorks] = useState({});
   const [loading, setLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null); 
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  
   const categoryMap = [
     "Мужские стрижки",
     "Женские стрижки",
@@ -36,7 +35,7 @@ const OurWorks = () => {
   const fetchWorks = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/stockfiles/all");
+      const response = await fetch("https://api.salon-era.ru/stockfiles/all");
 
       if (!response.ok) throw new Error("Ошибка при получении данных");
 
@@ -73,7 +72,7 @@ const OurWorks = () => {
   };
 
   if (loading) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   return (
@@ -82,7 +81,6 @@ const OurWorks = () => {
       <h1 className={styles["our-works__title"]}>Наши работы</h1>
 
       <div className={styles["category-container"]}>
-        
         <div className={styles["category-buttons"]}>
           {categoryMap.map((category, index) => (
             <div
@@ -97,7 +95,6 @@ const OurWorks = () => {
           ))}
         </div>
 
-        
         <div className={styles["category-select"]}>
           <select
             value={activeCategory}

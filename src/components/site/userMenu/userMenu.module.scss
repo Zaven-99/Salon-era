@@ -25,10 +25,10 @@
 }
  .user-name{
 	font-family:"Open Sans", sans-serif;
-    font-size:  20px;
-    font-weight:  300;
+    font-size:  $fz-20;
+    font-weight:  $light;
     color: black;
-    border-radius: 5px;
+    border-radius: $br-4;
  }
 .imageInput {
   display: none;  
@@ -40,17 +40,17 @@
 }
 
 .avatarImage {
-  width: 50px;   
-  height: 50px;  
-  border-radius: 50%;   
+  width: $wd-50;   
+  height: $hg-50;  
+  border-radius: $br-50p;   
   object-fit: cover;   
 }
 .avatar img{
 	width: $wd-50;
-	border-radius: 50%;
+	border-radius: $br-50p;
 }
 .avatar:hover{
-	border-radius: 50%;
+	border-radius:$br-50p;
 	box-shadow: $shadow-small;
 }
 .user-menu{
@@ -60,16 +60,16 @@
 	position: relative;
 }
 .notifications{
-	width: 330px;
+	width: $wd-330;
     position: absolute;
     background: #efeff1;
     text-align: center;
     z-index: 10;
-    right: -150px;
-    top: 40px;
-	padding: 15px 10px ;
+    right: -$sp-150;
+    top: $sp-40;
+	padding: $sp-15 $sp-10 ;
 	box-shadow: $shadow-small;
-	border-radius:5px;
+	border-radius:$br-4;
 	border:transparent;
 	animation:bounce-in .5s;
 }
@@ -90,57 +90,53 @@
   }
 }
 .notifications-img{
-	width: 30px;
+	width: $wd-30;
 }
  
 .order-count{
 	color:black;
 	font-weight: $semiBold;
 	border-radius:50%;
-	padding: 5px;
+	padding: $sp-5;
 	display: flex;
 	align-items:center;
 	position: absolute;
     top: 0;
-    right: -5px;
+    right: -$sp-5;
     background: #fe5440;
-    height: 20px;
+    height: $hg-20;
 }
 
 .created{
 	background:rgba(200, 200, 15, 0.76);
-	padding: 2px 5px 2px 5px;
-	border-radius: 4px;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius: $br-4;
 }
 .accepted{
 	background-color: rgba(15, 210, 15, 0.573);
-    padding: 2px 5px 2px 5px;
-    border-radius: 4px;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius: $br-4;
 }
-.accepted{
-	background-color: rgba(15, 210, 15, 0.573);
-    padding: 2px 5px 2px 5px;
-    border-radius: 4px;
-}
+ 
 .canceled{
 	background-color: salmon;
-    padding: 2px 5px 2px 5px;
-	border-radius: 4px;
+    padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius: $br-4;
 }
 .closed{
 	background-color: rgb(186, 178, 177);
-    padding: 2px 5px 2px 5px;
-	border-radius: 4px;
+    padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius: $br-4;
 }
 .all-notifications{
 	color: white;
     background-color: #00aaff;
     font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    padding: 7px;
-    border-radius: 4px;
-	margin-top: 10px;
+    font-size: $fz-12;
+    font-weight: $regular;
+    padding: $sp-7;
+    border-radius: $br-4;
+	margin-top: $sp-10;
 	width: 50%;
 }
 .all-notifications:hover{
@@ -152,19 +148,17 @@
 .notifications-item__inner{
 	display: flex;
 	align-items:center;
-	gap: 10px;
-	padding: 10px 5px;
+	gap: $sp-10;
+	padding: $sp-10 $sp-5;
 	box-shadow:0px 1px 3px -2px;
 }
 .notifications-item__inner div {
-	border-radius: 2px;
-	width: 75px;
+	border-radius: $br-2;
+	width: $wd-75;
 }
  
 @media(max-width:930px){
-	.user-menu{
-		width: $wd-250;
-	}
+	 
 	
 	.logOut{
 		font-size: $fz-14;
@@ -174,8 +168,42 @@
 @media(max-width:650px){
 	
 	 .notifications{
-		right: -75px;
+		right: -$sp-35;
 	 }
+}
+
+@media(max-width:400px){
+	.user-menu{
+		width: $wd-270;
+	}
+	
+ 
+}
+@media(max-width:370px){
+	.user-menu{
+		width: $wd-250;
+	}
+	.avatar{
+		width: $wd-35;
+		height: $hg-35;
+	}
+	.avatarImage{
+		height: $hg-35;
+	}
+	
+ 
+}
+@media(max-width:355px){
+	 .user-menu{
+		width: $wd-210;
+	}
+	.user{
+		margin-bottom: 0;
+	}
+	.user-name{
+		font-size: $fz-15;
+	}
+ 
 }
 
  

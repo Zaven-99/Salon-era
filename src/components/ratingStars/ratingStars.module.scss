@@ -1,3 +1,6 @@
+@import '../styles/variables.scss';
+
+
 .wrapper {
   display: flex;
   align-items: center;
@@ -38,12 +41,12 @@
   opacity: 0.7;
 }
 
-@media(max-width:800px){
+@media(max-width:425px){
 	  
 	  .star{
-      font-size: 15px;
+      font-size:$fz-20;
     }
     .count{
-      font-size: 10px;
+      font-size: $fz-12;
     }
 }

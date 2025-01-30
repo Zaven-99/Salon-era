@@ -43,7 +43,7 @@
 
  
 @media(max-width:800px){
-	 .barber-img{
+	 .employee-img{
 		width: $wd-200;
 		height: $hg-200;
 		 
@@ -55,16 +55,19 @@
 	}
 }
 @media(max-width:550px){
-	 .barber-img{
+	 .employee-img{
 		width: $wd-150;
 		height: $hg-150;
 		 
 	 }
 }
 @media(max-width:515px){
-	 .barber-img{
+	 .employee-img{
 		width: $wd-100;
 		height: $hg-100;
 		 
+	 }
+	 .employees{
+		padding: $sp-15;
 	 }
 }

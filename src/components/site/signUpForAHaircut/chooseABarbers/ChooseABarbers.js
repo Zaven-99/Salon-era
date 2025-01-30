@@ -18,12 +18,14 @@ const ChooseABarbers = () => {
   const [error, setError] = useState(null);
   const [feedbackBarber, setFeedbackBarber] = useState(null);
   const [feedbackText, setFeedbackText] = useState("");
+  const [editedFeedbackText, setEditedFeedbackText] = useState({});
   const [feedbacks, setFeedbacks] = useState([]);
   const [editFeedbackId, setEditFeedbackId] = useState(null);
-  const [editedFeedback, setEditedFeedback] = useState({});
   const [ratings, setRatings] = useState({});
   const [feedbackLimit, setFeedbackLimit] = useState(5);
-  const [width, setWidth] = useState("auto");
+  const [initialHeight, setInitialHeight] = useState("25px");
+
+  const [height, setHeight] = useState(initialHeight);
 
   const { id: clientId } = useAuth();
   const user = useSelector((state) => state.user);
@@ -40,25 +42,23 @@ const ChooseABarbers = () => {
   const handleChange = (e) => {
     const newText = e.target.value;
 
-    setEditedFeedback({
-      ...editedFeedback,
+    setEditedFeedbackText({
+      ...editedFeedbackText,
       text: newText,
     });
 
-    const span = document.createElement("span");
-    span.style.visibility = "hidden";
-    span.style.whiteSpace = "pre-wrap";
-    span.textContent = newText;
+    const textarea = e.target;
 
-    document.body.appendChild(span);
-    const textWidth = span.offsetWidth + 10;
-    document.body.removeChild(span);
+    const textHeight = textarea.scrollHeight;
 
-    setWidth(`${textWidth}px`);
+    const maxHeight = 250;
+
+    const finalHeight = textHeight > maxHeight ? maxHeight : textHeight;
+
+    setHeight(`${finalHeight}px`);
   };
 
   const getPositionText = (position) => positionMap[position];
-
   const selectedBarber = useSelector((state) => state.barber.selectedBarber);
   const selectedServices = useSelector(
     (state) => state.service.selectedServices
@@ -74,7 +74,7 @@ const ChooseABarbers = () => {
   const fetchBarbers = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/clients/all");
+      const response = await fetch("https://api.salon-era.ru/clients/all");
       if (!response.ok) {
         throw new Error("Ошибка при получении барберов");
       }
@@ -92,7 +92,7 @@ const ChooseABarbers = () => {
     setError(null);
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/feedbacks/all`, {
+      const response = await fetch(`https://api.salon-era.ru/feedbacks/all`, {
         method: "GET",
       });
 
@@ -141,6 +141,19 @@ const ChooseABarbers = () => {
 
   const handleFeedbackChange = (e) => {
     setFeedbackText(e.target.value);
+    const newText = e.target.value;
+
+    setEditedFeedbackText(newText);
+
+    const textarea = e.target;
+
+    const textHeight = textarea.scrollHeight;
+
+    const maxHeight = 250;
+
+    const finalHeight = textHeight > maxHeight ? maxHeight : textHeight;
+
+    setHeight(`${finalHeight}px`);
   };
 
   const isFeedbackDisabled =
@@ -150,10 +163,14 @@ const ChooseABarbers = () => {
     setLoading(true);
 
     const formData = new FormData();
+    const clientFirstName = user.firstName;
+    const clientLastName = user.lastName;
 
     formData.append(
       "clientData",
       JSON.stringify({
+        firstName: clientFirstName,
+        lastName: clientLastName,
         id_client_from: clientId,
         id_client_to: selectedBarber.id,
         text: feedbackText,
@@ -162,7 +179,7 @@ const ChooseABarbers = () => {
     );
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/feedbacks`, {
+      const response = await fetch(`https://api.salon-era.ru/feedbacks`, {
         method: "POST",
         body: formData,
       });
@@ -187,7 +204,7 @@ const ChooseABarbers = () => {
   const handleSave = async (id) => {
     setLoading(true);
 
-    const feedbackToUpdate = { ...editedFeedback, id };
+    const feedbackToUpdate = { ...editedFeedbackText, id };
 
     const formData = new FormData();
 
@@ -195,11 +212,12 @@ const ChooseABarbers = () => {
       "clientData",
       JSON.stringify({
         ...feedbackToUpdate,
+        createdAt: formattedDateTimeForServer(),
       })
     );
     try {
       const response = await fetch(
-        `http://95.163.84.228:6533/feedbacks/update`,
+        `https://api.salon-era.ru/feedbacks/update`,
         {
           method: "POST",
           body: formData,
@@ -210,12 +228,38 @@ const ChooseABarbers = () => {
 
       setFeedbacks((prevFeedback) =>
         prevFeedback.map((feedback) =>
-          feedback.id === id ? editedFeedback : feedback
+          feedback.id === id ? editedFeedbackText : feedback
         )
       );
       setEditFeedbackId(null);
-      setEditedFeedback({});
+      setEditedFeedbackText({});
+      setInitialHeight(height);
     } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        `https://api.salon-era.ru/feedbacks?id=${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Ошибка при удалении отзыва");
+      }
+
+      setFeedbacks((prevFeedback) =>
+        prevFeedback.filter((feedback) => feedback.id !== id)
+      );
+    } catch (error) {
+      alert(`Ошибка: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -223,7 +267,10 @@ const ChooseABarbers = () => {
 
   const handleEdit = (feedBack) => {
     setEditFeedbackId(feedBack.id);
-    setEditedFeedback(feedBack);
+
+    setEditedFeedbackText(feedBack);
+
+    setHeight(initialHeight);
   };
 
   const getAverageRating = (barberId) => {
@@ -258,6 +305,43 @@ const ChooseABarbers = () => {
       .length;
   };
 
+  const formatDate = (date) => {
+    const dateOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const timeOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    };
+
+    const formattedDate = new Date(date).toLocaleDateString(
+      "ru-RU",
+      dateOptions
+    );
+    const formattedTime = new Date(date).toLocaleTimeString(
+      "ru-RU",
+      timeOptions
+    );
+
+    return `${formattedDate}, ${formattedTime}`;
+  };
+
+  const formattedDateTimeForServer = () => {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0"); // Получаем секунды
+    const milliseconds = String(now.getMilliseconds()).padStart(3, "0"); // Получаем миллисекунды
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
+  };
   if (loading) {
     return <Spinner />;
   }
@@ -309,7 +393,7 @@ const ChooseABarbers = () => {
                   <div>
                     <img
                       className={styles["barber-avatar"]}
-                      src={item.imageLink}
+                      src={item.imageLink || avatar}
                       alt=""
                     />
                   </div>
@@ -359,49 +443,65 @@ const ChooseABarbers = () => {
                                 alt=""
                               />
                             </div>
-                            <div>
+                            <div
+                              className={styles["user-feedback__block__inner"]}
+                            >
                               <p className={styles["user-feedback__firstName"]}>
-                                <strong>{user.firstName}</strong>&nbsp;
-                                <strong>{user.lastName}</strong>
+                                {feedback.id_client_from === clientId
+                                  ? "Вы"
+                                  : `${feedback.firstName} ${feedback.lastName}`}
                               </p>
+
                               <div className={styles["feedBack-block"]}>
-                                <p className={styles["user-feedback__text"]}>
+                                <div className={styles["user-feedback__text"]}>
                                   {feedback.id === editFeedbackId ? (
                                     <textarea
                                       className={styles["edit-feedback"]}
-                                      value={editedFeedback.text}
+                                      value={editedFeedbackText.text}
                                       onChange={handleChange}
-                                      style={{ width }}
+                                      style={{ height }}
                                     />
                                   ) : (
-                                    feedback.text
+                                    <div className={styles["feedback-text"]}>
+                                      <p>{feedback.text}</p>
+                                      <p>{formatDate(feedback.createdAt)}</p>
+                                    </div>
                                   )}
-                                </p>
+                                </div>
                                 {feedback.id === editFeedbackId ? (
                                   <div
-                                    className={styles["feedBack-button__block"]}
+                                    className={styles["change-button__block"]}
                                   >
                                     <CustomButton
                                       type="button"
                                       onClick={() => handleSave(feedback.id)}
-                                      className={styles["change-feedback"]}
+                                      className={`${styles["change-feedback"]} ${styles["save"]}`}
                                     >
                                       Сохранить
                                     </CustomButton>
                                     <CustomButton
                                       type="button"
                                       onClick={() => setEditFeedbackId(null)}
-                                      className={styles["change-feedback"]}
+                                      className={`${styles["change-feedback"]} ${styles["cancel"]}`}
                                     >
                                       Отмена
                                     </CustomButton>
+                                    <CustomButton
+                                      type="button"
+                                      onClick={() => handleDelete(feedback.id)}
+                                      className={`${styles["change-feedback"]} ${styles["delete"]}`}
+                                    >
+                                      Удалить
+                                    </CustomButton>
                                   </div>
                                 ) : (
-                                  <CustomButton
-                                    className={styles["change-feedback"]}
-                                    label="изменить"
-                                    onClick={() => handleEdit(feedback)}
-                                  />
+                                  feedback.id_client_from === clientId && (
+                                    <CustomButton
+                                      className={styles["change-feedback"]}
+                                      label="изменить"
+                                      onClick={() => handleEdit(feedback)}
+                                    />
+                                  )
                                 )}
                               </div>
                             </div>
@@ -439,6 +539,7 @@ const ChooseABarbers = () => {
                       placeholder="Оставьте ваш отзыв..."
                       value={feedbackText}
                       onChange={handleFeedbackChange}
+                      style={{ height }}
                     />
 
                     <div className={styles["feedBack-button__block"]}>

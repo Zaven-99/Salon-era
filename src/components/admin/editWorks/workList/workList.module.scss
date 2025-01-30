@@ -1,26 +1,32 @@
 @import '../../../styles/variables.scss';
 
- 
-.grid-item img{
-	width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 2%;
-}
-.grid-container {
+ .work-list{
+  height: 100vh;
+ }
+
+.work-list__inner {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
   gap: 15px; 
   margin-top: 20px;
 }
 
-
-.grid-item {
+.work-list__item {
   background-color: #f0f0f0;
-  padding: 5px;
-  border-radius: 8px;
+  padding: $sp-5;
+  border-radius: $br-8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+  cursor: pointer;
+}
+.work-list__item:hover{
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.work-list__item img{
+	width: $wd-100p;
+  height: $hg-200;
+  object-fit: cover;
+  border-radius: $br-4;
 }
 .modal-overlay {
   position: fixed;
@@ -47,6 +53,14 @@
   text-align: center;
   box-shadow:$shadow-small;
    
+}
+.message{
+	text-align: center;
+	font-family: "Open Sans", sans-serif;
+	color: salmon;
+	margin-top: $sp-50;
+    font-size: $fz-20;
+    font-weight: $medium;
 }
 @keyframes bounce-in {
     0%{
@@ -98,6 +112,40 @@
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
+.accept-add__works{
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px;
+  height: 50px;
+  box-shadow: 0 8px 16px -8px;
+  background-color: rgb(15, 210, 15);
+  border-radius: 4px;
+  width: 150px;
+}
+.accept-add__works:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.cancel-delete__works{
+  color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+	padding:$sp-10;
+	height: $hg-50;
+	box-shadow: $shadow-small;
+	background-color:#fe5440;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+.cancel-delete__works:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
 .btn-block{
   margin-top: 50px;
   display: flex;
@@ -126,4 +174,9 @@
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-
+.btn-block{
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+ }

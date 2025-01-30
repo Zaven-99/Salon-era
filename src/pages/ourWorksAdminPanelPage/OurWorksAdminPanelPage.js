@@ -1,14 +1,14 @@
-import React from 'react';
-import HeaderAdminPanel from '../../components/admin/headerAdminPanel/HeaderAdminPanel';
-import OurWorks from '../../components/admin/ourWorks/OurWorks';
+import React from "react";
+import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
+import WorksField from "../../components/admin/editWorks/WorksField";
 
 const ourWorksAdminPanelPage = () => {
-	return (
-		<div>
-			<HeaderAdminPanel/>
-			<OurWorks/>
-		</div>
-	);
+  return (
+    <div>
+      <HeaderAdminPanel />
+      <WorksField />
+    </div>
+  );
 };
 
 export default ourWorksAdminPanelPage;

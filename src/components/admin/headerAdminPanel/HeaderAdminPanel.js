@@ -40,7 +40,7 @@ const HeaderAdminPanel = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/records/all", {
+      const response = await fetch("https://api.salon-era.ru/records/all", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const HeaderAdminPanel = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`http error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -83,6 +83,7 @@ const HeaderAdminPanel = () => {
     { path: "/adminPanel/services", label: "Услуги" },
     { path: "/adminPanel/our-works", label: "Работы" },
     { path: "/adminPanel/news", label: "Новости" },
+    { path: "/adminPanel/slides", label: "Слайдер" },
   ];
 
   return (
@@ -131,6 +132,9 @@ const HeaderAdminPanel = () => {
                   </NavLink>
                   <NavLink to="/adminPanel/news">
                     <li>Новости</li>
+                  </NavLink>
+                  <NavLink to="/adminPanel/slides">
+                    <li>Слайдер</li>
                   </NavLink>
                 </ul>
               </div>

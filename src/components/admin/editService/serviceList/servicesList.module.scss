@@ -7,6 +7,7 @@
 .services{
 	display: flex;
 	justify-content: center;
+    margin-bottom: $sp-20;
 }
 .message{
 	text-align: center;
@@ -16,7 +17,7 @@
     font-size: $fz-20;
     font-weight: $medium;
 }
-.service-item{
+.service-list__item{
     cursor: pointer;
 	display: flex;
     justify-content: space-between;
@@ -29,28 +30,24 @@
     margin: $sp-10;
  
 }
-strong {
-	font-size: $fz-14;
-}
-.service-item p {
+
+.service-list__item p {
 	color: black;
     font-family: $font;
     font-size: $fz-12;
     font-weight: $light;
 }
-.service-item:hover{
+.service-list__item:hover{
 	 
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-.service-item p {
-	color: black;
-    font-family: $font;
-    font-size: $fz-14;
-    font-weight: $light;
-}
+ 
 .service-item__inner{
     width: 100%;
+}
+strong {
+	font-size: $fz-14;
 }
 .gender{
 	padding-left: $sp-10;
@@ -236,7 +233,7 @@ strong {
 }
 
 @media(max-width:1400px){
-    .service-item{
+    .service-list__item{
         display: block;
         justify-content: center;
         width: $wd-300;

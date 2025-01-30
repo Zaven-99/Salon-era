@@ -5,10 +5,10 @@ import CustomInput from "../../customInput/CustomInput";
 import EmployeeList from "./employeeList/EmployeeList";
 import Modal from "../../modal/Modal";
 import CustomSelect from "../../customSelect/CustomSelect";
+import Spinner from "../../spinner/Spinner";
 
 import styles from "./employeeField.module.scss";
 import ImagePreview from "../../imagePreview/ImagePreview";
-import Spinner from "../../spinner/Spinner";
 
 const EmployeeField = () => {
   const {
@@ -86,7 +86,7 @@ const EmployeeField = () => {
   const password = watch("password");
 
   const onSubmit = async (formValues) => {
-    setLoading(true);
+    // setLoading(true);
     const { confirmPassword, ...dataToSend } = formValues;
     const dateWorkIn = new Date(formValues.dateWorkIn);
 
@@ -105,7 +105,7 @@ const EmployeeField = () => {
       formData.append("imageData", selectedFile, selectedFile.name);
     }
     try {
-      const response = await fetch("http://95.163.84.228:6533/clients", {
+      const response = await fetch("https://api.salon-era.ru/clients", {
         method: "POST",
         body: formData,
       });
@@ -137,7 +137,7 @@ const EmployeeField = () => {
           ...prev,
           phone: `Пользователь с номером ${formValues.phone} уже существует`,
         }));
-      } else if (status === 443) {
+      } else if (status === 6533) {
         setErrorMessages((prev) => ({
           ...prev,
           email: `Клиент с указанным почтовым адресом ${formValues.email} уже существует`,
@@ -198,7 +198,7 @@ const EmployeeField = () => {
         >
           <h2>Добавить сотрудника</h2>
           <form
-            className={styles["employee-field_inner"]}
+            className={styles["employee-field__inner"]}
             onSubmit={handleSubmit(onSubmit)}
           >
             <CustomInput

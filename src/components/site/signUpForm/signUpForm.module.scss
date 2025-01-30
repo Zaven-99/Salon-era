@@ -91,7 +91,7 @@
 .policy:hover{
     opacity: .8;
 }
-.agree input[type="radio"]{
+.agree input[type="checkbox"]{
     appearance: none;
     cursor: pointer;
     width: $wd-20;
@@ -100,11 +100,25 @@
     border-radius: $br-2;
     margin-right: $sp-8;
 }
+.darkmode input[type="checkbox"]{
+    appearance: none;
+    cursor: pointer;
+    width: $wd-20;
+    height:$hg-20;
+    border: $br-2 solid #b5abab;
+    border-radius: $br-2;
+    margin-right: $sp-8;
+}
 .error{
     font-size: $fz-10;
 }
  
 
-.agree input[type="radio"]:checked {
+.agree input[type="checkbox"]:checked {
     background-color: #000; 
+}
+
+.darkmode input[type="checkbox"]:checked {
+    background-color: #b5abab !important; 
+    
 }

@@ -4,13 +4,27 @@
     color: black;
 	text-align: center;
 	font-size: $fz-20;
-    font-weight: $light;
+    font-weight: $regular;
     width: $wd-1000;
     line-height: $wd-50;
     margin: $sp-50 auto;
+    text-align: start;
 }
- 
+.aboutUs ul {
+     
+    padding: $sp-40;
+    border-radius: 4px;
+    box-shadow:0 9px 8px -14px;
+}
 
+ .aboutUs li {
+    list-style-type: circle;
+    font-weight:400;
+ }
+.title{
+    font-size: 25px;
+    text-align: center;
+}
 @media(max-width:1070px){
     .aboutUs{
     width: $wd-600;
@@ -18,15 +32,23 @@
 }
 
 @media(max-width:700px){
+    .title{
+        font-size: $sp-15;
+    }
     .aboutUs{
         font-size: $fz-10;
         line-height: $sp-15;
     }
 }
 @media(max-width:650px){
+    .title{
+        font-size: $sp-12;
+    }
     .aboutUs{
-    width: $wd-400;
-}
+        width: $wd-400;
+        padding: $sp-20;
+    }   
+
 }
 
  

@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import styles from "./ourWorks.module.scss";
 import CustomButton from "../../customButton/CustomButton";
 import Modal from "../../modal/Modal";
 import CustomInput from "../../customInput/CustomInput";
-import ImagePreview from "../../imagePreview/ImagePreview";
 import WorkList from "./workList/WorkList";
 import CustomSelect from "../../customSelect/CustomSelect";
 import Spinner from "../../spinner/Spinner";
 
+import ImagePreview from "../../imagePreview/ImagePreview";
+import styles from "./worksField.module.scss";
+
 const OurWorks = () => {
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       category: "1",
@@ -71,7 +67,7 @@ const OurWorks = () => {
     }
   };
 
-  const onSubmit = async (formValues) => {
+  const formSubmitHandler = async (formValues) => {
     setLoading(true);
 
     const formData = new FormData();
@@ -89,7 +85,7 @@ const OurWorks = () => {
     }
 
     try {
-      const response = await fetch("http://95.163.84.228:6533/stockfiles", {
+      const response = await fetch("https://api.salon-era.ru/stockfiles", {
         method: "POST",
         body: formData,
       });
@@ -112,23 +108,20 @@ const OurWorks = () => {
   }
 
   return (
-    <div className={styles["our-works"]}>
+    <div className={styles["works-filed"]}>
       <CustomButton
-        className={styles['add-work']}
+        className={styles["add-work"]}
         label="Добавить работу"
         onClick={toggleOpenSignInForm}
       />
-      <h1>Работы</h1>
-      {!works.length > 0 && (
-        <p className={styles["message"]}>Добавьте работы!</p>
-      )}
+
       {addWorks && (
         <Modal
           toggleOpenSignInForm={toggleOpenSignInForm}
           toggleCloseSignInForm={toggleCloseSignInForm}
         >
           <h2>Добавить работу</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(formSubmitHandler)}>
             <Controller
               name="category"
               control={control}
@@ -163,7 +156,13 @@ const OurWorks = () => {
         </Modal>
       )}
 
-      <WorkList setWorks={setWorks} works={works} categoryMap={categoryMap} />
+      <WorkList
+        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpenSignInForm={toggleOpenSignInForm}
+        setWorks={setWorks}
+        works={works}
+        categoryMap={categoryMap}
+      />
     </div>
   );
 };

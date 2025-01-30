@@ -1,10 +1,11 @@
 @import '../../styles/variables.scss';
  
+
 .employee-field{
   padding: $sp-20;
   height: $hg-100vh;
 }
-.employee-field_inner{
+.employee-field__inner{
   width: $wd-100p;
   margin: $sp-5 auto;
 }

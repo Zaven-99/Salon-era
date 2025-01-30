@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/userSlice";
@@ -40,6 +40,7 @@ const SignUpForm = ({
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
   const [error, setError] = useState(false);
@@ -70,13 +71,12 @@ const SignUpForm = ({
   const password = watch("password");
 
   const handlePolicyChange = (e) => {
-    setPolicy(e.target.checked);
+    setPolicy(!policy);
   };
 
   const onSubmit = async (formValues, e) => {
-    e.preventDefault();
-
-    const { confirmPassword, gender, patronymic, ...dataToSend } = formValues;
+    const { confirmPassword, gender, patronymic, policy, ...dataToSend } =
+      formValues;
 
     const formData = new FormData();
 
@@ -98,7 +98,7 @@ const SignUpForm = ({
       return;
     } else {
       try {
-        const response = await fetch("http://95.163.84.228:6533/clients", {
+        const response = await fetch("https://api.salon-era.ru/clients", {
           method: "POST",
           body: formData,
         });
@@ -155,7 +155,7 @@ const SignUpForm = ({
             ...prev,
             phone: `Пользователь с номером ${formValues.phone} уже существует`,
           }));
-        } else if (status === 443) {
+        } else if (status === 6533) {
           setErrorMessages((prev) => ({
             ...prev,
             email: `Клиент с указанным почтовым адресом ${formValues.email} уже существует`,
@@ -198,6 +198,25 @@ const SignUpForm = ({
   const deletImagePreview = () => {
     setImagePreview(null);
   };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // Устанавливаем начальное состояние темы
+    setIsDarkMode(mediaQuery.matches);
+
+    // Функция для обновления состояния при смене темы
+    const handleChange = (e) => {
+      setIsDarkMode(e.matches);
+    };
+
+    // Добавляем обработчик изменений
+    mediaQuery.addEventListener("change", handleChange);
+
+    // Очистка обработчика при размонтировании компонента
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
 
   if (loading) {
     return <Spinner />;
@@ -362,6 +381,7 @@ const SignUpForm = ({
             name="gender"
             error={errors.gender}
             control={control}
+            isDarkMode = {isDarkMode}
             {...register("gender", { required: "Выберите пол." })}
           />
         </div>
@@ -374,13 +394,13 @@ const SignUpForm = ({
       </form>
       {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}
       <div className={styles["privacy-policy"]}>
-        <label className={styles["agree"]}>
+        <label className={isDarkMode ? styles["darkmode"] :styles['agree'] }>
           <input
             value=""
             name="policy"
-            type="radio"
+            type="checkbox"
             checked={policy}
-            onChange={handlePolicyChange}
+            onClick={handlePolicyChange}
             {...register("policy", {
               required: "Вы должны согласиться с политикой конфиденциальности",
             })}

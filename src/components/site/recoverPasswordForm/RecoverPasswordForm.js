@@ -43,7 +43,7 @@ const RecoverPasswordForm = ({
     try {
       if (step === 1) {
         const response = await fetch(
-          `http://95.163.84.228:6533/clients/recoveryPassword?send=true&email=${data.email}`,
+          `https://api.salon-era.ru/clients/recoveryPassword?send=true&email=${data.email}`,
           {
             method: "POST",
             headers: {
@@ -81,7 +81,7 @@ const RecoverPasswordForm = ({
           );
 
           const response = await fetch(
-            `http://95.163.84.228:6533/clients/changePasswordFromEmail?email=${email}&password=${data.password}`,
+            `https://api.salon-era.ru/clients/changePasswordFromEmail?email=${email}&password=${data.password}`,
             {
               method: "POST",
               body: formData,

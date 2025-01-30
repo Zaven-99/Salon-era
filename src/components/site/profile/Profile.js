@@ -22,9 +22,18 @@ const Profile = ({ closeProfile, logOut, isClosing }) => {
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <p className={styles["contact-item"]}>Логин:{login}</p>
-        <p className={styles["contact-item"]}>Номер телефона:{phone}</p>
-        <p className={styles["contact-item"]}>Почта:{email}</p>
+        <p className={styles["contact-item"]}>
+          <strong>Логин:&nbsp;</strong>
+          {login}
+        </p>
+        <p className={styles["contact-item"]}>
+          <strong>Номер телефона:&nbsp;</strong>
+          {phone}
+        </p>
+        <p className={styles["contact-item"]}>
+          <strong>Почта:&nbsp;</strong>
+          {email}
+        </p>
         <CustomButton
           className={styles["profile-close"]}
           type="button"

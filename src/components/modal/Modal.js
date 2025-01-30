@@ -7,6 +7,9 @@ const Modal = ({
   toggleCloseSignInForm,
   setEmployeeId,
   setEditServiceId,
+  setSlidesId,
+  setWorksId,
+  setNewsId,
   children,
   isClosing,
 }) => {
@@ -18,7 +21,15 @@ const Modal = ({
     if (setEditServiceId) {
       setEditServiceId(null);
     }
-
+    if (setSlidesId) {
+      setSlidesId(null);
+    }
+    if (setWorksId) {
+      setWorksId(null);
+    }
+    if (setNewsId) {
+      setNewsId(null);
+    }
     toggleCloseSignInForm();
   };
   return (

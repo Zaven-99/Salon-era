@@ -48,18 +48,19 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
     setRecoverPasswordForm(!showRecoverPasswordForm);
   };
 
-  const onSubmit = async (formValues, e) => {
-    e.preventDefault();
-    setLoading(true);
+  const onSubmit = async (formValues) => {
+     
     const formData = {
       ...formValues,
     };
 
     try {
-      const response = await fetch("http://95.163.84.228:6533/clients/auth", {
+      const response = await fetch("https://api.salon-era.ru/clients/auth", {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer true",
         },
         body: JSON.stringify(formData),
       });
@@ -75,21 +76,21 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
 
       const data = await response.json();
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: data.id,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          login: data.login,
-          phone: data.phone,
-          email: data.email,
-          gender: data.gender,
-          imageLink: data.imageLink,
-          clientType: data.clientType,
-          token: true,
-        })
-      );
+      // localStorage.setItem(
+      //   "user",
+      //   JSON.stringify({
+      //     id: data.id,
+      //     firstName: data.firstName,
+      //     lastName: data.lastName,
+      //     login: data.login,
+      //     phone: data.phone,
+      //     email: data.email,
+      //     gender: data.gender,
+      //     imageLink: data.imageLink,
+      //     clientType: data.clientType,
+      //     token: true,
+      //   })
+      // );
 
       dispatch(
         setUser({
@@ -139,7 +140,7 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
           <p className={styles["error-message"]}>{errorMessages.login}</p>
           <CustomInput
             label="Введите логин"
-            type="text"
+            type="login"
             name="login"
             error={errors.login}
             isActive={activeInput === "login"}

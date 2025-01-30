@@ -5,16 +5,20 @@ import {
 } from "../../../../store/slices/serviceSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "../../../../use-auth/use-auth";
+
 import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
 
 import styles from "./chooseAService.module.scss";
+import Service from "./Service";
 
-const ChooseAService = () => {
+const ChooseAService = ({ handleSignUpClick }) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const { token } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,7 +39,7 @@ const ChooseAService = () => {
   const selectedServices = useSelector(
     (state) => state.service.selectedServices
   );
-   
+
   const selectedServicesCount = selectedServices.length;
 
   const toggleChooseService = (service) => {
@@ -49,11 +53,28 @@ const ChooseAService = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://95.163.84.228:6533/services/all");
-      if (!response.ok) throw new Error("Ошибка при получении услуг");
+      const response = await fetch("https://api.salon-era.ru/services/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",  
+        },
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        
+
+        throw new Error(
+          `Ошибка: ${response.status} - ${response.statusText} (${errorText})`
+        );
+      }
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error(`Ожидался JSON, но сервер вернул: ${contentType}`);
+      }
       const data = await response.json();
       setServices(data);
     } catch (error) {
+      console.error("Ошибка при получении данных:", error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -65,16 +86,13 @@ const ChooseAService = () => {
   }, []);
 
   const groupedServices = services.reduce((acc, service) => {
-    if (!acc[service.category]) {
-      acc[service.category] = {};
+    if (!acc[service.gender]) {
+      acc[service.gender] = {};
     }
-
-    if (!acc[service.category][service.gender]) {
-      acc[service.category][service.gender] = [];
+    if (!acc[service.gender][service.category]) {
+      acc[service.gender][service.category] = [];
     }
-
-    acc[service.category][service.gender].push(service);
-
+    acc[service.gender][service.category].push(service);
     return acc;
   }, {});
 
@@ -87,12 +105,11 @@ const ChooseAService = () => {
   }
 
   return (
-    <section>
+    <section className={styles["choose-service"]}>
       <h1 className={styles.signUpForAHaircut}>Записаться</h1>
-      <h1>Прайс лист</h1>
       <div className={styles["sign-up_for__haircut"]}>
         <div className={styles["selected-services__container"]}>
-          {selectedServicesCount > 0 && (
+          {selectedServicesCount > 0 && token && (
             <div className={styles["navigate-button__container"]}>
               <div className={styles["button-wrapper"]}>
                 <CustomButton
@@ -107,57 +124,37 @@ const ChooseAService = () => {
         </div>
 
         <ul>
-          {Object.keys(groupedServices).map((category) => (
-            <div key={category}>
-              <h2 className={styles.category}>{category}</h2>
-
-              <div className={styles.wrapper}>
-                {Object.keys(groupedServices[category]).map((genderKey) => {
-                  const genderValue = Number(genderKey);
-
-                  return (
-                    <div key={genderValue}>
-                      {groupedServices[category][genderValue].map((item) => (
-                        <div
-                          className={styles["priceList-inner"]}
-                          key={item.id}
-                        >
-                          <div
-                            onClick={() => toggleChooseService(item)}
-                            className={`${styles["priceList-inner_item"]} ${
-                              selectedServices.some((s) => s.id === item.id)
-                                ? styles.selectedService
-                                : ""
-                            }`}
-                          >
-                            <p>Название: {item.name}</p>
-                            <p>
-                              {item.description && (
-                                <>Описание: {item.description}</>
-                              )}
-                            </p>
-                            <p>
-                              Продолжительность:{" "}
-                              {getDurationText(item.duration)}
-                            </p>
-                            <div>
-                              Цена:{" "}
-                              {item.priceMax === null
-                                ? `${item.priceLow} руб.`
-                                : `${item.priceLow} - ${item.priceMax} руб.`}
-                              {item.priceLow && item.priceMax && (
-                                <div className={styles.clarify}>
-                                  Уточни у сотрудника!
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+          {Object.keys(groupedServices).map((genderKey) => (
+            <div key={genderKey}>
+              <span className={styles.gender}>
+                {genderKey == 1 ? "Мужские услуги" : "Женские услуги"}
+              </span>
+              {Object.keys(groupedServices[genderKey]).map((category) => (
+                <div className={styles["price-list"]} key={category}>
+                  <h3 className={styles.category}>{category}</h3>
+                  {token ? (
+                    <Service
+                      groupedServices={groupedServices}
+                      genderKey={genderKey}
+                      category={category}
+                      toggleChooseService={toggleChooseService}
+                      selectedServices={selectedServices}
+                      getDurationText={getDurationText}
+                    />
+                  ) : (
+                    <div onClick={handleSignUpClick}>
+                      <Service
+                        groupedServices={groupedServices}
+                        genderKey={genderKey}
+                        category={category}
+                        toggleChooseService={toggleChooseService}
+                        selectedServices={selectedServices}
+                        getDurationText={getDurationText}
+                      />
                     </div>
-                  );
-                })}
-              </div>
+                  )}
+                </div>
+              ))}
             </div>
           ))}
         </ul>

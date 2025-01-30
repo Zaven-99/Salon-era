@@ -3,12 +3,11 @@ import { Controller, useForm } from "react-hook-form";
 import CustomButton from "../../../customButton/CustomButton";
 import CustomInput from "../../../customInput/CustomInput";
 import Modal from "../../../modal/Modal";
-
-import styles from "./employeeList.module.scss";
 import Spinner from "../../../spinner/Spinner";
-import ImagePreview from "../../../imagePreview/ImagePreview";
 import CustomSelect from "../../../customSelect/CustomSelect";
 
+import styles from "./employeeList.module.scss";
+import ImagePreview from "../../../imagePreview/ImagePreview";
 import avatarImg from "../../../../img/icons/avatar.png";
 
 const EmployeeList = ({
@@ -71,7 +70,7 @@ const EmployeeList = ({
   const fetchEmployee = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/clients/all");
+      const response = await fetch("https://api.salon-era.ru/clients/all");
 
       if (!response.ok) throw new Error("Ошибка при получении сотрудников");
       const data = await response.json();
@@ -113,7 +112,7 @@ const EmployeeList = ({
     }
 
     try {
-      const response = await fetch(`http://95.163.84.228:6533/clients/update`, {
+      const response = await fetch(`https://api.salon-era.ru/clients/update`, {
         method: "POST",
         body: formData,
       });
@@ -143,8 +142,10 @@ const EmployeeList = ({
 
     try {
       const response = await fetch(
-        `http://95.163.84.228:6533/clients?id=${id}`,
-        { method: "DELETE" }
+        `https://api.salon-era.ru/clients?id=${id}`,
+        {
+          method: "DELETE",
+        }
       );
       if (!response.ok) throw new Error("Ошибка при удалении услуги");
       setEmployee((prevEmployee) =>
@@ -154,8 +155,8 @@ const EmployeeList = ({
     } catch (error) {
       console.error("Ошибка:", error);
     } finally {
-      document.body.style.overflow = "scroll";
       setLoading(false);
+      document.body.style.overflow = "scroll";
     }
   };
   const handleEdit = (employee) => {
@@ -171,7 +172,7 @@ const EmployeeList = ({
   }, {});
 
   if (!Object.keys(groupedEmployee).length) {
-    return <p className={styles.message}>Список сотрудников пуст</p>;
+    return <p className={styles.message}>Список сотрудников пуст.</p>;
   }
 
   const formatDate = (dateString) => {
@@ -516,7 +517,7 @@ const EmployeeList = ({
                         employeeToDelete === employee.id && (
                           <div className={styles["modal-overlay"]}>
                             <div className={styles["modal-content"]}>
-                              <h2 className={styles["choose-dateWorkOut"]}>
+                              <h2 className={styles["choose"]}>
                                 Вы действительно хотите удалить сотрудника ?
                               </h2>
 

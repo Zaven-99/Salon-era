@@ -24,12 +24,12 @@ const CustomInput = React.forwardRef(
       handleChange,
       isActive,
       setActiveInput,
+      isDarkMode,
       ...props
     },
     ref
   ) => {
     const [inputValue, setInputValue] = useState("");
-    const [isFocused, setIsFocused] = useState(true);
 
     const inputType =
       (name === "password" && !showPassword) ||
@@ -61,11 +61,6 @@ const CustomInput = React.forwardRef(
         onChange && onChange({ target: { name, value: "+7" } });
       }
     };
-    const onBlurHandler = () => {
-      if (inputValue.length === 0) {
-        setIsFocused(false);
-      }
-    };
 
     return (
       <div className={styles["input-container"]}>
@@ -80,7 +75,6 @@ const CustomInput = React.forwardRef(
               name={name}
               ref={ref}
               onFocus={onFocusHandler}
-              onBlur={onBlurHandler}
               value={value || inputValue || ""}
               onChange={handleChange || handleInputChange}
               {...props}
@@ -91,7 +85,9 @@ const CustomInput = React.forwardRef(
                 onClick={handleClearInput}
                 className={styles["clear-input"]}
               >
-                <img src={close} alt="Clear" />
+                <div className={styles["clear"]}>
+                  <img src={close} alt="Clear" />
+                </div>
               </CustomButton>
             )}
             {(name === "password" || name === "confirmPassword") && (
@@ -123,7 +119,11 @@ const CustomInput = React.forwardRef(
                 <p className={styles["error-gender"]}>{error.message}</p>
               )}
               <p className={styles["gender"]}>Пол</p>
-              <label className={styles["custom-radio"]}>
+              <label
+                className={
+                  isDarkMode ? styles["darkmode"] : styles["custom-radio"]
+                }
+              >
                 <input
                   type="radio"
                   name={name}
@@ -133,7 +133,11 @@ const CustomInput = React.forwardRef(
                 />
                 Жен.
               </label>
-              <label className={styles["custom-radio"]}>
+              <label
+                className={
+                  isDarkMode ? styles["darkmode"] : styles["custom-radio"]
+                }
+              >
                 <input
                   type="radio"
                   name={name}

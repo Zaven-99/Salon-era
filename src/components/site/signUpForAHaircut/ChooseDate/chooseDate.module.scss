@@ -33,7 +33,7 @@
   border-radius: $br-5;
   padding: $sp-5 $sp-10;
   font-size: $fz-20;
-  font-weight: $light;
+  font-weight: $regular;
 }
 .select:hover{
   transform: scale(1.05);
@@ -132,14 +132,15 @@
  
 .sign-up_to__haircut {
   background-color: #00aaff;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-  color: white;
-  border: none;
-  padding: $sp-10 $sp-20;
-  border-radius: $br-5;
-  font-size: $fz-20;
-  font-weight: 300
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: $sp-10 $sp-20;
+    border-radius: $br-5;
+    font-size: $fz-16;
 }
 .sign-up_to__haircut:hover{
   transform: scale(1.05);
@@ -219,5 +220,14 @@
       font-size: $fz-20;
 
     }
+	  
+}
+@media(max-width:425px){
+	   .toMain{
+      font-size: 12px;
+     }
+     .sign-up_to__haircut{
+      font-size: 12px;
+     }
 	  
 }

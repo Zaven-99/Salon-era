@@ -5,13 +5,25 @@ import ServicesSection from "../../components/site/servicesSection/ServicesSecti
 import ChooseABarbers from "../../components/site/signUpForAHaircut/chooseABarbers/ChooseABarbers";
 import NewsBlock from "../../components/site/newBlock/newsBlock";
 
-const BarbersPage = () => {
+const BarbersPage = ({
+  openSignInForm,
+  isClosing,
+  setIsClosing,
+  toggleOpenSignInForm,
+  toggleCloseSignInForm,
+}) => {
   return (
     <div>
-      <Header />
+      <Header
+        openSignInForm={openSignInForm}
+        isClosing={isClosing}
+        setIsClosing={setIsClosing}
+        toggleOpenSignInForm={toggleOpenSignInForm}
+        toggleCloseSignInForm={toggleCloseSignInForm}
+      />
       <ServicesSection />
       <ChooseABarbers />
-      <NewsBlock/>
+      <NewsBlock />
       <Footer />
     </div>
   );

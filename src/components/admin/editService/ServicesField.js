@@ -72,7 +72,7 @@ const ServiceField = () => {
     );
 
     try {
-      const response = await fetch("http://95.163.84.228:6533/services", {
+      const response = await fetch("https://api.salon-era.ru/services", {
         method: "POST",
         body: formData,
       });
@@ -92,8 +92,8 @@ const ServiceField = () => {
       setLoading(false);
     }
   };
-  if(loading){
-    return <Spinner/>
+  if (loading) {
+    return <Spinner />;
   }
 
   return (

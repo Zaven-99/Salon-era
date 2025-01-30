@@ -4,9 +4,9 @@ import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
 import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
+import CustomSelect from "../../../customSelect/CustomSelect";
 
 import styles from "./servicesList.module.scss";
-import CustomSelect from "../../../customSelect/CustomSelect";
 
 const ServiceList = ({
   services,
@@ -34,13 +34,12 @@ const ServiceList = ({
       imageLink: "",
     },
   });
-  const [editServiceId, setEditServiceId] = useState(null);
+  const [serviceId, setServiceId] = useState(null);
   const [editedService, setEditedService] = useState({});
   const [confirmDeleteService, setConfirmDeleteService] = useState(false);
   const [serviceToDelete, setServiceToDelete] = useState(null);
   const [activeInput, setActiveInput] = useState("");
   const [loading, setLoading] = useState(false);
-  
 
   const genderMap = { 0: "Женский", 1: "Мужской" };
   const durationMap = [
@@ -60,7 +59,7 @@ const ServiceList = ({
   const fetchServices = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://95.163.84.228:6533/services/all");
+      const response = await fetch("https://api.salon-era.ru/services/all");
       if (!response.ok) throw new Error("Ошибка при получении услуг");
       const data = await response.json();
       setServices(data);
@@ -82,8 +81,10 @@ const ServiceList = ({
     if (serviceToDelete === null) return;
     try {
       const response = await fetch(
-        `http://95.163.84.228:6533/services?id=${id}`,
-        { method: "DELETE" }
+        `https://api.salon-era.ru/services?id=${id}`,
+        {
+          method: "DELETE",
+        }
       );
       if (!response.ok) throw new Error("Ошибка при удалении услуги");
       setServices((prevServices) =>
@@ -110,13 +111,10 @@ const ServiceList = ({
       })
     );
     try {
-      const response = await fetch(
-        `http://95.163.84.228:6533/services/update`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch(`https://api.salon-era.ru/services/update`, {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) throw new Error("Ошибка при сохранении услуги");
 
@@ -125,7 +123,7 @@ const ServiceList = ({
           service.id === id ? editedService : service
         )
       );
-      setEditServiceId(null);
+      setServiceId(null);
       setEditedService({});
       toggleCloseSignInForm();
       reset();
@@ -135,7 +133,7 @@ const ServiceList = ({
     }
   };
   const handleEdit = (service) => {
-    setEditServiceId(service.id);
+    setServiceId(service.id);
     setEditedService(service);
   };
 
@@ -153,7 +151,7 @@ const ServiceList = ({
   }, {});
 
   if (!Object.keys(groupedServices).length) {
-    return <p className={styles.message}>Нет доступных услуг.</p>;
+    return <p className={styles.message}>Список услуг пуст.</p>;
   }
 
   const showMessageDeleteEmployee = (id) => {
@@ -185,12 +183,12 @@ const ServiceList = ({
               <h4 className={styles.category}>{category}</h4>
               <ul className={styles["service-list__inner"]}>
                 {groupedServices[genderKey][category].map((service, index) => (
-                  <li className={styles["service-item"]} key={index}>
-                    {editServiceId === service.id ? (
+                  <li className={styles["service-list__item"]} key={index}>
+                    {serviceId === service.id ? (
                       <Modal
                         toggleOpenSignInForm={toggleOpenSignInForm}
                         toggleCloseSignInForm={toggleCloseSignInForm}
-                        setEditServiceId={setEditServiceId}
+                        setEditServiceId={setServiceId}
                       >
                         <>
                           <h2>Редактировать</h2>
@@ -325,7 +323,7 @@ const ServiceList = ({
                             <CustomButton
                               label="Отменить"
                               className={styles["cancel"]}
-                              onClick={() => setEditServiceId(null)}
+                              onClick={() => setServiceId(null)}
                             />
                           </div>
                         </>
