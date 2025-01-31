@@ -161,6 +161,7 @@ strong {
 .button-block{
     display: flex;
     gap: $sp-20;
+    
 }
 .cancelDelete-employee{
     color: black;
@@ -264,5 +265,6 @@ strong {
     }
     .btn-block{
         gap: $sp-15;
+        margin-top: $sp-15;
     }
 }

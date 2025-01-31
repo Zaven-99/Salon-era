@@ -6,9 +6,9 @@ import loadingGIF from "../../img/icons/loadingGIF.gif";
 const Spinner = () => {
   return (
     <div className={styles['modal-overlay']}>
-      <div className={styles["modal-content"]}>
+      {/* <div className={styles["modal-content"]}> */}
         <img className={styles.GIF} src={loadingGIF} alt="Загрузка..." />
-      </div>
+      {/* </div> */}
     </div>
   );
 };

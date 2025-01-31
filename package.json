@@ -19,6 +19,7 @@
     "flickity": "^2.3.0",
     "formik": "^2.4.6",
     "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.10.2",
     "react-calendar": "^5.0.0",
     "react-datepicker": "^7.5.0",
@@ -41,7 +42,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-    
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +60,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-    
   }
 }

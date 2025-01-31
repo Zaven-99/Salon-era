@@ -121,8 +121,8 @@
 	text-align: center;
 	margin-top: $sp-50;
 	font-family: "Open Sans", sans-serif;
-    font-size: $fz-20;
-    font-weight: $medium;
+  font-size: $fz-20;
+  font-weight: $medium;
 	color: salmon;
 }
 .acceptDelete-slides:hover{
@@ -152,6 +152,7 @@
   display: flex;
   justify-content: space-between;
   align-items:center;
+  gap: $sp-10;
  }
 .delete-slides{
   color: black;

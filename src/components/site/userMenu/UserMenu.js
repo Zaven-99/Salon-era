@@ -8,20 +8,17 @@ import { NavLink } from "react-router-dom";
 import avatar from "../../../img/icons/avatar.png";
 import notification from "../../../img/icons/notifications.png";
 import CustomButton from "../../customButton/CustomButton";
- 
+
 const UserMenu = ({ openProfile }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [order, setOrder] = useState([]);
   const [isOpenNotification, setIsOpenNotification] = useState(false);
- 
+
   const { id, firstName, lastName, imageLink } = useAuth();
   const dispatch = useDispatch();
 
   const toggleNotification = async () => {
-    if (
-      isOpenNotification &&
-      order.some((orderItem) => !orderItem.record.statusViewed)
-    ) {
+    if (isOpenNotification) {
       await updateView();
     }
     setIsOpenNotification((prev) => !prev);
@@ -29,24 +26,41 @@ const UserMenu = ({ openProfile }) => {
 
   const updateView = async () => {
     try {
-      const updatedOrders = order.map((orderItem) => {
+      const updatedOrders = [...order];
+      for (const orderItem of order) {
         if (!orderItem.record.statusViewed) {
-          fetch(`https://api.salon-era.ru/records/update`, {
-            method: "POST",
-            body: JSON.stringify({
+          const formData = new FormData();
+          formData.append(
+            "clientData",
+            JSON.stringify({
               id: orderItem.record.id,
               statusViewed: true,
-            }),
-            headers: { "Content-Type": "application/json" },
-          });
-          return {
-            ...orderItem,
-            record: { ...orderItem.record, statusViewed: true },
-          };
-        }
-        return orderItem;
-      });
+            })
+          );
 
+          const response = await fetch(
+            `https://api.salon-era.ru/records/update`,
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+
+          if (response.ok) {
+            const index = updatedOrders.findIndex(
+              (item) => item.record.id === orderItem.record.id
+            );
+            if (index !== -1) {
+              updatedOrders[index].record.statusViewed = true;
+            }
+          } else {
+            const errorText = await response.text();
+            throw new Error(
+              `Ошибка HTTP! статус: ${response.status}, сообщение: ${errorText}`
+            );
+          }
+        }
+      }
       setOrder(updatedOrders);
     } catch (error) {
       console.log(error.message || "Неизвестная ошибка");
@@ -118,7 +132,6 @@ const UserMenu = ({ openProfile }) => {
     0
   );
 
-   
   return (
     <div className={styles["user-menu"]}>
       <div className={styles.avatar}>

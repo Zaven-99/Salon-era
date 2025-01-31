@@ -110,7 +110,13 @@
 .record-item__inner{
   width: 250px;
 }
-
+.datePickerWrapper{
+  display: flex;
+  justify-content: space-between;
+}
+.total{
+  margin-right: $sp-50;
+}
 @media(max-width:1400px){
   .record-list{
     display: flex;

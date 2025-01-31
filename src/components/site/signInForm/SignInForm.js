@@ -76,21 +76,21 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
 
       const data = await response.json();
 
-      // localStorage.setItem(
-      //   "user",
-      //   JSON.stringify({
-      //     id: data.id,
-      //     firstName: data.firstName,
-      //     lastName: data.lastName,
-      //     login: data.login,
-      //     phone: data.phone,
-      //     email: data.email,
-      //     gender: data.gender,
-      //     imageLink: data.imageLink,
-      //     clientType: data.clientType,
-      //     token: true,
-      //   })
-      // );
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          login: data.login,
+          phone: data.phone,
+          email: data.email,
+          gender: data.gender,
+          imageLink: data.imageLink,
+          clientType: data.clientType,
+          token: true,
+        })
+      );
 
       dispatch(
         setUser({

@@ -96,6 +96,23 @@ const HistoryOrders = () => {
     return filteredGroupedOrders;
   };
 
+  // Функция для подсчета общей суммы
+  const calculateTotal = () => {
+    const filteredOrders = Object.values(filterOrdersByDate()).flat();
+    const totalAllOrders = filteredOrders.reduce(
+      (acc, current) => acc + (current.service?.priceLow || 0),
+      0
+    );
+
+    const totalCancelledOrders = filteredOrders
+      .filter((orderItem) => orderItem.record?.status === 400)
+      .reduce((acc, current) => acc + (current.service?.priceLow || 0), 0);
+
+    return totalAllOrders - totalCancelledOrders; // Исключаем отмененные заказы
+  };
+
+  const total = calculateTotal();
+
   if (loading) {
     return <Spinner />;
   }
@@ -118,7 +135,9 @@ const HistoryOrders = () => {
               isClearable
               locale="ru"
             />
+            <h2 className={styles.total}>Общая сумма: {total} р.</h2>
           </div>
+
           {Object.keys(filterOrdersByDate()).length > 0 ? (
             Object.keys(filterOrdersByDate()).map((date) => (
               <div key={date} className={styles["date-group"]}>
