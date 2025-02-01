@@ -35,7 +35,7 @@
     align-items:center;
 }
 .empty{
-    font-weight: 300;
+    font-weight: $light;
     color: black;
     text-align: center;
     font-size: $fz-20;
@@ -49,7 +49,7 @@
     color: white;
     text-align: center;
     background: rgba(200, 200, 15, 0.76);
-    padding: 2px 5px 2px 5px;
+    padding: $sp-2 $sp-5 $sp-2 $sp-5;
     border-radius:$br-4;
     width: $wd-130;
                     
@@ -58,7 +58,7 @@
     color: white;
     text-align: center;
     background: rgb(15 210 15);
-    padding: 2px 5px 2px 5px;
+    padding: $sp-2 $sp-5 $sp-2 $sp-5;
     border-radius:$br-4;
     width: $wd-130;
 }
@@ -66,7 +66,7 @@
     color: white;
     text-align: center;
     background: #fe5440;
-    padding: 2px 5px 2px 5px;
+    padding: $sp-2 $sp-5 $sp-2 $sp-5;
     border-radius:$br-4;
     width: $sp-130;
 }
@@ -74,7 +74,7 @@
     color: black;
     background: rgb(186, 178, 177);
     text-align: center;
-    padding: 2px 5px 2px 5px;
+    padding: $sp-2 $sp-5 $sp-2 $sp-5;
     border-radius:$br-4;
     width: $sp-130;
 }
@@ -90,21 +90,25 @@
         padding: $sp-10;
         line-height: $sp-35;
     }
-    .status div{
+    .records-list__item div{
+        margin-top: $sp-10;
+    }
+    .status span{
         width: max-content ;
         font-size: $sp-15 ;
         padding: $sp-2;
+        width: 200px;
     }
-}
-@media(max-width:1400px){
-    .records-list{
+     .records-list{
        justify-content: center;
        
     }
      .cancel{
         width: $sp-100p;
+        margin-top: $sp-10;
      }
 }
+ 
 @media(max-width:720px){
     .total{
       text-align: center;

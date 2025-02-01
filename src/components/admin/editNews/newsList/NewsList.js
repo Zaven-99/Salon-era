@@ -98,6 +98,7 @@ const NewsList = ({
       console.error("Ошибка:", error);
     } finally {
       setLoading(false);
+      window.location.reload()
     }
   };
 
@@ -297,11 +298,16 @@ const NewsList = ({
               </Modal>
             ) : (
               <div className={styles["news-card"]}>
-                <img
-                  className={styles["news-img"]}
-                  src={news.imageLink}
-                  alt=""
-                />
+                {news.imageLink === null ? (
+                  ""
+                ) : (
+                  <img
+                    className={styles["news-img"]}
+                    src={news.imageLink}
+                    alt=""
+                  />
+                )}
+
                 <h2>{news.name}</h2>
                 <p className={styles["main-text"]}>{news.mainText}</p>
                 <p>{formatDate(news.createdAt)}</p>

@@ -63,11 +63,15 @@ const NewsBlock = () => {
       <ul className={styles["news-list__inner"]}>
         {news.map((newsItem, index) => (
           <li className={styles["news-item"]} key={index}>
-            <img
-              className={styles["news-img"]}
-              src={newsItem.imageLink}
-              alt=""
-            />
+            {newsItem.imageLink === null ? (
+              ""
+            ) : (
+              <img
+                className={styles["news-img"]}
+                src={newsItem.imageLink}
+                alt=""
+              />
+            )}
             <h2>{newsItem.name}</h2>
             <p className={styles["main-text"]}>{newsItem.mainText}</p>
             <p>{formatDate(newsItem.createdAt)}</p>

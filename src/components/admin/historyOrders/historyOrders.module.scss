@@ -108,7 +108,7 @@
   gap: $sp-15;
 }
 .record-item__inner{
-  width: 250px;
+  width: $wd-250;
 }
 .datePickerWrapper{
   display: flex;
@@ -154,4 +154,16 @@
     }
 }
 
- 
+@media(max-width:520px){
+  .total{
+    margin-right: $sp-20;
+    font-size: $fz-15;
+  }
+  .dataPicker{
+    margin-left: $sp-20;
+  }
+  .history-orders{
+    font-size: $fz-20;
+  }
+   
+}

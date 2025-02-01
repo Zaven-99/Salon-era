@@ -10,21 +10,79 @@
     margin: $sp-50 auto;
     text-align: start;
 }
-.aboutUs ul {
+.aboutUsContainer ul {
      
-    padding: $sp-40;
-    border-radius: 4px;
-    box-shadow:0 9px 8px -14px;
+    padding: $sp-40 0 0 0;
+    border-radius: $br-4;
+    font-family: system-ui;
+    line-height: $sp-30;
+    
 }
 
- .aboutUs li {
-    list-style-type: circle;
-    font-weight:400;
+ .aboutUsContainer li {
+     
+    font-weight:$regular;
  }
-.title{
-    font-size: 25px;
-    text-align: center;
+ .aboutUsContainer {
+  display: flex;
+  flex-direction: column; // Располагаем элементы вертикально
+  align-items: center;
+  gap: 50px; // Добавляем расстояние между блоками
 }
+ .item{
+    width: 60%;
+    box-shadow:0 1px 4px -2px;
+    padding: $sp-50;
+    margin-top: $sp-20;
+    margin-left: $sp-50;
+    border-radius:$sp-15;
+    transform: translateX(-100px);
+ }
+.item span{
+    font-size: $fz-20;
+    text-align: center;
+    font-family: inter;
+    font-weight: $regular;
+}
+
+ .item2{
+    width: 60%;
+    box-shadow:0 1px 4px -2px;
+    padding: $sp-50;
+    margin-top: $sp-20;
+    margin-right: $sp-50;
+    border-radius:$sp-15;
+    transform: translateX(100px);
+    text-align: end;
+ }
+.item2 span{
+    font-size: $fz-20;
+    text-align: center;
+    font-family: inter;
+    font-weight: $regular;
+}
+.background{
+    background-image: url(../../../img/aboutUs/white.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.background1{
+    background-image: url(../../../img/aboutUs/1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.background2{
+    background-image: url(../../../img/aboutUs/5.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+.background3{
+    background-image: url(../../../img/aboutUs/3.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+ 
 @media(max-width:1070px){
     .aboutUs{
     width: $wd-600;

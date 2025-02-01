@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import AOS from "aos"; // импортируем AOS
+import Spinner from "../../spinner/Spinner";
+
+
 import styles from "./ourWorks.module.scss";
 import logo from "../../../img/logo.png";
-import Spinner from "../../spinner/Spinner";
 
 const OurWorks = () => {
   const [activeCategory, setActiveCategory] = useState("Мужские стрижки");
@@ -71,6 +74,14 @@ const OurWorks = () => {
     setSelectedImage(null);
   };
 
+  useEffect(() => {
+      AOS.init({
+        duration: 1000,
+        once: false,
+        offset: 300,
+      });
+    }, []);
+
   if (loading) {
     return <Spinner />;
   }
@@ -78,9 +89,11 @@ const OurWorks = () => {
   return (
     <div className={styles["our-works"]}>
       <img className={styles.logo} src={logo} alt="Логотип" />
-      <h1 className={styles["our-works__title"]}>Наши работы</h1>
+      <h1 data-aos="fade-right" className={styles["our-works__title"]}>
+        Наши работы
+      </h1>
 
-      <div className={styles["category-container"]}>
+      <div data-aos="fade-right" className={styles["category-container"]}>
         <div className={styles["category-buttons"]}>
           {categoryMap.map((category, index) => (
             <div
@@ -116,7 +129,7 @@ const OurWorks = () => {
         </div>
       </div>
 
-      <div className={styles["works-gallery"]}>
+      <div data-aos="zoom-in" className={styles["works-gallery"]}>
         <h1 className={styles["category-name"]}>{activeCategory}</h1>
         {activeCategory && groupedWorks[activeCategory] ? (
           <div className={styles.wrapper}>
@@ -125,6 +138,7 @@ const OurWorks = () => {
                 key={index}
                 className={styles["work-item"]}
                 onClick={() => handleImageClick(work.imageLink)}
+                data-aos="fade-right"
               >
                 <img
                   src={work.imageLink}

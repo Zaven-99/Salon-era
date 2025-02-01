@@ -4,7 +4,7 @@
 .service-field{
   width: $wd-100p;
   margin: $sp-5 auto;
-  padding: 20px;
+  padding: $sp-20;
 }
 
 
@@ -46,12 +46,12 @@
   opacity: .9;
 }
 .duration{
-  width: 100%;
-  max-width: 100%;
+  width: $wd-100p;
+  max-width: $wd-100p;
   min-width: 0px;
   padding: 0.706rem;
   font-style: normal;
-  font-weight: 400;
+  font-weight: $regular;
   font-size: 1rem;
   line-height: 1.412rem;
   color: var(--input-text);
@@ -65,7 +65,7 @@
   caret-color: var(--input-text) !important;
   background: var(--input-background) !important;
   appearance: none !important;
-  margin-top: 5px;
+  margin-top: $sp-5;
  }
  .accept-add__service{
   position: relative;
@@ -85,3 +85,38 @@
     box-shadow: $shadow-small;
     transition: .2s;
  }
+ .wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+ }
+.filter-block{
+  margin-top: $sp-35;
+}
+ .filter-title{
+  margin-left: $sp-10;
+  font-size: $fz-13;
+  margin-bottom: $sp-5;
+
+ }
+ .filter{
+  width: $wd-200;
+  margin-left: $sp-10;
+  border: $br-2 solid;
+  border-radius: $br-2;
+}
+ 
+
+@media(max-width:465px){
+  .add-service{
+    margin-left: 0;
+    width: $sp-160;
+    padding: $sp-10;
+  }
+  .filter{
+    width: $sp-150;
+  }
+  .filter-title{
+    font-size: $fz-10;
+  }
+}

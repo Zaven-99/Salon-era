@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "./Slider";
 import Spinner from "../../src/components/spinner/Spinner";
 
-import styles from "./slides.module.css";
+import styles from "./slides.module.scss";
 
 const Slides = () => {
   const [slides, setSlides] = useState([]);

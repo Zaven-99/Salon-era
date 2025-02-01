@@ -85,6 +85,11 @@
   font-size: $fz-20;
 }
  
+ .delete-account:hover{
+  transform: scale(1.01);
+	opacity: .8;
+	 
+ }
 .profile-close:hover {
   color: rgba(255, 0, 0, 0.274);  
   transition: .2s;
@@ -107,3 +112,91 @@
     margin-top: $sp-10;
 }
  
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+}
+.modal-content {
+  background: #eaeef4;
+  border-radius: $br-8;
+  padding: $sp-50;
+  position: relative;
+  max-width: $wd-500;
+  width: $wd-500;
+  height: $hg-305;
+  z-index: 15; 
+  animation:bounce-in .5s;
+  text-align: center;
+  box-shadow:$shadow-small;
+
+}
+
+.delete-clients{
+	color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  box-shadow: $shadow-small;
+  background-color: #fe5440;
+  border-radius: $br-4;
+  width: $wd-150;
+}
+.delete-clients:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.cancel-delete__clients{
+	color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  box-shadow: $shadow-small;
+  background-color: rgb(15 210 15);
+  border-radius: $br-4;
+  width: $wd-150;
+}
+.cancel-delete__clients:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.btn-block{
+    display: flex;
+    justify-content: space-between;
+    margin-top: $sp-50;
+}
+.delete-account{
+  margin-top: $sp-20;
+}
+.delete-account__inner{
+  width: $wd-135;
+  padding: $sp-5;
+  border-radius: $br-2;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  margin:0 auto;
+  cursor: pointer;
+  gap: $sp-5;
+  color:black;
+}
+.btn-delete{
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+}
+.recycle{
+  width: $wd-20;
+}

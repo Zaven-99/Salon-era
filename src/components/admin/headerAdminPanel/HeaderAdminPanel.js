@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { setUser, removeUser } from "../../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const HeaderAdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showOtherModal, setShowOtherModal] = useState(false);
   const [orders, setOrders] = useState([]);
-  const [prevOrderCount, setPrevOrderCount] = useState(0);
+  const prevOrderCountRef = useRef(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clientType } = useAuth();
@@ -37,6 +37,13 @@ const HeaderAdminPanel = () => {
     navigate("/");
   };
 
+  const playNotificationSound = () => {
+    const audio = new Audio("/sound.mp3");
+    audio
+      .play()
+      .catch((error) => console.error("Ошибка воспроизведения звука:", error));
+  };
+
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -52,12 +59,16 @@ const HeaderAdminPanel = () => {
       }
 
       const data = await response.json();
-      setOrders(data);
-      if (data.length > prevOrderCount) {
+      const newOrderCount = data.length;
+
+      if (newOrderCount > prevOrderCountRef.current) {
+        playNotificationSound();
       }
-      setPrevOrderCount(data.length);
+
+      prevOrderCountRef.current = newOrderCount;
+      setOrders(data);
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -73,7 +84,7 @@ const HeaderAdminPanel = () => {
   }, []);
 
   const createdOrders = orders.filter(
-    (order) => order.record.status === "Заказ создан"
+    (order) => order.record.status === 0
   ).length;
 
   const menuItems = [

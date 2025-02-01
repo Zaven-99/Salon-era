@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import AOS from "aos"; // импортируем AOS
 
 import styles from "./employee.module.scss";
 import logo from "../../../img/logo.png";
@@ -44,6 +45,14 @@ const Employee = () => {
     [barbers]
   );
 
+  useEffect(() => {
+      AOS.init({
+        duration: 1000,
+        once: false,
+        offset: 300,
+      });
+    }, []);
+
   if (loading) {
     return <Spinner />;
   }
@@ -51,18 +60,21 @@ const Employee = () => {
   return (
     <section className={styles["employee-section"]}>
       <img className={styles.logo} src={logo} alt="" />
-      <h1 className={styles["ours-professionals"]}>Наши профессионалы</h1>
-      <div className={styles["employees"]}>
+      <h1 data-aos="fade-right" className={styles["ours-professionals"]}>
+        Наши профессионалы
+      </h1>
+      <div data-aos="zoom-in" className={styles["employees"]}>
         {filteredBarbers.map((item) => (
-          <div key={item.id} className={styles.employee}>
+          <div key={item.id} className={styles.employee} data-aos="fade-right">
             <img
               className={styles["employee-img"]}
               src={item.imageLink || avatar}
               alt=""
+              data-aos="fade-right"
             />
-            <p>{item.firstName}</p>
-            <p>{item.lastName}</p>
-            <p>{getPositionText(item.position)}</p>
+            <p data-aos="fade-right">{item.firstName}</p>
+            <p data-aos="fade-right">{item.lastName}</p>
+            <p data-aos="fade-right">{getPositionText(item.position)}</p>
           </div>
         ))}
       </div>

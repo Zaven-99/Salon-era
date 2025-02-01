@@ -44,7 +44,7 @@
 }
  
 .service-item__inner{
-    width: 100%;
+    width: $wd-100p;
 }
 strong {
 	font-size: $fz-14;
@@ -131,12 +131,12 @@ strong {
 }
  
 .duration{
-	width: 100%;
-    max-width: 100%;
+	width: $wd-100p;
+    max-width: $wd-100p;
     min-width: 0px;
     padding: 0.706rem;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $regular;
     font-size: 1rem;
     line-height: 1.412rem;
     color: var(--input-text);
@@ -150,7 +150,7 @@ strong {
     caret-color: var(--input-text) !important;
     background: var(--input-background) !important;
     appearance: none !important;
-    margin-top: 5px;
+    margin-top: $sp-5;
 }
  
 .btn-block{
@@ -209,7 +209,7 @@ strong {
   position: relative;
   max-width: $wd-500;
   width: $wd-500;
-  height: $hg-270;
+  height: $hg-305;
   z-index: 15; 
   animation:bounce-in .5s;
   text-align: center;
@@ -237,7 +237,7 @@ strong {
     .service-list__item{
         display: block;
         justify-content: center;
-        width: $wd-300;
+        // width: $wd-300;
     }
     .service-list__inner{
         display: flex;

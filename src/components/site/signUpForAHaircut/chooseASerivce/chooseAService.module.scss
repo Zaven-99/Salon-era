@@ -4,56 +4,25 @@
 .sign-up_for__haircut{
 	padding: $sp-10;
 	height: $sp-100p;
-	margin: $sp-50 $sp-150;
+	margin: $sp-50 $sp-120;
 }
 
  
-.priceList-inner{
-	line-height: $sp-32;
-}
-
-.priceList-inner_item{
-	cursor: pointer;
-	display: flex;
-	justify-content: space-between;
-	padding: $sp-15;
-	background:$bg-white;
-	margin-bottom: $sp-5;
-	border-radius:$br-4;
-  align-items:center;
-}
-.priceList-inner_item p {
-  font-family: "Open Sans", sans-serif;
-  font-size: $fz-15;
-  width: $wd-350;
-}
- 
-.priceList-inner_item:hover{
-	transform: scale(1.01);
-	transition: .2s;
-	opacity: .8;
-	box-shadow: $shadow-small;
-}
  .category{
 	display: flex;
   color: black;
 	justify-content: start;
-  margin-bottom: $sp-10;
+   
   font-size: $fz-30;
   font-weight: $medium;
  }
- .selectedService {
-  background-color: rgba(0, 0, 0, 0.242);
-  border: $sp-2 solid $bg-white;  
-  padding: $sp-10;
-  border-radius: $br-4;
-  
-}
+ 
 .selected-services__container{
 	display: flex;
 	align-items: center;
-	justify-content: end;
-  position: absolute;
+	justify-content: space-between;
+  margin-bottom: 10px;
+  padding-top: 10px;
 	gap: $sp-50;
   right: $sp-10;
   top: $sp-90;
@@ -65,10 +34,7 @@
   font-weight: $light;
 }
  
-.button-wrapper{
-	display: flex;
-	gap: $sp-20;
-}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -94,6 +60,10 @@
   animation:bounce-in .5s;
   margin: $sp-10;
    
+}
+.animated{
+  animation:bounce-in 1s;
+
 }
 @keyframes bounce-in {
     0%{
@@ -122,15 +92,30 @@
 }
 .next-to__barber{
  background-color: #00aaff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: max-content;
-    text-align: center;
-    padding: $sp-10 $sp-20;
-    border-radius: $br-4;
-    font-size: $fz-16;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: max-content;
+  text-align: center;
+  padding: $sp-10 $sp-20;
+  border-radius: $br-4;
+  font-size: $fz-16;
+}
+.filter-block{
+  position: absolute;
+  right: $sp-15;
+  top: $sp-25;
+}
+.filter-title{
+  font-size: $fz-13;
+  margin-bottom: $sp-5;
+
+ }
+ .filter{
+  width: $wd-200;
+  border: $br-2 solid;
+  border-radius: $br-2;
 }
 .clarify{
   color:rgb(228 15 15 / 93%)
@@ -148,7 +133,7 @@
  
 @media(max-width:1400px){
   .sign-up_for__haircut{
-    margin: 50px 100px;
+    margin: $sp-50 $sp-100;
   }
    
 }
@@ -167,14 +152,7 @@
 
 @media(max-width:1000px){
 	   
-	  .priceList-inner_item{
-    display: block;
-    gap: $sp-10;
-    width: $wd-100p; 
-    flex-shrink: 0;  
-   }
-  
-    
+	 
    .sign-up_for__haircut{
 	  margin: 0;
     }
@@ -192,22 +170,36 @@
       }
       .category{
         font-size: $fz-20;
-        margin-bottom: $sp-20;
+        
       }
 }
-@media(max-width:425px){
+@media(max-width:580px){
+	  .filter{
+      width: $wd-140;
+    }
+    .filter-title{
+      font-size: $fz-10;
+    }
+    .gender{
+      font-size: $fz-30;
+    }
+    .category{
+        font-size: $fz-15;
+        
+      }
+       
+}
+@media(max-width:475px){
 	  
-       .gender{
-        font-size: $fz-35;
-       }
+        
       .next-to__barber{
         font-size: $fz-12;
       }
-      .category{
-        font-size: $fz-15;
-        margin-bottom: $sp-20;
-      }
+      
       .selected-services__container{
         top: $sp-75;
+      }
+      .next-to__barber{
+        padding: $sp-5 $sp-10 !important;
       }
 }

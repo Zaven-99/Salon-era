@@ -6,6 +6,9 @@
 	justify-content: center;
     margin-bottom: $sp-20;
 }
+.employee-list{
+    padding: $sp-20;
+}
 .message{
 	text-align: center;
 	margin-top: $sp-50;
@@ -164,12 +167,12 @@ img{
 }
 
  .position{
-    width: 100%;
-    max-width: 100%;
+    width: $wd-100p;
+    max-width: $wd-100p;
     min-width: 0px;
     padding: 0.706rem;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $regular;
     font-size: 1rem;
     line-height: 1.412rem;
     color: var(--input-text);
@@ -183,20 +186,20 @@ img{
     caret-color: var(--input-text) !important;
     background: var(--input-background) !important;
     appearance: none !important;
-    margin-top: 5px;
+    margin-top: $sp-5;
      
  
  }
 .employee-item__inner{
-    width: 100%;
+    width: $wd-100p;
  }
  .employee-item__inner div {
-    font-size:12px
+    font-size:$fz-12
  }
 .btn-block{
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
+    margin-top: $sp-50;
 }
 .modal-overlay {
   position: fixed;
@@ -216,7 +219,7 @@ img{
   position: relative;
   max-width: $wd-500;
   width: $wd-500;
-  height: $hg-270;
+  height: $hg-305;
   z-index: 15; 
   animation:bounce-in .5s;
   text-align: center;
@@ -243,11 +246,12 @@ strong{
     font-size: $fz-14;
 }
  
+
 .image-employee{
-    width: 100px;
-    height: 100px;
+    width: $wd-100;
+    height: $wd-100;
     object-fit: cover;
-    border-radius:2%;
+    border-radius:$br-2;
 }
 .preview-block{
     display: flex;
@@ -269,32 +273,32 @@ strong{
 @media(max-width:1400px){
     .employee-item{
         display: block;
-        width: 300px;
+        width: $wd-300;
         justify-content: center;
     }
-    .employee-list__inner{
-        display: flex;
-        align-items:center;
-        flex-wrap: wrap;
-    }
+    // .employee-list__inner{
+    //     display: flex;
+    //     align-items:center;
+    //     flex-wrap: wrap;
+    // }
     .employee-item__inner p{
-        font-size: 15px;
-        line-height: 25px;
+        font-size: $fz-15;
+        line-height: $sp-25;
     }
     
 }
 
 @media(max-width:500px){
     .employee-item{
-       margin: 20px auto;
+       margin: $sp-20 auto;
     }
     .employee{
-        font-size: 35px;
+        font-size: $fz-35;
     }
     .modal-content{
-        width: 400px;
+        width: $wd-400;
     }
     .btn-block{
-        gap: 15px;
+        gap: $sp-15;
     }
 }

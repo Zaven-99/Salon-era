@@ -1,15 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
+import AOS from "aos"; // импортируем AOS
 
 import styles from "./privacyPolicy.module.scss";
 
 const PrivacyPolicy = () => {
+
+  useEffect(() => {
+      AOS.init({
+        duration: 1000,
+        once: false,
+        offset: 100,
+      });
+    }, []);
   return (
     <div className={styles["privacy-policy"]}>
-      <header>
+      <header data-aos="fade-zoom-in">
         <h1 className={styles.title}>Политика конфиденциальности</h1>
       </header>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>1. Введение</h2>
         <p className={styles["privacy-paragraph"]}>
           Настоящая Политика конфиденциальности (далее — «Политика») объясняет,
@@ -21,7 +30,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>2. Сбор персональных данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы можем собирать следующие персональные данные:
@@ -48,7 +57,7 @@ const PrivacyPolicy = () => {
         </ul>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>3. Цели обработки персональных данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы обрабатываем ваши персональные данные для следующих целей:
@@ -74,7 +83,7 @@ const PrivacyPolicy = () => {
         </ul>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>4. Хранение данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Ваши персональные данные хранятся в течение необходимого срока для
@@ -83,7 +92,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>5. Раскрытие данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы не передаем ваши персональные данные третьим лицам, за исключением
@@ -93,7 +102,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>6. Защита данных</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы применяем различные меры безопасности для защиты ваших персональных
@@ -104,7 +113,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>7. Ваши права</h2>
         <p className={styles["privacy-paragraph"]}>Вы имеете право:</p>
         <ul>
@@ -129,7 +138,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>8. Использование cookies</h2>
         <p className={styles["privacy-paragraph"]}>
           Наш сайт использует cookies для улучшения работы сайта и анализа
@@ -139,7 +148,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>9. Изменения в Политике конфиденциальности</h2>
         <p className={styles["privacy-paragraph"]}>
           Мы оставляем за собой право в любое время изменять или обновлять
@@ -148,7 +157,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <footer>
+      <footer data-aos="fade-zoom-in">
         <p className={styles["privacy-paragraph"]}>
           <strong>Дата последнего обновления:</strong> 11.12.2024г.
         </p>

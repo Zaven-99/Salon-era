@@ -51,6 +51,14 @@ const ServiceList = ({
     "3ч",
     "3ч 30 минут",
     "4ч",
+    "4ч 30 минут",
+    "5ч",
+    "5ч 30 минут",
+    "6ч",
+    "6ч 30 минут",
+    "7ч",
+    "7ч 30 минут",
+    "8ч",
   ];
 
   const getGenderText = (gender) => genderMap[gender];
@@ -180,7 +188,7 @@ const ServiceList = ({
           </h3>
           {Object.keys(groupedServices[genderKey]).map((category, index) => (
             <div key={index}>
-              <h4 className={styles.category}>{category}</h4>
+              <h4 className={styles.category}>Категория: {category}</h4>
               <ul className={styles["service-list__inner"]}>
                 {groupedServices[genderKey][category].map((service, index) => (
                   <li className={styles["service-list__item"]} key={index}>
@@ -204,9 +212,9 @@ const ServiceList = ({
                             {...register("name", {
                               required: "Это поле обязательно.",
                               minLength: {
-                                value: 3,
+                                value: 2,
                                 message:
-                                  "Имя должен содержать минимум 3 символа.",
+                                  "Имя должен содержать минимум 2 символа.",
                               },
                             })}
                           />

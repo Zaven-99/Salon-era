@@ -1,0 +1,97 @@
+@import '../../../../styles/variables.scss';
+.user-feedback__block{
+    display: flex;
+    margin-top: $sp-40; 
+    align-items: baseline;
+    gap: $sp-10;
+}
+.user-feedback__block__inner{
+    width: $wd-100p;
+}
+.user-feedback__firstName{
+    margin: 0;
+}
+.user-feedback__text{
+    margin: 0 0 $sp-10 0;
+    word-wrap: break-word ;      
+    overflow-wrap: break-word;  
+}
+.feedBack-estimation{
+    margin-top: $sp-20;
+}
+.feedBack{
+    height: max-content;
+    background-color:white;
+    width: $wd-100p;
+    padding: $sp-15;
+    border-radius:$br-5;
+}
+.feedBackField{
+    height: max-content;
+   
+}
+.post-feedback{
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: $sp-10 $sp-20;
+    border-radius: $br-4;
+    font-size: $fz-16;
+}
+.feedBack-button__block{
+    display: flex;
+    justify-content: end;
+    margin-top: $sp-10;
+    gap: $sp-20;
+}
+ 
+ .feedback-text{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;;
+ }
+ .feedback-empty{
+    margin-top: 0;
+ }
+ .feedBack-block{
+     
+    position: relative;
+}
+
+ .edit-feedback{
+    margin: 0 0 $sp-15 0;
+ }
+ .change-feedback{
+    background-color: #00000099;
+    font-family: "Open Sans", sans-serif;
+    width: max-content;
+    color: white;
+    font-size: $fz-15;
+    font-weight: $regular;
+    padding: $sp-3;
+    border-radius: $br-3;
+   
+}
+.change-button__block{
+	display: flex;
+	align-items:center;
+	gap: $sp-10;
+}
+ .change-feedback:hover{
+    transform: scale(1.05);
+}
+
+
+/*media*/
+  @media(max-width:445px){
+	 
+	  
+     .post-feedback{
+        font-size: $fz-12;
+     }
+    
+}

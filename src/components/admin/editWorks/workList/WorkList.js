@@ -95,6 +95,7 @@ const WorkList = ({
     } finally {
       setLoading(false);
       document.body.style.overflow = "scroll";
+      window.location.reload()
     }
   };
 

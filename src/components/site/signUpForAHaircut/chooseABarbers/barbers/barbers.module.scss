@@ -1,0 +1,87 @@
+@import '../../../../styles/variables.scss';
+
+
+.wrapper{
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: $wd-100p;
+    margin-bottom: $sp-10;
+}
+.barber-avatar{
+    object-fit: cover;
+    width:$wd-150 ;
+    height: $hg-150;
+    border-radius:$br-50p;
+}
+.barber-item{
+    font-size: $fz-20 !important;
+    font-weight: initial !important;
+}
+.exclamation img{
+	width: $wd-25 !important ;
+	
+}
+.exclamation img:hover{
+	transform: scale(1.3);
+    transition: .3s;
+	
+}
+.about-barber{
+	display: flex;
+	align-items:center;
+	gap: 20px;
+}
+/*media*/
+
+@media(max-width:1000px){
+	 
+	.barber-avatar{
+        width: $wd-100;
+        height: $hg-100;
+    }
+	 .barber-item{
+        font-size: $fz-20 ;
+        line-height: $sp-20;
+    }
+ 
+}
+
+ @media(max-width:590px){
+	 
+	 .barber-avatar{
+        width: $wd-80;
+        height: $hg-80
+     }
+   .barber-item{
+        font-size: $fz-15 !important ;
+        line-height: $sp-15;
+    }
+     
+    
+}
+ 
+  @media(max-width:445px){
+	 
+	 .barber-avatar{
+        width: $wd-80;
+        height: $hg-80
+     }
+	 .barber-item{
+        font-size: $fz-13 !important ;
+    }
+     
+    
+}
+ 
+
+ @media(max-width:425px){
+	 
+	 .barber-avatar{
+        width: $wd-60;
+        height: $hg-60
+     }
+      
+     
+    
+}

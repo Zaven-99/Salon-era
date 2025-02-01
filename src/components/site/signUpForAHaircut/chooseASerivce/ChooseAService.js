@@ -5,23 +5,23 @@ import {
 } from "../../../../store/slices/serviceSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../../../use-auth/use-auth";
+import Service from "./service/Service";
+import AOS from "aos"; // импортируем AOS
+
 
 import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
 
 import styles from "./chooseAService.module.scss";
-import Service from "./Service";
 
-const ChooseAService = ({ handleSignUpClick }) => {
+const ChooseAService = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const { token } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const getDurationText = (duration) => {
     const durations = {
       1: "30 минут",
@@ -40,14 +40,20 @@ const ChooseAService = ({ handleSignUpClick }) => {
     (state) => state.service.selectedServices
   );
 
-  const selectedServicesCount = selectedServices.length;
-
   const toggleChooseService = (service) => {
     const isServiceSelected = selectedServices.some((s) => s.id === service.id);
     isServiceSelected
       ? dispatch(removeService(service.id))
       : dispatch(addService(service));
   };
+
+  useEffect(() => {
+    AOS.init({
+      duration: 500,
+      once: false,
+      offset: 10,
+    });
+  }, []);
 
   const fetchServices = async () => {
     setLoading(true);
@@ -56,13 +62,11 @@ const ChooseAService = ({ handleSignUpClick }) => {
       const response = await fetch("https://api.salon-era.ru/services/all", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",  
+          "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
         const errorText = await response.text();
-        
-
         throw new Error(
           `Ошибка: ${response.status} - ${response.statusText} (${errorText})`
         );
@@ -85,6 +89,7 @@ const ChooseAService = ({ handleSignUpClick }) => {
     fetchServices();
   }, []);
 
+  // Группировка сервисов по полу и категории
   const groupedServices = services.reduce((acc, service) => {
     if (!acc[service.gender]) {
       acc[service.gender] = {};
@@ -100,51 +105,108 @@ const ChooseAService = ({ handleSignUpClick }) => {
     return <div className={styles.error}>Ошибка: {error}</div>;
   }
 
+  // Уникальные категории для фильтрации
+  const uniqueCategories = [
+    ...new Set(services.map((service) => service.category)),
+  ];
+
+  // Фильтрация сервисов на основе выбранной категории
+  const filteredGroupedServices = Object.keys(groupedServices).reduce(
+    (acc, genderKey) => {
+      acc[genderKey] = Object.keys(groupedServices[genderKey]).reduce(
+        (categoryAcc, category) => {
+          // Если категория выбрана, то фильтруем только по ней
+          if (!selectedCategory || selectedCategory === category) {
+            categoryAcc[category] = groupedServices[genderKey][category];
+          }
+          return categoryAcc;
+        },
+        {}
+      );
+      return acc;
+    },
+    {}
+  );
+  
+
   if (loading) {
     return <Spinner />;
   }
 
   return (
     <section className={styles["choose-service"]}>
-      <h1 className={styles.signUpForAHaircut}>Записаться</h1>
-      <div className={styles["sign-up_for__haircut"]}>
-        <div className={styles["selected-services__container"]}>
-          {selectedServicesCount > 0 && token && (
-            <div className={styles["navigate-button__container"]}>
-              <div className={styles["button-wrapper"]}>
-                <CustomButton
-                  className={styles["next-to__barber"]}
-                  onClick={() => navigate("/select-barbers")}
-                  label="Перейти к парикмахерам"
-                  type="button"
-                />
-              </div>
-            </div>
-          )}
-        </div>
+      <h1 data-aos="fade-right" className={styles.signUpForAHaircut}>
+        Записаться
+      </h1>
 
+      <div className={styles["sign-up_for__haircut"]}>
+        <div className={styles["filter-block"]}>
+          <p className={styles["filter-title"]}>Отфильтруйте по категориям</p>
+
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className={styles.filter}
+          >
+            <option value="">Все категории</option>
+            {uniqueCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
         <ul>
-          {Object.keys(groupedServices).map((genderKey) => (
-            <div key={genderKey}>
-              <span className={styles.gender}>
-                {genderKey == 1 ? "Мужские услуги" : "Женские услуги"}
-              </span>
-              {Object.keys(groupedServices[genderKey]).map((category) => (
-                <div className={styles["price-list"]} key={category}>
-                  <h3 className={styles.category}>{category}</h3>
-                  {token ? (
-                    <Service
-                      groupedServices={groupedServices}
-                      genderKey={genderKey}
-                      category={category}
-                      toggleChooseService={toggleChooseService}
-                      selectedServices={selectedServices}
-                      getDurationText={getDurationText}
-                    />
-                  ) : (
-                    <div onClick={handleSignUpClick}>
+          {Object.keys(filteredGroupedServices).map((genderKey) => {
+            const genderServices = filteredGroupedServices[genderKey];
+
+            const hasServices = Object.keys(genderServices).length > 0;
+
+            if (!hasServices) return null;
+
+            return (
+              <div key={genderKey}>
+                <span data-aos="fade-right" className={styles.gender}>
+                  {genderKey === "1" ? "Мужские услуги" : "Женские услуги"}
+                </span>
+
+                {Object.keys(genderServices).map((category) => {
+                  const selectedInCategory = selectedServices.some(
+                    (service) =>
+                      service.category === category &&
+                      service.gender == genderKey
+                  );
+
+                  return (
+                    <div
+                      data-aos="fade-right"
+                      className={styles["price-list"]}
+                      key={category}
+                    >
+                      <div className={styles["selected-services__container"]}>
+                        <h3 className={styles.category}>{category}</h3>
+                        {selectedInCategory && (
+                          <div
+                            className={
+                              selectedServices
+                                ? styles["animated"]
+                                : styles["navigate-button__container"]
+                            }
+                          >
+                            <div className={styles["button-wrapper"]}>
+                              <CustomButton
+                                className={styles["next-to__barber"]}
+                                onClick={() => navigate("/select-barbers")}
+                                label="Перейти к парикмахерам"
+                                type="button"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
                       <Service
-                        groupedServices={groupedServices}
+                        groupedServices={filteredGroupedServices}
                         genderKey={genderKey}
                         category={category}
                         toggleChooseService={toggleChooseService}
@@ -152,11 +214,11 @@ const ChooseAService = ({ handleSignUpClick }) => {
                         getDurationText={getDurationText}
                       />
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
+                  );
+                })}
+              </div>
+            );
+          })}
         </ul>
       </div>
     </section>

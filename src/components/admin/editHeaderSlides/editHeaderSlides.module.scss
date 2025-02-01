@@ -9,10 +9,10 @@
 }
 .message{
     text-align: center;
-    margin-top: 50px;
+    margin-top: $sp-50;
     font-family: "Open Sans", sans-serif;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: $fz-20;
+    font-weight: $medium;
     color: salmon;
 }
 .add-slides{
@@ -52,13 +52,13 @@ transition: .2s;
 }
 .description{
   display: block;
-  width: 100%;
+  width: $wd-100p;
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
   font-family: inherit;
-  margin-top: 5px;
+  margin-top: $sp-5;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: $regular;
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
@@ -67,15 +67,15 @@ transition: .2s;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
-  height: 100px;
+  height: $hg-100;
 }
 
 .category{
-    width: 100%;
-    max-width: 100%;
+    width: $wd-100p;
+    max-width: $wd-100p;
     padding: 0.706rem;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $regular;
     font-size: 1rem;
     line-height: 1.412rem;
     color: var(--input-text);
@@ -89,5 +89,8 @@ transition: .2s;
     caret-color: var(--input-text) !important;
     background: var(--input-background) !important;
     appearance: none !important;
-    margin-top: 5px;
+    margin-top: $sp-5;
+}
+.error{
+  color:salmon;
 }

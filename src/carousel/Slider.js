@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Children, cloneElement } from "react";
-import styles from "./slider.module.css";
+import styles from "./slider.module.scss";
 
 const SLIDE_INTERVAL = 10000;
 

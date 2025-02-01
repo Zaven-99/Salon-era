@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/userSlice";
@@ -109,6 +109,8 @@ const SignUpForm = ({
           throw new Error(
             JSON.stringify({ message: errorText, status: statusCode })
           );
+        } else {
+          setLoading(true);
         }
 
         const data = await response.json();
@@ -155,7 +157,7 @@ const SignUpForm = ({
             ...prev,
             phone: `Пользователь с номером ${formValues.phone} уже существует`,
           }));
-        } else if (status === 6533) {
+        } else if (status === 443) {
           setErrorMessages((prev) => ({
             ...prev,
             email: `Клиент с указанным почтовым адресом ${formValues.email} уже существует`,
@@ -275,6 +277,8 @@ const SignUpForm = ({
               value: 20,
               message: "Логин не должен превышать 20 символов.",
             },
+            onChange: () =>
+              setErrorMessages((prev) => ({ ...prev, login: "" })),
           })}
         />
         <CustomInput
@@ -341,6 +345,8 @@ const SignUpForm = ({
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: "Введите корректный адрес электронной почты",
             },
+            onChange: () =>
+              setErrorMessages((prev) => ({ ...prev, email: "" })),
           })}
         />
         <p className={styles["error-message"]}>{errorMessages.phone}</p>
@@ -359,6 +365,8 @@ const SignUpForm = ({
               value: /^\+7\d{10}$/,
               message: "Номер телефона должен содержать 10 цифр",
             },
+            onChange: () =>
+              setErrorMessages((prev) => ({ ...prev, phone: "" })),
           })}
         />
         <ImagePreview
@@ -381,7 +389,7 @@ const SignUpForm = ({
             name="gender"
             error={errors.gender}
             control={control}
-            isDarkMode = {isDarkMode}
+            isDarkMode={isDarkMode}
             {...register("gender", { required: "Выберите пол." })}
           />
         </div>
@@ -394,7 +402,7 @@ const SignUpForm = ({
       </form>
       {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}
       <div className={styles["privacy-policy"]}>
-        <label className={isDarkMode ? styles["darkmode"] :styles['agree'] }>
+        <label className={isDarkMode ? styles["darkmode"] : styles["agree"]}>
           <input
             value=""
             name="policy"

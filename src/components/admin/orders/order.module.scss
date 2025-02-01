@@ -11,7 +11,10 @@
     padding: $sp-15;
     margin-bottom: $sp-5;
     border-radius: $br-4;
-	margin: $sp-10 $sp-50 $sp-10 $sp-50;
+	margin: $sp-10 $sp-10 $sp-10 $sp-10;
+}
+.record-item__inner{
+    width: $wd-200;
 }
 .accept{
 	color: black;
@@ -133,7 +136,7 @@
     box-shadow: $shadow-small;
     
 }
-
+ 
 @media(max-width:1400px){
     .record-list{
         display: flex;
@@ -164,4 +167,8 @@
     }
 }
 
- 
+ @media(max-width:520px){
+  .orders-today{
+    font-size: $fz-20;
+  }
+}

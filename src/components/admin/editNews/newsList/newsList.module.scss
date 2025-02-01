@@ -7,7 +7,7 @@
 .news-list__inner{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: $sp-10;
 }
  
 
@@ -26,6 +26,7 @@
   margin-bottom: $sp-5;
   border-radius: $br-4;
 	gap: $sp-10;
+  height: max-content;
  }
 .news-list__item:hover{
 	box-shadow: $shadow-small;
@@ -44,7 +45,7 @@
 }
  
  .main-text{
-  margin: 15px 0px 15px 0px ;
+  margin: $sp-15 0px $sp-15 0px ;
  }
 .delete-news{
 	color: black;
@@ -125,10 +126,10 @@
  
  
 .btn-block{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
-    gap: $sp-10;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  gap: $sp-10;
 }
 .modal-overlay {
   position: fixed;
@@ -148,7 +149,7 @@
   position: relative;
   max-width: $wd-500;
   width: $wd-500;
-  height: $hg-270;
+  height: $hg-305;
   z-index: 15; 
   animation:bounce-in .5s;
   text-align: center;
@@ -174,13 +175,13 @@
  
 .description{
   display: block;
-  width: 100%;
+  width: $wd-100p;
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
   font-family: inherit;
   margin-top: 5px;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: $regular;
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
@@ -189,7 +190,7 @@
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
-  height: 100px;
+  height: $hg-100;
 }
 .description:focus{
   color: #212529;

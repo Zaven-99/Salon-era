@@ -1,0 +1,29 @@
+@import '../components//styles/variables.scss';
+
+
+.main-container{
+    height: $hg-500;
+    top: 13.8em;
+}
+.sircle{
+    display: flex;
+    align-items: center;
+ }
+.window{
+    width: $wd-100p;
+    height: $hg-100p;
+    overflow: hidden;
+ }
+ 
+.all-items-container{
+    height: $hg-100p;
+    display: flex;
+
+    transition: translate;
+    transition-property: transform;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+}
+
+ 
+ 

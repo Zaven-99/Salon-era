@@ -113,9 +113,9 @@
     background-color:black;
     background-color: #b5b5b5;
     margin: 0 auto;
-    margin-top: 35px;
-    padding: 15px;
-    margin-bottom: 20px;
+    margin-top: $sp-35;
+    padding: $sp-15;
+    margin-bottom: $sp-20;
 }
 .signIn-btn:hover{
     transform: scale(1.01);

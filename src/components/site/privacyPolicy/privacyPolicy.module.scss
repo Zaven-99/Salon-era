@@ -1,42 +1,45 @@
+@import '../../styles/variables.scss';
+
+
 .title{
 	margin-bottom: 15px;
 }
 .privacy-policy{
-	padding: 50px;
+	padding: $sp-50;
 }
 
 .privacy-marker{
 	font-family: Open Sans,sans-serif;
 	color: #000;
-    font-size: 15px;
-    font-weight: 300;
-    padding: 5px;
+    font-size: $fz-15;
+    font-weight: $light;
+    padding: $sp-5;
 }
 .privacy-paragraph{
 	font-family: Open Sans,sans-serif;
 	color: #000;
-    font-size: 15px;
-    font-weight: 300;
-    padding: 5px;
+    font-size: $fz-15;
+    font-weight: $light;
+    padding: $sp-5;
 	
 }
 .section li {
 	list-style-type: circle;
-    font-weight:400;
+    font-weight:$regular;
 }
 .section{
-	box-shadow: 0 9px 8px -14px;
-	padding: 30px;
+	box-shadow: $shadow-unique;
+	padding: $sp-30;
 }
 
 @media(max-width:865px){
 	.title{
-		font-size: 30px;
+		font-size: $fz-30;
 	}
 }
 @media(max-width:580px){
 	.title{
-		font-size: 20px;
+		font-size: $fz-20;
 		 
 	}
 }

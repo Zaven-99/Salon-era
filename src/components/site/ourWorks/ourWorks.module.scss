@@ -28,7 +28,7 @@
 	
 }
 .category-button{
-  font-weight: 300;
+  font-weight: $light;
 	cursor: pointer;
   color: black;
 	padding: $sp-10;
@@ -157,7 +157,7 @@
 	.wrapper{
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(4, 0fr);
+    grid-template-columns: repeat(3, 0fr);
 	}
 }
 
@@ -183,12 +183,12 @@
     grid-template-columns: repeat(3, 0fr);
 	}
   .work-item{
-    width: 100px;
+    width: $wd-100;
   }
   .img-work{
     object-fit: cover;
-    width: 200px;
-    height: 100px;
+    width: $wd-200;
+    height: $hg-100;
   }
   .category-name{
     font-size: $sp-30;
@@ -197,7 +197,7 @@
 @media(max-width:750px){
 	 
 	.wrapper{
-    gap: 5px;
+    gap: $sp-5;
 	}
   .category-name{
     font-size: $sp-20;

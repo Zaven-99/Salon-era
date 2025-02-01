@@ -39,6 +39,14 @@ const ServiceField = () => {
     "3ч",
     "3ч 30 минут",
     "4ч",
+    "4ч 30 минут",
+    "5ч",
+    "5ч 30 минут",
+    "6ч",
+    "6ч 30 минут",
+    "7ч",
+    "7ч 30 минут",
+    "8ч",
   ];
 
   const [services, setServices] = useState([]);
@@ -46,6 +54,7 @@ const ServiceField = () => {
   const [addService, setAddService] = useState(false);
   const [activeInput, setActiveInput] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const toggleOpenSignInForm = () => {
     setAddService(true);
@@ -92,6 +101,14 @@ const ServiceField = () => {
       setLoading(false);
     }
   };
+  //фильтрование по категориям
+  const uniqueCategories = [
+    ...new Set(services.map((service) => service.category)),
+  ];
+  const filteredServices = selectedCategory
+    ? services.filter((service) => service.category === selectedCategory)
+    : services;
+
   if (loading) {
     return <Spinner />;
   }
@@ -99,11 +116,30 @@ const ServiceField = () => {
   return (
     <div className={styles["service-field"]}>
       {errorMessage && <>Что-то не так...</>}
-      <CustomButton
-        className={styles["add-service"]}
-        label="Добавить услугу"
-        onClick={toggleOpenSignInForm}
-      />
+      <div className={styles.wrapper}>
+        <CustomButton
+          className={styles["add-service"]}
+          label="Добавить услугу"
+          onClick={toggleOpenSignInForm}
+        />
+        <div className={styles['filter-block']}>
+          <p className={styles['filter-title']}>Отфильтруйте по категориям</p>
+
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className={styles.filter}
+          >
+            <option value="">Все категории</option>
+            {uniqueCategories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       {addService && (
         <Modal
           toggleCloseSignInForm={toggleCloseSignInForm}
@@ -124,8 +160,8 @@ const ServiceField = () => {
               {...register("name", {
                 required: "Это поле обязательно.",
                 minLength: {
-                  value: 3,
-                  message: "Название должен содержать минимум 3 символа.",
+                  value: 2,
+                  message: "Название должен содержать минимум 2 символа.",
                 },
               })}
             />
@@ -219,8 +255,9 @@ const ServiceField = () => {
           </form>
         </Modal>
       )}
+
       <ServiceList
-        services={services}
+        services={filteredServices}
         setServices={setServices}
         toggleCloseSignInForm={toggleCloseSignInForm}
         toggleOpenSignInForm={toggleOpenSignInForm}

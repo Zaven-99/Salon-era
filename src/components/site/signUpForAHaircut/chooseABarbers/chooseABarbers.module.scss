@@ -13,11 +13,17 @@
 	background:$bg-white;
 	border-radius:$br-4;
 	margin-bottom: $sp-5;
+    margin-top: $sp-10;
 }
 .barbers:hover{
 	transform: scale(1.01);
 	transition: .2s;
 	box-shadow: $shadow-small;
+}
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
  
 .barbers p {
@@ -34,9 +40,9 @@
     transition: background-color 0.3s ease;
     width: max-content;
     text-align: center;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: $sp-10 $sp-20;
+    border-radius: $br-5;
+    font-size: $fz-16;
 }
 .back:hover{
 	transform: scale(1.01);
@@ -45,23 +51,7 @@
 	box-shadow: $shadow-small;
 
 }
-.wrapper{
-	display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: $wd-100p;
-    margin-bottom: $sp-10;
-}
  
-.exclamation img{
-	width: $wd-25 !important ;
-	
-}
-.exclamation img:hover{
-	transform: scale(1.3);
-    transition: .3s;
-	
-}
  .selectedBarber {
   display: flex;
   flex-wrap: wrap; 
@@ -87,10 +77,7 @@
 	transform: scale(1.02);
 	opacity: .8;
 }
-.wrapper{
-	display: flex;
-	justify-content: space-between;
-}
+ 
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -141,17 +128,7 @@
     padding: $sp-10 $sp-10;
     border-radius: $br-8;
 }
-.feedBack{
-    height: max-content;
-    background-color:white;
-    width: $wd-100p;
-    padding: $sp-15;
-    border-radius:$br-5;
-}
-.feedBackField{
-    height: max-content;
-   
-}
+
  
 textarea{
     resize: none;
@@ -166,37 +143,12 @@ textarea{
     transition: width 0.2s ease, height 0.2s ease;
     position: relative;
 }
-.post-feedback{
-    background-color: #00aaff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: max-content;
-    text-align: center;
-    padding: $sp-10 $sp-20;
-    border-radius: $br-4;
-    font-size: $fz-16;
-}
-.feedBack-button__block{
-    display: flex;
-    justify-content: end;
-    margin-top: $sp-10;
-    gap: $sp-20;
-}
-.feedBack-form{
-    margin-top: 80px;
-}
- .feedback-text{
-    display: flex;
-    align-items:center;
-    justify-content: space-between;;
- }
+
 .cancel{
-    left: 100px;
+    left: $sp-100;
 }
 .delete{
-    left: 180px;
+    left: $sp-180;
     background-color:salmon !important;
 }
 .disabled {
@@ -217,27 +169,7 @@ textarea{
     border-radius: $br-4;
     margin-top: $sp-10;
 }
-.user-feedback__block{
-    display: flex;
-    margin-top: $sp-40; 
-    align-items: baseline;
-    gap: $sp-10;
-}
-.user-feedback__block__inner{
-    width: 100%;
-}
-.user-feedback__firstName{
-    margin: 0;
-}
-.user-feedback__text{
-    margin: 0 0 10px 0;
-    // width: 240px;
-    word-wrap: break-word ;      
-    overflow-wrap: break-word;  
-}
-.feedBack-estimation{
-    margin-top: $sp-50;
-}
+
  
 .open{
     animation:bounce-in .8s;
@@ -252,55 +184,23 @@ textarea{
     gap: $sp-30;
     line-height: $sp-30;
 }
-.barber-avatar{
-    object-fit: cover;
-    width:$wd-150 ;
-    height: $hg-150;
-    border-radius:$br-50p;
-}
+
 .user-avatar{
      
     object-fit: cover;
     border-radius: $br-50p;
 }
-.barber-item{
-    font-size: $fz-20 !important;
-    font-weight: initial !important;
-}
-.feedBack-block{
-     
-    position: relative;
-}
+
+
 .change-button__block{
     position: absolute;
 }
-.change-feedback{
-    background-color: #00000099;
-    font-family: "Open Sans", sans-serif;
-    width: max-content;
-    color: white;
-    font-size: 15px;
-    font-weight: 400;
-    padding: 3px;
-    border-radius: 2px;
-    position: absolute;
-}
-.change-feedback:hover{
-    transform: scale(1.05);
-}
- .edit-feedback{
-    margin: 0 0 15px 0;
- }
+
+/*media*/
 @media(max-width:1000px){
 	 
-	.barber-avatar{
-        width: $wd-100;
-        height: $hg-100;
-    }
-    .barber-item{
-        font-size: $fz-20 ;
-        line-height: $sp-20;
-    }
+	 
+   
     .choose-a__barbers{
         margin: 0;
     }
@@ -312,44 +212,16 @@ textarea{
     }
     
 }
- @media(max-width:590px){
-	 
-	 .barber-avatar{
-        width: 80px;
-        height: 80px
-     }
-    .barber-item{
-        font-size: $fz-15 !important ;
-        line-height: $sp-15;
-    }
-     
-    
-}
-  @media(max-width:445px){
-	 
-	 .barber-avatar{
-        width: 80px;
-        height: 80px
-     }
-    .barber-item{
-        font-size: $fz-13 !important ;
-    }
-     .post-feedback{
-        font-size: 12px;
-     }
-    
-}
+
+
  @media(max-width:425px){
 	 
-	 .barber-avatar{
-        width: 60px;
-        height: 60px
-     }
+	  
      .navigate-button__container button{
-        font-size: 12px;
+        font-size: $fz-12;
      }
      .back{
-        font-size: 12px;
+        font-size: $fz-12;
      }
      
     

@@ -4,7 +4,7 @@
 .wrapper {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: $sp-3;
 }
 
 .ratingContainer {
@@ -14,7 +14,7 @@
 }
 
 .star {
-  font-size: 24px;
+  font-size: $fz-24;
   color: rgb(154, 154, 154);   
   cursor: pointer;
   transition: color 0.2s ease, transform 0.2s ease;
@@ -30,10 +30,10 @@
 }
 
 .count {
-  font-size: 16px;
-  font-weight: 300;
+  font-size: $fz-16;
+  font-weight: $light;
   color: black;
-  margin-left: 8px;
+  margin-left: $sp-8;
   transition: opacity 0.3s ease;
 }
 

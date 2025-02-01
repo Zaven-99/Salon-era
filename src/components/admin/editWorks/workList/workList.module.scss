@@ -5,10 +5,10 @@
  }
 
 .work-list__inner {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-  gap: 15px; 
-  margin-top: 20px;
+   display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .work-list__item {
@@ -17,6 +17,8 @@
   border-radius: $br-8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  object-fit: cover;
+  width: 200px;
 }
 .work-list__item:hover{
 	box-shadow: $shadow-small;
@@ -47,7 +49,7 @@
   position: relative;
   max-width: $wd-500;
   width: $wd-500;
-  height: $hg-270;
+  height: $hg-305;
   z-index: 15; 
   animation:bounce-in .5s;
   text-align: center;
@@ -179,4 +181,13 @@
   display: flex;
   justify-content: space-between;
   align-items:center;
+ }
+
+ @media(max-width:670px){
+    .work-list__item{
+      width: 100px;
+    }
+    .work-list__item img{
+      height: 100px;
+    }
  }

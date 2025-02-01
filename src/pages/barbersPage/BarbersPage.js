@@ -4,6 +4,7 @@ import Footer from "../../components/site/footer/Footer";
 import ServicesSection from "../../components/site/servicesSection/ServicesSection";
 import ChooseABarbers from "../../components/site/signUpForAHaircut/chooseABarbers/ChooseABarbers";
 import NewsBlock from "../../components/site/newBlock/newsBlock";
+import { useAuth } from "../../use-auth/use-auth";
 
 const BarbersPage = ({
   openSignInForm,
@@ -12,6 +13,13 @@ const BarbersPage = ({
   toggleOpenSignInForm,
   toggleCloseSignInForm,
 }) => {
+const { token } = useAuth();
+
+  const handleSignUpClick = () => {
+    if (!token) {
+      toggleOpenSignInForm();
+    }
+  };
   return (
     <div>
       <Header
@@ -22,7 +30,7 @@ const BarbersPage = ({
         toggleCloseSignInForm={toggleCloseSignInForm}
       />
       <ServicesSection />
-      <ChooseABarbers />
+      <ChooseABarbers handleSignUpClick={handleSignUpClick} />
       <NewsBlock />
       <Footer />
     </div>

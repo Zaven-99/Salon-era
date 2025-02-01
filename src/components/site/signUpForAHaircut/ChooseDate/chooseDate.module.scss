@@ -203,10 +203,10 @@
     justify-content: center;
     transition: background 0.3s;
     background-color: #b5b5b5;
-    width: 200px;
-    margin: 15px auto;
-    padding: 15px;
-    border-radius: 4px;
+    width: $wd-200;
+    margin: $sp-15 auto;
+    padding: $sp-15;
+    border-radius: $br-4;
 }
 
 @media(max-width:500px){
@@ -224,10 +224,10 @@
 }
 @media(max-width:425px){
 	   .toMain{
-      font-size: 12px;
+      font-size: $fz-12;
      }
      .sign-up_to__haircut{
-      font-size: 12px;
+      font-size: $fz-12;
      }
 	  
 }

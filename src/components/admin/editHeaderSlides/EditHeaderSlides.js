@@ -25,7 +25,7 @@ const EditHeaderSlides = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [errorMessages, setErrorMessages] = useState("");
   const toggleOpenSignInForm = () => {
     setAddSlides(true);
   };
@@ -69,6 +69,11 @@ const EditHeaderSlides = () => {
         category: "8",
       })
     );
+    if (!selectedFile) {
+      setErrorMessages("Добавьте картинку!");
+      setLoading(false);
+      return;
+    }
 
     if (selectedFile) {
       formData.append("imageData", selectedFile, selectedFile.name);
@@ -129,7 +134,7 @@ const EditHeaderSlides = () => {
               deletImagePreview={deletImagePreview}
               imagePreview={imagePreview}
             />
-
+            <p className={styles.error}>{errorMessages}</p>
             <CustomInput
               type="file"
               name="imageLink"

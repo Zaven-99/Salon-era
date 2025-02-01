@@ -1,0 +1,43 @@
+@import '../components//styles/variables.scss';
+
+.carousel {
+  position: relative;
+  width: $wd-100p;
+  max-width: $wd-600;  
+  margin: 0 auto;
+  overflow: hidden;  
+}
+
+.carousel-images {
+  display: flex;
+  transition: transform ease-out 0.45s;  
+}
+
+.slide {
+  min-width: $wd-100p;  
+}
+
+.description{
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+	font-size: 20px;
+	font-weight: 300;
+  color:white;
+  font-size: 70px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 500px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+.text{
+    color:white;
+}
+
+@media(max-width:520px){
+  .text{
+    font-size: 20px;
+}
+}

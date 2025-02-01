@@ -49,7 +49,6 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
   };
 
   const onSubmit = async (formValues) => {
-     
     const formData = {
       ...formValues,
     };
@@ -109,9 +108,8 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
 
       if (data.clientType === "admin") {
         navigate("/adminPanel/orders");
-      } else {
-        navigate("/");
       }
+
       toggleCloseSignInForm();
     } catch (error) {
       const errorData = JSON.parse(error.message);
@@ -145,7 +143,11 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
             error={errors.login}
             isActive={activeInput === "login"}
             setActiveInput={setActiveInput}
-            {...register("login", { required: "Это поле обязательно." })}
+            {...register("login", {
+              required: "Это поле обязательно.",
+              onChange: () =>
+                setErrorMessages((prev) => ({ ...prev, login: "" })),
+            })}
           />
 
           <CustomInput

@@ -56,6 +56,7 @@ const EmployeeList = ({
     "Мужской парикмахер",
     "Специалист по маникюру",
     "Бровист",
+    "Специалист по ресницам",
   ];
 
   const getPositionText = (position) => {
@@ -147,7 +148,7 @@ const EmployeeList = ({
           method: "DELETE",
         }
       );
-      if (!response.ok) throw new Error("Ошибка при удалении услуги");
+      if (!response.ok) throw new Error("Ошибка при удалении сотрудника");
       setEmployee((prevEmployee) =>
         prevEmployee.filter((employee) => employee.id !== id)
       );
@@ -424,6 +425,7 @@ const EmployeeList = ({
                         setActiveInput={setActiveInput}
                         onChange={uploadImage}
                       />
+
                       <CustomInput
                         label="Пол"
                         type="radio"

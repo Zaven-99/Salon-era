@@ -144,14 +144,14 @@
 	transform: scale(1.01);
     transition: 0.2s;
     opacity: 0.8;
-    box-shadow: 0 8px 16px -8px;
+    box-shadow: $shadow-small;
 }
 .notifications-item__inner{
 	display: flex;
 	align-items:center;
 	gap: $sp-10;
 	padding: $sp-10 $sp-5;
-	box-shadow:0px 1px 3px -2px;
+	box-shadow:0px $sp-2 $sp-3 -$sp-2;
 }
 .notifications-item__inner div {
 	border-radius: $br-2;
@@ -169,7 +169,7 @@
 @media(max-width:650px){
 	
 	 .notifications{
-		right: -$sp-35;
+		right: -$sp-55;
 	 }
 }
 
@@ -191,7 +191,9 @@
 	.avatarImage{
 		height: $hg-35;
 	}
-	
+	.notifications{
+		right: -$sp-75;
+	 }
  
 }
 @media(max-width:355px){
@@ -204,6 +206,9 @@
 	.user-name{
 		font-size: $fz-15;
 	}
+	.notifications{
+		right: -$sp-95;
+	 }
  
 }
 
