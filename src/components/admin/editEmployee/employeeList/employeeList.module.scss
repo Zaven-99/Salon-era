@@ -128,8 +128,17 @@ img{
     text-align: center;
  }
  
-.button-block{
+.btn-block{
 	display: flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: 50px;
+	gap: $sp-20;
+}
+.button-block{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
 	gap: $sp-20;
 }
 
@@ -157,13 +166,7 @@ img{
      
  
  }
-// .employee-item__inner{
-//     width: $wd-100p;
-//  }
-//  .employee-item__inner div {
-//     font-size:$fz-12
-//  }
-
+ 
 .modal-overlay {
   position: fixed;
   top: 0;

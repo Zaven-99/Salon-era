@@ -1,0 +1,24 @@
+@import '../../../styles/variables.scss';
+
+
+.accept-add__employee{
+    width: $wd-200;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: background 0.3s;
+    background-color: #b5b5b5;
+    margin-top: $sp-35;
+    padding: $sp-15;
+    border-radius:$br-4;
+}
+.accept-add__employee:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.error-message{
+    color:rgba(255, 25, 0, 0.861);
+    font-size: $fz-13;
+}

@@ -9,7 +9,7 @@ import logo from "../../../img/logo.png";
 
 const NavList = ({
   token,
-  toggleOpenSignInForm,
+  toggleOpen,
   logOut,
   openProfile,
   closeProfile,
@@ -57,7 +57,7 @@ const NavList = ({
           </NavLink>
         </div>
         {!token ? (
-          <p onClick={toggleOpenSignInForm} className={styles["loginBtn"]}>
+          <p onClick={toggleOpen} className={styles["loginBtn"]}>
             Войти в личный кабинет
           </p>
         ) : (

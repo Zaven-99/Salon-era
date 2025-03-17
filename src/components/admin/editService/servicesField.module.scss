@@ -67,38 +67,13 @@
   appearance: none !important;
   margin-top: $sp-5;
  }
- .accept-add__service{
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  transition: background 0.3s;
-  background-color: #b5b5b5;
-  width: $wd-200;
-  margin-top: $sp-35;
-  padding: $sp-15 ;
-  border-radius:$br-4;
- }
 
- .accept-add__service:hover{
-    transform: scale(1.02);
-    box-shadow: $shadow-small;
-    transition: .2s;
- }
  .wrapper{
   display: flex;
   align-items: center;
   justify-content: space-between;
  }
-.filter-block{
-  margin-top: $sp-35;
-}
- .filter-title{
-  margin-left: $sp-10;
-  font-size: $fz-13;
-  margin-bottom: $sp-5;
 
- }
  .filter{
   width: $wd-200;
   margin-left: $sp-10;
@@ -116,7 +91,5 @@
   .filter{
     width: $sp-150;
   }
-  .filter-title{
-    font-size: $fz-10;
-  }
+   
 }

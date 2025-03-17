@@ -10,14 +10,14 @@ const BarbersPage = ({
   openSignInForm,
   isClosing,
   setIsClosing,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
 const { token } = useAuth();
 
   const handleSignUpClick = () => {
     if (!token) {
-      toggleOpenSignInForm();
+      toggleOpen();
     }
   };
   return (
@@ -26,8 +26,8 @@ const { token } = useAuth();
         openSignInForm={openSignInForm}
         isClosing={isClosing}
         setIsClosing={setIsClosing}
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
       />
       <ServicesSection />
       <ChooseABarbers handleSignUpClick={handleSignUpClick} />

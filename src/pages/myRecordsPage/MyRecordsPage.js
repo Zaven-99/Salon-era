@@ -6,8 +6,8 @@ const MyOrdersPage = ({
   openSignInForm,
   isClosing,
   setIsClosing,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
   return (
     <div>
@@ -15,8 +15,8 @@ const MyOrdersPage = ({
         openSignInForm={openSignInForm}
         isClosing={isClosing}
         setIsClosing={setIsClosing}
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
       />
       <MyRecords />
     </div>

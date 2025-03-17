@@ -43,9 +43,7 @@
 	transition: .2s;
 }
  
-.service-item__inner{
-    width: $wd-100p;
-}
+
 strong {
 	font-size: $fz-14;
 }
@@ -77,42 +75,7 @@ strong {
 	transition: .2s;
 }
 
-.save-service{
-	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-	padding:$sp-10;
-	height: $hg-50;
-	box-shadow: $shadow-small;
-	background-color: rgb(15 210 15);
-	border-radius: $br-4;
-	width: $wd-150;
 
-}
-.save-service:hover{
-	transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
-.cancel{
-	color: black;
-	background-color:#fe5440;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-	padding:$sp-10;
-	height:$hg-50;
-	box-shadow:$shadow-small;
-	border-radius: $br-4;
-	width: $wd-150;
-}
-
-.cancel:hover{
-	transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
  
 .duration{
 	width: $wd-100p;
@@ -135,6 +98,11 @@ strong {
     background: var(--input-background) !important;
     appearance: none !important;
     margin-top: $sp-5;
+}
+.service-block{
+    display: flex;
+    align-items:center;
+    width: 100%;
 }
  
 .btn-block{
@@ -175,6 +143,9 @@ strong {
 	box-shadow:$shadow-small;
 	border-radius: $br-4;
 	width: $wd-150;
+}
+.question{
+    text-align: center;
 }
 .delete-service:hover{
     transform: scale(1.02);

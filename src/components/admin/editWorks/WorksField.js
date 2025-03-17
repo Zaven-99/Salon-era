@@ -36,10 +36,10 @@ const OurWorks = () => {
     "Брови",
   ];
 
-  const toggleOpenSignInForm = () => {
+  const toggleOpen = () => {
     setAddWorks(true);
   };
-  const toggleCloseSignInForm = () => {
+  const toggleClose = () => {
     setAddWorks(false);
   };
   const deletImagePreview = () => {
@@ -95,7 +95,7 @@ const OurWorks = () => {
       }
 
       setWorks((prevWorks) => [...prevWorks, formData]);
-      toggleCloseSignInForm();
+      toggleClose();
       reset();
     } catch (error) {
       console.error("Ошибка отправки:", error);
@@ -112,14 +112,11 @@ const OurWorks = () => {
       <CustomButton
         className={styles["add-work"]}
         label="Добавить работу"
-        onClick={toggleOpenSignInForm}
+        onClick={toggleOpen}
       />
 
       {addWorks && (
-        <Modal
-          toggleOpenSignInForm={toggleOpenSignInForm}
-          toggleCloseSignInForm={toggleCloseSignInForm}
-        >
+        <Modal toggleOpen={toggleOpen} toggleClose={toggleClose}>
           <h2>Добавить работу</h2>
           <form onSubmit={handleSubmit(formSubmitHandler)}>
             <Controller
@@ -157,8 +154,8 @@ const OurWorks = () => {
       )}
 
       <WorkList
-        toggleCloseSignInForm={toggleCloseSignInForm}
-        toggleOpenSignInForm={toggleOpenSignInForm}
+        toggleClose={toggleClose}
+        toggleOpen={toggleOpen}
         setWorks={setWorks}
         works={works}
         categoryMap={categoryMap}

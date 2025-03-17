@@ -27,12 +27,12 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
   const [openSignInForm, setOpenSignInForm] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
-  const toggleOpenSignInForm = () => {
+  const toggleOpen = () => {
     setOpenSignInForm(true);
     document.body.style.overflow = "hidden";
     setIsClosing(false);
   };
-  const toggleCloseSignInForm = () => {
+  const toggleClose = () => {
     document.body.style.overflow = "scroll";
     setTimeout(() => {
       setOpenSignInForm(false);
@@ -57,8 +57,8 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
               openSignInForm={openSignInForm}
               isClosing={isClosing}
               setIsClosing={setIsClosing}
-              toggleOpenSignInForm={toggleOpenSignInForm}
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleOpen={toggleOpen}
+              toggleClose={toggleClose}
             />
           }
           index
@@ -70,8 +70,8 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
               openSignInForm={openSignInForm}
               isClosing={isClosing}
               setIsClosing={setIsClosing}
-              toggleOpenSignInForm={toggleOpenSignInForm}
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleOpen={toggleOpen}
+              toggleClose={toggleClose}
             />
           }
         />
@@ -82,8 +82,8 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
               openSignInForm={openSignInForm}
               isClosing={isClosing}
               setIsClosing={setIsClosing}
-              toggleOpenSignInForm={toggleOpenSignInForm}
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleOpen={toggleOpen}
+              toggleClose={toggleClose}
             />
           }
         />
@@ -94,8 +94,8 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
               openSignInForm={openSignInForm}
               isClosing={isClosing}
               setIsClosing={setIsClosing}
-              toggleOpenSignInForm={toggleOpenSignInForm}
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleOpen={toggleOpen}
+              toggleClose={toggleClose}
             />
           }
         />
@@ -106,8 +106,8 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
               openSignInForm={openSignInForm}
               isClosing={isClosing}
               setIsClosing={setIsClosing}
-              toggleOpenSignInForm={toggleOpenSignInForm}
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleOpen={toggleOpen}
+              toggleClose={toggleClose}
             />
           }
         />
@@ -118,8 +118,8 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
               openSignInForm={openSignInForm}
               isClosing={isClosing}
               setIsClosing={setIsClosing}
-              toggleOpenSignInForm={toggleOpenSignInForm}
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleOpen={toggleOpen}
+              toggleClose={toggleClose}
             />
           }
         />
@@ -130,8 +130,8 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
               openSignInForm={openSignInForm}
               isClosing={isClosing}
               setIsClosing={setIsClosing}
-              toggleOpenSignInForm={toggleOpenSignInForm}
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleOpen={toggleOpen}
+              toggleClose={toggleClose}
             />
           }
         />

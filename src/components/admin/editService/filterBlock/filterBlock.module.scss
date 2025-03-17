@@ -1,0 +1,23 @@
+@import '../../../styles/variables.scss';
+
+
+
+.filter-block{
+  margin-top: $sp-35;
+}
+ .filter-title{
+  margin-left: $sp-10;
+  font-size: $fz-13;
+  margin-bottom: $sp-5;
+
+ }
+
+
+ /*media*/
+
+ @media(max-width:465px){
+  
+  .filter-title{
+    font-size: $fz-10;
+  }
+}

@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Modal from "../../../modal/Modal";
-import CustomInput from "../../../customInput/CustomInput";
-import CustomButton from "../../../customButton/CustomButton";
-import Spinner from "../../../spinner/Spinner";
-import CustomSelect from "../../../customSelect/CustomSelect";
-
+import BtnBlock from "../../../btnBlock/BtnBlock";
+import EditModal from "./editModal/EditModal";
+import ServiceBlock from "./serviceBlock/ServiceBlock";
 import styles from "./servicesList.module.scss";
+import Spinner from "../../../spinner/Spinner";
 
-const ServiceList = ({
-  services,
-  setServices,
-  toggleCloseSignInForm,
-  toggleOpenSignInForm,
-}) => {
-  const {
-    register,
-    control,
-    reset,
-    formState: { errors },
-    setError,
-  } = useForm({
+const ServiceList = ({ services, setServices, toggleClose, toggleOpen }) => {
+  const { setError } = useForm({
     mode: "onChange",
     defaultValues: {
       id: "",
@@ -38,7 +26,6 @@ const ServiceList = ({
   const [editedService, setEditedService] = useState({});
   const [confirmDeleteService, setConfirmDeleteService] = useState(false);
   const [serviceToDelete, setServiceToDelete] = useState(null);
-  const [activeInput, setActiveInput] = useState("");
   const [loading, setLoading] = useState(false);
 
   const genderMap = { 0: "Женский", 1: "Мужской" };
@@ -105,49 +92,9 @@ const ServiceList = ({
     }
   };
 
-  const handleSave = async (id) => {
-    setLoading(true);
-
-    const serviceToUpdate = { ...editedService, id };
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        ...serviceToUpdate,
-      })
-    );
-    try {
-      const response = await fetch(`https://api.salon-era.ru/services/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Ошибка при сохранении услуги");
-
-      setServices((prevServices) =>
-        prevServices.map((service) =>
-          service.id === id ? editedService : service
-        )
-      );
-      setServiceId(null);
-      setEditedService({});
-      toggleCloseSignInForm();
-      reset();
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
   const handleEdit = (service) => {
     setServiceId(service.id);
     setEditedService(service);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedService((prev) => ({ ...prev, [name]: value }));
   };
 
   const groupedServices = services.reduce((acc, service) => {
@@ -194,218 +141,62 @@ const ServiceList = ({
                   <li className={styles["service-list__item"]} key={index}>
                     {serviceId === service.id ? (
                       <Modal
-                        toggleOpenSignInForm={toggleOpenSignInForm}
-                        toggleCloseSignInForm={toggleCloseSignInForm}
+                        toggleOpen={toggleOpen}
+                        toggleClose={toggleClose}
                         setEditServiceId={setServiceId}
                       >
-                        <>
-                          <h2>Редактировать</h2>
-                          <CustomInput
-                            label="Введите Название услуги:"
-                            error={errors.name}
-                            type="text"
-                            name="name"
-                            value={editedService.name}
-                            handleChange={handleChange}
-                            isActive={activeInput === "name"}
-                            setActiveInput={setActiveInput}
-                            {...register("name", {
-                              required: "Это поле обязательно.",
-                              minLength: {
-                                value: 2,
-                                message:
-                                  "Имя должен содержать минимум 2 символа.",
-                              },
-                            })}
-                          />
-
-                          <CustomInput
-                            label="Минимальная цена услуги:"
-                            error={errors.priceLow}
-                            type="number"
-                            name="priceLow"
-                            value={editedService.priceLow}
-                            handleChange={handleChange}
-                            isActive={activeInput === "priceLow"}
-                            setActiveInput={setActiveInput}
-                            {...register("priceLow", {
-                              required: "Это поле обязательно.",
-                              minLength: {
-                                value: 0,
-                                message:
-                                  "Минимальная цена должна быть не меньше 0.",
-                              },
-                            })}
-                          />
-
-                          <CustomInput
-                            label="Максимальная цена услуги:"
-                            name="priceMax"
-                            type="number"
-                            error={errors.priceMax}
-                            value={editedService.priceMax}
-                            isActive={activeInput === "priceMax"}
-                            setActiveInput={setActiveInput}
-                            handleChange={handleChange}
-                            min="0"
-                            {...register("priceMax", {
-                              minLength: {
-                                value: 0,
-                                message:
-                                  "Минимальная цена должна быть не меньше 0.",
-                              },
-                            })}
-                          />
-
-                          <CustomInput
-                            label="Категория:"
-                            name="category"
-                            type="text"
-                            error={errors.category}
-                            value={editedService.category}
-                            isActive={activeInput === "category"}
-                            setActiveInput={setActiveInput}
-                            handleChange={handleChange}
-                            {...register("category", {
-                              required: "Это поле обязательно.",
-                              minLength: {
-                                value: 3,
-                                message:
-                                  "Название должен содержать минимум 3 символа.",
-                              },
-                            })}
-                          />
-                          <CustomInput
-                            label="Описание:"
-                            name="description"
-                            type="text"
-                            error={errors.description}
-                            value={editedService.description}
-                            isActive={activeInput === "description"}
-                            setActiveInput={setActiveInput}
-                            handleChange={handleChange}
-                            {...register("description", {
-                              required: "Это поле обязательно.",
-                              minLength: {
-                                value: 3,
-                                message:
-                                  "Название должен содержать минимум 3 символа.",
-                              },
-                            })}
-                          />
-
-                          <Controller
-                            name="duration"
-                            control={control}
-                            rules={{ required: "Это поле обязательно" }}
-                            render={({ field }) => (
-                              <CustomSelect
-                                {...field}
-                                name="duration"
-                                handleChange={handleChange}
-                                edited={editedService.duration}
-                                control={control}
-                                map={durationMap}
-                                rules={{ required: "Это поле обязательно" }}
-                              />
-                            )}
-                          />
-
-                          <CustomInput
-                            label="Пол"
-                            type="radio"
-                            name="gender"
-                            value={editedService.gender}
-                            handleChange={handleChange}
-                            control={control}
-                            {...register("gender", {
-                              required: "Выберите пол.",
-                            })}
-                          />
-                          <div className={styles["btn-block"]}>
-                            <CustomButton
-                              label="Сохранить"
-                              className={styles["save-service"]}
-                              onClick={() => handleSave(service.id)}
-                            />
-                            <CustomButton
-                              label="Отменить"
-                              className={styles["cancel"]}
-                              onClick={() => setServiceId(null)}
-                            />
-                          </div>
-                        </>
+                        <EditModal
+                          setLoading={setLoading}
+                          editedService={editedService}
+                          setServices={setServices}
+                          setServiceId={setServiceId}
+                          setEditedService={setEditedService}
+                          toggleClose={toggleClose}
+                          durationMap={durationMap}
+                          service={service}
+                        />
                       </Modal>
                     ) : (
-                      <>
-                        <div className={styles["service-item__inner"]}>
-                          <strong>Название услуги:</strong>
-                          <div>{service.name}</div>
-                        </div>
-                        <div className={styles["service-item__inner"]}>
-                          <strong>Цена:</strong>{" "}
-                          <div>
-                            {service.priceMax === null
-                              ? `${service.priceLow} руб.`
-                              : `${service.priceLow} - ${service.priceMax} руб.`}
-                          </div>
-                        </div>
-                        <div className={styles["service-item__inner"]}>
-                          <strong>Описание:</strong>{" "}
-                          <div>{service.description}</div>
-                        </div>
-                        <div className={styles["service-item__inner"]}>
-                          <strong>Продолжительность:</strong>{" "}
-                          <div>{getDurationText(service.duration)}</div>
-                        </div>
-                        <div className={styles["service-item__inner"]}>
-                          <strong>Пол:</strong>
-                          <div> {getGenderText(service.gender)}</div>
-                        </div>
-                        <div className={styles["button-block"]}>
-                          <CustomButton
-                            label="Редактировать"
-                            type="button"
-                            className={styles["edit-service"]}
-                            onClick={() => handleEdit(service)}
+                      <div className={styles["service-block"]}>
+                        <ServiceBlock
+                          service={service}
+                          getDurationText={getDurationText}
+                          getGenderText={getGenderText}
+                        />
+                        <div>
+                          <BtnBlock
+                            className1={styles["edit-service"]}
+                            className2={styles["delete-service"]}
+                            className3={styles["button-block"]}
+                            label1="Редактировать"
+                            label2="Удалить услугу"
+                            fnc1={() => handleEdit(service)}
+                            fnc2={() => showMessageDeleteEmployee(service.id)}
                           />
-                          <CustomButton
-                            label="Удалить услугу"
-                            type="button"
-                            className={styles["delete-service"]}
-                            onClick={() =>
-                              showMessageDeleteEmployee(service.id)
-                            }
-                          />
+
                           {confirmDeleteService &&
                             serviceToDelete === service.id && (
-                              <div className={styles["modal-overlay"]}>
-                                <div className={styles["modal-content"]}>
-                                  <h2 className={styles["choose-dateWorkOut"]}>
-                                    Вы действительно хотите удалить услугу ?
-                                  </h2>
-
-                                  <div className={styles["btn-block"]}>
-                                    <CustomButton
-                                      className={styles["delete-service"]}
-                                      type="button"
-                                      label="Удалить услугу"
-                                      onClick={() => handleDelete(service.id)}
-                                    />
-                                    <CustomButton
-                                      className={
-                                        styles["cancel-delete__service"]
-                                      }
-                                      type="button"
-                                      label="Отменить удаления"
-                                      onClick={closeMessageDeleteEmployee}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
+                              <Modal
+                                toggleOpen={toggleOpen}
+                                toggleClose={toggleClose}
+                                setEditServiceId={closeMessageDeleteEmployee}
+                              >
+                                <h2 className={styles["question"]}>
+                                  Вы действительно хотите удалить услугу ?
+                                </h2>
+                                <BtnBlock
+                                  className1={styles["delete-service"]}
+                                  className2={styles["cancel-delete__service"]}
+                                  className3={styles["btn-block"]}
+                                  label1="Удалить услугу"
+                                  label2="Отменить удаления"
+                                  fnc1={() => handleDelete(service.id)}
+                                  fnc2={closeMessageDeleteEmployee}
+                                />
+                              </Modal>
                             )}
                         </div>
-                      </>
+                      </div>
                     )}
                   </li>
                 ))}

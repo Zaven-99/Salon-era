@@ -7,8 +7,8 @@ const AboutUsPage = ({
   openSignInForm,
   isClosing,
   setIsClosing,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
   return (
     <div>
@@ -16,8 +16,8 @@ const AboutUsPage = ({
         openSignInForm={openSignInForm}
         isClosing={isClosing}
         setIsClosing={setIsClosing}
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
       />
       <AboutUs />
       <Footer />

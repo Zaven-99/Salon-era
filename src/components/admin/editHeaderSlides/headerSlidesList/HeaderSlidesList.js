@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
 import Modal from "../../../modal/Modal";
-
-import styles from "./headerSlidesList.module.scss";
 import CustomInput from "../../../customInput/CustomInput";
 import ImagePreview from "../../../imagePreview/ImagePreview";
+import BtnBlock from "../../../btnBlock/BtnBlock";
 
-const HeaderSlidesList = ({
-  setSlides,
-  slides,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
-}) => {
+import styles from "./headerSlidesList.module.scss";
+
+const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
   const [slidesId, setSlidesId] = useState(null);
   const [editedSlides, setEditedSlides] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
@@ -181,8 +177,8 @@ const HeaderSlidesList = ({
             {slidesId === slides.id ? (
               <>
                 <Modal
-                  toggleOpenSignInForm={toggleOpenSignInForm}
-                  toggleCloseSignInForm={toggleCloseSignInForm}
+                  toggleOpen={toggleOpen}
+                  toggleClose={toggleClose}
                   setSlidesId={setSlidesId}
                 >
                   <h2>Редактировать</h2>
@@ -243,26 +239,22 @@ const HeaderSlidesList = ({
             )}
 
             {confirmDeleteSlides && slidesToDelete === slides.id && (
-              <div className={styles["modal-overlay"]}>
-                <div className={styles["modal-content"]}>
-                  <h2>Вы действительно хотите удалить слайд?</h2>
-
-                  <div className={styles["btn-block"]}>
-                    <CustomButton
-                      className={styles["acceptDelete-slides"]}
-                      type="button"
-                      label="Удалить слайд"
-                      onClick={() => handleDelete(slides.id)}
-                    />
-                    <CustomButton
-                      className={styles["cancelDelete-slides"]}
-                      type="button"
-                      label="Отменить удаления"
-                      onClick={closeMessageDeleteSlide}
-                    />
-                  </div>
-                </div>
-              </div>
+              <Modal
+                toggleOpen={toggleOpen}
+                toggleClose={toggleClose}
+                setSlidesId={closeMessageDeleteSlide}
+              >
+                <h2 className={styles.question}>Вы действительно хотите удалить слайд?</h2>
+                <BtnBlock
+                  className1={styles["acceptDelete-slides"]}
+                  className2={styles["cancelDelete-slides"]}
+                  className3={styles["btn-block"]}
+                  label1="Удалить слайд"
+                  label2="Отменить удаления"
+                  fnc1={() => handleDelete(slides.id)}
+                  fnc2={closeMessageDeleteSlide}
+                />
+              </Modal>
             )}
           </li>
         ))}

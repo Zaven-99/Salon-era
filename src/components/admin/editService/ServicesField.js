@@ -1,24 +1,17 @@
 import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import ServiceList from "./serviceList/ServiceList";
 import Modal from "../../modal/Modal";
 import CustomButton from "../../customButton/CustomButton";
-import CustomInput from "../../customInput/CustomInput";
-import CustomSelect from "../../customSelect/CustomSelect";
-import SelectCategory from "../../selectCategory/SelectCategory";
 
 import styles from "./servicesField.module.scss";
 import Spinner from "../../spinner/Spinner";
+import FilterBlock from "./filterBlock/FilterBlock";
+import AddService from "./addService/AddService";
 
 const ServiceField = () => {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-  } = useForm({
+  const { handleSubmit, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       name: "",
@@ -76,10 +69,10 @@ const ServiceField = () => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const toggleOpenSignInForm = () => {
+  const toggleOpen = () => {
     setAddService(true);
   };
-  const toggleCloseSignInForm = () => {
+  const toggleClose = () => {
     setAddService(false);
   };
 
@@ -123,7 +116,7 @@ const ServiceField = () => {
           gender: parseInt(formValues.gender),
         },
       ]);
-      toggleCloseSignInForm();
+      toggleClose();
       reset();
     } catch (error) {
       setLoading(false);
@@ -151,139 +144,34 @@ const ServiceField = () => {
         <CustomButton
           className={styles["add-service"]}
           label="Добавить услугу"
-          onClick={toggleOpenSignInForm}
+          onClick={toggleOpen}
         />
-        <div className={styles["filter-block"]}>
-          <p className={styles["filter-title"]}>Отфильтруйте по категориям</p>
-
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className={styles.filter}
-          >
-            <option value="">Все категории</option>
-            {uniqueCategories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+        <FilterBlock
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          uniqueCategories={uniqueCategories}
+        />
       </div>
 
       {addService && (
-        <Modal
-          toggleCloseSignInForm={toggleCloseSignInForm}
-          toggleOpenSignInForm={toggleOpenSignInForm}
-        >
+        <Modal toggleClose={toggleClose} toggleOpen={toggleOpen}>
           <h2>Добавить Услугу</h2>
-          <form
-            className={styles["service-field__inner"]}
-            onSubmit={handleSubmit(formSubmitHandler)}
-          >
-            <CustomInput
-              label="Введите название услуги:"
-              name="name"
-              type="text"
-              error={errors.name}
-              isActive={activeInput === "name"}
-              setActiveInput={setActiveInput}
-              {...register("name", {
-                required: "Это поле обязательно.",
-                minLength: {
-                  value: 2,
-                  message: "Название должен содержать минимум 2 символа.",
-                },
-              })}
-            />
-
-            <CustomInput
-              label="Минимальная цена услуги:"
-              name="priceLow"
-              type="number"
-              error={errors.priceLow}
-              isActive={activeInput === "priceLow"}
-              setActiveInput={setActiveInput}
-              min="0"
-              {...register("priceLow", {
-                required: "Это поле обязательно.",
-                minLength: {
-                  value: 0,
-                  message: "Минимальная цена должна быть не меньше 0.",
-                },
-              })}
-            />
-
-            <CustomInput
-              label="Максимальная цена услуги:"
-              name="priceMax"
-              type="number"
-              error={errors.priceMax}
-              isActive={activeInput === "priceMax"}
-              setActiveInput={setActiveInput}
-              min="0"
-              {...register("priceMax", {
-                minLength: {
-                  value: 0,
-                  message: "Минимальная цена должна быть не меньше 0.",
-                },
-              })}
-            />
-
-            <Controller
-              name="category"
-              control={control}
-              rules={{ required: "Это поле обязательно." }}
-              render={({ field }) => (
-                <SelectCategory {...field} optionsMap={positionMap} />
-              )}
-            />
-            <CustomInput
-              label="Описание:"
-              name="description"
-              type="text"
-              error={errors.description}
-              isActive={activeInput === "description"}
-              setActiveInput={setActiveInput}
-            />
-
-            <Controller
-              name="duration"
-              control={control}
-              rules={{ required: "Это поле обязательно" }}
-              render={({ field }) => (
-                <CustomSelect
-                  {...field}
-                  control={control}
-                  name="duration"
-                  map={durationMap}
-                  rules={{ required: "Это поле обязательно" }}
-                />
-              )}
-            />
-
-            <CustomInput
-              label="Пол"
-              type="radio"
-              name="gender"
-              control={control}
-              {...register("gender", { required: "Выберите пол." })}
-            />
-
-            <CustomButton
-              className={styles["accept-add__service"]}
-              type="submit"
-              label="Добавить услугу"
-            />
-          </form>
+          <AddService
+            handleSubmit={handleSubmit}
+            formSubmitHandler={formSubmitHandler}
+            activeInput={activeInput}
+            setActiveInput={setActiveInput}
+            positionMap={positionMap}
+            durationMap={durationMap}
+          />
         </Modal>
       )}
 
       <ServiceList
         services={filteredServices}
         setServices={setServices}
-        toggleCloseSignInForm={toggleCloseSignInForm}
-        toggleOpenSignInForm={toggleOpenSignInForm}
+        toggleClose={toggleClose}
+        toggleOpen={toggleOpen}
       />
     </div>
   );

@@ -10,8 +10,8 @@ const DatePage = ({
   openSignInForm,
   isClosing,
   setIsClosing,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
   return (
     <div>
@@ -19,8 +19,8 @@ const DatePage = ({
         openSignInForm={openSignInForm}
         isClosing={isClosing}
         setIsClosing={setIsClosing}
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
       />
       <ServicesSection />
       <ChooseDate />

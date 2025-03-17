@@ -18,8 +18,8 @@ const Header = ({
   openSignInForm,
   isClosing,
   setIsClosing,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
   const [showProfile, setShowProfile] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
@@ -27,7 +27,7 @@ const Header = ({
   const [loading, setLoading] = useState(false);
 
   const { token } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
@@ -102,7 +102,7 @@ const Header = ({
           />
           <NavList
             token={token}
-            toggleOpenSignInForm={toggleOpenSignInForm}
+            toggleOpen={toggleOpen}
             logOut={logOut}
             openProfile={openProfile}
             closeProfile={closeProfile}
@@ -113,12 +113,12 @@ const Header = ({
 
         {openSignInForm && (
           <Modal
-            toggleOpenSignInForm={toggleOpenSignInForm}
-            toggleCloseSignInForm={toggleCloseSignInForm}
+            toggleOpen={toggleOpen}
+            toggleClose={toggleClose}
             isClosing={isClosing}
           >
             <SignIn
-              toggleCloseSignInForm={toggleCloseSignInForm}
+              toggleClose={toggleClose}
               toggleShowMessage={toggleShowMessage}
               logOut={logOut}
             />

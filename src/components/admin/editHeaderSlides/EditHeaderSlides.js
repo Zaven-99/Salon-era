@@ -26,10 +26,10 @@ const EditHeaderSlides = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState("");
-  const toggleOpenSignInForm = () => {
+  const toggleOpen = () => {
     setAddSlides(true);
   };
-  const toggleCloseSignInForm = () => {
+  const toggleClose= () => {
     setAddSlides(false);
   };
   const deletImagePreview = () => {
@@ -90,7 +90,7 @@ const EditHeaderSlides = () => {
       }
 
       setSlides((prevSlides) => [...prevSlides, formData]);
-      toggleCloseSignInForm();
+      toggleClose();
       reset();
     } catch (error) {
       console.error("Ошибка отправки:", error);
@@ -107,14 +107,11 @@ const EditHeaderSlides = () => {
       <CustomButton
         className={styles["add-slides"]}
         label="Добавить слайды"
-        onClick={toggleOpenSignInForm}
+        onClick={toggleOpen}
       />
 
       {addSlides && (
-        <Modal
-          toggleOpenSignInForm={toggleOpenSignInForm}
-          toggleCloseSignInForm={toggleCloseSignInForm}
-        >
+        <Modal toggleOpen={toggleOpen} toggleClose={toggleClose}>
           <h2>Добавить слайды</h2>
           <form onSubmit={handleSubmit(formSubmitHandler)}>
             <textarea
@@ -153,8 +150,8 @@ const EditHeaderSlides = () => {
       )}
 
       <HeaderSlidesList
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
         setSlides={setSlides}
         slides={slides}
       />

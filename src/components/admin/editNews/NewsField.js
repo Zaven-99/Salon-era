@@ -30,10 +30,10 @@ const News = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const toggleOpenSignInForm = () => {
+  const toggleOpen = () => {
     setAddNews(true);
   };
-  const toggleCloseSignInForm = () => {
+  const toggleClose = () => {
     setAddNews(false);
   };
 
@@ -66,7 +66,7 @@ const News = () => {
       }
 
       setNews((prevNews) => [...prevNews, formData]);
-      toggleCloseSignInForm();
+      toggleClose();
       reset();
     } catch (error) {
     } finally {
@@ -108,14 +108,11 @@ const News = () => {
       <CustomButton
         className={styles["add-news"]}
         label="Добавить новость"
-        onClick={toggleOpenSignInForm}
+        onClick={toggleOpen}
       />
 
       {addNews && (
-        <Modal
-          toggleCloseSignInForm={toggleCloseSignInForm}
-          toggleOpenSignInForm={toggleOpenSignInForm}
-        >
+        <Modal toggleClose={toggleClose} toggleOpen={toggleOpen}>
           <h2>Добавить новости</h2>
           <form
             className={styles["news-field__inner"]}
@@ -175,8 +172,8 @@ const News = () => {
       <NewsList
         news={news}
         setNews={setNews}
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
       />
     </div>
   );

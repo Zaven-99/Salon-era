@@ -8,12 +8,13 @@ import { Controller, useForm } from "react-hook-form";
 
 import ImagePreview from "../../../imagePreview/ImagePreview";
 import styles from "./workList.module.scss";
+import BtnBlock from '../../../btnBlock/BtnBlock';
 
 const WorkList = ({
   setWorks,
   categoryMap,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
   const { control } = useForm({
     mode: "onChange",
@@ -211,8 +212,8 @@ const WorkList = ({
                 >
                   {worksId === work.id ? (
                     <Modal
-                      toggleOpenSignInForm={toggleOpenSignInForm}
-                      toggleCloseSignInForm={toggleCloseSignInForm}
+                      toggleOpen={toggleOpen}
+                      toggleClose={toggleClose}
                       setWorksId={setWorksId}
                     >
                       <h2>Редактировать</h2>
@@ -275,26 +276,22 @@ const WorkList = ({
 
                   <div>
                     {confirmDeleteWork && workToDelete === work.id && (
-                      <div className={styles["modal-overlay"]}>
-                        <div className={styles["modal-content"]}>
-                          <h2>Вы действительно хотите удалить работу?</h2>
-
-                          <div className={styles["btn-block"]}>
-                            <CustomButton
-                              className={styles["acceptDelete-work"]}
-                              type="button"
-                              label="Удалить работу"
-                              onClick={() => handleDelete(work.id)}
-                            />
-                            <CustomButton
-                              className={styles["cancelDelete-work"]}
-                              type="button"
-                              label="Отменить удаление"
-                              onClick={closeMessageDeleteWork}
-                            />
-                          </div>
-                        </div>
-                      </div>
+                      <Modal
+                        toggleOpen={toggleOpen}
+                        toggleClose={toggleClose}
+                        setWorksId={closeMessageDeleteWork}
+                      >
+                        <h2 className={styles.question}>Вы действительно хотите удалить работу?</h2>
+                        <BtnBlock
+                          className1={styles["acceptDelete-work"]}
+                          className2={styles["cancelDelete-work"]}
+                          className3={styles['btn-block']}
+                          label1="Удалить работу"
+                          label2="Отменить удаление"
+                          fnc1={() => handleDelete(work.id)}
+                          fnc2={closeMessageDeleteWork}
+                        />
+                      </Modal>
                     )}
                   </div>
                 </li>

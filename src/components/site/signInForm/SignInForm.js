@@ -12,7 +12,7 @@ import Spinner from "../../spinner/Spinner";
 
 import styles from "./signInForm.module.scss";
 
-const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
+const SignInForm = ({ toggleClose, toggleShowMessage }) => {
   const [showFormSignUp, setShowFormSignUp] = useState(false);
   const [showRecoverPasswordForm, setRecoverPasswordForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -110,7 +110,7 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
         navigate("/adminPanel/orders");
       }
 
-      toggleCloseSignInForm();
+      toggleClose();
     } catch (error) {
       const errorData = JSON.parse(error.message);
       const status = errorData.status;
@@ -200,7 +200,7 @@ const SignInForm = ({ toggleCloseSignInForm, toggleShowMessage }) => {
 
         {showFormSignUp && (
           <SignUpForm
-            toggleCloseSignInForm={toggleCloseSignInForm}
+            toggleClose={toggleClose}
             toggleShowMessage={toggleShowMessage}
             activeInput={activeInput}
             setActiveInput={setActiveInput}

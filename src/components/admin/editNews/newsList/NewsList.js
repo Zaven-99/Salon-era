@@ -7,12 +7,13 @@ import CustomInput from "../../../customInput/CustomInput";
 
 import styles from "./newsList.module.scss";
 import ImagePreview from "../../../imagePreview/ImagePreview";
+import BtnBlock from "../../../btnBlock/BtnBlock";
 
 const NewsList = ({
   news,
   setNews,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
   const {
     register,
@@ -98,7 +99,7 @@ const NewsList = ({
       console.error("Ошибка:", error);
     } finally {
       setLoading(false);
-      window.location.reload()
+      window.location.reload();
     }
   };
 
@@ -208,8 +209,8 @@ const NewsList = ({
           >
             {newsId === news.id ? (
               <Modal
-                toggleOpenSignInForm={toggleOpenSignInForm}
-                toggleCloseSignInForm={toggleCloseSignInForm}
+                toggleOpen={toggleOpen}
+                toggleClose={toggleClose}
                 setNewsId={setNewsId}
               >
                 <h2>Редактировать</h2>
@@ -271,28 +272,24 @@ const NewsList = ({
                     />
                   </div>
                   {confirmDeleteNews && newsToDelete === news.id && (
-                    <div className={styles["modal-overlay"]}>
-                      <div className={styles["modal-content"]}>
-                        <h2 className={styles["choose-question"]}>
-                          Вы действительно хотите удалить новость?
-                        </h2>
-
-                        <div className={styles["btn-block"]}>
-                          <CustomButton
-                            className={styles["delete-news"]}
-                            type="button"
-                            label="Удалить новость"
-                            onClick={() => handleDelete(news.id)}
-                          />
-                          <CustomButton
-                            className={styles["cancel-delete"]}
-                            type="button"
-                            label="Отменить"
-                            onClick={closeMessageDeleteNews}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    <Modal
+                      toggleOpen={toggleOpen}
+                      toggleClose={toggleClose}
+                      setNewsId={closeMessageDeleteNews}
+                    >
+                      <h2 className={styles["choose-question"]}>
+                        Вы действительно хотите удалить новость?
+                      </h2>
+                      <BtnBlock
+                        className1={styles["delete-news"]}
+                        className2={styles["cancel-delete"]}
+                        className3={styles["btn-block"]}
+                        label1="Удалить новость"
+                        label2="Отменить"
+                        fnc1={() => handleDelete(news.id)}
+                        fnc2={closeMessageDeleteNews}
+                      />
+                    </Modal>
                   )}
                 </>
               </Modal>

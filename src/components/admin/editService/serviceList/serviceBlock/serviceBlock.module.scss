@@ -1,0 +1,10 @@
+@import '../../../../styles/variables.scss';
+
+.service-block{
+	display: flex;
+	align-items:center;
+	width: 100%;
+}
+.service-item__inner{
+    width: $wd-100p;
+}

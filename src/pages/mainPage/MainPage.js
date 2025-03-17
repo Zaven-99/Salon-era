@@ -9,8 +9,8 @@ const MainPage = ({
   openSignInForm,
   isClosing,
   setIsClosing,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
 }) => {
   return (
     <div>
@@ -18,10 +18,10 @@ const MainPage = ({
         openSignInForm={openSignInForm}
         isClosing={isClosing}
         setIsClosing={setIsClosing}
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
       />
-      <Main toggleOpenSignInForm={toggleOpenSignInForm} />
+      <Main toggleOpen={toggleOpen} />
       <NewsBlock />
       <Footer />
     </div>
