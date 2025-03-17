@@ -8,7 +8,7 @@ const HistoryOrdersAdminPanelPage = () => {
 	return (
     <div>
       <HeaderAdminPanel />
-	  <HistoryOrders/>
+	    <HistoryOrders/>
     </div>
   );
 };

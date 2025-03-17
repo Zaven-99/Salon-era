@@ -56,23 +56,7 @@ strong {
 	padding-left: $sp-10;
 
 }
-.delete-service{
-    background-color: #fe5440;
-	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-    padding: $sp-10;
-    height: $hg-50;
-    box-shadow: $shadow-small;
-    border-radius:$br-4;
-    width: $wd-150;
-}
-.delete-service:hover{
-	transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
+ 
 
 
 .edit-service{
@@ -163,7 +147,7 @@ strong {
     gap: $sp-20;
     
 }
-.cancelDelete-employee{
+.cancel-delete__service{
     color: black;
 	background-color: rgb(15 210 15);
     font-family: $font;
@@ -175,7 +159,12 @@ strong {
 	border-radius: $br-4;
 	width: $wd-150;
 }
-.delete-employee{
+.cancel-delete__service:hover{
+	transform: scale(1.02);
+	box-shadow:$shadow-small;
+	transition: .2s;
+}
+.delete-service{
     color: black;
 	background-color:#fe5440;
     font-family: $font;
@@ -186,6 +175,11 @@ strong {
 	box-shadow:$shadow-small;
 	border-radius: $br-4;
 	width: $wd-150;
+}
+.delete-service:hover{
+    transform: scale(1.02);
+	box-shadow:$shadow-small;
+	transition: .2s;
 }
 .modal-overlay {
   position: fixed;

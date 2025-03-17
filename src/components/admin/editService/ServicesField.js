@@ -6,6 +6,7 @@ import Modal from "../../modal/Modal";
 import CustomButton from "../../customButton/CustomButton";
 import CustomInput from "../../customInput/CustomInput";
 import CustomSelect from "../../customSelect/CustomSelect";
+import SelectCategory from "../../selectCategory/SelectCategory";
 
 import styles from "./servicesField.module.scss";
 import Spinner from "../../spinner/Spinner";
@@ -49,6 +50,25 @@ const ServiceField = () => {
     "8ч",
   ];
 
+  const positionMap = [
+    "Женские стрижки",
+    "Укладка",
+    "Краска волос 1 тон",
+    "Мелирование",
+    "Осветление",
+    "Мелирование + тонирование",
+    "Осветление + Тонирование",
+    "Шлифовка волос",
+    "Другое",
+    "Мужские стрижки",
+    "Остальное",
+    "Маникюр",
+    "Педикюр",
+    "Укрепление ногтей",
+    "Оформление бровей",
+    "Наращивание ресниц",
+  ];
+
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addService, setAddService] = useState(false);
@@ -90,8 +110,19 @@ const ServiceField = () => {
         const errorData = await response.text();
         throw new Error(errorData || "Ошибка при добавлении услуги");
       }
-
-      setServices((prevServices) => [...prevServices, formData]);
+      reset();
+      setServices((prevServices) => [
+        ...prevServices,
+        {
+          name: formValues.name,
+          description: formValues.description,
+          category: formValues.category,
+          priceLow: parseInt(formValues.priceLow) || 0,
+          priceMax: formValues.priceMax ? parseInt(formValues.priceMax) : null,
+          duration: parseInt(formValues.duration),
+          gender: parseInt(formValues.gender),
+        },
+      ]);
       toggleCloseSignInForm();
       reset();
     } catch (error) {
@@ -122,8 +153,8 @@ const ServiceField = () => {
           label="Добавить услугу"
           onClick={toggleOpenSignInForm}
         />
-        <div className={styles['filter-block']}>
-          <p className={styles['filter-title']}>Отфильтруйте по категориям</p>
+        <div className={styles["filter-block"]}>
+          <p className={styles["filter-title"]}>Отфильтруйте по категориям</p>
 
           <select
             value={selectedCategory}
@@ -131,8 +162,8 @@ const ServiceField = () => {
             className={styles.filter}
           >
             <option value="">Все категории</option>
-            {uniqueCategories.map((category) => (
-              <option key={category} value={category}>
+            {uniqueCategories.map((category, index) => (
+              <option key={index} value={category}>
                 {category}
               </option>
             ))}
@@ -199,21 +230,13 @@ const ServiceField = () => {
               })}
             />
 
-            <CustomInput
-              label="Категория:"
+            <Controller
               name="category"
-              type="text"
-              error={errors.category}
-              isActive={activeInput === "category"}
-              setActiveInput={setActiveInput}
-              min="0"
-              {...register("category", {
-                required: "Это поле обязательно.",
-                minLength: {
-                  value: 3,
-                  message: "Название должен содержать минимум 3 символа.",
-                },
-              })}
+              control={control}
+              rules={{ required: "Это поле обязательно." }}
+              render={({ field }) => (
+                <SelectCategory {...field} optionsMap={positionMap} />
+              )}
             />
             <CustomInput
               label="Описание:"

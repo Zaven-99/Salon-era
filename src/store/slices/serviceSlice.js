@@ -10,16 +10,14 @@ const serviceSlice = createSlice({
   reducers: {
     addService(state, action) {
       const serviceToAdd = action.payload;
-      
+
       const existingServiceIndex = state.selectedServices.findIndex(
         (service) => service.id === serviceToAdd.id
       );
 
       if (existingServiceIndex >= 0) {
-       
         state.selectedServices.splice(existingServiceIndex, 1);
       } else {
-        
         state.selectedServices = [serviceToAdd];
       }
     },

@@ -1,0 +1,61 @@
+@import '../../../../styles/variables.scss';
+
+
+
+.client-info{
+  background: #cccccc47;
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+}
+.change-client{
+  color: black;
+  background-color: rgb(165, 206, 41);
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px;
+  height: 50px;
+  box-shadow: 0 8px 16px -8px;
+  border-radius: 4px;
+  width: 150px;
+  margin-top: 15px;
+}
+.change-client:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+
+ 
+.delete-client{
+  color: black;
+  background-color: #fe5440;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px;
+  height: 50px;
+  box-shadow: 0 8px 16px -8px;
+  border-radius: 4px;
+  width: 150px;
+}
+.delete-client:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+
+
+
+.clientBlock{
+	display: flex;
+}
+.btn-block{
+    display: flex;
+    justify-content: space-between;
+    margin-top: $sp-50;
+}

@@ -27,6 +27,8 @@
   width: $wd-100p;
   animation:bounce-in .5s;
   margin: $sp-10;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
 .modal-content.close {

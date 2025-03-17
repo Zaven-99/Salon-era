@@ -15,7 +15,9 @@ import HistoryOrdersAdminPanelPage from "./pages/historyOrdersAdminPanelPage/His
 import DatePage from "./pages/datePage/DatePage";
 import OurWorksAdminPanelPage from "./pages/ourWorksAdminPanelPage/OurWorksAdminPanelPage";
 import NewsAdminPanelPage from "./pages/newsAdminPanelPage/NewsAdminPanelPage";
+import ScheduleAdminPanelPage from './pages/scheduleAdminPanelPage/ScheduleAdminPanelPage'
 import PrivacyPolicyPage from "./pages/privacyPolicyPage/PrivacyPolicyPage";
+
 
 import "./App.css";
 import "./components/styles/reset.css";
@@ -162,6 +164,10 @@ import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelP
         />
 
         <Route path="/adminPanel/slides" element={<SlidesAdminPanelPage />} />
+        <Route
+          path="/adminPanel/schedule"
+          element={<ScheduleAdminPanelPage />}
+        />
       </Routes>
     </div>
   );

@@ -1,0 +1,117 @@
+ 
+@import '../../../styles/variables.scss';
+
+.enrol-form{
+  margin-top: 5px;
+}
+.signUp-button{
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: max-content;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+.signUp-button:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.btn-block{
+    display: flex;
+    justify-content: space-between;
+    margin-top: $sp-50;
+}
+.delete-client{
+  color: black;
+  background-color: #fe5440;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px;
+  height: 50px;
+  box-shadow: 0 8px 16px -8px;
+  border-radius: 4px;
+  width: 150px;
+}
+.delete-client:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.cancel-delete__client{
+	color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  box-shadow: $shadow-small;
+  background-color: rgb(15 210 15);
+  border-radius: $br-4;
+  width: $wd-150;
+}
+.cancel-delete__client:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  overflow-y: scroll;
+  
+}
+.modal-content {
+  z-index: 15;
+  background: white;
+  position: fixed;      
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: $br-8;
+  padding: $sp-20;
+  max-width: $wd-550;
+  width: $wd-100p;
+  animation: bounce-in .5s;
+  overflow-y: auto;
+ 
+}
+.succes-message{
+  z-index: 15;
+    background: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 550px;
+    width: 100%;
+    animation: bounce-in .5s;
+    overflow-y: auto;
+    height: 180px;
+    vertical-align: c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+ 
+.choose {
+  text-align: center;
+}

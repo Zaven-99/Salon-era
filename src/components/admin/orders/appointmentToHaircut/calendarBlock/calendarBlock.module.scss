@@ -1,0 +1,65 @@
+@import '../../../../styles/variables.scss';
+
+
+.error-message{
+  font-size: $fz-16;
+  color: #d22020ad;
+  margin: $sp-10 0px;
+  font-weight: $light;
+}
+
+.date-sign__up{
+	font-family: $font;
+  font-size: $fz-20;
+  font-weight: $medium;
+  padding: $sp-5;
+ 
+}
+.slots-block{
+  display: flex;
+  flex-wrap: wrap;
+  margin: $sp-20 0;
+  width: $wd-300;
+  gap: $sp-5;
+
+}
+
+.select{
+  cursor: pointer;
+  background: #e6e6e6;
+  color: black;
+  width: max-content;
+  border-radius: $br-5;
+  padding: $sp-5 $sp-10;
+  font-size: $fz-20;
+  font-weight: $regular;
+}
+.select:hover{
+  transform: scale(1.05);
+  transition: 0.2s;
+  background: #00aaff3e;
+
+}
+.selected{
+  background: #00aaff;
+  cursor: pointer;
+  width: max-content;
+  transform: scale(1.01);
+  transition: 0.2s;
+  color: black;
+  opacity: 0.8;
+  border-radius: $br-5;
+  padding: $sp-5 $sp-10;
+  box-shadow: $shadow-small;
+  font-size: $fz-20;
+  font-weight: $light;
+}
+.dataSelected{
+  color: black;
+  margin-bottom: $sp-10;
+  font-size: $fz-20;
+  font-weight: $light;
+  padding: $sp-5;
+  border-radius: $br-4;
+   
+}

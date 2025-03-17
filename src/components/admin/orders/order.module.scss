@@ -3,101 +3,12 @@
 .orders-today{
   margin-bottom:$sp-20;
 }
-.record-item{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-    background: #eaeef4;
-    padding: $sp-15;
-    margin-bottom: $sp-5;
-    border-radius: $br-4;
-	margin: $sp-10 $sp-10 $sp-10 $sp-10;
-}
-.record-item__inner{
-    width: $wd-200;
-}
-.accept{
-	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-    padding: $sp-10;
-    height: $hg-50;
-    box-shadow: $shadow-small;
-    background-color: rgb(15 210 15);
-    border-radius: $br-4;
-    width: $wd-150;
-}
-.accept:hover{
-	transform: scale(1.02);
-    box-shadow:$shadow-small;
-    transition: .2s;
-}
-.cancel{
-	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-    padding: $sp-10;
-    height: $hg-50;
-    box-shadow:$shadow-small;
-    background-color: #fe5440;
-    border-radius: $br-4;
-    width: $wd-150;
-}
-.cancel:hover{
-	transform: scale(1.02);
-    box-shadow: $shadow-small;
-    transition: .2s;
-}
-.order-created{
-	background-color:rgba(200, 200, 15, 0.76);
-	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
-	border-radius:$br-4;
-    width:$wd-125;
-    text-align: center;
-}
-.order-accept{
-	background-color:$buttonAccept-color;
-	padding: $sp-2 $sp-5 $sp-2 $sp-5;
-	border-radius:$br-4;
-    width:$wd-125;
-    text-align: center;
-}
-.order-canceled{
-    background-color:#fe5440;
-	padding: $sp-2 $sp-5 $sp-2 $sp-5;
-	border-radius:$br-4;
-    width:$wd-125;
-    text-align: center;
 
-}
-.order-closed{
-    background-color: rgb(15 210 15);
-	padding: $sp-2 $sp-5 $sp-2 $sp-5;
-	border-radius:$br-4;
-    width:$wd-125;
-    text-align: center;
-}
-.close{
-    color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-    padding: $sp-10;
-    height: $hg-50;
-    box-shadow: $shadow-small;
-    background-color: rgb(186, 178, 177);
-    border-radius: $br-4;
-    width: $wd-150;
-}
-
- 
-
-.btn-block{
-    display: flex;
-    gap: $sp-15;
-
+select{
+    border: 2px solid;
+    border-radius: 2px;
+    width: 100%;
+    
 }
 @keyframes bounce-in {
     0%{
@@ -115,17 +26,8 @@
     opacity: 0;
   }
 }
-.message{
-    text-align: center;
-	color: #fe5440;
-	font-family: "Open Sans", sans-serif;
-	margin-top: $sp-50;
-    font-size: $fz-20;
-    font-weight: $medium;
-}
-.date{
-    margin-left: $sp-50;
-}
+
+
 .date-picker{
     cursor: pointer;
     text-align: center;
@@ -136,7 +38,81 @@
     box-shadow: $shadow-small;
     
 }
- 
+.wrapper{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+}
+.add-order{
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: background 0.3s;
+    background-color: #b5b5b5;
+    width: 200px;
+    padding: 15px;
+    margin-right: 50px;
+    border-radius: 4px;
+}
+ .open-enrol__form{
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: background 0.3s;
+    background-color: #b5b5b5;
+    width: 100%;
+    padding: 10px;
+    border-radius: 2px;
+ }
+ .open-enrol__form:hover{
+    transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+ }
+.enrol-form{
+    background:#b5b5b565;
+    padding: 10px;
+    border-radius:2px;
+}
+ .enrol-button{
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    transition: background 0.3s;
+    background-color: #0af;
+    color:white;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 2px;
+ }
+ .enrol-button:hover{
+    transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+ }
+ .form-close{
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: end;
+ }
+ .form-close:hover {
+  color: rgba(255, 0, 0, 0.274);  
+  transition: .2s;
+}
+
+.form-close:active {
+  color: rgba(255, 0, 0, 0.274);  
+  transition: .1s;
+  transform: scale(1.3);
+}
+.service{
+    height: 20px;
+}
 @media(max-width:1400px){
     .record-list{
         display: flex;

@@ -76,18 +76,18 @@ const EmployeeField = () => {
     }
   };
 
-  const toggleOpenSignInForm = () => {
+  const toggleOpen = () => {
     setAddEmployee(true);
     document.body.style.overflow = "hidden";
   };
-  const toggleCloseSignInForm = () => {
+  const toggleClose = () => {
     setAddEmployee(false);
     document.body.style.overflow = "scroll";
   };
   const password = watch("password");
 
   const onSubmit = async (formValues) => {
-    // setLoading(true);
+  
     const { confirmPassword, ...dataToSend } = formValues;
     const dateWorkIn = new Date(formValues.dateWorkIn);
 
@@ -120,7 +120,7 @@ const EmployeeField = () => {
       }
 
       setEmployee((prev) => [...prev, dataToSend]);
-      toggleCloseSignInForm();
+      toggleClose();
       reset();
     } catch (error) {
       console.error("Ошибка отправки:", error);
@@ -190,12 +190,12 @@ const EmployeeField = () => {
       <CustomButton
         className={styles["add-employee"]}
         label="Добавить сотрудника"
-        onClick={toggleOpenSignInForm}
+        onClick={toggleOpen}
       />
       {addEmployee && (
         <Modal
-          toggleOpenSignInForm={toggleOpenSignInForm}
-          toggleCloseSignInForm={toggleCloseSignInForm}
+          toggleOpen={toggleOpen}
+          toggleClose={toggleClose}
         >
           <h2>Добавить сотрудника</h2>
           <form
@@ -397,8 +397,8 @@ const EmployeeField = () => {
         setLoading={setLoading}
         toggleHelpModal={toggleHelpModal}
         showHelpModal={showHelpModal}
-        toggleOpenSignInForm={toggleOpenSignInForm}
-        toggleCloseSignInForm={toggleCloseSignInForm}
+        toggleOpen={toggleOpen}
+        toggleClose={toggleClose}
         handleKeyDown={handleKeyDown}
       />
     </div>

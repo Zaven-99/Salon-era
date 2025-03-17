@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import CustomButton from "../../../customButton/CustomButton";
-import CustomInput from "../../../customInput/CustomInput";
+import { useForm } from "react-hook-form";
+
 import Modal from "../../../modal/Modal";
 import Spinner from "../../../spinner/Spinner";
-import CustomSelect from "../../../customSelect/CustomSelect";
 
 import styles from "./employeeList.module.scss";
-import ImagePreview from "../../../imagePreview/ImagePreview";
 import avatarImg from "../../../../img/icons/avatar.png";
+import BtnBlock from "../../../btnBlock/BtnBlock";
+import EditModal from "./editModal/EditModal";
+import EmployeeBlock from './employeeBlock/EmployeeBlock';
 
 const EmployeeList = ({
   employee,
   setEmployee,
   toggleHelpModal,
   showHelpModal,
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
   handleKeyDown,
 }) => {
-  const {
-    register,
-    control,
-    formState: { errors },
-    setError,
-  } = useForm({
+  const { setError } = useForm({
     mode: "onChange",
     defaultValues: {
       firstName: "",
@@ -40,15 +35,13 @@ const EmployeeList = ({
       clientType: "employee",
     },
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const [activeInput, setActiveInput] = useState("");
+
   const [loading, setLoading] = useState(false);
-  const [EmployeeId, setEmployeeId] = useState(null);
+  const [employeeId, setEmployeeId] = useState(null);
   const [editedEmployee, setEditedEmployee] = useState({});
   const [confirmDeleteEmployee, setConfirmDeleteEmployee] = useState(false);
   const [employeeToDelete, setEmployeeToDelete] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
   const genderMap = { 0: "Женщина", 1: "Мужчина" };
 
   const positionMap = [
@@ -92,50 +85,6 @@ const EmployeeList = ({
       await fetchEmployee();
     })();
   }, []);
-
-  const handleSave = async (id) => {
-    setLoading(true);
-    const formattedDate = `${editedEmployee.dateWorkIn}`;
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        ...editedEmployee,
-        dateWorkIn: formattedDate,
-        id,
-      })
-    );
-
-    if (selectedFile) {
-      formData.append("imageData", selectedFile, selectedFile.name);
-    }
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/clients/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        throw new Error(`Ошибка при сохранении услуги: ${errorMessage}`);
-      }
-
-      setEmployee((prevEmployee) =>
-        prevEmployee.map((employee) =>
-          employee.id === id ? editedEmployee : employee
-        )
-      );
-      setEmployeeId(null);
-      setEditedEmployee({});
-    } catch (error) {
-      console.error("Ошибка:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDelete = async (id) => {
     if (employeeToDelete === null) return;
@@ -199,35 +148,6 @@ const EmployeeList = ({
     document.body.style.overflow = "scroll";
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedEmployee((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const uploadImage = (event) => {
-    const files = event?.target?.files;
-    if (!files || files.length === 0) {
-      console.error("Файлы не найдены или пусты");
-      return;
-    }
-
-    const file = files[0];
-    setSelectedFile(file);
-
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Выберите файл изображения.");
-    }
-  };
-  const deletImagePreview = () => {
-    setImagePreview(null);
-  };
-
   if (loading) {
     return <Spinner />;
   }
@@ -243,216 +163,26 @@ const EmployeeList = ({
           <ul className={styles["employee-list__inner"]}>
             {groupedEmployee[position].map((employee, index) => (
               <li className={styles["employee-item"]} key={index}>
-                {EmployeeId === employee.id ? (
+                {employeeId === employee.id ? (
                   <Modal
-                    toggleOpenSignInForm={toggleOpenSignInForm}
-                    toggleCloseSignInForm={toggleCloseSignInForm}
+                    toggleOpen={toggleOpen}
+                    toggleClose={toggleClose}
                     setEmployeeId={setEmployeeId}
                   >
-                    <>
-                      <h2>Редактировать</h2>
-                      <CustomInput
-                        label="Введите имя:"
-                        error={errors.firstName}
-                        type="text"
-                        name="firstName"
-                        value={editedEmployee.firstName}
-                        handleChange={handleChange}
-                        isActive={activeInput === "firstName"}
-                        setActiveInput={setActiveInput}
-                        {...register("firstName", {
-                          required: "Это поле обязательно.",
-                          minLength: {
-                            value: 3,
-                            message: "Имя должен содержать минимум 3 символа.",
-                          },
-                        })}
-                      />
-                      <CustomInput
-                        label="Введите фамилию:"
-                        error={errors.lastName}
-                        type="text"
-                        name="lastName"
-                        value={editedEmployee.lastName}
-                        handleChange={handleChange}
-                        isActive={activeInput === "lastName"}
-                        setActiveInput={setActiveInput}
-                        {...register("lastName", {
-                          required: "Это поле обязательно.",
-                          minLength: {
-                            value: 3,
-                            message:
-                              "Фамилия должен содержать минимум 3 символа.",
-                          },
-                        })}
-                      />
-                      <CustomInput
-                        label="Введите логин:"
-                        error={errors.login}
-                        type="text"
-                        name="login"
-                        value={editedEmployee.login}
-                        handleChange={handleChange}
-                        isActive={activeInput === "login"}
-                        setActiveInput={setActiveInput}
-                        {...register("login", {
-                          required: "Это поле обязательно.",
-                          minLength: {
-                            value: 3,
-                            message:
-                              "Логин должен содержать минимум 3 символа.",
-                          },
-                          maxLength: {
-                            value: 20,
-                            message: "Логин не должен превышать 20 символов.",
-                          },
-                        })}
-                      />
-                      <CustomInput
-                        label="Введите пароль:"
-                        show={() => setShowPassword((prev) => !prev)}
-                        showPassword={showPassword}
-                        error={errors.password}
-                        toggleHelpModal={toggleHelpModal}
-                        showHelpModal={showHelpModal}
-                        value={editedEmployee.password}
-                        handleChange={handleChange}
-                        isActive={activeInput === "password"}
-                        setActiveInput={setActiveInput}
-                        {...register("password", {
-                          required: "Это поле обязательно.",
-                          minLength: {
-                            value: 8,
-                            message:
-                              "Пароль должен содержать минимум 8 символов.",
-                          },
-                          validate: {
-                            hasUpperCase: (value) =>
-                              /[A-Z]/.test(value) ||
-                              "Пароль должен содержать хотя бы одну заглавную букву.",
-                            hasLowerCase: (value) =>
-                              /[a-z]/.test(value) ||
-                              "Пароль должен содержать хотя бы одну строчную букву.",
-                            hasNumber: (value) =>
-                              /\d/.test(value) ||
-                              "Пароль должен содержать хотя бы одну цифру.",
-                            hasSpecialChar: (value) =>
-                              /[!@#$%^&*._-]/.test(value) ||
-                              "Пароль должен содержать хотя бы один специальный символ: ! @ # $ % ^ & * . - _",
-                            hasCyrillic: (value) =>
-                              !/[а-яА-ЯЁё]/.test(value) ||
-                              "Пароль не должен содержать кириллические символы.",
-                          },
-                        })}
-                      />
-
-                      <CustomInput
-                        label="Введите почту:"
-                        name="email"
-                        type="email"
-                        error={errors.email}
-                        value={editedEmployee.email}
-                        handleChange={handleChange}
-                        isActive={activeInput === "email"}
-                        setActiveInput={setActiveInput}
-                        {...register("email", {
-                          required: "Это поле обязательно",
-                          pattern: {
-                            value:
-                              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                            message:
-                              "Введите корректный адрес электронной почты",
-                          },
-                        })}
-                      />
-                      <CustomInput
-                        label="Введите номер телефона:"
-                        error={errors.phone}
-                        name="phone"
-                        type="tel"
-                        value={editedEmployee.phone}
-                        handleChange={handleChange}
-                        isActive={activeInput === "phone"}
-                        setActiveInput={setActiveInput}
-                        onKeyDown={handleKeyDown}
-                        {...register("phone", {
-                          required: "Это поле обязательно",
-                          pattern: {
-                            value: /^\+7\d{10}$/,
-                            message: "Номер телефона должен содержать 10 цифр",
-                          },
-                        })}
-                      />
-                      <CustomInput
-                        label="Укажите дату трудоустройства"
-                        type="date"
-                        name="dateWorkIn"
-                        value={editedEmployee.dateWorkIn.slice(0, -6) || ""}
-                        handleChange={handleChange}
-                        isActive={activeInput === "dateWorkIn"}
-                        setActiveInput={setActiveInput}
-                        {...register("dateWorkIn", {
-                          required: "Это поле обязательно",
-                        })}
-                      />
-
-                      <Controller
-                        name="position"
-                        control={control}
-                        rules={{ required: "Это поле обязательно" }}
-                        render={({ field }) => (
-                          <CustomSelect
-                            {...field}
-                            name="position"
-                            edited={editedEmployee.position}
-                            handleChange={handleChange}
-                            control={control}
-                            map={positionMap}
-                            rules={{ required: "Это поле обязательно" }}
-                          />
-                        )}
-                      />
-
-                      <ImagePreview
-                        deletImagePreview={deletImagePreview}
-                        imagePreview={imagePreview}
-                      />
-                      <CustomInput
-                        type="file"
-                        name="imageLink"
-                        placeholder="Выберите изображение"
-                        isActive={activeInput === "imageLink"}
-                        setActiveInput={setActiveInput}
-                        onChange={uploadImage}
-                      />
-
-                      <CustomInput
-                        label="Пол"
-                        type="radio"
-                        name="gender"
-                        value={editedEmployee.gender}
-                        handleChange={handleChange}
-                        control={control}
-                        {...register("gender", {
-                          required: "Выберите пол.",
-                        })}
-                      />
-
-                      <div className={styles["btn-block"]}>
-                        <CustomButton
-                          className={styles["save-employee"]}
-                          type="button"
-                          label="Сохранить"
-                          onClick={() => handleSave(employee.id)}
-                        />
-                        <CustomButton
-                          className={styles["cancel"]}
-                          type="button"
-                          label="Отменить"
-                          onClick={() => setEmployeeId(null)}
-                        />
-                      </div>
-                    </>
+                    <EditModal
+                      imagePreview={imagePreview}
+                      setLoading={setLoading}
+                      editedEmployee={editedEmployee}
+                      setEmployee={setEmployee}
+                      setEmployeeId={setEmployeeId}
+                      setEditedEmployee={setEditedEmployee}
+                      setImagePreview={setImagePreview}
+                      toggleHelpModal={toggleHelpModal}
+                      showHelpModal={showHelpModal}
+                      handleKeyDown={handleKeyDown}
+                      positionMap={positionMap}
+                      employee={employee}
+                    />
                   </Modal>
                 ) : (
                   <>
@@ -464,81 +194,52 @@ const EmployeeList = ({
                           alt=""
                         />
                       ) : (
-                        <>
+                        <div>
                           <img
                             className={styles["image-employee"]}
                             src={avatarImg}
                             alt=""
                           />
-                        </>
+                        </div>
                       )}
                     </div>
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Имя:</strong>
-                      <div>{employee.firstName}</div>
-                    </div>
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Фамилия:</strong>
-                      <div>{employee.lastName}</div>
-                    </div>
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Логин:</strong> <div>{employee.login}</div>
-                    </div>
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Пароль:</strong> <div>{employee.password}</div>
-                    </div>
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Email:</strong> <div>{employee.email}</div>
-                    </div>
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Телефон:</strong> <div>{employee.phone}</div>
-                    </div>
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Дата:</strong>
-                      <div>{formatDate(employee.dateWorkIn)}</div>
-                    </div>
-
-                    <div className={styles["employee-item__inner"]}>
-                      <strong>Пол:</strong>{" "}
-                      <div>{getGenderText(employee.gender)}</div>
-                    </div>
-                    <div className={styles["button-block"]}>
-                      <CustomButton
-                        className={styles["edit-employee"]}
-                        type="button"
-                        label="Редактировать"
-                        onClick={() => handleEdit(employee)}
+                      <EmployeeBlock
+                        employee={employee}
+                        formatDate={formatDate}
+                        getGenderText={getGenderText}
                       />
-                      <CustomButton
-                        className={styles["delete-employee"]}
-                        type="button"
-                        label="Удалить Сотрудника"
-                        onClick={() => showMessageDeleteEmployee(employee.id)}
+
+                    <div>
+                      <BtnBlock
+                        className1={styles["edit-employee"]}
+                        className2={styles["delete-employee"]}
+                        className3={styles["button-block"]}
+                        label1="Редактировать"
+                        label2="Удалить Сотрудника"
+                        fnc1={() => handleEdit(employee)}
+                        fnc2={() => showMessageDeleteEmployee(employee.id)}
                       />
                       {confirmDeleteEmployee &&
                         employeeToDelete === employee.id && (
-                          <div className={styles["modal-overlay"]}>
-                            <div className={styles["modal-content"]}>
-                              <h2 className={styles["choose"]}>
-                                Вы действительно хотите удалить сотрудника ?
-                              </h2>
+                          <Modal
+                            toggleOpen={toggleOpen}
+                            toggleClose={closeMessageDeleteEmployee}
+                            setEmployeeId={setEmployeeId}
+                          >
+                            <h2 className={styles["choose"]}>
+                              Вы действительно хотите удалить сотрудника ?
+                            </h2>
 
-                              <div className={styles["btn-block"]}>
-                                <CustomButton
-                                  className={styles["delete-employee"]}
-                                  type="button"
-                                  label="Удалить Сотрудника"
-                                  onClick={() => handleDelete(employee.id)}
-                                />
-                                <CustomButton
-                                  className={styles["cancel-delete__employee"]}
-                                  type="button"
-                                  label="Отменить удаления"
-                                  onClick={closeMessageDeleteEmployee}
-                                />
-                              </div>
-                            </div>
-                          </div>
+                            <BtnBlock
+                              className1={styles["delete-employee"]}
+                              className2={styles["cancel-delete__employee"]}
+                              className3={styles["btn-block"]}
+                              label1="Удалить Сотрудника"
+                              label2="Отменить удаления"
+                              fnc1={() => handleDelete(employee.id)}
+                              fnc2={closeMessageDeleteEmployee}
+                            />
+                          </Modal>
                         )}
                     </div>
                   </>

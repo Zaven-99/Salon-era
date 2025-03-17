@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import AOS from "aos"; // импортируем AOS
+import React, { useEffect } from "react";
+import AOS from "aos";
 
 import styles from "./service.module.scss";
 
@@ -11,21 +11,20 @@ const Service = ({
   selectedServices,
   getDurationText,
 }) => {
-
   useEffect(() => {
-        AOS.init({
-          duration: 500,
-          once: false,
-          offset: 10,
-        });
-      }, []);
+    AOS.init({
+      duration: 500,
+      once: false,
+      offset: 10,
+    });
+  }, []);
   return (
     <div className={styles.wrapper}>
-      {groupedServices[genderKey][category].map((item) => (
+      {groupedServices[genderKey]?.[category]?.map((item, index) => (
         <div
           data-aos="fade-up"
           className={styles["priceList-inner"]}
-          key={item.id}
+          key={`${item.id}-${index}`}
         >
           <div
             onClick={() => toggleChooseService(item)}

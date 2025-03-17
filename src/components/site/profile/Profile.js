@@ -53,7 +53,7 @@ const Profile = ({ closeProfile, logOut, isClosing }) => {
         setClients((prevClients) =>
           prevClients.filter((client) => client.id !== id)
         );
-        closeMessageDeleteEmployee();
+        closeMessageDeleteClients();
       }, 5000);
     } catch (error) {
       console.error("Ошибка:", error);
@@ -64,13 +64,13 @@ const Profile = ({ closeProfile, logOut, isClosing }) => {
     }
   };
 
-  const showMessageDeleteEmployee = (id) => {
+  const showMessageDeleteClients = (id) => {
     setClientToDelete(id);
     setConfirmDeleteEmployee(true);
     document.body.style.overflow = "hidden";
   };
 
-  const closeMessageDeleteEmployee = () => {
+  const closeMessageDeleteClients = () => {
     setConfirmDeleteEmployee(false);
     setClientToDelete(null);
     document.body.style.overflow = "scroll";
@@ -134,7 +134,7 @@ const Profile = ({ closeProfile, logOut, isClosing }) => {
                   className={styles["cancel-delete__clients"]}
                   type="button"
                   label="Отменить удаление"
-                  onClick={closeMessageDeleteEmployee}
+                  onClick={closeMessageDeleteClients}
                 />
               </div>
             </div>
@@ -150,7 +150,7 @@ const Profile = ({ closeProfile, logOut, isClosing }) => {
               <div className={styles["delete-account"]}>
                 <div
                   className={styles["delete-account__inner"]}
-                  onClick={() => showMessageDeleteEmployee(client.id)}
+                  onClick={() => showMessageDeleteClients(client.id)}
                 >
                   <img className={styles["recycle"]} src={recycle} alt="" />
                   <p className={styles["btn-delete"]}> Удалить аккаунт</p>

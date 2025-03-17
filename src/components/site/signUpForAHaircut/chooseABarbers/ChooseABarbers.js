@@ -4,17 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectChosenBarber } from "../../../../store/slices/action";
 import { useAuth } from "../../../../use-auth/use-auth";
 
-import styles from "./chooseABarbers.module.scss";
 
 import CustomButton from "../../../customButton/CustomButton";
 import RatingStars from "../../../ratingStars/RatingStars";
-import avatar from "../../../../img/icons/avatar.png";
-import Spinner from "../../../spinner/Spinner";
 import FeedbackSection from "./feedbackSection/FeedbackSection";
 import Barbers from "./barbers/Barbers";
 
+import avatar from "../../../../img/icons/avatar.png";
+import Spinner from "../../../spinner/Spinner";
+import styles from "./chooseABarbers.module.scss";
+
 const ChooseABarbers = ({ handleSignUpClick }) => {
-  const [clients, setClients] = useState([]);
+  const [barbers, setBarbers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [feedbackBarber, setFeedbackBarber] = useState(null);
@@ -48,7 +49,7 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
         throw new Error("Ошибка при получении барберов");
       }
       const data = await response.json();
-      setClients(data);
+      setBarbers(data);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -95,7 +96,7 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
   };
 
   const filteredBarbers = useMemo(() => {
-    return clients.filter((barber) => {
+    return barbers.filter((barber) => {
       // Проверка, есть ли выбрана услуга из категории женских стрижек
       const isFemaleHaircutSelected = selectedServices.some((service) =>
         [
@@ -160,9 +161,8 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
       }
 
        
-      navigate('/')
     });
-  }, [clients, selectedServices]);
+  }, [barbers, selectedServices]);
 
   const getAverageRating = (barberId) => {
     const barberFeedbacks = feedbacks.filter(

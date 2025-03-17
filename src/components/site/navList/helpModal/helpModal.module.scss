@@ -10,7 +10,7 @@
     width: $wd-100p;
     z-index: 17;
     position: absolute;
-    top: -$sp-215;
+    top: -$sp-140;
     right: $sp-0;
     animation:bounce-in .5s;
     box-shadow:$shadow-small;
@@ -26,13 +26,13 @@
     }
 }
 .help h2{
-    font-size: $fz-14;
+    font-size: $fz-12;
     font-weight:$extra-bold;
     text-align: start;
 
 }
 .help-item{
-    font-size: $fz-14;
+    font-size: $fz-10;
     text-align: start;
 }
 

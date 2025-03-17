@@ -1,0 +1,45 @@
+@import '../../../../styles/variables.scss';
+
+ 
+.save-employee{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+	padding:$sp-10;
+	height: $hg-50;
+	box-shadow: $shadow-small;
+	background-color: rgb(15 210 15);
+	border-radius: $br-4;
+	width: $wd-150;
+
+}
+.save-employee:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.cancel{
+	color: black;
+    font-family:  $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+	padding:$sp-10;
+	height: $hg-50;
+	box-shadow: $shadow-small;
+	background-color:#fe5440;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+
+.cancel:hover{
+	transform: scale(1.02);
+	box-shadow:$shadow-small;
+	transition: .2s;
+}
+
+.btn-block{
+    display: flex;
+    justify-content: space-between;
+    margin-top: $sp-50;
+}

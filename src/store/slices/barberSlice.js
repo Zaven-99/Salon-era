@@ -1,9 +1,8 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   selectedBarber: null,
-  slotsByBarber: {}, 
+  slotsByBarber: {},
 };
 
 const barberSlice = createSlice({
@@ -13,7 +12,6 @@ const barberSlice = createSlice({
     selectBarber(state, action) {
       const barberToSelect = action.payload;
 
-     
       if (
         state.selectedBarber &&
         state.selectedBarber.id === barberToSelect.id
@@ -21,22 +19,21 @@ const barberSlice = createSlice({
         return;
       }
 
-      state.selectedBarber = barberToSelect; 
+      state.selectedBarber = barberToSelect;
     },
     clearBarber(state) {
       state.selectedBarber = null;
     },
     setSlotsForBarber(state, action) {
       const { barberId, slots } = action.payload;
-      state.slotsByBarber[barberId] = slots; 
+      state.slotsByBarber[barberId] = slots;
     },
     clearSlotsForBarber(state, action) {
       const barberId = action.payload;
-      delete state.slotsByBarber[barberId]; 
+      delete state.slotsByBarber[barberId];
     },
   },
 });
-
 
 export const {
   selectBarber,
@@ -44,6 +41,5 @@ export const {
   setSlotsForBarber,
   clearSlotsForBarber,
 } = barberSlice.actions;
-
 
 export default barberSlice.reducer;

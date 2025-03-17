@@ -3,8 +3,8 @@ import styles from "./modal.module.scss";
 import CustomButton from "../customButton/CustomButton";
 
 const Modal = ({
-  toggleOpenSignInForm,
-  toggleCloseSignInForm,
+  toggleOpen,
+  toggleClose,
   setEmployeeId,
   setEditServiceId,
   setSlidesId,
@@ -13,7 +13,7 @@ const Modal = ({
   children,
   isClosing,
 }) => {
-  if (!toggleOpenSignInForm) return null;
+  if (!toggleOpen) return null;
   const handleClose = () => {
     if (setEmployeeId) {
       setEmployeeId(null);
@@ -30,7 +30,7 @@ const Modal = ({
     if (setNewsId) {
       setNewsId(null);
     }
-    toggleCloseSignInForm();
+    toggleClose();
   };
   return (
     <div

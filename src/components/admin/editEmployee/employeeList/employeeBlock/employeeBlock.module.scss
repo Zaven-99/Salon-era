@@ -1,0 +1,13 @@
+@import '../../../../styles/variables.scss';
+
+.employee-item{
+	display: flex;
+	align-items:center;
+	width: 100%;
+}
+.employee-item__inner{
+    width: $wd-100p;
+ }
+ .employee-item__inner div {
+    font-size:$fz-12
+ }

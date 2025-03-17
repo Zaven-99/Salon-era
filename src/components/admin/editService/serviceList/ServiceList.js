@@ -387,14 +387,14 @@ const ServiceList = ({
 
                                   <div className={styles["btn-block"]}>
                                     <CustomButton
-                                      className={styles["delete-employee"]}
+                                      className={styles["delete-service"]}
                                       type="button"
                                       label="Удалить услугу"
                                       onClick={() => handleDelete(service.id)}
                                     />
                                     <CustomButton
                                       className={
-                                        styles["cancelDelete-employee"]
+                                        styles["cancel-delete__service"]
                                       }
                                       type="button"
                                       label="Отменить удаления"

@@ -102,42 +102,7 @@ img{
 	transition: .2s;
 }
 
-.save-employee{
-	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-	padding:$sp-10;
-	height: $hg-50;
-	box-shadow: $shadow-small;
-	background-color: rgb(15 210 15);
-	border-radius: $br-4;
-	width: $wd-150;
 
-}
-.save-employee:hover{
-	transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
-.cancel{
-	color: black;
-    font-family:  $font;
-    font-size: $fz-12;
-    font-weight: $regular;
-	padding:$sp-10;
-	height: $hg-50;
-	box-shadow: $shadow-small;
-	background-color:#fe5440;
-	border-radius: $br-4;
-	width: $wd-150;
-}
-
-.cancel:hover{
-	transform: scale(1.02);
-	box-shadow:$shadow-small;
-	transition: .2s;
-}
 .input-item{
     width: $wd-100p;
     max-width: $wd-100p;
@@ -159,7 +124,9 @@ img{
     appearance: none !important;
     margin-top: 5px;
 }
- 
+ .choose{
+    text-align: center;
+ }
  
 .button-block{
 	display: flex;
@@ -190,17 +157,13 @@ img{
      
  
  }
-.employee-item__inner{
-    width: $wd-100p;
- }
- .employee-item__inner div {
-    font-size:$fz-12
- }
-.btn-block{
-    display: flex;
-    justify-content: space-between;
-    margin-top: $sp-50;
-}
+// .employee-item__inner{
+//     width: $wd-100p;
+//  }
+//  .employee-item__inner div {
+//     font-size:$fz-12
+//  }
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -248,7 +211,7 @@ strong{
  
 
 .image-employee{
-    width: $wd-100;
+    width: $wd-150;
     height: $wd-100;
     object-fit: cover;
     border-radius:$br-2;
@@ -276,11 +239,7 @@ strong{
         width: $wd-300;
         justify-content: center;
     }
-    // .employee-list__inner{
-    //     display: flex;
-    //     align-items:center;
-    //     flex-wrap: wrap;
-    // }
+    
     .employee-item__inner p{
         font-size: $fz-15;
         line-height: $sp-25;

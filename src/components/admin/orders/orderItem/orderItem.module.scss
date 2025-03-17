@@ -1,0 +1,123 @@
+@import '../../../styles/variables.scss';
+
+
+.record-item{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+    background: #eaeef4;
+    padding: $sp-15;
+    margin-bottom: $sp-5;
+    border-radius: $br-4;
+	margin: $sp-10 $sp-10 $sp-10 $sp-10;
+}
+.record-item__inner{
+    width: $wd-100p;
+}
+.record-item__inner div{
+	font-size: 12px;
+	 
+}
+.accept{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+    padding: $sp-10;
+    height: $hg-50;
+    box-shadow: $shadow-small;
+    background-color: rgb(15 210 15);
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.accept:hover{
+	transform: scale(1.02);
+    box-shadow:$shadow-small;
+    transition: .2s;
+}
+.cancel{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+    padding: $sp-10;
+    height: $hg-50;
+    box-shadow:$shadow-small;
+    background-color: #fe5440;
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.cancel:hover{
+	transform: scale(1.02);
+    box-shadow: $shadow-small;
+    transition: .2s;
+}
+
+.close{
+    color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+    padding: $sp-10;
+    height: $hg-50;
+    box-shadow: $shadow-small;
+    background-color: rgb(186, 178, 177);
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.close:hover{
+	transform: scale(1.02);
+    box-shadow: $shadow-small;
+    transition: .2s;
+}
+.order-created{
+	background-color:rgba(200, 200, 15, 0.76);
+	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
+	border-radius:$br-4;
+    width:$wd-125;
+    text-align: center;
+}
+.order-accepted{
+	background-color:$buttonAccept-color;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius:$br-4;
+    width:$wd-125;
+    text-align: center;
+}
+.order-canceled{
+    background-color:#fe5440;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius:$br-4;
+    width:$wd-125;
+    text-align: center;
+
+}
+ 
+ .date{
+    margin-left: $sp-50;
+}
+.message{
+    text-align: center;
+	color: #fe5440;
+	font-family: "Open Sans", sans-serif;
+	margin-top: $sp-50;
+    font-size: $fz-20;
+    font-weight: $medium;
+}
+
+
+.btn-block{
+    display: flex;
+    gap: $sp-15;
+}
+/*media*/
+
+
+@media(max-width:1400px){
+    .record-list{
+        display: flex;
+        flex-wrap: wrap;
+        align-items:center;
+     }
+     
+}

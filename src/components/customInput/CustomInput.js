@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import CustomButton from "../customButton/CustomButton";
 import HelpModal from "../site/navList/helpModal/HelpModal";
-
+import { useDispatch } from "react-redux";
+import { clearBarber } from "../../store/slices/barberSlice.js";
+import { clearServices } from "../../store/slices/serviceSlice.js";
 import question from "../../img/icons/question.png";
 import close from "../../img/icons/close.svg";
 
@@ -25,11 +27,14 @@ const CustomInput = React.forwardRef(
       isActive,
       setActiveInput,
       isDarkMode,
+      setClient,
+      setSelectedTime,
       ...props
     },
     ref
   ) => {
     const [inputValue, setInputValue] = useState("");
+    const dispatch = useDispatch();
 
     const inputType =
       (name === "password" && !showPassword) ||
@@ -51,6 +56,12 @@ const CustomInput = React.forwardRef(
       setInputValue("");
       if (onChange) {
         onChange({ target: { name, value: "" } });
+      }
+      if (setClient) {
+        setClient(null);
+        setSelectedTime(null);
+        dispatch(clearServices());
+        dispatch(clearBarber());
       }
     };
 

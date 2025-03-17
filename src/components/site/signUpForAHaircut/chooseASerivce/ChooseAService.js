@@ -6,8 +6,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Service from "./service/Service";
-import AOS from "aos"; // импортируем AOS
-
+import AOS from "aos";
 
 import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
@@ -127,7 +126,6 @@ const ChooseAService = () => {
     },
     {}
   );
-  
 
   if (loading) {
     return <Spinner />;

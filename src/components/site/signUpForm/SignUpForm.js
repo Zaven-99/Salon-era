@@ -43,7 +43,6 @@ const SignUpForm = ({
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
-  const [error, setError] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [policy, setPolicy] = useState(false);
@@ -93,7 +92,6 @@ const SignUpForm = ({
       formData.append("imageData", selectedFile, selectedFile.name);
     }
     if (!policy) {
-      setError(true);
       setLoading(false);
       return;
     } else {
@@ -171,7 +169,6 @@ const SignUpForm = ({
         }
       } finally {
         setLoading(false);
-        setError(false);
       }
     }
   };

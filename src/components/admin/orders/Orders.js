@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
+import AppointmentToHaircut from "./appointmentToHaircut/AppointmentToHaircut.js";
+import CustomButton from "../../customButton/CustomButton";
 import "react-datepicker/dist/react-datepicker.css";
+import { useForm } from "react-hook-form";
 import { ru } from "date-fns/locale";
 
-import CustomButton from "../../customButton/CustomButton";
 import Spinner from "../../spinner/Spinner.js";
-
 import styles from "./order.module.scss";
+import OrderItem from "./orderItem/OrderItem.js";
 
 registerLocale("ru", ru);
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [addOrderModal, setAddOrderModal] = useState(false);
 
-  const durationMap = [
-    "30 минут",
-    "1 час",
-    "1ч 30 минут",
-    "2 часа",
-    "2ч 30 минут",
-    "3ч",
-    "3ч 30 минут",
-    "4ч",
-  ];
-  const getDurationText = (duration) => durationMap[duration - 1] || "";
+  useForm({
+    mode: "onChange",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+    },
+  });
 
   const fetchData = async () => {
     setLoading(true);
@@ -62,26 +64,17 @@ const Orders = () => {
   };
 
   useEffect(() => {
+    if (addOrderModal) {
+      return;
+    }
+
     fetchData();
     const interval = setInterval(() => {
       fetchData();
     }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
-
-  const groupOrdersByDate = (orders) => {
-    return orders.reduce((acc, order) => {
-      if (order.record.status !== 400 && order.record.status !== 500) {
-        const date = formatDate(order.record.dateRecord).split(",")[0];
-        if (!acc[date]) {
-          acc[date] = [];
-        }
-        acc[date].push(order);
-      }
-      return acc;
-    }, {});
-  };
+  }, [addOrderModal]);
 
   const formatDate = (date) => {
     const dateOptions = {
@@ -126,116 +119,14 @@ const Orders = () => {
     }
   };
 
-  const acceptOrder = async (order) => {
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        id: order.record.id,
-        status: 100,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/records/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
-        );
-      }
-
-      const updatedOrder = await response.json();
-      setOrders((prevOrders) =>
-        prevOrders.map((o) =>
-          o.record.id === updatedOrder.id ? updatedOrder : o
-        )
-      );
-    } catch (error) {
-    } finally {
-      window.location.reload();
-    }
+  const toggleOpen = () => {
+    setAddOrderModal(true);
+    document.body.style.overflow = "hidden";
   };
 
-  const closeOrder = async (order) => {
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        id: order.record.id,
-        status: 500,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/records/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
-        );
-      }
-
-      const updatedOrder = await response.json();
-      setOrders((prevOrders) =>
-        prevOrders.map((o) =>
-          o.record.id === updatedOrder.id ? updatedOrder : o
-        )
-      );
-    } catch (error) {
-    } finally {
-      window.location.reload();
-    }
-  };
-
-  const cancelOrder = async (order) => {
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        id: order.record.id,
-        status: 400,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/records/update`, {
-        method: "POST",
-
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
-        );
-      }
-      const updatedOrder = await response.json();
-      setOrders((prevOrders) =>
-        prevOrders.map((o) =>
-          o.record.id === updatedOrder.id ? updatedOrder : o
-        )
-      );
-    } catch (error) {
-      setError(error.message || "Неизвестная ошибка");
-    } finally {
-      window.location.reload();
-    }
-  };
-
-  const groupedOrders = groupOrdersByDate(filteredOrders);
+  if (error) {
+    return <div className={styles.error}>Ошибка: {error}</div>;
+  }
 
   if (loading) {
     return <Spinner />;
@@ -246,7 +137,7 @@ const Orders = () => {
       {error && <p>Ошибка: {error}</p>}
       <h1 className={styles["orders-today"]}>Заказы на сегодня</h1>
 
-      <div className={styles.datePickerWrapper}>
+      <div className={styles.wrapper}>
         <DatePicker
           className={styles["date-picker"]}
           selected={selectedDate}
@@ -264,112 +155,28 @@ const Orders = () => {
           }}
           locale="ru"
         />
+        <CustomButton
+          onClick={toggleOpen}
+          className={styles["add-order"]}
+          label="Записать"
+        />
       </div>
 
-      {Object.keys(groupedOrders).length > 0 ? (
-        Object.keys(groupedOrders).map((date) => (
-          <div key={date}>
-            <h2 className={styles.date}>{date}</h2>
-            <ul className={styles["record-list"]}>
-              {groupedOrders[date].map((order) => (
-                <li className={styles["record-item"]} key={order.record.id}>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Клиент:</strong>
-                    <div>
-                      {order.clientFrom
-                        ? `${order.clientFrom.firstName} ${order.clientFrom.lastName}`
-                        : "Неизвестный клиент"}
-                    </div>
-                  </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Парикмахер:</strong>
-                    <div>
-                      {order.clientTo
-                        ? `${order.clientTo.firstName} ${order.clientTo.lastName}`
-                        : "Неизвестный парикмахер"}
-                    </div>
-                  </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Услуга:</strong>
-                    <div>
-                      {order.service
-                        ? order.service.name
-                        : "Неизвестная услуга"}
-                    </div>
-                  </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Описание:</strong>
-                    <div>
-                      {order.service
-                        ? order.service.description
-                        : "Нет описания"}
-                    </div>
-                  </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Цена:</strong>
-                    <div>
-                      {order.service
-                        ? `${order.service.priceLow} р.`
-                        : "Цена недоступна"}
-                    </div>
-                  </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Дата:</strong>
-                    <div>{formatDate(order.record.dateRecord)}</div>
-                  </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Длительность:</strong>
-                    <div>{getDurationText(order.service.duration)}</div>
-                  </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Статус:</strong>
-                    {order.record.status === 0 ? (
-                      <div className={styles["order-created"]}>
-                        Заказ создан
-                      </div>
-                    ) : (
-                      <div className={styles["order-accept"]}>Заказ принят</div>
-                    )}
-                  </div>
-                  {order.record.status === 0 ? (
-                    <div className={styles["btn-block"]}>
-                      <CustomButton
-                        label="Принять заказ"
-                        onClick={() => acceptOrder(order)}
-                        className={styles.accept}
-                        type="submit"
-                      />
-                      <CustomButton
-                        label="Отменить заказ"
-                        onClick={() => cancelOrder(order)}
-                        className={styles.cancel}
-                        type="submit"
-                      />
-                    </div>
-                  ) : (
-                    <div className={styles["btn-block"]}>
-                      <CustomButton
-                        label="Закрыть заказ"
-                        onClick={() => closeOrder(order)}
-                        className={styles["close"]}
-                        type="submit"
-                      />
-                      <CustomButton
-                        label="Отменить заказ"
-                        onClick={() => cancelOrder(order)}
-                        className={styles.cancel}
-                        type="submit"
-                      />
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      ) : (
-        <p className={styles.message}>Заказов нет</p>
+      {addOrderModal && (
+        <AppointmentToHaircut
+          setAddOrderModal={setAddOrderModal}
+          toggleOpen={toggleOpen}
+          addOrderModal={addOrderModal}
+          selectedDate={selectedDate}
+        />
       )}
+
+      <OrderItem
+        filteredOrders={filteredOrders}
+        setOrders={setOrders}
+        setError={setError}
+        formatDate={formatDate}
+      />
     </div>
   );
 };

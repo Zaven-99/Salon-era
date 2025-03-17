@@ -1,0 +1,49 @@
+@import '../../../../styles/variables.scss';
+
+
+.sign-up__button{
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: max-content;
+  text-align: center;
+  padding: $sp-10 $sp-20;
+  border-radius: $br-5;
+  font-size: $fz-16;
+  margin-top:10px;
+}
+.sign-up__button:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+
+.form-close{
+  border: none;
+  cursor: pointer;
+  background: none;
+  justify-content: end;
+  display: flex;
+  font-size: 14px;
+}
+
+.modal-content {
+  z-index: 15;
+  background: white;
+  position: fixed;      
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: $br-8;
+  padding: $sp-20;
+  max-width: $wd-550;
+  width: $wd-100p;
+  animation: bounce-in .5s;
+  overflow-y: auto;
+ 
+}
+.error{
+  color:salmon;
+}

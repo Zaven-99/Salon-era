@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { setUser, removeUser } from "../../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const HeaderAdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showOtherModal, setShowOtherModal] = useState(false);
   const [orders, setOrders] = useState([]);
-  const prevOrderCountRef = useRef(0);
+  // const prevOrderCountRef = useRef(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clientType } = useAuth();
@@ -37,12 +37,12 @@ const HeaderAdminPanel = () => {
     navigate("/");
   };
 
-  const playNotificationSound = () => {
-    const audio = new Audio("/sound.mp3");
-    audio
-      .play()
-      .catch((error) => console.error("Ошибка воспроизведения звука:", error));
-  };
+  // const playNotificationSound = () => {
+  //   const audio = new Audio("/sound.mp3");
+  //   audio
+  //     // .play()
+  //     .catch((error) => console.error("Ошибка воспроизведения звука:", error));
+  // };
 
   const fetchData = async () => {
     setLoading(true);
@@ -59,13 +59,13 @@ const HeaderAdminPanel = () => {
       }
 
       const data = await response.json();
-      const newOrderCount = data.length;
+      // const newOrderCount = data.length;
 
-      if (newOrderCount > prevOrderCountRef.current) {
-        playNotificationSound();
-      }
+      // if (newOrderCount > prevOrderCountRef.current) {
+      //   playNotificationSound();
+      // }
 
-      prevOrderCountRef.current = newOrderCount;
+      // prevOrderCountRef.current = newOrderCount;
       setOrders(data);
     } catch (error) {
       console.error(error.message);
@@ -95,6 +95,7 @@ const HeaderAdminPanel = () => {
     { path: "/adminPanel/our-works", label: "Работы" },
     { path: "/adminPanel/news", label: "Новости" },
     { path: "/adminPanel/slides", label: "Слайдер" },
+    { path: "/adminPanel/schedule", label: "График" },
   ];
 
   return (
@@ -125,6 +126,9 @@ const HeaderAdminPanel = () => {
           </NavLink>
           <NavLink to="/adminPanel/history-orders">
             <li>История заказов</li>
+          </NavLink>
+          <NavLink to="/adminPanel/schedule">
+            <li>График</li>
           </NavLink>
 
           <div onClick={handleOtherModal} className={styles["other-btn"]}>
