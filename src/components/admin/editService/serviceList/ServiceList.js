@@ -109,13 +109,13 @@ const ServiceList = ({ services, setServices, toggleClose, toggleOpen }) => {
     return <p className={styles.message}>Список услуг пуст.</p>;
   }
 
-  const showMessageDeleteEmployee = (id) => {
+  const showMessageDeleteService = (id) => {
     setServiceToDelete(id);
     setConfirmDeleteService(true);
     document.body.style.overflow = "hidden";
   };
 
-  const closeMessageDeleteEmployee = () => {
+  const closeMessageDeleteService = () => {
     setServiceToDelete(null);
     setConfirmDeleteService(false);
     document.body.style.overflow = "scroll";
@@ -167,11 +167,11 @@ const ServiceList = ({ services, setServices, toggleClose, toggleOpen }) => {
                           <BtnBlock
                             className1={styles["edit-service"]}
                             className2={styles["delete-service"]}
-                            className3={styles["button-block"]}
+                            className4={styles["button-block"]}
                             label1="Редактировать"
                             label2="Удалить услугу"
                             fnc1={() => handleEdit(service)}
-                            fnc2={() => showMessageDeleteEmployee(service.id)}
+                            fnc2={() => showMessageDeleteService(service.id)}
                           />
 
                           {confirmDeleteService &&
@@ -179,7 +179,7 @@ const ServiceList = ({ services, setServices, toggleClose, toggleOpen }) => {
                               <Modal
                                 toggleOpen={toggleOpen}
                                 toggleClose={toggleClose}
-                                setEditServiceId={closeMessageDeleteEmployee}
+                                setEditServiceId={closeMessageDeleteService}
                               >
                                 <h2 className={styles["question"]}>
                                   Вы действительно хотите удалить услугу ?
@@ -187,11 +187,11 @@ const ServiceList = ({ services, setServices, toggleClose, toggleOpen }) => {
                                 <BtnBlock
                                   className1={styles["delete-service"]}
                                   className2={styles["cancel-delete__service"]}
-                                  className3={styles["btn-block"]}
+                                  className4={styles["btn-block"]}
                                   label1="Удалить услугу"
                                   label2="Отменить удаления"
                                   fnc1={() => handleDelete(service.id)}
-                                  fnc2={closeMessageDeleteEmployee}
+                                  fnc2={closeMessageDeleteService}
                                 />
                               </Modal>
                             )}

@@ -8,3 +8,13 @@
 .service-item__inner{
     width: $wd-100p;
 }
+
+/*media*/
+
+@media(max-width:1400px){
+    .service-block{
+         display: block;
+    }
+     
+    
+}

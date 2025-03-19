@@ -1,6 +1,8 @@
 @import '../../../styles/variables.scss';
 
-
+.order-item{
+    padding: 20px;
+}
 .record-item{
 	display: flex;
 	justify-content: space-between;
@@ -94,7 +96,7 @@
 }
  
  .date{
-    margin-left: $sp-50;
+    margin-left: $sp-10;
 }
 .message{
     text-align: center;

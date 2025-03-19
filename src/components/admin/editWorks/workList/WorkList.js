@@ -8,14 +8,9 @@ import { Controller, useForm } from "react-hook-form";
 
 import ImagePreview from "../../../imagePreview/ImagePreview";
 import styles from "./workList.module.scss";
-import BtnBlock from '../../../btnBlock/BtnBlock';
+import BtnBlock from "../../../btnBlock/BtnBlock";
 
-const WorkList = ({
-  setWorks,
-  categoryMap,
-  toggleOpen,
-  toggleClose,
-}) => {
+const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
   const { control } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -96,7 +91,7 @@ const WorkList = ({
     } finally {
       setLoading(false);
       document.body.style.overflow = "scroll";
-      window.location.reload()
+      window.location.reload();
     }
   };
 
@@ -245,26 +240,20 @@ const WorkList = ({
                         setActiveInput={setActiveInput}
                         onChange={uploadImage}
                       />
-                      <div className={styles["btn-block"]}>
-                        <CustomButton
-                          className={styles["accept-add__works"]}
-                          type="submit"
-                          label="Сохранить"
-                          onClick={() => handleSave(work.id)}
-                        />
-                        <CustomButton
-                          label="Удалить работу"
-                          type="button"
-                          className={styles["delete-work"]}
-                          onClick={() => showMessageDeleteWork(work.id)}
-                        />
-                        <CustomButton
-                          className={styles["cancel-delete__works"]}
-                          type="button"
-                          label="Отменить"
-                          onClick={() => setWorksId(null)}
-                        />
-                      </div>
+
+                      <BtnBlock
+                        className1={styles["accept-add__works"]}
+                        className2={styles["delete-work"]}
+                        className3={styles["cancel-delete__works"]}
+                        className4={styles["btn-block"]}
+                        label1="Сохранить"
+                        label2="Удалить работу"
+                        label3="Отменить"
+                        fnc1={() => handleSave(work.id)}
+                        fnc2={() => showMessageDeleteWork(work.id)}
+                        fnc3={() => setWorksId(null)}
+                        showThirdButton={true}
+                      />
                     </Modal>
                   ) : (
                     <>
@@ -281,11 +270,13 @@ const WorkList = ({
                         toggleClose={toggleClose}
                         setWorksId={closeMessageDeleteWork}
                       >
-                        <h2 className={styles.question}>Вы действительно хотите удалить работу?</h2>
+                        <h2 className={styles.question}>
+                          Вы действительно хотите удалить работу?
+                        </h2>
                         <BtnBlock
                           className1={styles["acceptDelete-work"]}
                           className2={styles["cancelDelete-work"]}
-                          className3={styles['btn-block']}
+                          className4={styles["btn-block"]}
                           label1="Удалить работу"
                           label2="Отменить удаление"
                           fnc1={() => handleDelete(work.id)}

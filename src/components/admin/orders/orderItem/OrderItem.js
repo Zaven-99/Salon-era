@@ -1,5 +1,4 @@
 import React from "react";
-import CustomButton from "../../../customButton/CustomButton";
 
 import styles from "./orderItem.module.scss";
 import BtnBlock from "../../../btnBlock/BtnBlock";
@@ -146,7 +145,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
     <div>
       {Object.keys(groupedOrders).length > 0 ? (
         Object.keys(groupedOrders).map((date) => (
-          <div key={date}>
+          <div className={styles['order-item']} key={date}>
             <h2 className={styles.date}>{date}</h2>
             <ul className={styles["record-list"]}>
               {groupedOrders[date].map((order) => (
@@ -213,7 +212,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     <BtnBlock
                       className1={styles.accept}
                       className2={styles.cancel}
-                      className3={styles["btn-block"]}
+                      className4={styles["btn-block"]}
                       label1="Принять заказ"
                       label2="Отменить заказ"
                       fnc1={() => acceptOrder(order)}
@@ -223,7 +222,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     <BtnBlock
                       className1={styles.close}
                       className2={styles.cancel}
-                      className3={styles["btn-block"]}
+                      className4={styles["btn-block"]}
                       label1="Закрыть заказ"
                       label2="Отменить заказ"
                       fnc1={() => closeOrder(order)}

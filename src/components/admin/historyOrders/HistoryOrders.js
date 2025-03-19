@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./historyOrders.module.scss";
-import CustomButton from "../../customButton/CustomButton";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ru } from "date-fns/locale";
 import Spinner from "../../spinner/Spinner";
+import RecordList from './recordList/RecordList';
 
 registerLocale("ru", ru);
 
@@ -73,12 +73,7 @@ const HistoryOrders = () => {
     return new Date(date).toLocaleString("ru-RU", options);
   };
 
-  const handleLoadMore = (date) => {
-    setVisibleOrdersCount((prevCount) => ({
-      ...prevCount,
-      [date]: prevCount[date] + 5,
-    }));
-  };
+  
 
   const filterOrdersByDate = () => {
     if (!selectedDate) {
@@ -142,89 +137,14 @@ const HistoryOrders = () => {
             Object.keys(filterOrdersByDate()).map((date) => (
               <div key={date} className={styles["date-group"]}>
                 <h2 className={styles.date}>{date}</h2>
-                <ul className={styles["record-list"]}>
-                  {filterOrdersByDate()
-                    [date].slice(0, visibleOrdersCount[date] || 0)
-                    .map((order) => (
-                      <li
-                        key={order.record.id}
-                        className={styles["record-item"]}
-                      >
-                        <div className={styles["record-item__inner"]}>
-                          <strong>Клиент:</strong>
-                          <div>
-                            {order.clientFrom
-                              ? `${order.clientFrom.firstName} ${order.clientFrom.lastName}`
-                              : "Неизвестный клиент"}
-                          </div>
-                        </div>
-                        <div className={styles["record-item__inner"]}>
-                          <strong>Парикмахер:</strong>
-                          <div>
-                            {order.clientTo
-                              ? `${order.clientTo.firstName} ${order.clientTo.lastName}`
-                              : "Неизвестный парикмахер"}
-                          </div>
-                        </div>
-                        <div className={styles["record-item__inner"]}>
-                          <strong>Услуга:</strong>
-                          <div>
-                            {order.service
-                              ? order.service.name
-                              : "Неизвестная услуга"}
-                          </div>
-                        </div>
-                        <div className={styles["record-item__inner"]}>
-                          <strong>Описание:</strong>
-                          <div>
-                            {order.service
-                              ? order.service.description
-                              : "Нет описания"}
-                          </div>
-                        </div>
-                        <div className={styles["record-item__inner"]}>
-                          <strong>Цена:</strong>
-                          <div>
-                            {order.service
-                              ? `${order.service.priceLow} р.`
-                              : "Цена недоступна"}
-                          </div>
-                        </div>
-                        <div className={styles["record-item__inner"]}>
-                          <strong>Дата:</strong>
-                          <div>{formatDate(order.record.dateRecord)}</div>
-                        </div>
-                        <div className={styles.wrapper}>
-                          <strong>Статус:</strong>
-                          {order.record.status === 500 ? (
-                            <div className={styles[`order-closed`]}>
-                              Заказ закрыт
-                            </div>
-                          ) : order.record.status === 400 ? (
-                            <div className={styles[`order-canceled`]}>
-                              Заказ отменен
-                            </div>
-                          ) : order.record.status === 0 ? (
-                            <div className={styles[`order-created`]}>
-                              Заказ создан
-                            </div>
-                          ) : order.record.status === 100 ? (
-                            <div className={styles[`order-accept`]}>
-                              Заказ принят
-                            </div>
-                          ) : null}
-                        </div>
-                      </li>
-                    ))}
-                </ul>
-                {filterOrdersByDate()[date].length >
-                  (visibleOrdersCount[date] || 0) && (
-                  <CustomButton
-                    label="Загрузить еще"
-                    className={styles["load-more"]}
-                    onClick={() => handleLoadMore(date)}
-                  />
-                )}
+
+                <RecordList
+                  filterOrdersByDate={filterOrdersByDate}
+                  visibleOrdersCount={visibleOrdersCount}
+                  date={date}
+                  formatDate={formatDate}
+                  setVisibleOrdersCount={setVisibleOrdersCount}
+                />
               </div>
             ))
           ) : (

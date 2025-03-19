@@ -5,10 +5,11 @@ import CustomButton from "../../customButton/CustomButton";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 import { ru } from "date-fns/locale";
-
-import Spinner from "../../spinner/Spinner.js";
-import styles from "./order.module.scss";
 import OrderItem from "./orderItem/OrderItem.js";
+import Spinner from "../../spinner/Spinner.js";
+
+import reload from "../../../img/icons/reload.png";
+import styles from "./order.module.scss";
 
 registerLocale("ru", ru);
 
@@ -20,6 +21,7 @@ const Orders = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [addOrderModal, setAddOrderModal] = useState(false);
+  const [onReload, setOnReload] = useState(false);
 
   useForm({
     mode: "onChange",
@@ -64,7 +66,7 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    if (addOrderModal) {
+    if (addOrderModal || onReload) {
       return;
     }
 
@@ -74,7 +76,11 @@ const Orders = () => {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [addOrderModal]);
+  }, [addOrderModal, onReload]);
+
+  const toggleOnAutoReload = () => {
+    setOnReload(!onReload);
+  };
 
   const formatDate = (date) => {
     const dateOptions = {
@@ -155,6 +161,22 @@ const Orders = () => {
           }}
           locale="ru"
         />
+        <CustomButton
+          label={
+            onReload ? (
+              <div className={styles["stop-reload"]}>
+                <img src={reload} alt="" />
+              </div>
+            ) : (
+              <div className={styles["reload"]}>
+                <img src={reload} alt="" />
+              </div>
+            )
+          }
+          onClick={toggleOnAutoReload}
+          className={onReload ? styles.on : styles.off}
+        />
+
         <CustomButton
           onClick={toggleOpen}
           className={styles["add-order"]}

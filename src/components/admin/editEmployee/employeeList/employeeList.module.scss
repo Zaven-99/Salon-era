@@ -6,9 +6,7 @@
 	justify-content: center;
     margin-bottom: $sp-20;
 }
-.employee-list{
-    padding: $sp-20;
-}
+ 
 .message{
 	text-align: center;
 	margin-top: $sp-50;
@@ -34,12 +32,7 @@
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-.employee-item p {
-	color: black;
-    font-family: $font;
-    font-size: $fz-12;
-    font-weight: $light;
-}
+ 
 img{
 	width: $wd-60;
 }
@@ -236,6 +229,8 @@ strong{
     width: $wd-150;
 }
 
+
+/*media*/
 @media(max-width:1400px){
     .employee-item{
         display: block;
@@ -243,10 +238,7 @@ strong{
         justify-content: center;
     }
     
-    .employee-item__inner p{
-        font-size: $fz-15;
-        line-height: $sp-25;
-    }
+   
     
 }
 

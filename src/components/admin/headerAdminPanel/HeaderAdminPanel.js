@@ -14,7 +14,7 @@ const HeaderAdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showOtherModal, setShowOtherModal] = useState(false);
   const [orders, setOrders] = useState([]);
-  // const prevOrderCountRef = useRef(0);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clientType } = useAuth();
@@ -37,13 +37,6 @@ const HeaderAdminPanel = () => {
     navigate("/");
   };
 
-  // const playNotificationSound = () => {
-  //   const audio = new Audio("/sound.mp3");
-  //   audio
-  //     // .play()
-  //     .catch((error) => console.error("Ошибка воспроизведения звука:", error));
-  // };
-
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -59,13 +52,7 @@ const HeaderAdminPanel = () => {
       }
 
       const data = await response.json();
-      // const newOrderCount = data.length;
 
-      // if (newOrderCount > prevOrderCountRef.current) {
-      //   playNotificationSound();
-      // }
-
-      // prevOrderCountRef.current = newOrderCount;
       setOrders(data);
     } catch (error) {
       console.error(error.message);

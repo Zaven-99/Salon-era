@@ -1,29 +1,31 @@
 @import '../../styles/variables.scss';
 
-
 .schedule {
   padding: 20px;
 }
-.table{
-overflow-x: auto;
+
+.table {
+  overflow-x: auto;
 }
+
 table {
   width: 100%;
-  border-collapse: collapse;
   margin: 20px 0;
   font-size: 18px;
   text-align: left;
   border: 1px solid #000;
   table-layout: auto;
   width: max-content;
+   
 }
 
 th, td {
   padding: 12px;
-  border: 1px solid #000; /* Убедимся, что границы есть у всех ячеек */
+  border: 1px solid #000;
   text-align: center;
-  font-size: 12px;
+  font-size: 15px;
   word-wrap: break-word;
+  height: 70px;
 }
 
 th {
@@ -37,15 +39,15 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #ddd;
-  transition: 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 td {
   font-weight: 500;
 }
-.red{
-	background-color:salmon;
 
+.red {
+  background-color: salmon;
 }
 
 .modal-overlay {
@@ -59,6 +61,7 @@ td {
   align-items: center;
   z-index: 6;
 }
+
 .modal-content {
   background: #eaeef4;
   border-radius: $br-8;
@@ -67,39 +70,40 @@ td {
   max-width: $wd-500;
   width: $wd-500;
   height: $hg-305;
-  z-index: 15; 
-  animation:bounce-in .5s;
+  z-index: 15;
+  animation: bounce-in 0.5s ease-in-out;
   text-align: center;
-  box-shadow:$shadow-small;
+  box-shadow: $shadow-small;
+}
 
+.btn-block {
+  display: flex;
+  justify-content: space-between;
 }
-.btn-block{
-    display: flex;
-    justify-content: space-between;
+
+.yes, .no {
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px;
+  height: 50px;
+  box-shadow: 0 8px 16px -8px;
+  border-radius: 4px;
+  width: 150px;
+  transition: transform 0.2s ease-in-out;
 }
-.yes{
-	color: black;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    padding: 10px;
-    height: 50px;
-    box-shadow: 0 8px 16px -8px;
-    background-color: rgb(15, 210, 15);
-    border-radius: 4px;
-    width: 150px;
+
+.yes {
+  background-color: rgb(15, 210, 15);
 }
-.no{
-	color: black;
-    font-family: "Open Sans", sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    padding: 10px;
-    height: 50px;
-    box-shadow: 0 8px 16px -8px;
-    background-color: #fe5440;
-    border-radius: 4px;
-    width: 150px;
+
+.no {
+  background-color: #fe5440;
+}
+
+.yes:hover, .no:hover {
+  transform: scale(1.05); /* Увеличиваем кнопку при наведении */
 }
 
 .month-navigation {
@@ -117,11 +121,12 @@ td {
   font-size: 16px;
   margin: 0 10px;
   border-radius: 5px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .nav-button:hover {
   background-color: #ddd;
+  transform: scale(1.05); /* Увеличиваем кнопку при наведении */
 }
 
 .month-span {
@@ -154,12 +159,10 @@ td {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
 .select:focus {
   border-color: #007bff;
   outline: none;
 }
-
-
- 

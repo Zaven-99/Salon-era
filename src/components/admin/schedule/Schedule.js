@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./schedule.module.scss";
 import CustomButton from "../../customButton/CustomButton";
 
@@ -10,6 +10,18 @@ const Schedule = () => {
   const [workTimeFrom, setWorkTimeFrom] = useState(""); // Время начала работы для выбранной ячейки
   const [workTimeTo, setWorkTimeTo] = useState(""); // Время окончания работы для выбранной ячейки
   const [currentDate, setCurrentDate] = useState(new Date()); // Текущая дата для переключения месяцев
+
+  const tableRef = useRef(null); // Создаем ссылку на контейнер с таблицей
+
+  // Обработчик события wheel для горизонтальной прокрутки
+  const handleWheel = (event) => {
+    // Прокрутка по горизонтали
+    if (tableRef.current) {
+      if (event.deltaY === 0) {
+        tableRef.current.scrollLeft += event.deltaX; // Горизонтальная прокрутка
+      }
+    }
+  };
 
   const fetchEmployee = async () => {
     try {
@@ -39,7 +51,7 @@ const Schedule = () => {
     const currentYear = date.getFullYear(); // Год из текущей даты
 
     // Получаем первый день месяца
-    const firstDay = new Date(currentYear, currentMonth, 1);
+    // const firstDay = new Date(currentYear, currentMonth, 1);
     const lastDay = new Date(currentYear, currentMonth + 1, 0); // Последний день месяца
 
     // Генерация дней месяца
@@ -75,7 +87,7 @@ const Schedule = () => {
       const { employeeIndex, dayIndex } = selectedCell;
       const key = `${employeeIndex}-${dayIndex}`;
       const clientId = employee[employeeIndex].id; // Получаем ID клиента
-      const date = daysOfMonth[dayIndex].date; // Получаем дату
+      // const date = daysOfMonth[dayIndex].date; // Получаем дату
 
       // Преобразуем время начала и окончания в нужный формат для сервера
       const [hoursFrom, minutesFrom] = workTimeFrom.split(":");
@@ -146,8 +158,6 @@ const Schedule = () => {
     setCurrentDate(prevMonthDate);
   };
 
-  console.log(selectedCells);
-
   return (
     <div className={styles.schedule}>
       <div className={styles["month-navigation"]}>
@@ -165,7 +175,7 @@ const Schedule = () => {
         </button>
       </div>
 
-      <div className={styles.table}>
+      <div className={styles.table} onWheel={handleWheel} ref={tableRef}>
         <table>
           <thead>
             <tr>

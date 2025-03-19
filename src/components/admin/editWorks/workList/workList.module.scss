@@ -151,12 +151,7 @@
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-.btn-block{
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-between;
-
- }
+ 
 .delete-work{
   color: black;
   font-family: "Open Sans", sans-serif;
@@ -182,6 +177,7 @@
 .btn-block{
   margin-top: 50px;
   display: flex;
+  gap: 10px;
   justify-content: space-between;
   align-items:center;
  }

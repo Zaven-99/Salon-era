@@ -213,7 +213,7 @@ const EmployeeList = ({
                       <BtnBlock
                         className1={styles["edit-employee"]}
                         className2={styles["delete-employee"]}
-                        className3={styles["button-block"]}
+                        className4={styles["button-block"]}
                         label1="Редактировать"
                         label2="Удалить Сотрудника"
                         fnc1={() => handleEdit(employee)}
@@ -233,7 +233,7 @@ const EmployeeList = ({
                             <BtnBlock
                               className1={styles["delete-employee"]}
                               className2={styles["cancel-delete__employee"]}
-                              className3={styles["btn-block"]}
+                              className4={styles["btn-block"]}
                               label1="Удалить Сотрудника"
                               label2="Отменить удаления"
                               fnc1={() => handleDelete(employee.id)}

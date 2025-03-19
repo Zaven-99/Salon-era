@@ -199,6 +199,9 @@ strong {
 }
 
 @media(max-width:1400px){
+    .service-block{
+         display: block;
+    }
     .service-list__item{
         display: block;
         justify-content: center;
@@ -215,21 +218,5 @@ strong {
     }
     
 }
-
-
-
-@media(max-width:500px){
-     .service-item{
-       margin: $sp-20 auto;
-    }
-    .employee{
-        font-size: $fz-35;
-    }
-    .modal-content{
-        width: $wd-400;
-    }
-    .btn-block{
-        gap: $sp-15;
-        margin-top: $sp-15;
-    }
-}
+ 
+ 

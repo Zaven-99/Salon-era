@@ -1,0 +1,68 @@
+@import '../../../styles/variables.scss';
+
+
+.record-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $sp-15;
+  background: #eaeef4;
+  margin-bottom: $sp-5;
+  border-radius: $br-4;
+  margin: $sp-10 $sp-50 $sp-10 $sp-50;
+}
+
+.record-item__inner{
+  width: $wd-250;
+}
+
+.order-closed{
+  background-color:rgb(186, 178, 177);
+  text-align: center;
+  padding: $sp-2 $sp-5 $sp-2 $sp-5;
+  border-radius:$br-4;
+  width:$wd-125;
+  text-align: center;
+}
+.order-canceled{
+  background-color:salmon;
+  padding: $sp-2 $sp-5 $sp-2 $sp-5;
+  border-radius:$br-4;
+  width:$wd-125;
+  text-align: center;
+}
+.order-accept{
+	background-color:$buttonAccept-color;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5;
+	border-radius:$br-4;
+  width:$wd-125;
+  text-align: center;
+}
+.load-more{
+    margin: $sp-0 auto;
+    display: flex;
+    justify-content: center;
+    padding: $sp-10;
+    background: rgba(132, 127, 122, 0.365);
+}
+
+@media(max-width:1400px){
+	.record-item{
+		display: block;
+		width: 300px;
+	}
+	
+     .order-closed{
+      width: auto;
+     }
+     .order-canceled{
+      width: auto;
+     }
+     .order-created{
+      width: auto;
+     }
+     .order-accept{
+      width: auto;
+     }
+      
+}

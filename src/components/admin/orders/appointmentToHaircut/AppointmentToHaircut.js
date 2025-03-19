@@ -254,7 +254,7 @@ const AppointmentToHaircut = ({
           <BtnBlock
             className1={styles["delete-client"]}
             className2={styles["cancel-delete__client"]}
-            className3={styles["btn-block"]}
+            className4={styles["btn-block"]}
             label1="Удалить аккаунт"
             label2="Отменить удаление"
             fnc1={() => handleDelete(clientToDelete)}

@@ -304,7 +304,7 @@ const EditModal = ({
       <BtnBlock
         className1={styles["save-employee"]}
         className2={styles["cancel"]}
-        className3={styles["btn-block"]}
+        className4={styles["btn-block"]}
         label1="Сохранить"
         label2="Отменить"
         fnc1={() => handleSave(employee.id)}

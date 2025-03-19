@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
@@ -204,26 +203,20 @@ const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
                       setActiveInput={setActiveInput}
                       onChange={uploadImage}
                     />
-                    <div className={styles["btn-block"]}>
-                      <CustomButton
-                        className={styles["accept-add__slide"]}
-                        type="submit"
-                        label="Сохранить"
-                        onClick={() => handleSave(slides.id)}
-                      />
-                      <CustomButton
-                        label="Удалить слайд"
-                        type="button"
-                        className={styles["delete-slides"]}
-                        onClick={() => showMessageDeleteSlide(slides.id)}
-                      />
-                      <CustomButton
-                        className={styles["cancel-delete__slides"]}
-                        type="button"
-                        label="Отменить"
-                        onClick={() => setSlidesId(null)}
-                      />
-                    </div>
+
+                    <BtnBlock
+                      className1={styles["accept-add__slide"]}
+                      className2={styles["delete-slides"]}
+                      className3={styles["cancel-delete__slides"]}
+                      className4={styles["btn-block"]}
+                      label1="Сохранить"
+                      label2="Удалить слайд"
+                      label3="Отменить"
+                      fnc1={() => handleSave(slides.id)}
+                      fnc2={() => showMessageDeleteSlide(slides.id)}
+                      fnc3={() => setSlidesId(null)}
+                      showThirdButton={true}
+                    />
                   </>
                 </Modal>
               </>
@@ -244,11 +237,13 @@ const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
                 toggleClose={toggleClose}
                 setSlidesId={closeMessageDeleteSlide}
               >
-                <h2 className={styles.question}>Вы действительно хотите удалить слайд?</h2>
+                <h2 className={styles.question}>
+                  Вы действительно хотите удалить слайд?
+                </h2>
                 <BtnBlock
                   className1={styles["acceptDelete-slides"]}
                   className2={styles["cancelDelete-slides"]}
-                  className3={styles["btn-block"]}
+                  className4={styles["btn-block"]}
                   label1="Удалить слайд"
                   label2="Отменить удаления"
                   fnc1={() => handleDelete(slides.id)}
