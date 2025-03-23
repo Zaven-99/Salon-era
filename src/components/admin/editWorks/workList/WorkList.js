@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
@@ -91,7 +90,7 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
     } finally {
       setLoading(false);
       document.body.style.overflow = "scroll";
-      window.location.reload();
+      // window.location.reload();
     }
   };
 

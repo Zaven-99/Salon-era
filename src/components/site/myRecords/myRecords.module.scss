@@ -18,6 +18,10 @@
     margin: $sp-10 $sp-20 $sp-10 $sp-20;
     padding: $sp-10 $sp-25 $sp-10 $sp-60;
 }
+.records-list__item div span {
+    font-size: 14px;
+    
+}
  
 .cancel{
 	color: black;
@@ -26,13 +30,14 @@
     background-color: #fe5440;
     font-size: $fz-12;
     padding: $sp-10;
-    box-shadow: $shadow-small;
     border-radius: $br-4;
     width: $wd-150;
+    color:white;
 }
 .status{
     display: flex;
     align-items:center;
+    gap: 10px;
 }
 .empty{
     font-weight: $light;
@@ -93,16 +98,15 @@
     .records-list__item div{
         margin-top: $sp-10;
     }
+   
     .status span{
         width: max-content ;
         font-size: $sp-15 ;
         padding: $sp-2;
         width: 200px;
     }
-     .records-list{
-       justify-content: center;
-       
-    }
+      
+     
      .cancel{
         width: $sp-100p;
         margin-top: $sp-10;

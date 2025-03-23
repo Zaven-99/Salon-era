@@ -118,8 +118,9 @@
 .category-button {
   cursor: pointer;
   padding: $sp-8 $sp-16;
-  border: $br-1 solid #ccc;
+  
   border-radius: $sp-5;
+  box-shadow:1px 1px 4px -2px;;
 }
 
 .category-button:hover {
@@ -150,7 +151,7 @@
 
 
 
-@media(max-width:1260px){
+@media(max-width:1380px){
 	.category-buttons{
 		flex-wrap: wrap;
 	}
@@ -161,8 +162,15 @@
 	}
 }
 
+@media(max-width:1270px){
+	.category-button{
+		font-size: 12px;
+	}
+	 
+}
+
  
-@media (max-width: 770px) {
+@media (max-width: 860px) {
   .category-buttons {
     display: none;  
   }

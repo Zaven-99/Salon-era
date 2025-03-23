@@ -139,38 +139,38 @@ const MyRecords = () => {
                   <span>{order.record.number}</span>
                 </div>
                 <div>
-                  <strong>Парикмахер:</strong>
+                  <strong>Парикмахер: </strong>
                   <span>{order.clientTo?.firstName}&nbsp;</span>
                   <span>{order.clientTo?.lastName}</span>
                 </div>
                 {order.record?.status === 0 ? (
                   <div className={styles.status}>
-                    <strong>Статус:</strong>
+                    <strong>Статус: </strong>
                     <span className={styles.created}>Заказ создан</span>
                   </div>
                 ) : order.record?.status === 400 ? (
                   <div className={styles.status}>
-                    <strong>Статус:</strong>{" "}
+                    <strong>Статус: </strong>{" "}
                     <span className={styles.canceled}>Заказ отменен</span>
                   </div>
                 ) : order.record?.status === 100 ? (
                   <div className={styles.status}>
-                    <strong>Статус:</strong>{" "}
+                    <strong>Статус: </strong>{" "}
                     <span className={styles.accept}>Заказ принят</span>
                   </div>
                 ) : (
                   <div className={styles.status}>
-                    <strong>Статус:</strong>{" "}
+                    <strong>Статус: </strong>{" "}
                     <span className={styles.closed}>Заказ закрыт</span>
                   </div>
                 )}
                 <div>
-                  <strong>Дата заказа:</strong>
+                  <strong>Дата заказа: </strong>
                   <span>{formatDate(order.record.dateRecord)}</span>
                 </div>
 
                 <div>
-                  <strong>Стоимость:</strong>
+                  <strong>Стоимость: </strong>
                   <span>{order.service?.priceLow} руб.</span>
                 </div>
                 {order.record?.status === 0 ? (

@@ -14,6 +14,9 @@ const CustomSelect = React.forwardRef(
 
     return (
       <div>
+        {fieldState?.error && (
+          <p className={styles.error}>{fieldState?.error.message}</p>
+        )}
         <select
           {...field}
           onChange={handleChange ? handleChange : field.onChange}
@@ -22,14 +25,11 @@ const CustomSelect = React.forwardRef(
           className={styles["custom-select__style"]}
         >
           {map.map((item, index) => (
-            <option key={index} value={index + 1}>
+            <option key={index} value={item}>
               {item}
             </option>
           ))}
         </select>
-        {fieldState?.error && (
-          <p className={styles.error}>{fieldState?.error.message}</p>
-        )}
       </div>
     );
   }

@@ -41,6 +41,7 @@ const News = () => {
     setLoading(true);
     const formData = new FormData();
 
+    
     formData.append(
       "clientData",
       JSON.stringify({

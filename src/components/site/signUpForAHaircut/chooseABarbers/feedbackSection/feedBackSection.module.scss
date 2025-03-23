@@ -30,6 +30,23 @@
     height: max-content;
    
 }
+.cancel{
+    background-color: salmon;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: $sp-10 $sp-20;
+    border-radius: $br-4;
+    font-size: $fz-16;
+}
+.cancel:hover{
+    transition: .2s;
+	transform: scale(1.02);
+	opacity: .8;
+}
 .post-feedback{
     background-color: #00aaff;
     color: white;
@@ -41,6 +58,11 @@
     padding: $sp-10 $sp-20;
     border-radius: $br-4;
     font-size: $fz-16;
+}
+.post-feedback:hover{
+    transition: .2s;
+	transform: scale(1.02);
+	opacity: .8;
 }
 .feedBack-button__block{
     display: flex;
@@ -74,7 +96,11 @@
     font-weight: $regular;
     padding: $sp-3;
     border-radius: $br-3;
-   
+}
+.change-feedback:hover{
+    transition: .2s;
+	transform: scale(1.02);
+	opacity: .8;
 }
 .change-button__block{
 	display: flex;
@@ -84,7 +110,12 @@
  .change-feedback:hover{
     transform: scale(1.05);
 }
-
+.delete{
+    background:salmon;
+}
+.disabled{
+    background:gray;
+}
 
 /*media*/
   @media(max-width:445px){

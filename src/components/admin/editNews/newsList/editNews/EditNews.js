@@ -46,7 +46,6 @@ const EditNews = ({
       if (!response.ok) throw new Error("Ошибка при удалении новости");
       setNews((prevNews) => prevNews.filter((newsItem) => newsItem.id !== id));
       closeMessageDeleteNews();
-      document.body.style.overflow = "scroll";
     } catch (error) {
       console.error("Ошибка при удалении новости:", error);
     } finally {

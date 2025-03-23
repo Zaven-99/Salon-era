@@ -105,6 +105,7 @@ const NewsList = ({ news, setNews, toggleOpen, toggleClose }) => {
                   setLoading={setLoading}
                   setNews={setNews}
                   setNewsId={setNewsId}
+                  
                   setEditedNews={setEditedNews}
                   news={news}
                   toggleOpen={toggleOpen}

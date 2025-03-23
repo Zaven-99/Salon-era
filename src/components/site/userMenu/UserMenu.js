@@ -174,7 +174,7 @@ const UserMenu = ({ openProfile }) => {
                 !item.record.statusViewed ? (
                   <li className={styles["notifications-item"]} key={index}>
                     <div className={styles["notifications-item__inner"]}>
-                      Заказ с номером {item.record.number}{" "}
+                      Запись с номером {item.record.number}
                       <div
                         className={
                           styles[

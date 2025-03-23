@@ -60,7 +60,7 @@
 	position: relative;
 }
 .notifications{
-	width: $wd-330;
+	width: $wd-355;
     position: absolute;
     background: #efeff1;
     text-align: center;
@@ -148,10 +148,12 @@
 }
 .notifications-item__inner{
 	display: flex;
-	align-items:center;
-	gap: $sp-10;
-	padding: $sp-10 $sp-5;
-	box-shadow:0px $sp-2 $sp-3 -$sp-2;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px;
+    background: white;
+    border-radius: 2px;
+    margin: 5px auto;
 }
 .notifications-item__inner div {
 	border-radius: $br-2;

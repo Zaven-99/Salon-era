@@ -6,11 +6,7 @@
 	gap: $sp-20;
 }
 
-.priceList-inner_item p {
-  font-family: "Open Sans", sans-serif;
-  font-size: $fz-15;
-  width: $wd-350;
-}
+
  
 .priceList-inner_item:hover{
 	transform: scale(1.01);
@@ -24,12 +20,17 @@
 .priceList-inner_item{
 	cursor: pointer;
 	display: flex;
-	justify-content: space-between;
 	padding: $sp-15;
-	background:$bg-white;
+	background:#e6e6e68a;
 	margin-bottom: $sp-5;
 	border-radius:$br-4;
-  align-items:center;
+  	align-items:center;
+}
+.priceList-inner_item p {
+  font-family: "Open Sans", sans-serif;
+  font-size: $fz-15;
+  text-align: start;
+  width: $wd-350;
 }
 
 .selectedService {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useForm, FormProvider } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import CustomInput from "../../../customInput/CustomInput";
 import CustomButton from "../../../customButton/CustomButton";
 import CustomSelect from "../../../customSelect/CustomSelect";
@@ -29,7 +29,6 @@ const AddService = ({
       gender: "",
     },
   });
-  const methods = useForm();
   return (
     <form
       className={styles["service-field__inner"]}
@@ -84,14 +83,20 @@ const AddService = ({
         })}
       />
 
-      <FormProvider {...methods}>
-        <CustomSelect
-          name="category"
-          control={methods.control}
-          map={positionMap}
-          rules={{ required: "Это поле обязательно." }}
-        />
-      </FormProvider>
+      <Controller
+        name="category"
+        control={control}
+        rules={{ required: "Это поле обязательно" }}
+        render={({ field }) => (
+          <CustomSelect
+            {...field}
+            control={control}
+            name="category"
+            map={positionMap}
+            rules={{ required: "Это поле обязательно" }}
+          />
+        )}
+      />
 
       <CustomInput
         label="Описание:"

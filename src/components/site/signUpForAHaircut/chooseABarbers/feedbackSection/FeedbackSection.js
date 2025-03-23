@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CustomButton from "../../../../customButton/CustomButton";
 import { useAuth } from "../../../../../use-auth/use-auth";
 import { useSelector } from "react-redux";
+import BtnBlock from "../../../../btnBlock/BtnBlock";
 
 import styles from "./feedBackSection.module.scss";
 
@@ -292,29 +293,19 @@ const FeedbackSection = ({
                           )}
                         </div>
                         {feedback.id === editFeedbackId ? (
-                          <div className={styles["change-button__block"]}>
-                            <CustomButton
-                              type="button"
-                              onClick={() => handleSave(feedback.id)}
-                              className={`${styles["change-feedback"]} ${styles["save"]}`}
-                            >
-                              Сохранить
-                            </CustomButton>
-                            <CustomButton
-                              type="button"
-                              onClick={() => setEditFeedbackId(null)}
-                              className={`${styles["change-feedback"]} ${styles["cancel"]}`}
-                            >
-                              Отмена
-                            </CustomButton>
-                            <CustomButton
-                              type="button"
-                              onClick={() => handleDelete(feedback.id)}
-                              className={`${styles["change-feedback"]} ${styles["delete"]}`}
-                            >
-                              Удалить
-                            </CustomButton>
-                          </div>
+                          <BtnBlock
+                            label1="Сохранить"
+                            label2="Отмена"
+                            label3="Удалить"
+                            className1={`${styles["change-feedback"]} ${styles["save"]}`}
+                            className2={`${styles["change-feedback"]} ${styles["cancel"]}`}
+                            className3={`${styles["change-feedback"]} ${styles["delete"]}`}
+                            className4={styles["change-button__block"]}
+                            fnc1={() => handleSave(feedback.id)}
+                            fnc2={() => setEditFeedbackId(null)}
+                            fnc3={() => handleDelete(feedback.id)}
+                            showThirdButton={true}
+                          />
                         ) : (
                           feedback.id_client_from === clientId && (
                             <CustomButton
@@ -367,31 +358,23 @@ const FeedbackSection = ({
               style={{ height }}
             />
 
-            <div className={styles["feedBack-button__block"]}>
-              <CustomButton
-                type="button"
-                onClick={() => showFeedBackToggle(item)}
-                className={styles["post-feedback"]}
-              >
-                Отмена
-              </CustomButton>
-              <CustomButton
-                type="button"
-                onClick={(e) => {
-                  if (isFeedbackDisabled) {
-                    e.preventDefault();
-                    return;
-                  }
-                  handleSubmitFeedback();
-                }}
-                disabled={isFeedbackDisabled}
-                className={`${styles["post-feedback"]} ${
-                  isFeedbackDisabled ? styles.disabled : ""
-                }`}
-              >
-                Отправить
-              </CustomButton>
-            </div>
+            <BtnBlock
+              label1="Отмена"
+              label2="Оставить комментарий"
+              className1={styles["cancel"]}
+              className2={`${styles["post-feedback"]} ${
+                isFeedbackDisabled ? styles.disabled : ""
+              }`}
+              className4={styles["feedBack-button__block"]}
+              fnc1={() => showFeedBackToggle(item)}
+              fnc2={(e) => {
+                if (isFeedbackDisabled) {
+                  e.preventDefault();
+                  return;
+                }
+                handleSubmitFeedback();
+              }}
+            />
           </div>
         </div>
       )}

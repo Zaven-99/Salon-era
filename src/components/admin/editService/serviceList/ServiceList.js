@@ -103,6 +103,7 @@ const ServiceList = ({ services, setServices, toggleClose, toggleOpen }) => {
     if (!acc[gender][category]) acc[gender][category] = [];
     acc[gender][category].push(service);
     return acc;
+     
   }, {});
 
   if (!Object.keys(groupedServices).length) {
@@ -135,7 +136,8 @@ const ServiceList = ({ services, setServices, toggleClose, toggleOpen }) => {
           </h3>
           {Object.keys(groupedServices[genderKey]).map((category, index) => (
             <div key={index}>
-              <h4 className={styles.category}>Категория: {category}</h4>
+              <h4 className={styles.category}>Категория:{category}</h4>
+              {console.log(category)}
               <ul className={styles["service-list__inner"]}>
                 {groupedServices[genderKey][category].map((service, index) => (
                   <li className={styles["service-list__item"]} key={index}>

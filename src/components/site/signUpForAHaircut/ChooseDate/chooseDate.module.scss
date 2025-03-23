@@ -202,13 +202,18 @@
     display: flex;
     justify-content: center;
     transition: background 0.3s;
-    background-color: #b5b5b5;
+    background-color: #978c8c;
     width: $wd-200;
     margin: $sp-15 auto;
     padding: $sp-15;
     border-radius: $br-4;
+    color:white;
+  }
+.accept:hover{
+  transform: scale(1.05);
+  transition: 0.2s;
+  background: #00aaff3e;
 }
-
 @media(max-width:500px){
 	  .calendar-container{
       width: $wd-100p;

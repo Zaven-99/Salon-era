@@ -13,10 +13,16 @@ const BtnBlock = ({
   label2,
   label3,
   showThirdButton,
+   
 }) => {
   return (
     <div className={className4}>
-      <CustomButton className={className1} label={label1} onClick={fnc1} />
+      <CustomButton
+        
+        className={className1}
+        label={label1}
+        onClick={fnc1}
+      />
       <CustomButton className={className2} label={label2} onClick={fnc2} />
       {showThirdButton && (
         <CustomButton className={className3} label={label3} onClick={fnc3} />

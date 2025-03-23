@@ -44,6 +44,7 @@ const ServiceField = () => {
   ];
 
   const positionMap = [
+    "Выберите категортю",
     "Женские стрижки",
     "Укладка",
     "Краска волос 1 тон",
@@ -61,6 +62,8 @@ const ServiceField = () => {
     "Оформление бровей",
     "Наращивание ресниц",
   ];
+
+   
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
