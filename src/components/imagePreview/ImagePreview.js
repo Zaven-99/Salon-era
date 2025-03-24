@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from './imagePreview.module.scss'
+import React from "react";
+import styles from "./imagePreview.module.scss";
+import CustomButton from "../customButton/CustomButton";
 
-
-const ImagePreview = ({imagePreview, deletImagePreview}) => {
-	return (
+const ImagePreview = ({ imagePreview, deletImagePreview }) => {
+  return (
     <div>
       {imagePreview && (
         <div>
@@ -14,12 +14,12 @@ const ImagePreview = ({imagePreview, deletImagePreview}) => {
               alt="Preview"
               style={{ width: "70px", height: "auto" }}
             />
-            <button
-              className={styles["delete-Image__Preview"]}
+
+            <CustomButton
+              label="Удалить"
               onClick={deletImagePreview}
-            >
-              Удалить
-            </button>
+              className={styles["r-btn"]}
+            />
           </div>
         </div>
       )}

@@ -50,11 +50,7 @@ td {
   
 }
 
-.red {
-  background-color: salmon;
-  box-shadow: -2px 3px 4px -2px;
-  cursor: pointer;
-}
+
 
 .modal-overlay {
   position: fixed;
@@ -87,29 +83,37 @@ td {
   justify-content: space-between;
 }
 
-.yes, .no {
+.r-btn{
   color: black;
+  background-color: #f0526e;
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-weight: 400;
   padding: 10px;
   height: 50px;
-  box-shadow: 0 8px 16px -8px;
   border-radius: 4px;
   width: 150px;
-  transition: transform 0.2s ease-in-out;
 }
-
-.yes {
-  background-color: rgb(15, 210, 15);
+.r-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }
-
-.no {
-  background-color: #fe5440;
+.g-btn{
+	color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  background-color: rgb(80, 200, 120);
+  border-radius: $br-4;
+  width: $wd-150;
 }
-
-.yes:hover, .no:hover {
-  transform: scale(1.05); /* Увеличиваем кнопку при наведении */
+.g-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }
 
 .week-navigation {

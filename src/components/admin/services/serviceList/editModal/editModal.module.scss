@@ -1,0 +1,43 @@
+@import '../../../../styles/variables.scss';
+
+
+
+.g-btn{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+	padding:$sp-10;
+	height: $hg-50;
+	background-color: rgb(80, 200, 120);
+	border-radius: $br-4;
+	width: $wd-150;
+
+}
+.g-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.r-btn{
+	color: black;
+	background-color:#f0526e;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+	padding:$sp-10;
+	height:$hg-50;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+
+.r-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.btn-block{
+	display: flex;
+    justify-content: space-between;
+    margin-top: $sp-50;
+}

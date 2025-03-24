@@ -68,8 +68,8 @@ const ClientBlock = ({
               <ClientInfo client={client} />
 
               <BtnBlock
-                className1={styles["delete-client"]}
-                className2={styles["change-client"]}
+                className1={styles["r-btn"]}
+                className2={styles["y-btn"]}
                 label1="Удалить аккаунт"
                 label2="Изменить аккаунт"
                 fnc1={() => showMessageDeleteClients(client.id)}

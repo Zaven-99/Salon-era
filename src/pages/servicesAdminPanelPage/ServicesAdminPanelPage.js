@@ -1,12 +1,12 @@
 import React from 'react';
 import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
-import EditService from "../../components/admin/editService/ServicesField";
+import ServicesField from "../../components/admin/services/ServicesField";
 
 const ServicesAdminPanel = () => {
 	return (
     <div>
-      <HeaderAdminPanel/>
-      <EditService/>
+      <HeaderAdminPanel />
+      <ServicesField />
     </div>
   );
 };

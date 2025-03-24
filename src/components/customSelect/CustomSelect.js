@@ -25,7 +25,7 @@ const CustomSelect = React.forwardRef(
           className={styles["custom-select__style"]}
         >
           {map.map((item, index) => (
-            <option key={index} value={item}>
+            <option key={index} value={index + 1}>
               {item}
             </option>
           ))}

@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
-import EditEmployee from "../../components/admin/editEmployee/EmployeeField";
-
+import EmployeeField from "../../components/admin/employee/EmployeeField";
 
 const EmployeeAdminPanelPage = () => {
-	return (
-		<div>
-			<HeaderAdminPanel/>
-			<EditEmployee/>
-		</div>
-	);
+  return (
+    <div>
+      <HeaderAdminPanel />
+      <EmployeeField />
+    </div>
+  );
 };
 
 export default EmployeeAdminPanelPage;

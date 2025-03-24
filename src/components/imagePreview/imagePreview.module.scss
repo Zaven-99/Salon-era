@@ -6,14 +6,19 @@
     align-items:center;
     justify-content: space-between;
 }
-.delete-Image__Preview{
+.r-btn{
     color: black;
     font-family: "Open Sans", sans-serif;
-    font-size: $fz-12;
-    font-weight: $light;
-    padding: $sp-10;
-    height: $hg-50;
-    background-color: rgba(255, 93, 75, 0.715);
-    border-radius: $br-4;
-    width: $wd-150;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 10px;
+    height: 50px;
+    background-color: #fe5440;
+    border-radius: 4px;
+    width: 150px;
+}
+.r-btn:hover{
+    transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
 }

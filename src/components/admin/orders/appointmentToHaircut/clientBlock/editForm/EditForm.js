@@ -155,8 +155,8 @@ const EditForm = ({
       />
 
       <BtnBlock
-        className1={styles["save-client"]}
-        className2={styles["cancel"]}
+        className1={styles["g-btn"]}
+        className2={styles["r-btn"]}
         className4={styles["btn-block"]}
         label1="Сохранить изменения"
         label2="Отменить"

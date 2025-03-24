@@ -1,0 +1,246 @@
+@import '../../../styles/variables.scss';
+
+ 
+.employee{
+	display: flex;
+	justify-content: center;
+    margin-bottom: $sp-20;
+}
+ 
+.message{
+	text-align: center;
+	margin-top: $sp-50;
+	font-family: "Open Sans", sans-serif;
+    font-size: $fz-20;
+    font-weight: $medium;
+	color: salmon;
+}
+.employee-item{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+    cursor: pointer;
+    padding: $sp-15;
+    background: #eaeef4;
+    margin-bottom: $sp-5;
+    border-radius: $br-4;
+	gap: $sp-10;
+	margin: $sp-10 $sp-10 $sp-10 $sp-10;
+    
+}
+.employee-item:hover{
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+ 
+img{
+	width: $wd-60;
+}
+.gender{
+	padding-left: $sp-10;
+}
+.category{
+	padding-left: $sp-10;
+
+}
+.r-btn{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+    padding: $sp-10;
+    height: $hg-50;
+    background-color: #f0526e;
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.r-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.g-btn{
+	color: black;
+    font-family: $font;
+    font-size: $fz-12;
+    font-weight: $regular;
+    padding: $sp-10;
+    height: $hg-50;
+    background-color: rgb(80,200,120);
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.g-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.y-btn{
+	color: black;
+    font-family:$font;
+    font-size: $fz-12;
+    font-weight: $regular;
+    padding: $sp-10;
+    height: $hg-50;
+    background-color: rgb(165, 206, 41);
+    border-radius: $br-4;
+    width: $wd-150;
+}
+.y-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.btn-block{
+	display: flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: $sp-50;
+	gap: $sp-20;
+}
+.button-block{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+	gap: $sp-20;
+}
+
+
+.input-item{
+    width: $wd-100p;
+    max-width: $wd-100p;
+    padding: 0.706rem;
+    font-style: normal;
+    font-weight: $regular;
+    font-size: 1rem;
+    line-height: 1.412rem;
+    color: var(--input-text);
+    border-radius: var(--input-border-radius, 0.1rem);
+    border-width: var(--input-border-width, 0.01rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    margin-top: 5px;
+}
+ .choose{
+    text-align: center;
+ }
+ 
+
+
+ .position{
+    width: $wd-100p;
+    max-width: $wd-100p;
+    min-width: 0px;
+    padding: 0.706rem;
+    font-style: normal;
+    font-weight: $regular;
+    font-size: 1rem;
+    line-height: 1.412rem;
+    color: var(--input-text);
+    border-radius: var(--input-border-radius, 0.2rem);
+    border-width: var(--input-border-width, 0.01rem);
+    border-style: solid;
+    border-color: var(--border-primary);
+    box-shadow: var(--input-box-shadow);
+    outline: none;
+    filter: none;
+    caret-color: var(--input-text) !important;
+    background: var(--input-background) !important;
+    appearance: none !important;
+    margin-top: $sp-5;
+     
+ 
+ }
+ 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+}
+.modal-content {
+  background: #eaeef4;
+  border-radius: $br-8;
+  padding: $sp-50;
+  position: relative;
+  max-width: $wd-500;
+  width: $wd-500;
+  height: $hg-305;
+  z-index: 15; 
+  animation:bounce-in .5s;
+  text-align: center;
+  box-shadow:$shadow-small;
+
+}
+@keyframes bounce-in {
+    0%{
+        opacity: 0; 
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+strong{
+    font-size: $fz-14;
+}
+ 
+
+.image-employee{
+    width: $wd-150;
+    height: $wd-100;
+    object-fit: cover;
+    border-radius:$br-2;
+}
+.preview-block{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+}
+ 
+
+
+/*media*/
+@media(max-width:1400px){
+    .employee-item{
+        display: block;
+        width: $wd-300;
+        justify-content: center;
+    }
+    
+   
+    
+}
+
+@media(max-width:500px){
+    .employee-item{
+       margin: $sp-20 auto;
+    }
+    .employee{
+        font-size: $fz-35;
+    }
+    .modal-content{
+        width: $wd-400;
+    }
+    .btn-block{
+        gap: $sp-15;
+    }
+}

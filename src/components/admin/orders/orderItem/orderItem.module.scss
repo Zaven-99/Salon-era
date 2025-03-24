@@ -20,54 +20,51 @@
 	font-size: 12px;
 	 
 }
-.accept{
+.g-btn{
 	color: black;
     font-family: $font;
     font-size: $fz-12;
     font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
-    box-shadow: $shadow-small;
-    background-color: rgb(15 210 15);
+    background-color: rgb(80, 200, 120);
     border-radius: $br-4;
     width: $wd-150;
 }
-.accept:hover{
+.g-btn:hover{
 	transform: scale(1.02);
     box-shadow:$shadow-small;
     transition: .2s;
 }
-.cancel{
+.r-btn{
 	color: black;
     font-family: $font;
     font-size: $fz-12;
     font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
-    box-shadow:$shadow-small;
-    background-color: #fe5440;
+    background-color: #f0526e;
     border-radius: $br-4;
     width: $wd-150;
 }
-.cancel:hover{
+.r-btn:hover{
 	transform: scale(1.02);
     box-shadow: $shadow-small;
     transition: .2s;
 }
 
-.close{
+.gr-btn{
     color: black;
     font-family: $font;
     font-size: $fz-12;
     font-weight: $regular;
     padding: $sp-10;
     height: $hg-50;
-    box-shadow: $shadow-small;
     background-color: rgb(186, 178, 177);
     border-radius: $br-4;
     width: $wd-150;
 }
-.close:hover{
+.gr-btn:hover{
 	transform: scale(1.02);
     box-shadow: $shadow-small;
     transition: .2s;

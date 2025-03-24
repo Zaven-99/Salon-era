@@ -13,6 +13,14 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
     "3ч",
     "3ч 30 минут",
     "4ч",
+    "4ч 30 минут",
+    "5ч",
+    "5ч 30 минут",
+    "6ч",
+    "6ч 30 минут",
+    "7ч",
+    "7ч 30 минут",
+    "8ч",
   ];
 
   const getDurationText = (duration) => durationMap[duration - 1] || "";
@@ -210,8 +218,8 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                   </div>
                   {order.record.status === 0 ? (
                     <BtnBlock
-                      className1={styles.accept}
-                      className2={styles.cancel}
+                      className1={styles['g-btn']}
+                      className2={styles['r-btn']}
                       className4={styles["btn-block"]}
                       label1="Принять заказ"
                       label2="Отменить заказ"
@@ -220,8 +228,8 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     />
                   ) : (
                     <BtnBlock
-                      className1={styles.close}
-                      className2={styles.cancel}
+                      className1={styles['gr-btn']}
+                      className2={styles['r-btn']}
                       className4={styles["btn-block"]}
                       label1="Закрыть заказ"
                       label2="Отменить заказ"

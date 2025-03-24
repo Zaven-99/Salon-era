@@ -1,0 +1,155 @@
+@import '../../../styles/variables.scss';
+
+ .slides-list{
+  height: 100vh;
+ }
+
+.slides-list__inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  gap: $sp-15; 
+  margin-top: $sp-20;
+}
+
+.slides-list__item{
+  cursor: pointer;
+  padding: $sp-15;
+  background: #eaeef4;
+  margin-bottom: $sp-5;
+  border-radius: $br-4;
+	gap: $sp-10;
+ }
+ .slides-list__item img{
+	width: $wd-100p;
+  height: $hg-200;
+  object-fit: cover;
+  border-radius: $br-4;
+}
+.slides-list__item:hover{
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  
+}
+.modal-content {
+  background: #eaeef4;
+  border-radius: $br-8;
+  padding: $sp-50;
+  position: relative;
+  max-width: $wd-500;
+  width: $wd-500;
+  height: $hg-305;
+  z-index: 15; 
+  animation:bounce-in .5s;
+  text-align: center;
+  box-shadow:$shadow-small;
+   
+}
+@keyframes bounce-in {
+    0%{
+        opacity: 0; 
+    }
+    100% {
+       opacity: 1;
+    }
+}
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.r-btn{
+  color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+	padding:$sp-10;
+	height: $hg-50;
+	box-shadow: $shadow-small;
+	background-color: #f0526e;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+.r-btn:hover{
+	transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.g-btn{
+  color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+	padding:$sp-10;
+	height: $hg-50;
+	box-shadow: $shadow-small;
+	background-color: rgb(80, 200, 120);;
+	border-radius: $br-4;
+	width: $wd-150;
+}
+.g-btn:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+ 
+.message{
+	text-align: center;
+	margin-top: $sp-50;
+	font-family: "Open Sans", sans-serif;
+  font-size: $fz-20;
+  font-weight: $medium;
+	color: salmon;
+}
+ 
+ 
+.btn-block{
+  margin-top: $sp-50;
+  gap: $sp-10;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+ }
+ 
+.name{
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-size: $fz-15;
+  font-weight: $light;
+  padding: $sp-10;
+}
+.description{
+  display: block;
+  width: $wd-100p;
+  height: calc(2.25rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-family: inherit;
+  margin-top: 5px;
+  font-size: 1rem;
+  font-weight: $regular;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  appearance: none;
+  height: $hg-100;
+}
+.question{
+  text-align: center;
+}

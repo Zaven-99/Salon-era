@@ -38,6 +38,14 @@
   width:$wd-125;
   text-align: center;
 }
+.order-created{
+	background-color:rgba(200, 200, 15, 0.76);
+  text-align: center;
+	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
+	border-radius:$br-4;
+  width:$wd-125;
+  text-align: center;
+}
 .load-more{
     margin: $sp-0 auto;
     display: flex;

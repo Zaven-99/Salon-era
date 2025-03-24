@@ -11,7 +11,7 @@ import styles from "./signUpForm.module.scss";
 import ImagePreview from "../../imagePreview/ImagePreview";
 
 const SignUpForm = ({
-  toggleCloseSignInForm,
+  toggleClose,
   toggleShowMessage,
   activeInput,
   setActiveInput,
@@ -139,7 +139,7 @@ const SignUpForm = ({
         );
 
         navigate("/");
-        toggleCloseSignInForm();
+        toggleClose();
         toggleShowMessage();
       } catch (error) {
         const errorData = JSON.parse(error.message);
@@ -394,7 +394,7 @@ const SignUpForm = ({
           className={styles["signUp-btn"]}
           label="Зарегистрироваться"
           type="submit"
-          disabled={!policy}
+          // disabled={!policy}
         />
       </form>
       {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}

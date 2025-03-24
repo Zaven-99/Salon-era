@@ -1,7 +1,7 @@
 import React from "react";
 
 import HeaderAdminPage from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
-import News from "../../components/admin/editNews/NewsField";
+import News from "../../components/admin/news/NewsField";
 const NewsPage = () => {
   return (
     <div>

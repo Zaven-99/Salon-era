@@ -179,7 +179,7 @@ const Orders = () => {
 
         <CustomButton
           onClick={toggleOpen}
-          className={styles["add-order"]}
+          className={styles["gr-btn"]}
           label="Записать"
         />
       </div>

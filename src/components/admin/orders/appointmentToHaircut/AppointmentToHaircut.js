@@ -220,7 +220,7 @@ const AppointmentToHaircut = ({
             selectedBarber &&
             selectedTime && (
               <CustomButton
-                className={styles["signUp-button"]}
+                className={styles["b-btn"]}
                 label="Записать"
                 onClick={enroll}
               />
@@ -252,8 +252,8 @@ const AppointmentToHaircut = ({
             Вы действительно хотите удалить аккаунт?
           </h2>
           <BtnBlock
-            className1={styles["delete-client"]}
-            className2={styles["cancel-delete__client"]}
+            className1={styles["g-btn"]}
+            className2={styles["r-btn"]}
             className4={styles["btn-block"]}
             label1="Удалить аккаунт"
             label2="Отменить удаление"

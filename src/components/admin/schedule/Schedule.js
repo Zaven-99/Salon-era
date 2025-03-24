@@ -2,8 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import CustomButton from "../../customButton/CustomButton";
 import CustomSelect from "../../customSelect/CustomSelect";
-import styles from "./schedule.module.scss";
 import Spinner from "../../spinner/Spinner";
+import BtnBlock from "../../btnBlock/BtnBlock";
+import Modal from "../../modal/Modal";
+
+import styles from "./schedule.module.scss";
+import Table from "./table/Table";
 
 const Schedule = () => {
   const { control, handleSubmit, reset, setValue } = useForm();
@@ -14,9 +18,15 @@ const Schedule = () => {
   const [currentDate, setCurrentDate] = useState(new Date()); // Текущая дата для переключения месяцев
   const [loading, setLoading] = useState(false); // Загрузка
   const [selectedDate, setSelectedDate] = useState([]);
-
+  const [day, setDay] = useState([]);
   const tableRef = useRef(null); // Ссылка на таблицу для горизонтальной прокрутки
 
+  const toggleOpen = () => {
+    setMessage(true);
+  };
+  const toggleClose = () => {
+    setMessage(false);
+  };
   // Функция для получения даты начала недели (понедельник)
   const getStartOfWeek = (date) => {
     const startOfWeek = new Date(date);
@@ -83,24 +93,6 @@ const Schedule = () => {
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
-  };
-
-  const handleCellClick = (employeeIndex, dayIndex, employeeId, date) => {
-    const cellKey = `${employeeId}-${dayIndex}`;
-    const existingCellData = selectedCells[cellKey]; // Проверка, есть ли данные в ячейке
-
-    setSelectedCell({ employeeIndex, dayIndex, employeeId });
-    setSelectedDate(date);
-
-    // Если данные уже есть в ячейке, заполняем форму этими данными
-    if (existingCellData) {
-      setValue("workTimeFrom", existingCellData.startTime.slice(-5)); // Устанавливаем время начала
-      setValue("workTimeTo", existingCellData.endTime.slice(-5)); // Устанавливаем время окончания
-    } else {
-      reset(); // Если данных нет, сбрасываем форму
-    }
-
-    setMessage(true); // Показываем модальное окно
   };
 
   const closeMessage = () => {
@@ -219,12 +211,12 @@ const Schedule = () => {
         throw new Error(`Ошибка http! статус: ${response.status}`);
       }
       const data = await response.json();
-
       // Обновляем состояние расписания
       const updatedCells = {};
 
       data.forEach((scheduleItem) => {
         const { idClient, scheludeDateStart, scheludeDateEnd } = scheduleItem;
+        setDay(scheduleItem);
 
         // Находим соответствующий день и сотрудника
         const dateStart = new Date(scheludeDateStart);
@@ -252,24 +244,18 @@ const Schedule = () => {
     fetchClientSchedule();
   }, [selectedCell, currentDate]);
 
-  const formatTimeToDisplay = (str) => {
-    return str.slice(-5);
-  };
-
   const currentMonth = currentDate.toLocaleDateString("ru-RU", {
     month: "long",
     year: "numeric",
   });
 
-  const handleDelete = async (employeeId, dayIndex) => {
+  const handleDelete = async (id) => {
     setLoading(true);
-
-    const cellKey = `${employeeId}-${dayIndex}`;
 
     try {
       // Выполняем запрос для удаления расписания
       const response = await fetch(
-        `https://api.salon-era.ru/clientsschelude?id=${employeeId}`,
+        `https://api.salon-era.ru/clientsschelude?id=${id}`,
         {
           method: "DELETE",
         }
@@ -280,7 +266,7 @@ const Schedule = () => {
       // Убираем данные из состояния после удаления
       setSelectedCells((prevCells) => {
         const newCells = { ...prevCells };
-        delete newCells[cellKey]; // Удаляем конкретную ячейку
+
         return newCells;
       });
 
@@ -300,131 +286,94 @@ const Schedule = () => {
   return (
     <div className={styles.schedule}>
       <div className={styles["week-navigation"]}>
-        <button onClick={prevWeek} className={styles["nav-button"]}>
-          Предыдущая неделя
-        </button>
-        <span className={styles["week-span"]}>
-          {`Неделя с ${daysOfWeek[0].displayDate} по ${daysOfWeek[6].displayDate}`}
-        </span>
-        <button onClick={nextWeek} className={styles["nav-button"]}>
-          Следующая неделя
-        </button>
+        <BtnBlock
+          className1={styles["nav-button"]}
+          className2={styles["nav-button"]}
+          className4={styles["week-navigation"]}
+          label1="Предыдущая неделя"
+          label2="Следующая неделя"
+          fnc1={prevWeek}
+          fnc2={nextWeek}
+          Children={`Неделя с ${daysOfWeek[0].displayDate} по ${daysOfWeek[6].displayDate}`}
+        ></BtnBlock>
       </div>
 
       <div className={styles.table} ref={tableRef}>
         <span>{currentMonth}</span>
-        <table>
-          <thead>
-            <tr>
-              <th>Имя Фамилия</th>
-              {daysOfWeek.map((dayObj, index) => (
-                <th key={index}>
-                  {dayObj.weekday} <br /> {dayObj.displayDate}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {employee.map((item, index) => (
-              <tr key={index}>
-                <td>
-                  {item.firstName} {item.lastName}
-                </td>
-                {daysOfWeek.map((dayObj, dayIndex) => {
-                  const cellKey = `${item.id}-${dayIndex}`;
-                  const cellData = selectedCells[cellKey];
-
-                  return (
-                    <td
-                      key={dayIndex}
-                      className={cellData ? styles.red : ""}
-                      onClick={() =>
-                        handleCellClick(index, dayIndex, item.id, dayObj.date)
-                      }
-                    >
-                      {cellData
-                        ? `${formatTimeToDisplay(
-                            cellData.startTime
-                          )} - ${formatTimeToDisplay(cellData.endTime)}`
-                        : ""}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table
+          setSelectedDate={setSelectedDate}
+          setValue={setValue}
+          employee={employee}
+          setSelectedCell={setSelectedCell}
+          reset={reset}
+          setMessage={setMessage}
+          selectedCells={selectedCells}
+          daysOfWeek={daysOfWeek}
+        />
       </div>
 
       {message && selectedCell && (
-        <div className={styles["modal-overlay"]}>
-          <div className={styles["modal-content"]}>
-            <h2 className={styles["modal-title"]}>
-              Выбрать ячейку для {selectedDate}
-            </h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className={styles["work-time-block"]}>
-                <label className={styles["label"]}>
-                  Введите время начала работы:
-                </label>
-                <Controller
-                  name="workTimeFrom"
-                  control={control}
-                  rules={{ required: "Это поле обязательно" }}
-                  render={({ field }) => (
-                    <CustomSelect
-                      {...field}
-                      control={control}
-                      name="workTimeFrom"
-                      map={workHours}
-                    />
-                  )}
-                />
-              </div>
-              <div className={styles["work-time-block"]}>
-                <label className={styles["label"]}>
-                  Введите время окончания работы:
-                </label>
-                <Controller
-                  name="workTimeTo"
-                  control={control}
-                  rules={{ required: "Это поле обязательно" }}
-                  render={({ field }) => (
-                    <CustomSelect
-                      {...field}
-                      control={control}
-                      name="workTimeTo"
-                      map={workHours}
-                    />
-                  )}
-                />
-              </div>
-              <div className={styles["btn-block"]}>
-                <CustomButton label="Да" className={styles.yes} type="submit" />
-                <CustomButton
-                  className={styles.no}
-                  label="Нет"
-                  onClick={closeMessage}
-                />
-                {selectedCell &&
-                  selectedCells[
-                    `${selectedCell.employeeId}-${selectedCell.dayIndex}`
-                  ] && (
-                    <CustomButton
-                      className={styles.delete}
-                      label="Удалить"
-                      onClick={() =>
-                        handleDelete(
-                          selectedCell.employeeId,
-                          selectedCell.dayIndex
-                        )
-                      }
-                    />
-                  )}
-              </div>
-            </form>
-          </div>
-        </div>
+        <Modal toggleOpen={toggleOpen} toggleClose={toggleClose}>
+          <h2 className={styles["modal-title"]}>
+            Выбрать ячейку для {selectedDate}
+          </h2>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles["work-time-block"]}>
+              <label className={styles["label"]}>
+                Введите время начала работы:
+              </label>
+              <Controller
+                name="workTimeFrom"
+                control={control}
+                rules={{ required: "Это поле обязательно" }}
+                render={({ field }) => (
+                  <CustomSelect
+                    {...field}
+                    control={control}
+                    name="workTimeFrom"
+                    map={workHours}
+                  />
+                )}
+              />
+            </div>
+            <div className={styles["work-time-block"]}>
+              <label className={styles["label"]}>
+                Введите время окончания работы:
+              </label>
+              <Controller
+                name="workTimeTo"
+                control={control}
+                rules={{ required: "Это поле обязательно" }}
+                render={({ field }) => (
+                  <CustomSelect
+                    {...field}
+                    control={control}
+                    name="workTimeTo"
+                    map={workHours}
+                  />
+                )}
+              />
+            </div>
+            <div className={styles["btn-block"]}>
+              <CustomButton label="Да" className={styles['g-btn']} />
+              <CustomButton
+                className={styles['r-btn']}
+                label="Нет"
+                onClick={closeMessage}
+              />
+              {selectedCell &&
+                selectedCells[
+                  `${selectedCell.employeeId}-${selectedCell.dayIndex}`
+                ] && (
+                  <CustomButton
+                    className={styles['r-btn']}
+                    label="Удалить"
+                    onClick={() => handleDelete(day.id)}
+                  />
+                )}
+            </div>
+          </form>
+        </Modal>
       )}
     </div>
   );

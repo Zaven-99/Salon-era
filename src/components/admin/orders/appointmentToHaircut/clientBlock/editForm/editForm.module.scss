@@ -1,42 +1,40 @@
 @import '../../../../../styles/variables.scss';
 
 
-.save-client{
+.g-btn{
   color: black;
   font-family: "Open Sans", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 10px;
-  height: 50px;
-  box-shadow: 0 8px 16px -8px;
-  background-color: rgb(15, 210, 15);
-  border-radius: 4px;
-  width: 150px;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  background-color: rgb(80, 200, 120);
+  border-radius: $br-4;
+  width: $wd-150;
 }
-.save-client:hover{
+.g-btn:hover{
   transform: scale(1.02);
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-.cancel{
+.r-btn{
   color: black;
   font-family: $font;
   font-size: $fz-12;
   font-weight: $regular;
   padding: $sp-10;
   height: $hg-50;
-  box-shadow: $shadow-small;
-  background-color: #fe5440;
+  background-color: #f0526e;
   border-radius: $br-4;
   width: $wd-150;
 }
-.cancel:hover{
+.r-btn:hover{
   transform: scale(1.02);
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
 .btn-block{
 	display: flex;
-    justify-content: space-between;
-    margin-top: $sp-50;
+  justify-content: space-between;
+  margin-top: $sp-50;
 }

@@ -26,16 +26,6 @@
   margin-left: $sp-50;
 }
  
-
-.order-created{
-	background-color:rgba(200, 200, 15, 0.76);
-  text-align: center;
-	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
-	border-radius:$br-4;
-  width:$wd-125;
-  text-align: center;
-}
-
   
 .dataPicker{
   cursor: pointer;
@@ -54,18 +44,7 @@
   font-size: $fz-20;
   font-weight: $medium;
 }
-.delete{
-  color: black;
-  background-color: #fe5440;
-  font-family: "Open Sans", sans-serif;
-  font-size: $fz-12;
-  font-weight: $regular;
-  padding: $sp-10;
-  height: $hg-50;
-  box-shadow: $shadow-small;
-  border-radius: $br-4;
-  width: $wd-150;
-}
+ 
 .wrapper{
   display: flex;
   align-items:center;
