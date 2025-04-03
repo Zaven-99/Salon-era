@@ -1,40 +1,54 @@
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
 
 import CustomButton from "../../customButton/CustomButton";
 import Modal from "../../modal/Modal";
-import CustomInput from "../../customInput/CustomInput";
 import WorkList from "./workList/WorkList";
-import CustomSelect from "../../customSelect/CustomSelect";
 import Spinner from "../../spinner/Spinner";
 
-import ImagePreview from "../../imagePreview/ImagePreview";
 import styles from "./worksField.module.scss";
+import AddWork from "./addWork/AddWork";
 
 const OurWorks = () => {
-  const { handleSubmit, control, reset } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      category: "1",
-    },
-  });
-
   const [works, setWorks] = useState([]);
   const [addWorks, setAddWorks] = useState(false);
-  const [activeInput, setActiveInput] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  const categoryMap = [
-    "Мужские стрижки",
-    "Женские стрижки",
-    "Женские прически",
-    "Окрашивание волос",
-    "Маникюр",
-    "Ресницы",
-    "Брови",
-  ];
+  console.log(categories.find((cat) => cat.value));
+  
+  const getCategoryText = (categoryId) => {
+    const category = categories.find((cat) => cat.value === categoryId);
+  
+    return category ? category.value : "Неизвестная работа"; // Если категория найдена, выводим её значение, иначе текст по умолчанию
+  };
+  
+
+  const categoryOptions = categories.filter(
+    (item) => item.category === "Категория работ"
+  );
+
+  const fetchCategory = async () => {
+    try {
+      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+
+      if (!response.ok) {
+        throw new Error(`Ошибка http! статус: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      setCategories(data);
+      
+    } catch {
+      console.log("error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
 
   const toggleOpen = () => {
     setAddWorks(true);
@@ -42,67 +56,7 @@ const OurWorks = () => {
   const toggleClose = () => {
     setAddWorks(false);
   };
-  const deletImagePreview = () => {
-    setImagePreview(null);
-  };
 
-  const uploadImage = (event) => {
-    const files = event?.target?.files;
-    if (!files || files.length === 0) {
-      console.error("Файлы не найдены или пусты");
-      return;
-    }
-
-    const file = files[0];
-    setSelectedFile(file);
-
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Выберите файл изображения.");
-    }
-  };
-
-  const formSubmitHandler = async (formValues) => {
-    setLoading(true);
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        name: formValues.workName,
-        category: formValues.category,
-      })
-    );
-
-    if (selectedFile) {
-      formData.append("imageData", selectedFile, selectedFile.name);
-    }
-
-    try {
-      const response = await fetch("https://api.salon-era.ru/stockfiles", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Ошибка при получении данных: ${response.statusText}`);
-      }
-
-      setWorks((prevWorks) => [...prevWorks, formData]);
-      toggleClose();
-      reset();
-    } catch (error) {
-      console.error("Ошибка отправки:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
   if (loading) {
     return <Spinner />;
   }
@@ -110,7 +64,7 @@ const OurWorks = () => {
   return (
     <div className={styles["works-filed"]}>
       <CustomButton
-        className={styles["add-work"]}
+        className={styles["gr-btn"]}
         label="Добавить работу"
         onClick={toggleOpen}
       />
@@ -118,38 +72,12 @@ const OurWorks = () => {
       {addWorks && (
         <Modal toggleOpen={toggleOpen} toggleClose={toggleClose}>
           <h2>Добавить работу</h2>
-          <form onSubmit={handleSubmit(formSubmitHandler)}>
-            <Controller
-              name="category"
-              control={control}
-              render={({ field }) => (
-                <CustomSelect
-                  {...field}
-                  name="category"
-                  control={control}
-                  map={categoryMap}
-                />
-              )}
-            />
-
-            <ImagePreview
-              deletImagePreview={deletImagePreview}
-              imagePreview={imagePreview}
-            />
-            <CustomInput
-              type="file"
-              name="imageLink"
-              placeholder="Выберите изображение"
-              isActive={activeInput === "imageLink"}
-              setActiveInput={setActiveInput}
-              onChange={uploadImage}
-            />
-            <CustomButton
-              className={styles["accept-add__work"]}
-              type="submit"
-              label="Добавить работу"
-            />
-          </form>
+          <AddWork
+            setWorks={setWorks}
+            toggleClose={toggleClose}
+            categoryOptions={categoryOptions}
+            getCategoryText={getCategoryText}
+          />
         </Modal>
       )}
 
@@ -158,7 +86,8 @@ const OurWorks = () => {
         toggleOpen={toggleOpen}
         setWorks={setWorks}
         works={works}
-        categoryMap={categoryMap}
+        categoryOptions={categoryOptions}
+        getCategoryText={getCategoryText}
       />
     </div>
   );

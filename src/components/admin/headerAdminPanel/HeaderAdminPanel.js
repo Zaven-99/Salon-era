@@ -106,7 +106,7 @@ const HeaderAdminPanel = () => {
         />
         <ul className={styles.navigation}>
           <NavLink to="/adminPanel/orders">
-            <li>
+            <li className={styles['orders']}>
               Заказы
               <span className={styles["create-orders"]}>{createdOrders}</span>
             </li>

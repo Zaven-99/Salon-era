@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import ServiceList from "./serviceList/ServiceList";
@@ -11,7 +11,7 @@ import FilterBlock from "./filterBlock/FilterBlock";
 import AddService from "./addService/AddService";
 
 const ServiceField = () => {
-  const { handleSubmit, reset } = useForm({
+  const { handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {
       name: "",
@@ -19,56 +19,101 @@ const ServiceField = () => {
       priceMax: "",
       category: "",
       description: "",
-      duration: "1",
+      duration: null,
       gender: "",
     },
   });
-
-  const durationMap = [
-    "30 минут",
-    "1 час",
-    "1ч 30 минут",
-    "2 часа",
-    "2ч 30 минут",
-    "3ч",
-    "3ч 30 минут",
-    "4ч",
-    "4ч 30 минут",
-    "5ч",
-    "5ч 30 минут",
-    "6ч",
-    "6ч 30 минут",
-    "7ч",
-    "7ч 30 минут",
-    "8ч",
-  ];
-
-  const positionMap = [
-    "Выберите категортю",
-    "Женские стрижки",
-    "Укладка",
-    "Краска волос 1 тон",
-    "Мелирование",
-    "Осветление",
-    "Мелирование + тонирование",
-    "Осветление + Тонирование",
-    "Шлифовка волос",
-    "Другое",
-    "Мужские стрижки",
-    "Остальное",
-    "Маникюр",
-    "Педикюр",
-    "Укрепление ногтей",
-    "Оформление бровей",
-    "Наращивание ресниц",
-  ];
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addService, setAddService] = useState(false);
   const [activeInput, setActiveInput] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(""); // selectedCategory может быть строкой или числом
+  const [categories, setCategories] = useState([]);
+
+  const generateDurationOptions = () => {
+    const durations = ["Выберите продолжительность"];
+
+    for (let hours = 0; hours <= 9; hours++) {
+      for (let minutes = 0; minutes <= 1; minutes++) {
+        const totalMinutes = hours * 60 + minutes * 30;
+        const hoursText = Math.floor(totalMinutes / 60);
+        const minutesText = totalMinutes % 60;
+
+        if (hoursText === 0 && minutesText === 0) continue;
+
+        let durationText = "";
+
+        if (hoursText > 0) {
+          durationText += `${hoursText} ${getHourText(hoursText)}`;
+        }
+        if (minutesText > 0) {
+          durationText += ` ${minutesText} минут`;
+        }
+
+        durations.push(durationText.trim());
+      }
+    }
+
+    return durations;
+  };
+
+  // Функция для корректного склонения слова "час"
+  const getHourText = (hours) => {
+    if (hours === 1) return "час";
+    if (hours >= 2 && hours <= 4) return "часа";
+    return "часов";
+  };
+
+  const durationToText = (step) => {
+    const hours = Math.floor(step / 2);
+    const minutes = (step % 2) * 30;
+
+    let result = "";
+
+    if (hours > 0) {
+      result += `${hours} ${getHourText(hours)}`;
+    }
+    if (minutes > 0) {
+      result += ` ${minutes} минут`;
+    }
+
+    return result.trim();
+  };
+
+  const dur = generateDurationOptions();
+
+  const fetchCategory = async () => {
+    try {
+      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+
+      if (!response.ok) {
+        throw new Error(`Ошибка http! статус: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setCategories(data);
+    } catch {
+      console.log("error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  const categoryOptions = categories.filter(
+    (item) => item.category === "Категория услуг"
+  );
+
+  const getCategoryTextById = (id) => {
+    const categoryId = Number(id); // Приводим id категории к числу
+    const category = categories.find((item) => item.id === categoryId);
+    return category ? category.value : "Категория не найдена";
+  };
 
   const toggleOpen = () => {
     setAddService(true);
@@ -77,61 +122,15 @@ const ServiceField = () => {
     setAddService(false);
   };
 
-  const formSubmitHandler = async (formValues) => {
-    setLoading(true);
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        name: formValues.name,
-        description: formValues.description,
-        category: formValues.category,
-        priceLow: parseInt(formValues.priceLow) || 0,
-        priceMax: formValues.priceMax ? parseInt(formValues.priceMax) : null,
-        duration: parseInt(formValues.duration),
-        gender: parseInt(formValues.gender),
-      })
-    );
-
-    try {
-      const response = await fetch("https://api.salon-era.ru/services", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData || "Ошибка при добавлении услуги");
-      }
-      reset();
-      setServices((prevServices) => [
-        ...prevServices,
-        {
-          name: formValues.name,
-          description: formValues.description,
-          category: formValues.category,
-          priceLow: parseInt(formValues.priceLow) || 0,
-          priceMax: formValues.priceMax ? parseInt(formValues.priceMax) : null,
-          duration: parseInt(formValues.duration),
-          gender: parseInt(formValues.gender),
-        },
-      ]);
-      toggleClose();
-      reset();
-    } catch (error) {
-      setLoading(false);
-      setErrorMessage(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-  //фильтрование по категориям
+  // фильтрация по категориям
   const uniqueCategories = [
     ...new Set(services.map((service) => service.category)),
   ];
+
   const filteredServices = selectedCategory
-    ? services.filter((service) => service.category === selectedCategory)
+    ? services.filter(
+        (service) => Number(service.category) === Number(selectedCategory) // Приводим оба значения к числу для корректного сравнения
+      )
     : services;
 
   if (loading) {
@@ -151,6 +150,7 @@ const ServiceField = () => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           uniqueCategories={uniqueCategories}
+          getCategoryTextById={getCategoryTextById}
         />
       </div>
 
@@ -159,11 +159,14 @@ const ServiceField = () => {
           <h2>Добавить Услугу</h2>
           <AddService
             handleSubmit={handleSubmit}
-            formSubmitHandler={formSubmitHandler}
+            setLoading={setLoading}
             activeInput={activeInput}
             setActiveInput={setActiveInput}
-            positionMap={positionMap}
-            durationMap={durationMap}
+            categoryOptions={categoryOptions}
+            setServices={setServices}
+            toggleClose={toggleClose}
+            setErrorMessage={setErrorMessage}
+            dur={dur}
           />
         </Modal>
       )}
@@ -173,8 +176,10 @@ const ServiceField = () => {
         setServices={setServices}
         toggleClose={toggleClose}
         toggleOpen={toggleOpen}
-        durationMap={durationMap}
-        positionMap={positionMap}
+        categoryOptions={categoryOptions}
+        dur={dur}
+        durationToText={durationToText}
+        getCategoryTextById={getCategoryTextById}
       />
     </div>
   );

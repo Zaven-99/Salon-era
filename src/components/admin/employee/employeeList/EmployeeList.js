@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 
 import Modal from "../../../modal/Modal";
 import Spinner from "../../../spinner/Spinner";
@@ -8,7 +7,7 @@ import styles from "./employeeList.module.scss";
 import avatarImg from "../../../../img/icons/avatar.png";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import EditModal from "./editModal/EditModal";
-import EmployeeBlock from './employeeBlock/EmployeeBlock';
+import EmployeeBlock from "./employeeBlock/EmployeeBlock";
 
 const EmployeeList = ({
   employee,
@@ -18,24 +17,9 @@ const EmployeeList = ({
   toggleOpen,
   toggleClose,
   handleKeyDown,
+  positionOptions,
+  getPositionTextById,
 }) => {
-  const { setError } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      login: "",
-      password: "",
-      confirmPassword: "",
-      email: "",
-      phone: "",
-      position: "",
-      dateWorkIn: "",
-      gender: "",
-      clientType: "employee",
-    },
-  });
-
   const [loading, setLoading] = useState(false);
   const [employeeId, setEmployeeId] = useState(null);
   const [editedEmployee, setEditedEmployee] = useState({});
@@ -44,21 +28,6 @@ const EmployeeList = ({
   const [imagePreview, setImagePreview] = useState(null);
   const genderMap = { 0: "Женщина", 1: "Мужчина" };
 
-  const positionMap = [
-    "Женский парикмахер",
-    "Мужской парикмахер",
-    "Специалист по маникюру",
-    "Бровист",
-    "Специалист по ресницам",
-  ];
-
-  const getPositionText = (position) => {
-    if (position >= 1 && position <= positionMap.length) {
-      return positionMap[position - 1];
-    } else {
-      return "Неизвестная позиция";
-    }
-  };
   const getGenderText = (gender) => genderMap[gender];
 
   const fetchEmployee = async () => {
@@ -74,7 +43,7 @@ const EmployeeList = ({
       );
       setEmployee(filteredData);
     } catch (error) {
-      setError("Ошибка при загрузке сотрудников");
+      console.error("Ошибка при загрузке сотрудников");
     } finally {
       setLoading(false);
     }
@@ -158,7 +127,7 @@ const EmployeeList = ({
 
       {Object.keys(groupedEmployee).map((position) => (
         <div key={position}>
-          <h4 className={styles.category}>{getPositionText(position)}</h4>
+          <h4 className={styles.category}>{getPositionTextById(position)}</h4>
 
           <ul className={styles["employee-list__inner"]}>
             {groupedEmployee[position].map((employee, index) => (
@@ -180,7 +149,7 @@ const EmployeeList = ({
                       toggleHelpModal={toggleHelpModal}
                       showHelpModal={showHelpModal}
                       handleKeyDown={handleKeyDown}
-                      positionMap={positionMap}
+                      positionOptions={positionOptions}
                       employee={employee}
                     />
                   </Modal>
@@ -203,11 +172,11 @@ const EmployeeList = ({
                         </div>
                       )}
                     </div>
-                      <EmployeeBlock
-                        employee={employee}
-                        formatDate={formatDate}
-                        getGenderText={getGenderText}
-                      />
+                    <EmployeeBlock
+                      employee={employee}
+                      formatDate={formatDate}
+                      getGenderText={getGenderText}
+                    />
 
                     <div>
                       <BtnBlock

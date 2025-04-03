@@ -51,33 +51,11 @@ td {
 }
 
 
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 6;
+.month{
+  font-weight: 600;
+  font-family: $font;
 }
-
-.modal-content {
-  background: #eaeef4;
-  border-radius: $br-8;
-  padding: $sp-20;
-  position: relative;
-  max-width: $wd-500;
-  width: $wd-500;
-  height: $hg-305;
-  z-index: 15;
-  animation: bounce-in 0.5s ease-in-out;
-  text-align: center;
-  box-shadow: $shadow-small;
-}
-
+ 
 .btn-block {
   display: flex;
   justify-content: space-between;
@@ -120,23 +98,26 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: $sp-20;
+  gap: $sp-15;
 }
 
 .nav-button {
-  background-color: #f4f4f4;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
-  margin: 0 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s, transform 0.2s;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
 .nav-button:hover {
-  background-color: #ddd;
-  transform: scale(1.05); /* Увеличиваем кнопку при наведении */
+  
+  transform: scale(1.01); /* Увеличиваем кнопку при наведении */
 }
 
 .month-span {

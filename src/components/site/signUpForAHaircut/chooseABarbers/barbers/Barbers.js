@@ -12,16 +12,8 @@ const Barbers = ({
   avatar,
   showFeedBackToggle,
   handleSignUpClick,
+  getCategoryTextById,
 }) => {
-  const getPositionText = (position) => positionMap[position];
-
-  const positionMap = {
-    1: "Женский парикмахер",
-    2: "Мужской парикмахер",
-    3: "Специалист по маникюру",
-    4: "Бровист",
-    5: "Специалист по ресницам",
-  };
   return (
     <div className={styles.wrapper} onClick={handleSignUpClick}>
       <div className={styles["about-barber"]}>
@@ -36,7 +28,7 @@ const Barbers = ({
           <p className={styles["barber-item"]}>Имя: {item?.firstName}</p>
           <p className={styles["barber-item"]}>Фамилия: {item?.lastName}</p>
           <p className={styles["barber-item"]}>
-            Должность: {getPositionText(item?.position)}
+            Должность: {getCategoryTextById(item?.position)}
           </p>
           <RatingStars
             isInteractive={false}

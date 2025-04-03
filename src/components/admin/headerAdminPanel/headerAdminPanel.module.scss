@@ -3,65 +3,73 @@
 .header-top{
 	display: flex;
 	justify-content: space-between;
-	padding: $sp-5 $sp-5;
+	padding: $sp-10 $sp-10;
+	background:#f2f2f2;
 }
  
 .navigation{
 	display: flex;
 	align-items: center;
 	justify-content: start;
-	gap: $sp-70;
-	background-color:#dddddd;
-	padding: $sp-30;
-	border-radius:$br-4;
-	box-shadow: $shadow-small;
-
+	background-color:#ddddddc7;
+	padding: $sp-10;
+	gap: 50px;
+	box-shadow:3px 1px 2px -1px;
 }
 .navigation li {
 	color:black;
 	font-family:$font;
-	font-size: $fz-20;
-	font-weight: $light;
+	font-weight: $regular;
 	padding: $sp-5;
+	
+	 
 }
 .navigation li:hover{
-	transform: scale(1.05);
-	background:#ffffff3d;
+	background:#ffffff;
 	transition: .2s;
 }
 .other-btn{
-	padding: $sp-5;
+	color:black;
+	font-family:$font;
+	font-weight: $regular;
+	padding: $sp-5;;
+	cursor: pointer;
+	position: relative;
 }
 .other-btn:hover{
-	transform: scale(1.05);
-	background:#ffffff3d;
+	background:#ffffff;
 	transition: .2s;
-
 }
 .logOut{
 	color: black;
     font-family: $font;
-    font-size: $fz-20;
-    font-weight: $medium;
+    font-weight: $regular;
 	cursor: pointer;
+	padding: 0 $sp-5;
+	background:#ffffff;
+	border-radius:$br-4;
+	display: flex;
+	align-items:center;
 }
 .logOut:hover{
-	transform: scale(1.1);
+ 
+	// transition: .1s;
+	transform: scale(1.01);
 }
 .status{
-	color:black;
+	color:rgb(0, 0, 0);
 	font-family: $font;
 	font-size: $fz-20;
 	font-weight: $medium;
 }
-.other{
-	cursor: pointer;
-}
  
+ .other-modal ul li{
+	 padding: 0 $sp-5;
+}
 .other-modal ul li:hover{
 	background-color:#dddddd;
 	transition: .3s;
-	transform: scale(1.1);
+	transform: scale(1.01);
 	
 }
 @keyframes bounce-in {
@@ -83,29 +91,25 @@
 .GIF{
 	border-radius:$br-50p;
 }
-.other-btn{
-	position: relative;
-	cursor: pointer;
-	color:black;
-	font-family:$font;
-	font-size: $fz-20;
-	font-weight: $light;
-}
+ 
 .other-modal{
 	position: absolute;
 	background: white;
 	box-shadow: $shadow-small;
-	padding: $sp-15;
-    left: -$sp-25;
-    top: $sp-35;
+	left: 0;
 	line-height: $sp-35;
 	border-radius:$br-4;
+	padding: $sp-5;
+}
+.orders{
+	display: flex;
+	gap: $sp-5;
+	align-items:center;
 }
 .create-orders{
-	background-color:salmon;
+	background-color:#f0526e;
 	padding: $sp-0 $sp-10;
 	border-radius:$br-4;
-	 
 }
 
 

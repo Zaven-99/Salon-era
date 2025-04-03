@@ -13,43 +13,29 @@ const EditModal = ({
   setServiceId,
   setEditedService,
   toggleClose,
-  durationMap,
+  categoryOptions,
   service,
+  dur,
 }) => {
   const {
-    register,
     control,
     reset,
     formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      id: "",
-      name: "",
-      category: "",
-      description: "",
-      duration: "1",
-      priceLow: null,
-      priceMax: null,
-      gender: "",
-      imageLink: "",
-    },
-  });
+  } = useForm({});
   const [activeInput, setActiveInput] = useState("");
 
   const handleSave = async (id) => {
     setLoading(true);
 
     const serviceToUpdate = { ...editedService, id };
-
     const formData = new FormData();
-
     formData.append(
       "clientData",
       JSON.stringify({
         ...serviceToUpdate,
       })
     );
+
     try {
       const response = await fetch(`https://api.salon-era.ru/services/update`, {
         method: "POST",
@@ -70,6 +56,7 @@ const EditModal = ({
     } catch (error) {
     } finally {
       setLoading(false);
+      // window.location.reload();
     }
   };
 
@@ -90,13 +77,6 @@ const EditModal = ({
         handleChange={handleChange}
         isActive={activeInput === "name"}
         setActiveInput={setActiveInput}
-        {...register("name", {
-          required: "Это поле обязательно.",
-          minLength: {
-            value: 2,
-            message: "Имя должен содержать минимум 2 символа.",
-          },
-        })}
       />
 
       <CustomInput
@@ -108,13 +88,6 @@ const EditModal = ({
         handleChange={handleChange}
         isActive={activeInput === "priceLow"}
         setActiveInput={setActiveInput}
-        {...register("priceLow", {
-          required: "Это поле обязательно.",
-          minLength: {
-            value: 0,
-            message: "Минимальная цена должна быть не меньше 0.",
-          },
-        })}
       />
 
       <CustomInput
@@ -127,30 +100,22 @@ const EditModal = ({
         setActiveInput={setActiveInput}
         handleChange={handleChange}
         min="0"
-        {...register("priceMax", {
-          minLength: {
-            value: 0,
-            message: "Минимальная цена должна быть не меньше 0.",
-          },
-        })}
       />
 
-      <CustomInput
-        label="Категория:"
+      <Controller
         name="category"
-        type="text"
-        error={errors.category}
-        value={editedService.category}
-        isActive={activeInput === "category"}
-        setActiveInput={setActiveInput}
-        handleChange={handleChange}
-        {...register("category", {
-          required: "Это поле обязательно.",
-          minLength: {
-            value: 3,
-            message: "Название должен содержать минимум 3 символа.",
-          },
-        })}
+        control={control}
+        render={({ field }) => (
+          <CustomSelect
+            {...field}
+            handleChange={handleChange}
+            edited={editedService.category}
+            control={control}
+            valueType="id"
+            name="category"
+            map={categoryOptions}
+          />
+        )}
       />
       <CustomInput
         label="Описание:"
@@ -161,19 +126,11 @@ const EditModal = ({
         isActive={activeInput === "description"}
         setActiveInput={setActiveInput}
         handleChange={handleChange}
-        {...register("description", {
-          required: "Это поле обязательно.",
-          minLength: {
-            value: 3,
-            message: "Название должен содержать минимум 3 символа.",
-          },
-        })}
       />
 
       <Controller
         name="duration"
         control={control}
-        rules={{ required: "Это поле обязательно" }}
         render={({ field }) => (
           <CustomSelect
             {...field}
@@ -181,8 +138,8 @@ const EditModal = ({
             handleChange={handleChange}
             edited={editedService.duration}
             control={control}
-            map={durationMap}
-            rules={{ required: "Это поле обязательно" }}
+            map={dur}
+            valueType="index"
           />
         )}
       />
@@ -194,9 +151,6 @@ const EditModal = ({
         value={editedService.gender}
         handleChange={handleChange}
         control={control}
-        {...register("gender", {
-          required: "Выберите пол.",
-        })}
       />
 
       <BtnBlock

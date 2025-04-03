@@ -44,11 +44,11 @@ const News = () => {
     
     formData.append(
       "clientData",
-      JSON.stringify({
+      JSON.stringify([{
         id: formValues.id,
         name: formValues.name,
         mainText: formValues.mainText,
-      })
+      }])
     );
 
     if (selectedFile) {

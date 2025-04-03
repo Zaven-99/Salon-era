@@ -49,33 +49,6 @@
  }
 
  
-
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 6;
-}
-.modal-content {
-  background: #eaeef4;
-  border-radius: $br-8;
-  padding: $sp-50;
-  position: relative;
-  max-width: $wd-500;
-  width: $wd-500;
-  height: $hg-305;
-  z-index: 15; 
-  animation:bounce-in .5s;
-  text-align: center;
-  box-shadow:$shadow-small;
-
-}
 @keyframes bounce-in {
     0%{
         opacity: 0; 

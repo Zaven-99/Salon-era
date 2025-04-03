@@ -64,10 +64,10 @@ const EditHeaderSlides = () => {
 
     formData.append(
       "clientData",
-      JSON.stringify({
+      JSON.stringify([{
         name: formValues.name,
         category: "8",
-      })
+      }])
     );
     if (!selectedFile) {
       setErrorMessages("Добавьте картинку!");

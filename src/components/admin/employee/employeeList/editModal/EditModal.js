@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import CustomInput from "../../../../customInput/CustomInput";
 import CustomSelect from "../../../../customSelect/CustomSelect";
 import ImagePreview from "../../../../imagePreview/ImagePreview";
-import BtnBlock from '../../../../btnBlock/BtnBlock';
+import BtnBlock from "../../../../btnBlock/BtnBlock";
 import { Controller, useForm } from "react-hook-form";
 
-import styles from './editModal.module.scss'
+import styles from "./editModal.module.scss";
 
 const EditModal = ({
   imagePreview,
@@ -18,8 +18,8 @@ const EditModal = ({
   toggleHelpModal,
   showHelpModal,
   handleKeyDown,
-  positionMap,
-  employee
+  positionOptions,
+  employee,
 }) => {
   const {
     register,
@@ -47,6 +47,7 @@ const EditModal = ({
 
   const handleSave = async (id) => {
     setLoading(true);
+
     const formattedDate = `${editedEmployee.dateWorkIn}`;
 
     const formData = new FormData();
@@ -116,9 +117,10 @@ const EditModal = ({
   };
   const deletImagePreview = () => {
     setImagePreview(null);
+    setSelectedFile(null);
   };
   return (
-    <div className={styles['edit-modal']}>
+    <div className={styles["edit-modal"]}>
       <h2>Редактировать</h2>
       <CustomInput
         label="Введите имя:"
@@ -159,6 +161,7 @@ const EditModal = ({
         error={errors.login}
         type="text"
         name="login"
+        autoComplete="off"
         value={editedEmployee.login}
         handleChange={handleChange}
         isActive={activeInput === "login"}
@@ -179,6 +182,7 @@ const EditModal = ({
         label="Введите пароль:"
         show={() => setShowPassword((prev) => !prev)}
         showPassword={showPassword}
+        autoComplete="new-password"
         error={errors.password}
         toggleHelpModal={toggleHelpModal}
         showHelpModal={showHelpModal}
@@ -270,7 +274,8 @@ const EditModal = ({
             edited={editedEmployee.position}
             handleChange={handleChange}
             control={control}
-            map={positionMap}
+            map={positionOptions}
+            valueType="id"
             rules={{ required: "Это поле обязательно" }}
           />
         )}
@@ -310,7 +315,6 @@ const EditModal = ({
         fnc1={() => handleSave(employee.id)}
         fnc2={() => setEmployeeId(null)}
       />
-
     </div>
   );
 };

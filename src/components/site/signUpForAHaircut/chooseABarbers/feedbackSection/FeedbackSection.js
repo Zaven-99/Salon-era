@@ -74,10 +74,10 @@ const FeedbackSection = ({
 
     formData.append(
       "clientData",
-      JSON.stringify({
+      JSON.stringify([{
         ...feedbackToUpdate,
         createdAt: formattedDateTimeForServer(),
-      })
+      }])
     );
     try {
       const response = await fetch(
@@ -205,14 +205,14 @@ const FeedbackSection = ({
 
     formData.append(
       "clientData",
-      JSON.stringify({
+      JSON.stringify([{
         firstName: clientFirstName,
         lastName: clientLastName,
         id_client_from: clientId,
         id_client_to: selectedBarber.id,
         text: feedbackText,
         value: ratings[selectedBarber.id],
-      })
+      }])
     );
 
     try {

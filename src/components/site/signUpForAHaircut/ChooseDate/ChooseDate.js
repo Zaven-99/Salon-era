@@ -62,7 +62,7 @@ const ChooseDate = () => {
       }
 
       const data = await response.json();
-      
+
       let filteredSlots = data.filter((slot) => {
         const slotDate = new Date(slot);
 
@@ -85,7 +85,6 @@ const ChooseDate = () => {
         setErrorMessage("");
         setAvailableSlots(filteredSlots);
       }
-        
     } catch (error) {
       alert(`Произошла ошибка при получении данных. ${error}`);
     } finally {
@@ -130,14 +129,16 @@ const ChooseDate = () => {
 
     formData.append(
       "clientData",
-      JSON.stringify({
-        id_client_from: clientId,
-        id_client_to: selectedBarber.id,
-        id_service: selectedService.id,
-        number: "",
-        status: 0,
-        dateRecord: formattedDateTimeForServer(),
-      })
+      JSON.stringify([
+        {
+          id_client_from: clientId,
+          id_client_to: selectedBarber.id,
+          id_service: selectedService.id,
+          number: "",
+          status: 0,
+          dateRecord: formattedDateTimeForServer(),
+        },
+      ])
     );
 
     try {
@@ -223,7 +224,7 @@ const ChooseDate = () => {
 
   return (
     <div className={styles["choose-date"]}>
-      <h1  className={styles.signUpForAHaircut}>Записаться</h1>
+      <h1 className={styles.signUpForAHaircut}>Записаться</h1>
       <div className={styles["calendar-container"]}>
         <div>
           <div className={styles["btn-block"]}>

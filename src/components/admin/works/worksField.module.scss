@@ -15,7 +15,7 @@
     font-weight: 500;
     color: salmon;
 }
-.add-work{
+.gr-btn{
   position: relative;
   cursor: pointer;
   display: flex;
@@ -28,28 +28,12 @@
   margin-left: $sp-10;
   border-radius:$br-4;
 }
-.add-work:hover{
-transform: scale(1.02);
-box-shadow: $shadow-small;
-transition: .2s;
-}
-.accept-add__work{
-   position: relative;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  transition: background 0.3s;
-  background-color: #b5b5b5;
-  width: $wd-200;
-  margin-top: $sp-35;
-  padding: $sp-15 ;
-  border-radius:$br-4;
-}
-.accept-add__work:hover{
+.gr-btn:hover{
     transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
+    box-shadow: $shadow-small;
+    transition: .2s;
 }
+ 
 .category{
     width: 100%;
     max-width: 100%;

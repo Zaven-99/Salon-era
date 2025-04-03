@@ -1,14 +1,13 @@
 @import '../../../../styles/variables.scss';
 
 
-.r-gtn{
+.r-btn{
 	color: black;
   font-family: $font;
   font-size: $fz-12;
   font-weight: $regular;
   padding: $sp-10;
   height: $hg-50;
-  box-shadow: $shadow-small;
   background-color: #f0526e;
   border-radius: $br-4;
   width: $wd-150;
@@ -26,7 +25,6 @@
   font-weight: $regular;
   padding: $sp-10;
   height: $hg-50;
-  box-shadow: $shadow-small;
   background-color: rgb(80, 200, 120);
   border-radius: $br-4;
   width: $wd-150;

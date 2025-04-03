@@ -2,9 +2,9 @@ import React from "react";
 
 import styles from './serviceBlock.module.scss'
 
-const ServiceBlock = ({ service, getDurationText, getGenderText }) => {
+const ServiceBlock = ({ service, durationToText, getGenderText }) => {
   return (
-    <div className={styles['service-block']}>
+    <div className={styles["service-block"]}>
       <div className={styles["service-item__inner"]}>
         <strong>Название услуги:</strong>
         <div>{service.name}</div>
@@ -21,8 +21,7 @@ const ServiceBlock = ({ service, getDurationText, getGenderText }) => {
         <strong>Описание:</strong> <div>{service.description}</div>
       </div>
       <div className={styles["service-item__inner"]}>
-        <strong>Продолжительность:</strong>{" "}
-        <div>{getDurationText(service.duration)}</div>
+        <strong>Продолжительность:</strong> <div>{durationToText(service.duration)}</div>
       </div>
       <div className={styles["service-item__inner"]}>
         <strong>Пол:</strong>

@@ -92,7 +92,7 @@ const EditNews = ({
       console.error("Ошибка:", error);
     } finally {
       setLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 

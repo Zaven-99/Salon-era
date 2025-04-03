@@ -1,5 +1,7 @@
-import React, { Children } from "react";
+import React from "react";
 import CustomButton from "../customButton/CustomButton";
+
+import styles from './btnBlock.module.scss'
 
 const BtnBlock = ({
   className1,
@@ -18,7 +20,7 @@ const BtnBlock = ({
   return (
     <div className={className4}>
       <CustomButton className={className1} label={label1} onClick={fnc1} />
-      {Children && Children}
+      {Children && <p className={styles.child}>{Children}</p>}
       <CustomButton className={className2} label={label2} onClick={fnc2} />
       {showThirdButton && (
         <CustomButton className={className3} label={label3} onClick={fnc3} />

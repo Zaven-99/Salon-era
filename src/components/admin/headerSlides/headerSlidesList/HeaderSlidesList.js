@@ -242,7 +242,7 @@ const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
                 </h2>
                 <BtnBlock
                   className1={styles["g-btn"]}
-                  className2={styles["cr-btn"]}
+                  className2={styles["r-btn"]}
                   className4={styles["btn-block"]}
                   label1="Удалить слайд"
                   label2="Отменить удаления"

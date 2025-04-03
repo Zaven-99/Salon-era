@@ -4,7 +4,7 @@ import serviceReducer from "./slices/serviceSlice";
 import barberReducer from './slices/barberSlice'
 import orderReducer from './slices/orderSlice'
 import { addNotification } from './slices/notificationSlice';
- 
+import positionsReducer from "./slices/positionsSlices"; 
 
 export const store = configureStore({
   reducer: {
@@ -13,5 +13,6 @@ export const store = configureStore({
     barber: barberReducer,
     order: orderReducer,
     notification: addNotification,
-   },
+    positions: positionsReducer,
+  },
 });

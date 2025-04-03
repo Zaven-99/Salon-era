@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import CustomButton from "../../../customButton/CustomButton";
@@ -7,6 +7,10 @@ import ImagePreview from "../../../imagePreview/ImagePreview";
 import CustomSelect from "../../../customSelect/CustomSelect";
 
 import styles from "./addEmployee.module.scss";
+import Modal from "../../../modal/Modal";
+import AddPosition from "./addPosition/AddPosition";
+import Spinner from "../../../spinner/Spinner";
+import DeletePosition from "./deletePosition/DeletePosition";
 
 const AddEmployee = ({
   setLoading,
@@ -15,6 +19,8 @@ const AddEmployee = ({
   toggleHelpModal,
   showHelpModal,
   handleKeyDown,
+  positionOptions,
+  loading,
 }) => {
   const {
     register,
@@ -37,17 +43,10 @@ const AddEmployee = ({
       dateWorkIn: "",
       gender: "",
       imageLink: "",
+      arrayTypeWork: [],
       clientType: "employee",
     },
   });
-
-  const positionMap = [
-    "Женский парикмахер",
-    "Мужской парикмахер",
-    "Специалист по маникюру",
-    "Бровист",
-    "Специалист по ресницам",
-  ];
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -55,6 +54,22 @@ const AddEmployee = ({
   const [errorMessages, setErrorMessages] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [addPosition, setAddPosition] = useState(false);
+  const [deletePosition, setDeletePosition] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  const toggleOpenAddPosition = () => {
+    setAddPosition(true);
+  };
+  const toggleCloseAddPosition = () => {
+    setAddPosition(false);
+  };
+  const toggleOpenDeletePosition = () => {
+    setDeletePosition(true);
+  };
+  const toggleCloseDeletePosition = () => {
+    setDeletePosition(false);
+  };
 
   const password = watch("password");
 
@@ -62,15 +77,19 @@ const AddEmployee = ({
     const { confirmPassword, ...dataToSend } = formValues;
     const dateWorkIn = new Date(formValues.dateWorkIn);
 
+    setLoading(true);
     const formData = new FormData();
 
     formData.append(
       "clientData",
-      JSON.stringify({
-        ...dataToSend,
-        dateWorkIn: dateWorkIn.toISOString().slice(0, -1),
-        clientType: "employee",
-      })
+      JSON.stringify([
+        {
+          ...dataToSend,
+          dateWorkIn: dateWorkIn.toISOString().slice(0, -1),
+          clientType: "employee",
+          arrayTypeWork: formValues.arrayTypeWork,
+        },
+      ])
     );
 
     if (selectedFile) {
@@ -152,6 +171,36 @@ const AddEmployee = ({
     setImagePreview(null);
   };
 
+  const fetchCategroy = async () => {
+    try {
+      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+
+      if (!response.ok) {
+        throw new Error(`Ошибка http! статус: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setCategories(data);
+    } catch {
+      console.log("error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategroy();
+  }, []);
+
+  const categoryOptions = categories.filter(
+    (item) => item.category === "Должность"
+  );
+  console.log(categoryOptions);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <form
       className={styles["employee-field__inner"]}
@@ -219,7 +268,7 @@ const AddEmployee = ({
         showHelpModal={showHelpModal}
         isActive={activeInput === "password"}
         setActiveInput={setActiveInput}
-        autocomplete="new-password"
+        autoComplete="new-password"
         {...register("password", {
           required: "Это поле обязательно.",
           minLength: {
@@ -310,10 +359,45 @@ const AddEmployee = ({
             {...field}
             name="position"
             control={control}
-            map={positionMap}
+            map={positionOptions}
+            valueType="id"
           />
         )}
       />
+      <div className={styles["btn-block"]}>
+        <CustomButton
+          label="Добавить должность"
+          onClick={toggleOpenAddPosition}
+          className={styles["g-btn"]}
+        />
+        <CustomButton
+          label="Удалить должность"
+          onClick={toggleOpenDeletePosition}
+          className={styles["r-btn"]}
+        />
+      </div>
+
+      {addPosition && (
+        <Modal
+          toggleOpen={toggleOpenAddPosition}
+          toggleClose={toggleCloseAddPosition}
+        >
+          <AddPosition
+            toggleClose={toggleCloseAddPosition}
+            activeInput={activeInput}
+            setActiveInput={setActiveInput}
+          />
+        </Modal>
+      )}
+
+      {deletePosition && (
+        <Modal
+          toggleOpen={toggleOpenDeletePosition}
+          toggleClose={toggleCloseDeletePosition}
+        >
+          <DeletePosition toggleClose={toggleCloseDeletePosition} />
+        </Modal>
+      )}
 
       <ImagePreview
         deletImagePreview={deletImagePreview}
@@ -328,6 +412,24 @@ const AddEmployee = ({
         setActiveInput={setActiveInput}
         onChange={uploadImage}
       />
+      <h5 className={styles["choose-category"]}>
+        Выберите категорию услуг для мастера
+      </h5>
+      <div className={styles["block-checkbox"]}>
+        {categoryOptions.map((category) => (
+          <div key={category.id}>
+            <label className={styles.check}>
+              <input
+                name="arrayTypeWork"
+                type="checkbox"
+                value={category.id}
+                {...register("arrayTypeWork")}
+              />
+              {category.value}
+            </label>
+          </div>
+        ))}
+      </div>
 
       <CustomInput
         label="Пол"

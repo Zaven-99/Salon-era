@@ -12,8 +12,10 @@ const ServiceList = ({
   setServices,
   toggleClose,
   toggleOpen,
-  durationMap,
-  positionMap,
+  categoryOptions,
+  getCategoryTextById,
+  dur,
+  durationToText,
 }) => {
   const { setError } = useForm({
     mode: "onChange",
@@ -22,7 +24,7 @@ const ServiceList = ({
       name: "",
       category: "",
       description: "",
-      duration: "1",
+      duration: "",
       priceLow: null,
       priceMax: null,
       gender: "",
@@ -38,8 +40,7 @@ const ServiceList = ({
   const genderMap = { 0: "Женский", 1: "Мужской" };
 
   const getGenderText = (gender) => genderMap[gender];
-  const getDurationText = (duration) => durationMap[duration - 1] || "";
-  const getCategoryText = (category) => positionMap[category - 1] || "";
+
   const fetchServices = async () => {
     setLoading(true);
     try {
@@ -47,6 +48,7 @@ const ServiceList = ({
       if (!response.ok) throw new Error("Ошибка при получении услуг");
       const data = await response.json();
       setServices(data);
+      console.log(data);
     } catch (error) {
       setError("Ошибка при загрузке услуг");
     } finally {
@@ -125,9 +127,9 @@ const ServiceList = ({
           {Object.keys(groupedServices[genderKey]).map((category, index) => (
             <div key={index}>
               <h4 className={styles.category}>
-                Категория:{getCategoryText(category)}
+                Категория:{getCategoryTextById(category)}
               </h4>
-              {console.log(category)}
+
               <ul className={styles["service-list__inner"]}>
                 {groupedServices[genderKey][category].map((service, index) => (
                   <li className={styles["service-list__item"]} key={index}>
@@ -144,15 +146,16 @@ const ServiceList = ({
                           setServiceId={setServiceId}
                           setEditedService={setEditedService}
                           toggleClose={toggleClose}
-                          durationMap={durationMap}
                           service={service}
+                          categoryOptions={categoryOptions}
+                          dur={dur}
                         />
                       </Modal>
                     ) : (
                       <div className={styles["service-block"]}>
                         <ServiceBlock
                           service={service}
-                          getDurationText={getDurationText}
+                          durationToText={durationToText}
                           getGenderText={getGenderText}
                         />
                         <div>

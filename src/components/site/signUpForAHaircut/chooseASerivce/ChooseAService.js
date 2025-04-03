@@ -7,51 +7,60 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Service from "./service/Service";
 import AOS from "aos";
-
 import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
 
 import styles from "./chooseAService.module.scss";
+import FilterBlock from "../../../admin/services/filterBlock/FilterBlock";
 
 const ChooseAService = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const getDurationText = (duration) => {
-    const durations = {
-      1: "30 минут",
-      2: "1 час",
-      3: "1 час 30 минут",
-      4: "2 часа",
-      5: "2 часа 30 минут",
-      6: "3 часа",
-      7: "3 часа 30 минут",
-      8: "4 часа",
-      9: "4 часа 30 минут",
-      10: "5 часов",
-      11: "5 часов 30 минут",
-      12: "6 часов",
-      13: "6 часов 30 минут",
-      14: "7 часов",
-      15: "7 часов 30 минут",
-      16: "8 часов",
-    };
-    return durations[duration] || "Не указано";
-  };
 
   const selectedServices = useSelector(
     (state) => state.service.selectedServices
   );
 
+  const getHourText = (hours) => {
+    if (hours === 1) return "час";
+    if (hours >= 2 && hours <= 4) return "часа";
+    return "часов";
+  };
+
+  const getDurationText = (step) => {
+    const hours = Math.floor(step / 2);
+    const minutes = (step % 2) * 30;
+
+    let result = "";
+
+    if (hours > 0) {
+      result += `${hours} ${getHourText(hours)}`;
+    }
+    if (minutes > 0) {
+      result += ` ${minutes} минут`;
+    }
+
+    return result.trim();
+  };
+
+  const getCategoryTextById = (id) => {
+    const categoryId = Number(id);
+    const category = categories.find((item) => item.id === categoryId);
+    return category ? category.value : "Категория не найдена";
+  };
+
   const toggleChooseService = (service) => {
     const isServiceSelected = selectedServices.some((s) => s.id === service.id);
-    isServiceSelected
-      ? dispatch(removeService(service.id))
-      : dispatch(addService(service));
+    if (isServiceSelected) {
+      dispatch(removeService(service.id));
+    } else {
+      dispatch(addService(service));
+    }
   };
 
   useEffect(() => {
@@ -94,6 +103,27 @@ const ChooseAService = () => {
 
   useEffect(() => {
     fetchServices();
+  }, []);
+
+  const fetchCategory = async () => {
+    try {
+      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+
+      if (!response.ok) {
+        throw new Error(`Ошибка http! статус: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setCategories(data);
+    } catch {
+      console.log("error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
   }, []);
 
   // Группировка сервисов по полу и категории
@@ -146,22 +176,12 @@ const ChooseAService = () => {
       </h1>
 
       <div className={styles["sign-up_for__haircut"]}>
-        <div className={styles["filter-block"]}>
-          <p className={styles["filter-title"]}>Отфильтруйте по категориям</p>
-
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className={styles.filter}
-          >
-            <option value="">Все категории</option>
-            {uniqueCategories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+        <FilterBlock
+          uniqueCategories={uniqueCategories}
+          setSelectedCategory={setSelectedCategory}
+          selectedCategory={selectedCategory}
+          getCategoryTextById={getCategoryTextById}
+        />
         <ul>
           {Object.keys(filteredGroupedServices).map((genderKey) => {
             const genderServices = filteredGroupedServices[genderKey];
@@ -177,10 +197,11 @@ const ChooseAService = () => {
                 </span>
 
                 {Object.keys(genderServices).map((category) => {
+                  // Приводим category к числу
                   const selectedInCategory = selectedServices.some(
                     (service) =>
-                      service.category === category &&
-                      service.gender == genderKey
+                      Number(service.category) === Number(category) &&
+                      Number(service.gender) === Number(genderKey)
                   );
 
                   return (
@@ -190,16 +211,13 @@ const ChooseAService = () => {
                       key={category}
                     >
                       <div className={styles["selected-services__container"]}>
-                        <h3 className={styles.category}>{category}</h3>
+                        <h3 className={styles.category}>
+                          {getCategoryTextById(category)}
+                        </h3>
+
                         {selectedInCategory && (
-                          <div
-                            className={
-                              selectedServices
-                                ? styles["animated"]
-                                : styles["navigate-button__container"]
-                            }
-                          >
-                            <div className={styles["button-wrapper"]}>
+                          <div className={styles["button-wrapper"]}>
+                            <div className={styles["next-button"]}>
                               <CustomButton
                                 className={styles["next-to__barber"]}
                                 onClick={() => navigate("/select-barbers")}

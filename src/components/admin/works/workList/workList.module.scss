@@ -30,32 +30,7 @@
   object-fit: cover;
   border-radius: $br-4;
 }
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 6;
-  
-}
-.modal-content {
-  background: #eaeef4;
-  border-radius: $br-8;
-  padding: $sp-50;
-  position: relative;
-  max-width: $wd-500;
-  width: $wd-500;
-  height: $hg-305;
-  z-index: 15; 
-  animation:bounce-in .5s;
-  text-align: center;
-  box-shadow:$shadow-small;
-   
-}
+ 
 .message{
 	text-align: center;
 	font-family: "Open Sans", sans-serif;
@@ -83,97 +58,41 @@
     opacity: 0;
   }
 }
-.cancelDelete-work{
+.g-btn{
   color: black;
   font-family: $font;
   font-size: $fz-12;
   font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
-	box-shadow: $shadow-small;
-	background-color: rgb(15 210 15);
+	background-color: rgb(80, 200, 120);
 	border-radius: $br-4;
 	width: $wd-150;
 }
-.cancelDelete-work:hover{
+.g-btn:hover{
 	transform: scale(1.02);
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-.acceptDelete-work{
+.r-btn{
 	color: black;
   font-family: $font;
   font-size: $fz-12;
   font-weight: $regular;
 	padding:$sp-10;
 	height: $hg-50;
-	box-shadow: $shadow-small;
-	background-color:#fe5440;
+ 
+	background-color:#f0526e;
 	border-radius: $br-4;
 	width: $wd-150;
 }
-.acceptDelete-work:hover{
+.r-btn:hover{
 	transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
-.accept-add__works{
-  color: black;
-  font-family: "Open Sans", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 10px;
-  height: 50px;
-  box-shadow: 0 8px 16px -8px;
-  background-color: rgb(15, 210, 15);
-  border-radius: 4px;
-  width: 150px;
-}
-.accept-add__works:hover{
-  transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
-.cancel-delete__works{
-  color: black;
-  font-family: $font;
-  font-size: $fz-12;
-  font-weight: $regular;
-	padding:$sp-10;
-	height: $hg-50;
-	box-shadow: $shadow-small;
-	background-color:#fe5440;
-	border-radius: $br-4;
-	width: $wd-150;
-}
-.cancel-delete__works:hover{
-  transform: scale(1.02);
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
  
-.delete-work{
-  color: black;
-  font-family: "Open Sans", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 10px;
-  height: 50px;
-  box-shadow: 0 8px 16px -8px;
-  background-color: #fe5440;
-  border-radius: 4px;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 15px auto;
-  width: 150px;
-}
-.delete-work:hover{
-	transform: scale(1.02);
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
+ 
 .btn-block{
   margin-top: 50px;
   display: flex;

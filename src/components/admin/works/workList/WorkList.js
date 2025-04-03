@@ -9,7 +9,7 @@ import ImagePreview from "../../../imagePreview/ImagePreview";
 import styles from "./workList.module.scss";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 
-const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
+const WorkList = ({ setWorks, categoryOptions, toggleOpen, toggleClose }) => {
   const { control } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -23,18 +23,24 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
   const [activeInput, setActiveInput] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [groupedWorks, setGroupedWorks] = useState({});
+  const [categoryData, setCategoryData] = useState([]);
   const [workToDelete, setWorkToDelete] = useState(null);
   const [confirmDeleteWork, setConfirmDeleteWork] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getCategpryText = (category) => {
-    if (category >= 1 && category <= categoryMap.length) {
-      return categoryMap[category - 1];
-    } else {
-      return "Неизвестная позиция";
+  // Fetch categories data
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+      if (!response.ok) throw new Error("Ошибка при получении категорий");
+      const data = await response.json();
+      setCategoryData(data); // Store category data
+    } catch (error) {
+      console.error("Ошибка при получении категорий:", error);
     }
   };
 
+  // Fetch works data
   const fetchWorks = async () => {
     setLoading(true);
 
@@ -48,7 +54,7 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
       const filteredData = data.filter((work) => work.category !== "8");
 
       const grouped = filteredData.reduce((acc, work) => {
-        const category = getCategpryText(work.category);
+        const category = work.category;
         if (!acc[category]) {
           acc[category] = [];
         }
@@ -65,14 +71,21 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
   };
 
   useEffect(() => {
-    (async () => {
-      await fetchWorks();
-    })();
+    fetchCategories();
+    fetchWorks();
   }, []);
 
   if (!Object.entries(groupedWorks).length) {
     return <p className={styles.message}>Список работ пуст.</p>;
   }
+
+  // Function to get category name by category ID
+  const getCategoryName = (categoryId) => {
+    const category = categoryData.find(
+      (cat) => cat.id === parseInt(categoryId)
+    ); // Ensure comparison is done with integer values
+    return category ? category.value : "Неизвестная категория";
+  };
 
   const handleDelete = async (id) => {
     if (workToDelete === null) return;
@@ -85,12 +98,13 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
       if (!response.ok) throw new Error("Ошибка при удалении работы");
       setWorks((prevWorks) => prevWorks.filter((work) => work.id !== id));
       closeMessageDeleteWork();
+      setWorksId(null);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
       document.body.style.overflow = "scroll";
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
@@ -194,9 +208,10 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
     <div className={styles["work-list"]}>
       <h1 className={styles.works}>Работы</h1>
       {Object.entries(groupedWorks).map(
-        ([category, worksInCategory], index) => (
+        ([categoryId, worksInCategory], index) => (
           <div key={index}>
-            <h3>{category}</h3>
+            {/* Display category name based on the category ID */}
+            <h3>{getCategoryName(categoryId)}</h3>
             <ul className={styles["work-list__inner"]}>
               {worksInCategory.map((work, index) => (
                 <li
@@ -219,8 +234,9 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
                             {...field}
                             name="category"
                             control={control}
-                            map={categoryMap}
+                            map={categoryOptions}
                             edited={editedWorks.category}
+                            valueType = 'id'
                             handleChange={handleChange}
                           />
                         )}
@@ -241,9 +257,9 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
                       />
 
                       <BtnBlock
-                        className1={styles["accept-add__works"]}
-                        className2={styles["delete-work"]}
-                        className3={styles["cancel-delete__works"]}
+                        className1={styles["g-btn"]}
+                        className2={styles["r-btn"]}
+                        className3={styles["r-btn"]}
                         className4={styles["btn-block"]}
                         label1="Сохранить"
                         label2="Удалить работу"
@@ -273,8 +289,8 @@ const WorkList = ({ setWorks, categoryMap, toggleOpen, toggleClose }) => {
                           Вы действительно хотите удалить работу?
                         </h2>
                         <BtnBlock
-                          className1={styles["acceptDelete-work"]}
-                          className2={styles["cancelDelete-work"]}
+                          className1={styles["g-btn"]}
+                          className2={styles["r-btn"]}
                           className4={styles["btn-block"]}
                           label1="Удалить работу"
                           label2="Отменить удаление"

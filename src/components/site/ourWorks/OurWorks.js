@@ -2,69 +2,21 @@ import React, { useState, useEffect } from "react";
 import AOS from "aos"; // импортируем AOS
 import Spinner from "../../spinner/Spinner";
 
-
 import styles from "./ourWorks.module.scss";
 import logo from "../../../img/logo.png";
 
 const OurWorks = () => {
-  const [activeCategory, setActiveCategory] = useState("Мужские стрижки");
+  const [activeCategory, setActiveCategory] = useState(""); // Состояние для выбранной категории
   const [works, setWorks] = useState([]);
   const [groupedWorks, setGroupedWorks] = useState({});
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const categoryMap = [
-    "Мужские стрижки",
-    "Женские стрижки",
-    "Женские прически",
-    "Окрашивание волос",
-    "Маникюр",
-    "Ресницы",
-    "Брови",
-  ];
-
-  const getCategpryText = (category) => {
-    if (category >= 1 && category <= categoryMap.length) {
-      return categoryMap[category - 1];
-    } else {
-      return "Неизвестная позиция";
-    }
-  };
+  const [categories, setCategories] = useState([]);
+  const [categoryMap, setCategoryMap] = useState({});
 
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
   };
-
-  const fetchWorks = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("https://api.salon-era.ru/stockfiles/all");
-
-      if (!response.ok) throw new Error("Ошибка при получении данных");
-
-      const data = await response.json();
-      setWorks(data);
-
-      const grouped = data.reduce((acc, work) => {
-        const category = getCategpryText(work.category);
-        if (!acc[category]) {
-          acc[category] = [];
-        }
-        acc[category].push(work);
-        return acc;
-      }, {});
-
-      setGroupedWorks(grouped);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchWorks();
-  }, []);
 
   const handleImageClick = (imageLink) => {
     setSelectedImage(imageLink);
@@ -75,12 +27,85 @@ const OurWorks = () => {
   };
 
   useEffect(() => {
-      AOS.init({
-        duration: 1000,
-        once: false,
-        offset: 300,
-      });
-    }, []);
+    AOS.init({
+      duration: 1000,
+      once: false,
+      offset: 300,
+    });
+  }, []);
+
+  // Fetch categories
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+
+      if (!response.ok)
+        throw new Error("Ошибка при получении данных категорий");
+
+      const data = await response.json();
+      // Create a map for category ids to their names
+      const categoryObj = data.reduce((acc, category) => {
+        acc[category.id] = category.value;
+        return acc;
+      }, {});
+
+      setCategoryMap(categoryObj); // Set category map
+      setCategories(data); // Save the categories list
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Fetch works
+  const fetchWorks = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("https://api.salon-era.ru/stockfiles/all");
+
+      if (!response.ok) throw new Error("Ошибка при получении данных");
+
+      const data = await response.json();
+      setWorks(data);
+
+      // Group works by category names using category map
+      const grouped = data.reduce((acc, work) => {
+        const categoryId = work.category; // Category ID from the work
+        const categoryName = categoryMap[categoryId]; // Get category name from map
+
+        if (categoryName) {
+          if (!acc[categoryName]) {
+            acc[categoryName] = [];
+          }
+          acc[categoryName].push(work);
+        }
+        return acc;
+      }, {});
+
+      setGroupedWorks(grouped);
+
+      // Set the first category as active if available
+      const uniqueCategories = Object.keys(grouped);
+      if (uniqueCategories.length > 0) {
+        setActiveCategory(uniqueCategories[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load categories and works once on mount
+  useEffect(() => {
+    fetchCategories(); // Fetch categories on mount
+  }, []);
+
+  // Once categories are loaded, fetch the works
+  useEffect(() => {
+    if (Object.keys(categoryMap).length > 0) {
+      fetchWorks(); // Fetch works once category map is ready
+    }
+  }, [categoryMap]); // This will trigger once categoryMap is populated
 
   if (loading) {
     return <Spinner />;
@@ -95,7 +120,7 @@ const OurWorks = () => {
 
       <div data-aos="fade-right" className={styles["category-container"]}>
         <div className={styles["category-buttons"]}>
-          {categoryMap.map((category, index) => (
+          {Object.keys(groupedWorks).map((category, index) => (
             <div
               key={index}
               onClick={() => handleCategoryClick(category)}
@@ -114,7 +139,7 @@ const OurWorks = () => {
             onChange={(e) => handleCategoryClick(e.target.value)}
             className={styles["category-dropdown"]}
           >
-            {categoryMap.map((category, index) => (
+            {Object.keys(groupedWorks).map((category, index) => (
               <option
                 key={index}
                 value={category}
@@ -130,7 +155,9 @@ const OurWorks = () => {
       </div>
 
       <div data-aos="zoom-in" className={styles["works-gallery"]}>
-        <h1 className={styles["category-name"]}>{activeCategory}</h1>
+        <h1 className={styles["category-name"]}>
+          {activeCategory ? activeCategory : "Выберите категорию"}
+        </h1>
         {activeCategory && groupedWorks[activeCategory] ? (
           <div className={styles.wrapper}>
             {groupedWorks[activeCategory].map((work, index) => (

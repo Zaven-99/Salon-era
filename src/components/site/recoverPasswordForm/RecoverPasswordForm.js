@@ -75,9 +75,9 @@ const RecoverPasswordForm = ({
           const formData = new FormData();
           formData.append(
             "clientData",
-            JSON.stringify({
+            JSON.stringify([{
               password: data.password,
-            })
+            }])
           );
 
           const response = await fetch(

@@ -82,7 +82,7 @@ const Schedule = () => {
     return hours;
   };
 
-  const workHours = generateWorkHours(); // Список доступных часов
+  const workHours = generateWorkHours();
 
   // Функция для преобразования времени в нужный формат (YYYY-MM-DDTHH:mm)
   const formatDateTime = (date) => {
@@ -108,7 +108,7 @@ const Schedule = () => {
     // Преобразуем выбранную дату в объект Date
     const startDateTime = new Date(selectedDate); // В selectedDate будет выбранная дата в формате 'YYYY-MM-DD'
 
-    // Устанавливаем время начала
+    // // Устанавливаем время начала
     const [startHour, startMinute] = formValues.workTimeFrom.split(":");
     startDateTime.setHours(startHour, startMinute, 0, 0);
 
@@ -123,11 +123,13 @@ const Schedule = () => {
     const formData = new FormData();
     formData.append(
       "clientData",
-      JSON.stringify({
-        idClient: selectedCell.employeeId,
-        scheludeDateStart: formattedStartTime,
-        scheludeDateEnd: formattedEndTime,
-      })
+      JSON.stringify([
+        {
+          idClient: selectedCell.employeeId,
+          scheludeDateStart: formattedStartTime,
+          scheludeDateEnd: formattedEndTime,
+        },
+      ])
     );
 
     try {
@@ -253,7 +255,6 @@ const Schedule = () => {
     setLoading(true);
 
     try {
-      // Выполняем запрос для удаления расписания
       const response = await fetch(
         `https://api.salon-era.ru/clientsschelude?id=${id}`,
         {
@@ -263,14 +264,25 @@ const Schedule = () => {
 
       if (!response.ok) throw new Error("Ошибка при удалении записи");
 
-      // Убираем данные из состояния после удаления
       setSelectedCells((prevCells) => {
         const newCells = { ...prevCells };
+
+        // Найти ячейку, которая соответствует `id`
+        const keyToDelete = Object.keys(newCells).find(
+          (key) => newCells[key]?.clientId === id
+        );
+
+        if (keyToDelete) {
+          delete newCells[keyToDelete];
+          console.log(`Удалена ячейка: ${keyToDelete}`);
+        } else {
+          console.warn(`Ячейка с id ${id} не найдена в selectedCells!`);
+        }
 
         return newCells;
       });
 
-      closeMessage(); // Закрываем модальное окно
+      closeMessage();
     } catch (error) {
       console.error("Ошибка при удалении записи:", error);
     } finally {
@@ -299,7 +311,7 @@ const Schedule = () => {
       </div>
 
       <div className={styles.table} ref={tableRef}>
-        <span>{currentMonth}</span>
+        <span className={styles.month}>{currentMonth}</span>
         <Table
           setSelectedDate={setSelectedDate}
           setValue={setValue}
@@ -332,6 +344,7 @@ const Schedule = () => {
                     control={control}
                     name="workTimeFrom"
                     map={workHours}
+                    valueType="item"
                   />
                 )}
               />
@@ -350,14 +363,15 @@ const Schedule = () => {
                     control={control}
                     name="workTimeTo"
                     map={workHours}
+                    valueType="item"
                   />
                 )}
               />
             </div>
             <div className={styles["btn-block"]}>
-              <CustomButton label="Да" className={styles['g-btn']} />
+              <CustomButton label="Да" className={styles["g-btn"]} />
               <CustomButton
-                className={styles['r-btn']}
+                className={styles["r-btn"]}
                 label="Нет"
                 onClick={closeMessage}
               />
@@ -366,7 +380,7 @@ const Schedule = () => {
                   `${selectedCell.employeeId}-${selectedCell.dayIndex}`
                 ] && (
                   <CustomButton
-                    className={styles['r-btn']}
+                    className={styles["r-btn"]}
                     label="Удалить"
                     onClick={() => handleDelete(day.id)}
                   />

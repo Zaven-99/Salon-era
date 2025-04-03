@@ -32,10 +32,12 @@ const UserMenu = ({ openProfile }) => {
           const formData = new FormData();
           formData.append(
             "clientData",
-            JSON.stringify({
-              id: orderItem.record.id,
-              statusViewed: true,
-            })
+            JSON.stringify(
+              {
+                id: orderItem.record.id,
+                statusViewed: true,
+              },
+            )
           );
 
           const response = await fetch(
@@ -89,8 +91,8 @@ const UserMenu = ({ openProfile }) => {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 5000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchData, 50);
+    // return () => clearInterval(interval);
   }, [id]);
 
   const handleImageChange = (event) => {
@@ -119,11 +121,12 @@ const UserMenu = ({ openProfile }) => {
       if (!response.ok) throw new Error(await response.text());
 
       const data = await response.json();
+
       dispatch(setUser({ ...data.clientFrom, token: true }));
     } catch (error) {
       console.error("Ошибка при загрузке изображения:", error);
     } finally {
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -137,7 +140,7 @@ const UserMenu = ({ openProfile }) => {
       <div className={styles.avatar}>
         <label htmlFor="image-upload">
           <img
-            src={imageLink || avatar}
+            src={imageLink ? imageLink : avatar}
             alt="Avatar"
             className={styles.avatarImage}
           />

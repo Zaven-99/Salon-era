@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectChosenBarber } from "../../../../store/slices/action";
 import { useAuth } from "../../../../use-auth/use-auth";
 
-
 import CustomButton from "../../../customButton/CustomButton";
 import RatingStars from "../../../ratingStars/RatingStars";
 import FeedbackSection from "./feedbackSection/FeedbackSection";
@@ -22,6 +21,7 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
   const [feedbackText, setFeedbackText] = useState("");
   const [feedbacks, setFeedbacks] = useState([]);
   const [ratings, setRatings] = useState({});
+  const [categories, setCategories] = useState([])
 
   const { token } = useAuth();
 
@@ -50,6 +50,7 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
       }
       const data = await response.json();
       setBarbers(data);
+      console.log(data)
     } catch (error) {
       setError(error.message);
     } finally {
@@ -96,71 +97,35 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
   };
 
   const filteredBarbers = useMemo(() => {
+    // Если selectedServices пустой, то не показываем барберов
+    if (selectedServices.length === 0) return [];
+
     return barbers.filter((barber) => {
-      // Проверка, есть ли выбрана услуга из категории женских стрижек
-      const isFemaleHaircutSelected = selectedServices.some((service) =>
-        [
-          "Женские стрижки",
-          "Укладка",
-          "Краска волос 1 тон",
-          "Мелирование",
-          "Осветление",
-          "Мелирование + тонирование",
-          "Осветление + Тонирование",
-          "Шлифовка волос",
-          "Другое",
-        ].includes(service.category.trim())
-      );
-
-      // Проверка, есть ли выбрана услуга из категории мужских стрижек
-      const isMaleHaircutSelected = selectedServices.some((service) =>
-        ["Мужские стрижки", "Остальное"].includes(service.category.trim())
-      );
-
-      // Проверка, есть ли выбрана услуга из категории маникюра
-      const isManicureSelected = selectedServices.some((service) =>
-        ["Маникюр", "Педикюр", "Укрепление ногтей"].includes(
-          service.category.trim()
-        )
-      );
-
-      // Проверка, есть ли выбрана услуга из категории бровей
-      const isBrowServiceSelected = selectedServices.some((service) =>
-        ["Оформление бровей"].includes(service.category.trim())
-      );
-
-      // Проверка, есть ли выбрана услуга из категории ресниц
-      const isEyelashServiceSelected = selectedServices.some((service) =>
-        ["Наращивание ресниц"].includes(service.category.trim())
-      );
-
-      // Фильтрация сотрудников в зависимости от выбранных услуг
-      if (isFemaleHaircutSelected) {
-        // Показываем только женских парикмахеров (position 1)
-        return barber.clientType === "employee" && barber.position === "1";
+      // Убедимся, что barber.arrayTypeWork существует и является массивом
+      if (
+        !Array.isArray(barber.arrayTypeWork) ||
+        barber.arrayTypeWork.length === 0
+      ) {
+        return false;
       }
 
-      if (isMaleHaircutSelected) {
-        // Показываем только мужских парикмахеров (position 2)
-        return barber.clientType === "employee" && barber.position === "2";
+      // Проверяем, что clientType равен "employee"
+      if (barber.clientType !== "employee") {
+        return false;
       }
 
-      if (isManicureSelected) {
-        // Показываем только специалистов по маникюру (position 3)
-        return barber.clientType === "employee" && barber.position === "3";
-      }
+      // Получаем все ID должностей из выбранных услуг
+      const selectedCategoryIds = selectedServices.map(
+        (service) => service.category
+      );
 
-      if (isBrowServiceSelected) {
-        // Показываем только бровистов (position 4)
-        return barber.clientType === "employee" && barber.position === "4";
-      }
+      // Проверяем, если хотя бы одна из должностей барбера содержится в выбранных услугах
+      const isMatchingCategory = barber.arrayTypeWork.some((id) =>
+        selectedCategoryIds.includes(id)
+      );
 
-      if (isEyelashServiceSelected) {
-        // Показываем только специалистов по ресницам (position 5)
-        return barber.clientType === "employee" && barber.position === "5";
-      }
-
-       
+      // Если должность барбера не совпадает с выбранной категорией, то он должен отображаться
+      return !isMatchingCategory;
     });
   }, [barbers, selectedServices]);
 
@@ -179,6 +144,37 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
   const getFeedbackCount = (barberId) => {
     return feedbacks.filter((feedback) => feedback.id_client_to === barberId)
       .length;
+  };
+
+  const fetchCategory = async () => {
+      try {
+        const response = await fetch("https://api.salon-era.ru/catalogs/all");
+  
+        if (!response.ok) {
+          throw new Error(`Ошибка http! статус: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        setCategories(data);
+      } catch {
+        console.log("error");
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      fetchCategory();
+    }, []);
+  
+    const categoryOptions = categories.filter(
+      (item) => item.category === "Должность"
+    );
+
+  const getCategoryTextById = (id) => {
+    const categoryId = Number(id); // Приводим id категории к числу
+    const category = categoryOptions.find((item) => item.id === categoryId);
+    return category ? category.value : "Категория не найдена";
   };
 
   if (loading) {
@@ -232,6 +228,7 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
                   item={item}
                   avatar={avatar}
                   showFeedBackToggle={showFeedBackToggle}
+                  getCategoryTextById={getCategoryTextById}
                 />
               ) : (
                 <Barbers
@@ -241,6 +238,7 @@ const ChooseABarbers = ({ handleSignUpClick }) => {
                   avatar={avatar}
                   showFeedBackToggle={showFeedBackToggle}
                   handleSignUpClick={handleSignUpClick}
+                  getCategoryTextById={getCategoryTextById}
                 />
               )}
 

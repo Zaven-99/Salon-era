@@ -22,3 +22,89 @@
     color:rgba(255, 25, 0, 0.861);
     font-size: $fz-13;
 }
+
+ 
+
+.r-btn{
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-family: inherit;
+    margin-top: 5px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #f0526e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    appearance: none;
+    font-size: 13px;
+}
+.r-btn:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+.g-btn{
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-family: inherit;
+    margin-top: 5px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgb(80, 200, 120);
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #bdbdbd;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    appearance: none;
+    font-size: 13px;
+}
+.g-btn:hover{
+  transform: scale(1.02);
+	box-shadow: $shadow-small;
+	transition: .2s;
+}
+ .btn-block{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+ }
+ .choose-category{
+  margin-top: 5px;
+  margin-bottom: 5px;
+ }
+ .block-checkbox{
+    display: flex;
+    align-items:center;
+    gap:15px;
+     
+ }
+  .block-checkbox label {
+    display: flex;
+    align-items:center;
+    
+  }
+.check input[type="checkbox"]{
+    appearance: none;
+    cursor: pointer;
+    width: $wd-20;
+    height:$hg-20;
+    border: $br-2 solid #000;
+    border-radius: $br-2;
+    margin-right: $sp-8;
+}
+
+ 
+.check input[type="checkbox"]:checked {
+    background-color: #000; 
+}

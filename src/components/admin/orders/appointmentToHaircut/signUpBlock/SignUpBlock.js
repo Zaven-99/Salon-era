@@ -54,14 +54,14 @@ const SignUpBlock = ({
 
     formData.append(
       "clientData",
-      JSON.stringify({
+      JSON.stringify([{
         ...dataToSend,
         login: generateRandomString(5),
         password: "Password123.",
         email: generateRandomEmail(10),
         gender: parseInt(formValues.gender),
         patronymic: "0",
-      })
+      }])
     );
 
     setSuccesSignUp(true);

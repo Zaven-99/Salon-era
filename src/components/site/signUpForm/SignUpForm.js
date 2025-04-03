@@ -81,11 +81,11 @@ const SignUpForm = ({
 
     formData.append(
       "clientData",
-      JSON.stringify({
+      JSON.stringify([{
         ...dataToSend,
         gender: parseInt(formValues.gender),
         patronymic: "0",
-      })
+      }])
     );
 
     if (selectedFile) {
