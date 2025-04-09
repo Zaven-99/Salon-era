@@ -174,6 +174,7 @@ const AppointmentToHaircut = ({
       if (!response.ok) {
         throw new Error("Ошибка при отправке данных на сервер");
       }
+      
     } catch (error) {
       alert("Извините произошла ошибка!");
     } finally {
@@ -216,13 +217,11 @@ const AppointmentToHaircut = ({
       closeMessageDeleteClients();
       setSuccesDelete(true);
       setClient(null);
-      setTimeout(() => {
-        setSuccesDelete(false);
-      }, 1000);
     } catch (error) {
       console.error("Ошибка:", error);
     } finally {
       setLoading(false);
+      setSuccesDelete(false);
       document.body.style.overflow = "scroll";
     }
   };

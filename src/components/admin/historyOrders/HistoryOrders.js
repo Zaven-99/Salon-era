@@ -130,7 +130,7 @@ const HistoryOrders = () => {
               isClearable
               locale="ru"
             />
-            <h2 className={styles.total}>Общая сумма: {total} р.</h2>
+            <h2 className={styles.total}>Общая сумма: {total}р.</h2>
           </div>
 
           {Object.keys(filterOrdersByDate()).length > 0 ? (
@@ -148,7 +148,7 @@ const HistoryOrders = () => {
               </div>
             ))
           ) : (
-            <p className={styles.message}>История пуста </p>
+            <p className={styles.message}>Заказов нет</p>
           )}
         </div>
       )}

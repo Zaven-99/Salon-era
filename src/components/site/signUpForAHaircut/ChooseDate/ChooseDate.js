@@ -95,6 +95,7 @@ const ChooseDate = () => {
   useEffect(() => {
     fetchDate(date);
   }, [date]);
+  
 
   const handleTimeSelect = (slot) => {
     const selectedDate = new Date(slot);
@@ -116,7 +117,7 @@ const ChooseDate = () => {
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
-
+  console.log(selectedServices);
   const handleSubmit = async () => {
     setLoading(true);
     if (selectedServices.length === 0 || !selectedBarber || !selectedTime) {

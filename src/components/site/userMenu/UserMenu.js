@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./userMenu.module.scss";
 import { useAuth } from "../../../use-auth/use-auth";
 import { useDispatch } from "react-redux";
@@ -17,6 +17,49 @@ const UserMenu = ({ openProfile }) => {
   const { id, firstName, lastName, imageLink } = useAuth();
   const dispatch = useDispatch();
 
+  // WebSocket для получения заказов клиента
+  const wsRef = useRef(null);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const socket = new WebSocket("wss://api.salon-era.ru/websocket/records");
+    wsRef.current = socket;
+
+    socket.onopen = () => {
+      console.log("WebSocket подключен");
+    };
+
+    socket.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+
+        if (!Array.isArray(data)) {
+          console.warn("Неверный формат данных:", data);
+          return;
+        }
+
+        // Фильтрация по clientFrom.id === id
+        const filtered = data.filter((order) => order.clientFrom?.id === id);
+        setOrder(filtered);
+      } catch (err) {
+        console.error("Ошибка обработки WebSocket-сообщения:", err);
+      }
+    };
+
+    socket.onerror = (err) => {
+      console.error("WebSocket ошибка:", err);
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket закрыт");
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, [id]);
+
   const toggleNotification = async () => {
     if (isOpenNotification) {
       await updateView();
@@ -32,12 +75,10 @@ const UserMenu = ({ openProfile }) => {
           const formData = new FormData();
           formData.append(
             "clientData",
-            JSON.stringify(
-              {
-                id: orderItem.record.id,
-                statusViewed: true,
-              },
-            )
+            JSON.stringify({
+              id: orderItem.record.id,
+              statusViewed: true,
+            })
           );
 
           const response = await fetch(
@@ -55,6 +96,7 @@ const UserMenu = ({ openProfile }) => {
             if (index !== -1) {
               updatedOrders[index].record.statusViewed = true;
             }
+            
           } else {
             const errorText = await response.text();
             throw new Error(
@@ -68,32 +110,6 @@ const UserMenu = ({ openProfile }) => {
       console.log(error.message || "Неизвестная ошибка");
     }
   };
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch("https://api.salon-era.ru/records/all", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!response.ok)
-        throw new Error(`http error! status: ${response.status}`);
-
-      const data = await response.json();
-      if (!Array.isArray(data))
-        throw new Error("Полученные данные не являются массивом");
-
-      setOrder(data.filter((order) => order.clientFrom?.id === id));
-    } catch (error) {
-      console.log("Ошибка при получении данных:", error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    // const interval = setInterval(fetchData, 50);
-    // return () => clearInterval(interval);
-  }, [id]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -125,8 +141,6 @@ const UserMenu = ({ openProfile }) => {
       dispatch(setUser({ ...data.clientFrom, token: true }));
     } catch (error) {
       console.error("Ошибка при загрузке изображения:", error);
-    } finally {
-      // window.location.reload();
     }
   };
 
@@ -167,7 +181,12 @@ const UserMenu = ({ openProfile }) => {
           alt=""
         />
         {statusViewedCount > 0 && (
-          <div className={styles["order-count"]}>{statusViewedCount}</div>
+          <div
+            className={styles["order-count"]}
+            style={{ fontSize: statusViewedCount >= 10 ? "10px" : "inherit" }}
+          >
+            {statusViewedCount}
+          </div>
         )}
 
         {isOpenNotification && (

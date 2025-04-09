@@ -29,11 +29,13 @@ const CustomInput = React.forwardRef(
       isDarkMode,
       setClient,
       setSelectedTime,
+      categoryOptions,
       ...props
     },
     ref
   ) => {
     const [inputValue, setInputValue] = useState("");
+
     const dispatch = useDispatch();
 
     const inputType =

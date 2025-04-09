@@ -132,7 +132,6 @@ const EditModal = ({
         isActive={activeInput === "firstName"}
         setActiveInput={setActiveInput}
         {...register("firstName", {
-          required: "Это поле обязательно.",
           minLength: {
             value: 3,
             message: "Имя должен содержать минимум 3 символа.",
@@ -149,7 +148,6 @@ const EditModal = ({
         isActive={activeInput === "lastName"}
         setActiveInput={setActiveInput}
         {...register("lastName", {
-          required: "Это поле обязательно.",
           minLength: {
             value: 3,
             message: "Фамилия должен содержать минимум 3 символа.",
@@ -167,7 +165,6 @@ const EditModal = ({
         isActive={activeInput === "login"}
         setActiveInput={setActiveInput}
         {...register("login", {
-          required: "Это поле обязательно.",
           minLength: {
             value: 3,
             message: "Логин должен содержать минимум 3 символа.",
@@ -191,7 +188,6 @@ const EditModal = ({
         isActive={activeInput === "password"}
         setActiveInput={setActiveInput}
         {...register("password", {
-          required: "Это поле обязательно.",
           minLength: {
             value: 8,
             message: "Пароль должен содержать минимум 8 символов.",
@@ -225,7 +221,6 @@ const EditModal = ({
         isActive={activeInput === "email"}
         setActiveInput={setActiveInput}
         {...register("email", {
-          required: "Это поле обязательно",
           pattern: {
             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
             message: "Введите корректный адрес электронной почты",
@@ -243,7 +238,6 @@ const EditModal = ({
         setActiveInput={setActiveInput}
         onKeyDown={handleKeyDown}
         {...register("phone", {
-          required: "Это поле обязательно",
           pattern: {
             value: /^\+7\d{10}$/,
             message: "Номер телефона должен содержать 10 цифр",
@@ -258,9 +252,6 @@ const EditModal = ({
         handleChange={handleChange}
         isActive={activeInput === "dateWorkIn"}
         setActiveInput={setActiveInput}
-        {...register("dateWorkIn", {
-          required: "Это поле обязательно",
-        })}
       />
 
       <Controller
@@ -276,7 +267,6 @@ const EditModal = ({
             control={control}
             map={positionOptions}
             valueType="id"
-            rules={{ required: "Это поле обязательно" }}
           />
         )}
       />
@@ -301,9 +291,6 @@ const EditModal = ({
         value={editedEmployee.gender}
         handleChange={handleChange}
         control={control}
-        {...register("gender", {
-          required: "Выберите пол.",
-        })}
       />
 
       <BtnBlock

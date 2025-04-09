@@ -157,3 +157,13 @@ td {
   border-color: #007bff;
   outline: none;
 }
+@media(max-width:900px){
+  .table{
+    overflow-y: scroll;
+  }
+  .nav-button{
+    font-size: 10px;
+
+  }
+   
+}

@@ -4,26 +4,28 @@ import styles from "./orderItem.module.scss";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 
 const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
-  const durationMap = [
-    "30 минут",
-    "1 час",
-    "1ч 30 минут",
-    "2 часа",
-    "2ч 30 минут",
-    "3ч",
-    "3ч 30 минут",
-    "4ч",
-    "4ч 30 минут",
-    "5ч",
-    "5ч 30 минут",
-    "6ч",
-    "6ч 30 минут",
-    "7ч",
-    "7ч 30 минут",
-    "8ч",
-  ];
+  // Функция для корректного склонения слова "час"
+  const getHourText = (hours) => {
+    if (hours === 1) return "час";
+    if (hours >= 2 && hours <= 4) return "часа";
+    return "часов";
+  };
 
-  const getDurationText = (duration) => durationMap[duration - 1] || "";
+  const durationToText = (step) => {
+    const hours = Math.floor(step / 2);
+    const minutes = (step % 2) * 30;
+
+    let result = "";
+
+    if (hours > 0) {
+      result += `${hours} ${getHourText(hours)}`;
+    }
+    if (minutes > 0) {
+      result += ` ${minutes} минут`;
+    }
+
+    return result.trim();
+  };
 
   const acceptOrder = async (order) => {
     const formData = new FormData();
@@ -136,8 +138,8 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
 
   const groupOrdersByDate = (orders) => {
     return orders.reduce((acc, order) => {
-      if (order.record.status !== 400 && order.record.status !== 500) {
-        const date = formatDate(order.record.dateRecord).split(",")[0];
+      if (order.record?.status !== 400 && order.record?.status !== 500) {
+        const date = formatDate(order.record?.dateRecord).split(",")[0];
         if (!acc[date]) {
           acc[date] = [];
         }
@@ -153,16 +155,19 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
     <div>
       {Object.keys(groupedOrders).length > 0 ? (
         Object.keys(groupedOrders).map((date) => (
-          <div className={styles['order-item']} key={date}>
+          <div className={styles["order-item"]} key={date}>
             <h2 className={styles.date}>{date}</h2>
             <ul className={styles["record-list"]}>
-              {groupedOrders[date].map((order) => (
-                <li className={styles["record-item"]} key={order.record.id}>
+              {groupedOrders[date].map((order, index) => (
+                <li
+                  className={styles["record-item"]}
+                  key={`${order.record?.id}-${index}`}
+                >
                   <div className={styles["record-item__inner"]}>
                     <strong>Клиент:</strong>
                     <div>
                       {order.clientFrom
-                        ? `${order.clientFrom.firstName} ${order.clientFrom.lastName}`
+                        ? `${order.clientFrom?.firstName} ${order.clientFrom?.lastName}`
                         : "Неизвестный клиент"}
                     </div>
                   </div>
@@ -170,7 +175,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     <strong>Парикмахер:</strong>
                     <div>
                       {order.clientTo
-                        ? `${order.clientTo.firstName} ${order.clientTo.lastName}`
+                        ? `${order.clientTo?.firstName} ${order.clientTo?.lastName}`
                         : "Неизвестный парикмахер"}
                     </div>
                   </div>
@@ -178,7 +183,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     <strong>Услуга:</strong>
                     <div>
                       {order.service
-                        ? order.service.name
+                        ? order.service?.name
                         : "Неизвестная услуга"}
                     </div>
                   </div>
@@ -186,7 +191,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     <strong>Описание:</strong>
                     <div>
                       {order.service
-                        ? order.service.description
+                        ? order.service?.description
                         : "Нет описания"}
                     </div>
                   </div>
@@ -194,32 +199,34 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     <strong>Цена:</strong>
                     <div>
                       {order.service
-                        ? `${order.service.priceLow} р.`
+                        ? `${order.service?.priceLow} р.`
                         : "Цена недоступна"}
                     </div>
                   </div>
                   <div className={styles["record-item__inner"]}>
                     <strong>Дата:</strong>
-                    <div>{formatDate(order.record.dateRecord)}</div>
+                    <div>{formatDate(order.record?.dateRecord)}</div>
                   </div>
                   <div className={styles["record-item__inner"]}>
                     <strong>Длительность:</strong>
-                    <div>{getDurationText(order.service.duration)}</div>
+                    <div>{durationToText(order.service?.duration)}</div>
                   </div>
                   <div className={styles["record-item__inner"]}>
                     <strong>Статус:</strong>
-                    {order.record.status === 0 ? (
+                    {order.record?.status === 0 ? (
                       <div className={styles["order-created"]}>
                         Заказ создан
                       </div>
                     ) : (
-                      <div className={styles["order-accepted"]}>Заказ принят</div>
+                      <div className={styles["order-accepted"]}>
+                        Заказ принят
+                      </div>
                     )}
                   </div>
-                  {order.record.status === 0 ? (
+                  {order.record?.status === 0 ? (
                     <BtnBlock
-                      className1={styles['g-btn']}
-                      className2={styles['r-btn']}
+                      className1={styles["g-btn"]}
+                      className2={styles["r-btn"]}
                       className4={styles["btn-block"]}
                       label1="Принять заказ"
                       label2="Отменить заказ"
@@ -228,8 +235,8 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     />
                   ) : (
                     <BtnBlock
-                      className1={styles['gr-btn']}
-                      className2={styles['r-btn']}
+                      className1={styles["gr-btn"]}
+                      className2={styles["r-btn"]}
                       className4={styles["btn-block"]}
                       label1="Закрыть заказ"
                       label2="Отменить заказ"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import AppointmentToHaircut from "./appointmentToHaircut/AppointmentToHaircut.js";
 import CustomButton from "../../customButton/CustomButton";
@@ -8,20 +8,19 @@ import { ru } from "date-fns/locale";
 import OrderItem from "./orderItem/OrderItem.js";
 import Spinner from "../../spinner/Spinner.js";
 
-import reload from "../../../img/icons/reload.png";
 import styles from "./order.module.scss";
 
 registerLocale("ru", ru);
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [filteredOrders, setFilteredOrders] = useState([]);
   const [addOrderModal, setAddOrderModal] = useState(false);
-  const [onReload, setOnReload] = useState(false);
+  const [ws, setWs] = useState(null);
+  const [notificationVisible, setNotificationVisible] = useState(false); // Состояние для уведомления
 
   useForm({
     mode: "onChange",
@@ -33,66 +32,93 @@ const Orders = () => {
     },
   });
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("https://api.salon-era.ru/records/all", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  const notificationSound = new Audio("/sound.mp3");
 
-      if (!response.ok) {
-        throw new Error(`Ошибка http! статус: ${response.status}`);
-      }
+  // Сохранение ссылок на WebSocket и идентификаторы заказов
+  const previousOrdersRef = useRef(null);
 
-      const data = await response.json();
-      data.sort(
-        (a, b) => new Date(b.record.dateRecord) - new Date(a.record.dateRecord)
-      );
-      setOrders(data);
-
-      setFilteredOrders(
-        data.filter(
-          (order) => order.record.status !== 400 && order.record.status !== 500
-        )
-      );
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Подключение WebSocket
   useEffect(() => {
-    if (addOrderModal || onReload) {
-      return;
-    }
+    let socket = null;
+    let reconnectTimeout = null;
 
-    fetchData();
-    const interval = setInterval(() => {
-      fetchData();
-    }, 10000);
+    const connect = () => {
+      socket = new WebSocket("wss://api.salon-era.ru/websocket/records");
 
-    return () => clearInterval(interval);
-  }, [addOrderModal, onReload]);
+      socket.onopen = () => {
+        console.log("WebSocket открыт");
+        setError(null);
+        setLoading(false);
+      };
 
-  const toggleOnAutoReload = () => {
-    setOnReload(!onReload);
-  };
+      socket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+
+          // Сравниваем новый список заказов с предыдущим
+          if (previousOrdersRef.current) {
+            const newOrdersCount = data.length;
+            const previousOrdersCount = previousOrdersRef.current.length;
+
+            if (newOrdersCount > previousOrdersCount) {
+              // Воспроизводим звук
+              notificationSound
+                .play()
+                .catch((e) => console.warn("Ошибка звука:", e));
+
+              // Показ уведомления
+              setNotificationVisible(true);
+              setTimeout(() => {
+                setNotificationVisible(false);
+              }, 3000);
+            }
+          }
+
+          // Обновляем список заказов
+          previousOrdersRef.current = data;
+          setOrders(data);
+        } catch (e) {
+          console.error("Ошибка парсинга WebSocket:", e);
+        }
+      };
+
+      socket.onerror = (err) => {
+        console.error("WebSocket ошибка:", err);
+        setError("Ошибка подключения к WebSocket");
+      };
+
+      socket.onclose = (event) => {
+        console.warn("WebSocket закрыт", event.code, event.reason);
+        setError("WebSocket соединение закрыто");
+
+        // Пытаемся переподключиться
+        reconnectTimeout = setTimeout(() => {
+          console.log("Переподключение к WebSocket...");
+          connect();
+        }, 5000);
+      };
+
+      setWs(socket);
+    };
+
+    connect();
+
+    // Очистка при размонтировании
+    return () => {
+      if (reconnectTimeout) clearTimeout(reconnectTimeout);
+      if (
+        socket &&
+        (socket.readyState === WebSocket.OPEN ||
+          socket.readyState === WebSocket.CONNECTING)
+      ) {
+        socket.close(1000, "Компонент размонтирован");
+      }
+    };
+  }, []);
 
   const formatDate = (date) => {
-    const dateOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const timeOptions = {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    };
+    const dateOptions = { year: "numeric", month: "long", day: "numeric" };
+    const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: false };
 
     const formattedDate = new Date(date).toLocaleDateString(
       "ru-RU",
@@ -106,24 +132,35 @@ const Orders = () => {
     return `${formattedDate}, ${formattedTime}`;
   };
 
-  const filterOrdersByDate = (date) => {
+  // Фильтрация заказов по дате
+  const filterOrdersByDate = (date, ordersList) => {
+    const ordersToFilter = ordersList || orders;
+
     if (!date) {
-      const filtered = orders.filter(
-        (order) => order.record.status !== 400 && order.record.status !== 500
+      setFilteredOrders(
+        ordersToFilter.filter(
+          (order) =>
+            order.record?.status !== 400 && order.record?.status !== 500
+        )
       );
-      setFilteredOrders(filtered);
     } else {
       const formattedDate = formatDate(date).split(",")[0];
-      const filtered = orders.filter((order) => {
-        return (
-          formatDate(order.record.dateRecord).split(",")[0] === formattedDate &&
-          order.record.status !== 400 &&
-          order.record.status !== 500
-        );
-      });
-      setFilteredOrders(filtered);
+      setFilteredOrders(
+        ordersToFilter.filter(
+          (order) =>
+            formatDate(order.record?.dateRecord).split(",")[0] ===
+              formattedDate &&
+            order.record?.status !== 400 &&
+            order.record?.status !== 500
+        )
+      );
     }
   };
+
+  // Применение фильтрации при изменении даты
+  useEffect(() => {
+    filterOrdersByDate(selectedDate);
+  }, [orders, selectedDate]);
 
   const toggleOpen = () => {
     setAddOrderModal(true);
@@ -141,7 +178,12 @@ const Orders = () => {
   return (
     <div>
       {error && <p>Ошибка: {error}</p>}
-      <h1 className={styles["orders-today"]}>Заказы на сегодня</h1>
+      <h1 className={styles["orders-today"]}>Заказы</h1>
+
+      {/* Визуальное уведомление при новом заказе */}
+      {notificationVisible && (
+        <div className={styles.notification}>Новый заказ!</div>
+      )}
 
       <div className={styles.wrapper}>
         <DatePicker
@@ -160,21 +202,6 @@ const Orders = () => {
             }
           }}
           locale="ru"
-        />
-        <CustomButton
-          label={
-            onReload ? (
-              <div className={styles["stop-reload"]}>
-                <img src={reload} alt="" />
-              </div>
-            ) : (
-              <div className={styles["reload"]}>
-                <img src={reload} alt="" />
-              </div>
-            )
-          }
-          onClick={toggleOnAutoReload}
-          className={onReload ? styles.on : styles.off}
         />
 
         <CustomButton

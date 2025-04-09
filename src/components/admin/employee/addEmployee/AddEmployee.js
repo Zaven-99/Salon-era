@@ -195,7 +195,6 @@ const AddEmployee = ({
   const categoryOptions = categories.filter(
     (item) => item.category === "Должность"
   );
-  console.log(categoryOptions);
 
   if (loading) {
     return <Spinner />;
@@ -302,6 +301,7 @@ const AddEmployee = ({
         isActive={activeInput === "confirmPassword"}
         setActiveInput={setActiveInput}
         {...register("confirmPassword", {
+          required: "Это поле обязательно.",
           validate: (value) => value === password || "Пароли не совпадают",
         })}
       />
@@ -343,6 +343,7 @@ const AddEmployee = ({
       <CustomInput
         label="Укажите дату трудоустройства"
         type="date"
+        error={errors.dateWorkIn}
         name="dateWorkIn"
         isActive={activeInput === "dateWorkIn"}
         setActiveInput={setActiveInput}
@@ -361,6 +362,7 @@ const AddEmployee = ({
             control={control}
             map={positionOptions}
             valueType="id"
+            error={errors.position}
           />
         )}
       />

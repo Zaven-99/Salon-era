@@ -90,7 +90,7 @@
 }
 .succes-message{
   z-index: 15;
-    background: white;
+    background: rgb(255, 255, 255);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -98,11 +98,11 @@
     border-radius: $br-4;
     padding: $sp-20;
     max-width: 550px;
-    width: $wd-100p;
+    width: 31%;
     animation: bounce-in .5s;
     overflow-y: auto;
     height: $hg-150;
-    vertical-align: center;
+    box-shadow: 0px 3px 12px -2px;
     display: flex;
     align-items: center;
     justify-content: center;

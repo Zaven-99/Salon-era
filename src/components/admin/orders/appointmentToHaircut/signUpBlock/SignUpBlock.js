@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import CustomButton from "../../../../customButton/CustomButton";
 import CustomInput from "../../../../customInput/CustomInput";
 import { useForm } from "react-hook-form";
@@ -54,22 +54,17 @@ const SignUpBlock = ({
 
     formData.append(
       "clientData",
-      JSON.stringify([{
-        ...dataToSend,
-        login: generateRandomString(5),
-        password: "Password123.",
-        email: generateRandomEmail(10),
-        gender: parseInt(formValues.gender),
-        patronymic: "0",
-      }])
+      JSON.stringify([
+        {
+          ...dataToSend,
+          login: generateRandomString(5),
+          password: "Password123.",
+          email: generateRandomEmail(10),
+          gender: parseInt(formValues.gender),
+          patronymic: "0",
+        },
+      ])
     );
-
-    setSuccesSignUp(true);
-    reset();
-    toggleCloseOfferModal();
-    setTimeout(() => {
-      setSuccesSignUp(false);
-    }, 1300);
 
     try {
       const response = await fetch("https://api.salon-era.ru/clients", {
@@ -88,6 +83,10 @@ const SignUpBlock = ({
         const responseData = await response.json();
         setClient(responseData);
       }
+      setSuccesSignUp(true);
+
+      reset();
+      toggleCloseOfferModal();
     } catch (error) {
       const errorData = JSON.parse(error.message);
       const status = errorData.status;
@@ -99,6 +98,7 @@ const SignUpBlock = ({
         }));
       }
     } finally {
+      setSuccesSignUp(false);
       setLoading(false);
     }
   };

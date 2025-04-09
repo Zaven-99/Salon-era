@@ -14,7 +14,7 @@
 	margin: $sp-10 $sp-10 $sp-10 $sp-10;
 }
 .record-item__inner{
-    width: $wd-100p;
+    // width: $wd-100p;
 }
 .record-item__inner div{
 	font-size: 12px;
@@ -104,7 +104,7 @@
     font-weight: $medium;
 }
 
-
+ 
 .btn-block{
     display: flex;
     gap: $sp-15;
@@ -113,10 +113,14 @@
 
 
 @media(max-width:1400px){
-    .record-list{
-        display: flex;
+    .record-item{
+        display: inline-block;
         flex-wrap: wrap;
         align-items:center;
      }
-     
+     .btn-block{
+        margin-top: 15px;
+     }
 }
+
+ 

@@ -11,6 +11,7 @@
 	align-items:center;
 	justify-content: space-evenly;
 	cursor: pointer;
+	
 }
 .user-menu:hover{
 	transition: .2s;
@@ -25,7 +26,7 @@
 }
  .user-name{
 	font-family:"Open Sans", sans-serif;
-    font-size:  $fz-20;
+    font-size:  $fz-15;
     font-weight:  $light;
     color: black;
     border-radius: $br-4;
@@ -106,6 +107,7 @@
     right: -$sp-5;
     background: #fe5440;
     height: $hg-20;
+	 
 }
 
 .created{

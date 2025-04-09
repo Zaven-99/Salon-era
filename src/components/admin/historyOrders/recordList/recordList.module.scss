@@ -46,13 +46,36 @@
   width:$wd-125;
   text-align: center;
 }
-.load-more{
-    margin: $sp-0 auto;
-    display: flex;
-    justify-content: center;
-    padding: $sp-10;
-    background: rgba(132, 127, 122, 0.365);
+ .pagination{
+  text-align: center;
+  padding: 30px;
+ }
+
+
+.pagination-btn {
+  margin: 0 5px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.pagination-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.pagination-btn:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background-color: #f0526e; /* Красный цвет для активной страницы */
+  color: white;
+  font-weight: bold;
+}
+
 
 @media(max-width:1400px){
 	.record-item{

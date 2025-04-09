@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { setUser, removeUser } from "../../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const HeaderAdminPanel = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showOtherModal, setShowOtherModal] = useState(false);
   const [orders, setOrders] = useState([]);
-
+  const [orderCount, setOrderCount] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { clientType } = useAuth();
@@ -37,42 +37,71 @@ const HeaderAdminPanel = () => {
     navigate("/");
   };
 
-  const fetchData = async () => {
-    setLoading(true);
+  const wsRef = useRef(null); // Храним ссылку на WebSocket соединение
+
+  const handleSocketMessage = (event) => {
     try {
-      const response = await fetch("https://api.salon-era.ru/records/all", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const data = JSON.parse(event.data);
 
-      if (!response.ok) {
-        throw new Error(`http error! status: ${response.status}`);
+      const isInactive = (order) =>
+        order.record?.status === 400 || order.record?.status === 500;
+
+      if (Array.isArray(data)) {
+        // фильтруем только активные заказы
+        const activeOrders = data.filter((order) => !isInactive(order));
+        setOrders(activeOrders);
+        setOrderCount(activeOrders.length);
+      } else {
+        setOrders((prevOrders) => {
+          const updatedOrders = isInactive(data)
+            ? prevOrders.filter((o) => o.record.id !== data.record.id)
+            : [
+                data,
+                ...prevOrders.filter((o) => o.record.id !== data.record.id),
+              ];
+
+          setOrderCount(updatedOrders.length);
+          return updatedOrders;
+        });
       }
-
-      const data = await response.json();
-
-      setOrders(data);
     } catch (error) {
-      console.error(error.message);
-    } finally {
-      setLoading(false);
+      console.error("Ошибка обработки данных WebSocket", error);
     }
   };
 
+
+  // Функция для обработки ошибок WebSocket
+  const handleSocketError = (error) => {
+    // setError("Ошибка подключения к WebSocket");
+    console.error("WebSocket ошибка:", error);
+  };
+
+  // Функция для обработки закрытия соединения WebSocket
+  const handleSocketClose = (event) => {
+    // setError("WebSocket соединение закрыто");
+    console.warn("WebSocket закрыт:", event.code, event.reason);
+  };
+
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(() => {
-      fetchData();
-    }, 10000);
+    // Устанавливаем соединение с WebSocket сервером
+    wsRef.current = new WebSocket("wss://api.salon-era.ru/websocket/records");
 
-    return () => clearInterval(interval);
-  }, []);
+    wsRef.current.onopen = () => {
+      console.log("WebSocket открыт");
+      setLoading(false);
+    };
 
-  const createdOrders = orders.filter(
-    (order) => order.record.status === 0
-  ).length;
+    wsRef.current.onmessage = handleSocketMessage;
+    wsRef.current.onerror = handleSocketError;
+    wsRef.current.onclose = handleSocketClose;
+
+    // Очистка при размонтировании компонента
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []); 
 
   const menuItems = [
     { path: "/adminPanel/orders", label: "Заказы" },
@@ -106,9 +135,9 @@ const HeaderAdminPanel = () => {
         />
         <ul className={styles.navigation}>
           <NavLink to="/adminPanel/orders">
-            <li className={styles['orders']}>
+            <li className={styles["orders"]}>
               Заказы
-              <span className={styles["create-orders"]}>{createdOrders}</span>
+              <span className={styles["create-orders"]}>{orderCount}</span>
             </li>
           </NavLink>
           <NavLink to="/adminPanel/history-orders">

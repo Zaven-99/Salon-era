@@ -41,7 +41,13 @@ const EmployeeList = ({
       const filteredData = data.filter(
         (employee) => employee.clientType === "employee"
       );
-      setEmployee(filteredData);
+
+      // Удаляем дубликаты по id
+      const uniqueData = Array.from(
+        new Map(filteredData.map((item) => [item.id, item])).values()
+      );
+
+      setEmployee(uniqueData);
     } catch (error) {
       console.error("Ошибка при загрузке сотрудников");
     } finally {

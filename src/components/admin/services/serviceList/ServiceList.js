@@ -48,7 +48,7 @@ const ServiceList = ({
       if (!response.ok) throw new Error("Ошибка при получении услуг");
       const data = await response.json();
       setServices(data);
-      console.log(data);
+       
     } catch (error) {
       setError("Ошибка при загрузке услуг");
     } finally {
