@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './employeeBlock.module.scss'
+import styles from "./employeeBlock.module.scss";
 
 const EmployeeBlock = ({ employee, formatDate, getGenderText }) => {
   return (
@@ -16,9 +16,7 @@ const EmployeeBlock = ({ employee, formatDate, getGenderText }) => {
       <div className={styles["employee-item__inner"]}>
         <strong>Логин:</strong> <div>{employee.login}</div>
       </div>
-      <div className={styles["employee-item__inner"]}>
-        <strong>Пароль:</strong> <div>{employee.password}</div>
-      </div>
+
       <div className={styles["employee-item__inner"]}>
         <strong>Email:</strong> <div>{employee.email}</div>
       </div>

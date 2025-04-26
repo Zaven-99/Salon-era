@@ -1,61 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import CustomButton from "../../customButton/CustomButton";
 import Modal from "../../modal/Modal";
 import WorkList from "./workList/WorkList";
 import Spinner from "../../spinner/Spinner";
-
+import { WorksFieldState } from "../../hooks/works/WorksFieldState";
 import styles from "./worksField.module.scss";
 import AddWork from "./addWork/AddWork";
 
 const OurWorks = () => {
-  const [works, setWorks] = useState([]);
-  const [addWorks, setAddWorks] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  console.log(categories.find((cat) => cat.value));
-  
-  const getCategoryText = (categoryId) => {
-    const category = categories.find((cat) => cat.value === categoryId);
-  
-    return category ? category.value : "Неизвестная работа"; // Если категория найдена, выводим её значение, иначе текст по умолчанию
-  };
-  
-
-  const categoryOptions = categories.filter(
-    (item) => item.category === "Категория работ"
-  );
-
-  const fetchCategory = async () => {
-    try {
-      const response = await fetch("https://api.salon-era.ru/catalogs/all");
-
-      if (!response.ok) {
-        throw new Error(`Ошибка http! статус: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      setCategories(data);
-      
-    } catch {
-      console.log("error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategory();
-  }, []);
-
-  const toggleOpen = () => {
-    setAddWorks(true);
-  };
-  const toggleClose = () => {
-    setAddWorks(false);
-  };
+  const {
+    works,
+    setWorks,
+    addWorks,
+    loading,
+    categories,
+    getCategoryText,
+    toggleOpen,
+    toggleClose,
+  } = WorksFieldState();
 
   if (loading) {
     return <Spinner />;
@@ -75,7 +38,7 @@ const OurWorks = () => {
           <AddWork
             setWorks={setWorks}
             toggleClose={toggleClose}
-            categoryOptions={categoryOptions}
+            categories={categories}
             getCategoryText={getCategoryText}
           />
         </Modal>
@@ -86,7 +49,7 @@ const OurWorks = () => {
         toggleOpen={toggleOpen}
         setWorks={setWorks}
         works={works}
-        categoryOptions={categoryOptions}
+        categories={categories}
         getCategoryText={getCategoryText}
       />
     </div>

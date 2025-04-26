@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 
 import CustomInput from "../../../../customInput/CustomInput";
 import CustomButton from "../../../../customButton/CustomButton";
 import Spinner from "../../../../spinner/Spinner";
-
+import { AddCategoryState } from "../../../../hooks/services/addCategoryState";
 import styles from "./addCategory.module.scss";
 
 const AddCategory = ({ toggleClose, activeInput, setActiveInput }) => {
@@ -20,46 +20,7 @@ const AddCategory = ({ toggleClose, activeInput, setActiveInput }) => {
     },
   });
 
-  const [loading, setLoading] = useState(false);
-
-  const formSubmitHandler = async (formValues) => {
-    setLoading(true);
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify([
-        {
-          category: "Категория услуг",
-          value: formValues.category.trim(),
-          type:'Типы категории'
-        },
-      ])
-    );
-
-    try {
-      const response = await fetch("https://api.salon-era.ru/catalogs", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData || "Ошибка при добавлении услуги");
-      }
-      reset();
-
-      toggleClose();
-      reset();
-    } catch (error) {
-      setLoading(false);
-    } finally {
-      setLoading(false);
-      window.location.reload();
-      
-    }
-  };
-
+  const { loading, formSubmitHandler } = AddCategoryState(toggleClose, reset);
   if (loading) {
     return <Spinner />;
   }

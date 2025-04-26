@@ -1,124 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
 import CustomInput from "../../../../customInput/CustomInput";
 import CustomSelect from "../../../../customSelect/CustomSelect";
 import ImagePreview from "../../../../imagePreview/ImagePreview";
 import BtnBlock from "../../../../btnBlock/BtnBlock";
-import { Controller, useForm } from "react-hook-form";
-
+import { Controller } from "react-hook-form";
+import { EditModalState } from "../../../../hooks/employee/EditModalState";
 import styles from "./editModal.module.scss";
+import Spinner from "../../../../spinner/Spinner";
 
 const EditModal = ({
-  imagePreview,
   setLoading,
   editedEmployee,
   setEmployee,
   setEmployeeId,
   setEditedEmployee,
-  setImagePreview,
   toggleHelpModal,
   showHelpModal,
   handleKeyDown,
-  positionOptions,
+  positions,
   employee,
 }) => {
   const {
     register,
     control,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      login: "",
-      password: "",
-      confirmPassword: "",
-      email: "",
-      phone: "",
-      position: "",
-      dateWorkIn: "",
-      gender: "",
-      clientType: "employee",
-    },
+    errors,
+    showPassword,
+    setShowPassword,
+    activeInput,
+    setActiveInput,
+    categories,
+    handleChange,
+    handleCategoryChange,
+    uploadImage,
+    deletImagePreview,
+    handleSave,
+    imagePreview,
+    loading,
+  } = EditModalState({
+    setLoading,
+    setEmployee,
+    setEmployeeId,
+    setEditedEmployee,
+    editedEmployee,
+    employee,
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const [activeInput, setActiveInput] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleSave = async (id) => {
-    setLoading(true);
+  if (loading) {
+    return <Spinner />;
+  }
 
-    const formattedDate = `${editedEmployee.dateWorkIn}`;
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        ...editedEmployee,
-        dateWorkIn: formattedDate,
-        id,
-      })
-    );
-
-    if (selectedFile) {
-      formData.append("imageData", selectedFile, selectedFile.name);
-    }
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/clients/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        throw new Error(`Ошибка при сохранении услуги: ${errorMessage}`);
-      }
-
-      setEmployee((prevEmployee) =>
-        prevEmployee.map((employee) =>
-          employee.id === id ? editedEmployee : employee
-        )
-      );
-      setEmployeeId(null);
-      setEditedEmployee({});
-    } catch (error) {
-      console.error("Ошибка:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedEmployee((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const uploadImage = (event) => {
-    const files = event?.target?.files;
-    if (!files || files.length === 0) {
-      console.error("Файлы не найдены или пусты");
-      return;
-    }
-
-    const file = files[0];
-    setSelectedFile(file);
-
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Выберите файл изображения.");
-    }
-  };
-  const deletImagePreview = () => {
-    setImagePreview(null);
-    setSelectedFile(null);
-  };
   return (
     <div className={styles["edit-modal"]}>
       <h2>Редактировать</h2>
@@ -265,7 +195,7 @@ const EditModal = ({
             edited={editedEmployee.position}
             handleChange={handleChange}
             control={control}
-            map={positionOptions}
+            map={positions}
             valueType="id"
           />
         )}
@@ -281,8 +211,28 @@ const EditModal = ({
         placeholder="Выберите изображение"
         isActive={activeInput === "imageLink"}
         setActiveInput={setActiveInput}
+        accept="image/*"
         onChange={uploadImage}
       />
+      <h5 className={styles["choose-category"]}>
+        Выберите категорию услуг для мастера
+      </h5>
+      <div className={styles["block-checkbox"]}>
+        {categories.map((category) => (
+          <div key={category.id}>
+            <label className={styles.check}>
+              <input
+                type="checkbox"
+                name="arrayTypeWork"
+                value={category.id}
+                checked={editedEmployee.arrayTypeWork.includes(category.id)}
+                onChange={(e) => handleCategoryChange(e, category.id)}
+              />
+              {category.value}
+            </label>
+          </div>
+        ))}
+      </div>
 
       <CustomInput
         label="Пол"

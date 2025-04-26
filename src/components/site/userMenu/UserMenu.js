@@ -1,153 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import styles from "./userMenu.module.scss";
 import { useAuth } from "../../../use-auth/use-auth";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../store/slices/userSlice";
 import { NavLink } from "react-router-dom";
-
+import Spinner from '../../spinner/Spinner'
 import avatar from "../../../img/icons/avatar.png";
 import notification from "../../../img/icons/notifications.png";
 import CustomButton from "../../customButton/CustomButton";
-
+import useImageUpload from "../../hooks/userMenu/UseImageUpload";
+import useOrders from "../../hooks/userMenu/UseOrders";
 const UserMenu = ({ openProfile }) => {
-  const [imagePreview, setImagePreview] = useState(null);
-  const [order, setOrder] = useState([]);
-  const [isOpenNotification, setIsOpenNotification] = useState(false);
-
   const { id, firstName, lastName, imageLink } = useAuth();
-  const dispatch = useDispatch();
 
-  // WebSocket для получения заказов клиента
-  const wsRef = useRef(null);
+  const { handleImageChange, loading, } = useImageUpload(id, firstName);
+  const { order, toggleNotification, statusViewedCount, isOpenNotification } =
+    useOrders(id);
 
-  useEffect(() => {
-    if (!id) return;
-
-    const socket = new WebSocket("wss://api.salon-era.ru/websocket/records");
-    wsRef.current = socket;
-
-    socket.onopen = () => {
-      console.log("WebSocket подключен");
-    };
-
-    socket.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-
-        if (!Array.isArray(data)) {
-          console.warn("Неверный формат данных:", data);
-          return;
-        }
-
-        // Фильтрация по clientFrom.id === id
-        const filtered = data.filter((order) => order.clientFrom?.id === id);
-        setOrder(filtered);
-      } catch (err) {
-        console.error("Ошибка обработки WebSocket-сообщения:", err);
-      }
-    };
-
-    socket.onerror = (err) => {
-      console.error("WebSocket ошибка:", err);
-    };
-
-    socket.onclose = () => {
-      console.log("WebSocket закрыт");
-    };
-
-    return () => {
-      socket.close();
-    };
-  }, [id]);
-
-  const toggleNotification = async () => {
-    if (isOpenNotification) {
-      await updateView();
+    if(loading){
+      return <Spinner/>
     }
-    setIsOpenNotification((prev) => !prev);
-  };
-
-  const updateView = async () => {
-    try {
-      const updatedOrders = [...order];
-      for (const orderItem of order) {
-        if (!orderItem.record.statusViewed) {
-          const formData = new FormData();
-          formData.append(
-            "clientData",
-            JSON.stringify({
-              id: orderItem.record.id,
-              statusViewed: true,
-            })
-          );
-
-          const response = await fetch(
-            `https://api.salon-era.ru/records/update`,
-            {
-              method: "POST",
-              body: formData,
-            }
-          );
-
-          if (response.ok) {
-            const index = updatedOrders.findIndex(
-              (item) => item.record.id === orderItem.record.id
-            );
-            if (index !== -1) {
-              updatedOrders[index].record.statusViewed = true;
-            }
-            
-          } else {
-            const errorText = await response.text();
-            throw new Error(
-              `Ошибка HTTP! статус: ${response.status}, сообщение: ${errorText}`
-            );
-          }
-        }
-      }
-      setOrder(updatedOrders);
-    } catch (error) {
-      console.log(error.message || "Неизвестная ошибка");
-    }
-  };
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
-      reader.readAsDataURL(file);
-      uploadImage(file);
-    } else {
-      alert("Выберите файл изображения.");
-    }
-  };
-
-  const uploadImage = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append("clientData", JSON.stringify({ id, firstName }));
-      formData.append("imageData", file, file.name);
-
-      const response = await fetch(`https://api.salon-era.ru/clients/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error(await response.text());
-
-      const data = await response.json();
-
-      dispatch(setUser({ ...data.clientFrom, token: true }));
-    } catch (error) {
-      console.error("Ошибка при загрузке изображения:", error);
-    }
-  };
-
-  const statusViewedCount = order.reduce(
-    (count, item) => (item.record.statusViewed ? count : count + 1),
-    0
-  );
 
   return (
     <div className={styles["user-menu"]}>

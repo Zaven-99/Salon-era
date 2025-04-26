@@ -13,9 +13,7 @@
     border-radius: $br-4;
 	margin: $sp-10 $sp-10 $sp-10 $sp-10;
 }
-.record-item__inner{
-    // width: $wd-100p;
-}
+ 
 .record-item__inner div{
 	font-size: 12px;
 	 
@@ -109,6 +107,44 @@
     display: flex;
     gap: $sp-15;
 }
+.price-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  input {
+    width: 80px;
+    padding: 4px 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
+}
+
+.price-text {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #007bff;
+
+  &:hover {
+    color: #0056b3;
+  }
+}
+
 /*media*/
 
 

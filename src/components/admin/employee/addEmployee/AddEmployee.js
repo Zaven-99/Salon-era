@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import React from "react";
+import { Controller } from "react-hook-form";
 
 import CustomButton from "../../../customButton/CustomButton";
 import CustomInput from "../../../customInput/CustomInput";
 import ImagePreview from "../../../imagePreview/ImagePreview";
 import CustomSelect from "../../../customSelect/CustomSelect";
-
+import { AddEmployeeState } from "../../../hooks/employee/AddEmployeeState";
 import styles from "./addEmployee.module.scss";
 import Modal from "../../../modal/Modal";
 import AddPosition from "./addPosition/AddPosition";
-import Spinner from "../../../spinner/Spinner";
 import DeletePosition from "./deletePosition/DeletePosition";
+import Spinner from '../../../spinner/Spinner';
 
 const AddEmployee = ({
   setLoading,
@@ -19,185 +19,37 @@ const AddEmployee = ({
   toggleHelpModal,
   showHelpModal,
   handleKeyDown,
-  positionOptions,
-  loading,
+  positions,
 }) => {
   const {
     register,
     handleSubmit,
     control,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      login: "",
-      password: "",
-      confirmPassword: "",
-      email: "",
-      phone: "",
-      position: "1",
-      dateWorkIn: "",
-      gender: "",
-      imageLink: "",
-      arrayTypeWork: [],
-      clientType: "employee",
-    },
-  });
+    errors,
+    password,
+    showPassword,
+    setShowPassword,
+    showConfirmPassword,
+    setShowConfirmPassword,
+    activeInput,
+    setActiveInput,
+    errorMessages,
+    imagePreview,
+    uploadImage,
+    deletImagePreview,
+    onSubmit,
+    addPosition,
+    deletePosition,
+    toggleOpenAddPosition,
+    toggleCloseAddPosition,
+    toggleOpenDeletePosition,
+    toggleCloseDeletePosition,
+    categories,
+    loading,
+  } = AddEmployeeState({ setLoading, setEmployee, toggleClose });
 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [activeInput, setActiveInput] = useState("");
-  const [errorMessages, setErrorMessages] = useState({});
-  const [imagePreview, setImagePreview] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [addPosition, setAddPosition] = useState(false);
-  const [deletePosition, setDeletePosition] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  const toggleOpenAddPosition = () => {
-    setAddPosition(true);
-  };
-  const toggleCloseAddPosition = () => {
-    setAddPosition(false);
-  };
-  const toggleOpenDeletePosition = () => {
-    setDeletePosition(true);
-  };
-  const toggleCloseDeletePosition = () => {
-    setDeletePosition(false);
-  };
-
-  const password = watch("password");
-
-  const onSubmit = async (formValues) => {
-    const { confirmPassword, ...dataToSend } = formValues;
-    const dateWorkIn = new Date(formValues.dateWorkIn);
-
-    setLoading(true);
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify([
-        {
-          ...dataToSend,
-          dateWorkIn: dateWorkIn.toISOString().slice(0, -1),
-          clientType: "employee",
-          arrayTypeWork: formValues.arrayTypeWork,
-        },
-      ])
-    );
-
-    if (selectedFile) {
-      formData.append("imageData", selectedFile, selectedFile.name);
-    }
-    try {
-      const response = await fetch("https://api.salon-era.ru/clients", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        const statusCode = response.status;
-        throw new Error(
-          JSON.stringify({ message: errorText, status: statusCode })
-        );
-      }
-
-      setEmployee((prev) => [...prev, dataToSend]);
-      toggleClose();
-      reset();
-    } catch (error) {
-      console.error("Ошибка отправки:", error);
-
-      const errorData = JSON.parse(error.message);
-      const status = errorData.status;
-
-      if (status === 441) {
-        setErrorMessages((prev) => ({
-          ...prev,
-          login: `Пользователь с логином ${formValues.login} уже существует`,
-        }));
-      } else if (status === 442) {
-        setErrorMessages((prev) => ({
-          ...prev,
-          phone: `Пользователь с номером ${formValues.phone} уже существует`,
-        }));
-      } else if (status === 443) {
-        setErrorMessages((prev) => ({
-          ...prev,
-          email: `Клиент с указанным почтовым адресом ${formValues.email} уже существует`,
-        }));
-      } else {
-        setErrorMessages((prev) => ({
-          ...prev,
-          general:
-            "Произошла ошибка при регистрации. Пожалуйста, попробуйте позже.",
-        }));
-      }
-    } finally {
-      setLoading(false);
-      deletImagePreview();
-    }
-  };
-
-  const uploadImage = (event) => {
-    const files = event?.target?.files;
-    if (!files || files.length === 0) {
-      console.error("Файлы не найдены или пусты");
-      return;
-    }
-
-    const file = files[0];
-    setSelectedFile(file);
-
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Выберите файл изображения.");
-    }
-  };
-
-  const deletImagePreview = () => {
-    setImagePreview(null);
-  };
-
-  const fetchCategroy = async () => {
-    try {
-      const response = await fetch("https://api.salon-era.ru/catalogs/all");
-
-      if (!response.ok) {
-        throw new Error(`Ошибка http! статус: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setCategories(data);
-    } catch {
-      console.log("error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategroy();
-  }, []);
-
-  const categoryOptions = categories.filter(
-    (item) => item.category === "Должность"
-  );
-
-  if (loading) {
-    return <Spinner />;
+  if(loading){
+    return <Spinner/>
   }
 
   return (
@@ -360,7 +212,7 @@ const AddEmployee = ({
             {...field}
             name="position"
             control={control}
-            map={positionOptions}
+            map={positions}
             valueType="id"
             error={errors.position}
           />
@@ -404,21 +256,24 @@ const AddEmployee = ({
       <ImagePreview
         deletImagePreview={deletImagePreview}
         imagePreview={imagePreview}
+        className = {styles.preview}
       />
-
+    
       <CustomInput
         type="file"
         name="imageLink"
         placeholder="Выберите изображение"
         isActive={activeInput === "imageLink"}
         setActiveInput={setActiveInput}
+        accept="image/*"
         onChange={uploadImage}
       />
+
       <h5 className={styles["choose-category"]}>
         Выберите категорию услуг для мастера
       </h5>
       <div className={styles["block-checkbox"]}>
-        {categoryOptions.map((category) => (
+        {categories.map((category) => (
           <div key={category.id}>
             <label className={styles.check}>
               <input

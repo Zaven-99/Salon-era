@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { removeUser } from "../../../store/slices/userSlice";
-import { useAuth } from "../../../use-auth/use-auth";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
+import { HeaderState } from "../../hooks/header/HeaderState";
 import Slides from "../../../carousel/Slides";
 import MenuSideBtn from "../../menuSideBtn/MenuSideBtn";
 import MenuSide from "../../menuSide/MenuSide";
@@ -21,59 +18,18 @@ const Header = ({
   toggleOpen,
   toggleClose,
 }) => {
-  const [showProfile, setShowProfile] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const { token } = useAuth();
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("user"));
-    if (savedUser) {
-      setUser(savedUser);
-    }
-  }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const toggleShowMessage = () => {
-    setShowMessage(true);
-
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 3000);
-  };
-
-  const openProfile = () => {
-    setShowProfile(true);
-    setIsClosing(false);
-  };
-
-  const closeProfile = () => {
-    document.body.style.overflow = "scroll";
-    setTimeout(() => {
-      setShowProfile(false);
-    }, 100);
-    setIsClosing(true);
-  };
-
-  const logOut = async () => {
-    setLoading(true);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    dispatch(removeUser());
-    setUser(null);
-    navigate("/");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    closeProfile();
-    setLoading(false);
-  };
+  const {
+    showProfile,
+    showMessage,
+    isMenuOpen,
+    loading,
+    token,
+    toggleMenu,
+    toggleShowMessage,
+    openProfile,
+    closeProfile,
+    logOut,
+  } = HeaderState();
 
   const menuItems = [
     { path: "/", label: "Главная" },

@@ -2,154 +2,21 @@ import React from "react";
 
 import styles from "./orderItem.module.scss";
 import BtnBlock from "../../../btnBlock/BtnBlock";
+import { OrderItemState } from "../../../hooks/orders/OrderItemState";
 
 const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
-  // Функция для корректного склонения слова "час"
-  const getHourText = (hours) => {
-    if (hours === 1) return "час";
-    if (hours >= 2 && hours <= 4) return "часа";
-    return "часов";
-  };
-
-  const durationToText = (step) => {
-    const hours = Math.floor(step / 2);
-    const minutes = (step % 2) * 30;
-
-    let result = "";
-
-    if (hours > 0) {
-      result += `${hours} ${getHourText(hours)}`;
-    }
-    if (minutes > 0) {
-      result += ` ${minutes} минут`;
-    }
-
-    return result.trim();
-  };
-
-  const acceptOrder = async (order) => {
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        id: order.record.id,
-        status: 100,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/records/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
-        );
-      }
-
-      const updatedOrder = await response.json();
-      setOrders((prevOrders) =>
-        prevOrders.map((o) =>
-          o.record.id === updatedOrder.id ? updatedOrder : o
-        )
-      );
-    } catch (error) {
-    } finally {
-      window.location.reload();
-    }
-  };
-
-  const closeOrder = async (order) => {
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        id: order.record.id,
-        status: 500,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/records/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
-        );
-      }
-
-      const updatedOrder = await response.json();
-      setOrders((prevOrders) =>
-        prevOrders.map((o) =>
-          o.record.id === updatedOrder.id ? updatedOrder : o
-        )
-      );
-    } catch (error) {
-    } finally {
-      window.location.reload();
-    }
-  };
-
-  const cancelOrder = async (order) => {
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        id: order.record.id,
-        status: 400,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/records/update`, {
-        method: "POST",
-
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Ошибка http! статус: ${response.status}, сообщение: ${errorText}`
-        );
-      }
-      const updatedOrder = await response.json();
-      setOrders((prevOrders) =>
-        prevOrders.map((o) =>
-          o.record.id === updatedOrder.id ? updatedOrder : o
-        )
-      );
-    } catch (error) {
-      setError(error.message || "Неизвестная ошибка");
-    } finally {
-      window.location.reload();
-    }
-  };
-
-  const groupOrdersByDate = (orders) => {
-    return orders.reduce((acc, order) => {
-      if (order.record?.status !== 400 && order.record?.status !== 500) {
-        const date = formatDate(order.record?.dateRecord).split(",")[0];
-        if (!acc[date]) {
-          acc[date] = [];
-        }
-        acc[date].push(order);
-      }
-      return acc;
-    }, {});
-  };
-
-  const groupedOrders = groupOrdersByDate(filteredOrders);
+  const {
+    durationToText,
+    acceptOrder,
+    closeOrder,
+    cancelOrder,
+    groupedOrders,
+    editingPriceId,
+    setEditingPriceId,
+    newPrice,
+    setNewPrice,
+    updateOrderPrice,
+  } = OrderItemState({ filteredOrders, setOrders, setError, formatDate });
 
   return (
     <div>
@@ -198,9 +65,38 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                   <div className={styles["record-item__inner"]}>
                     <strong>Цена:</strong>
                     <div>
-                      {order.service
-                        ? `${order.service?.priceLow} р.`
-                        : "Цена недоступна"}
+                      {editingPriceId === order.record?.id ? (
+                        <div className={styles["price-edit"]}>
+                          <input
+                            type="number"
+                            value={newPrice}
+                            onChange={(e) => setNewPrice(e.target.value)}
+                          />
+                          <button
+                            onClick={() =>
+                              updateOrderPrice(order.record.id, newPrice)
+                            }
+                          >
+                            Сохранить
+                          </button>
+                        </div>
+                      ) : (
+                        <span
+                          className={styles["price-text"]}
+                          onClick={() => {
+                            setEditingPriceId(order.record.id);
+                            setNewPrice(
+                              order.record.price ?? order.service?.priceLow ?? 0
+                            );
+                          }}
+                        >
+                          {order.record?.price
+                            ? `${order.record.price} р.`
+                            : order.service?.priceMax
+                            ? `${order.service?.priceLow}–${order.service?.priceMax} р.`
+                            : `${order.service?.priceLow} р.`}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className={styles["record-item__inner"]}>

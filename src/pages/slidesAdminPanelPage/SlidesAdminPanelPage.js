@@ -1,6 +1,6 @@
 import React from 'react';
 import HeaderAdminPanel from '../../components/admin/headerAdminPanel/HeaderAdminPanel';
-import EditHeaderSlides from '../../components/admin/headerSlides/HeaderSlides';
+import EditHeaderSlides from '../../components/admin/headerSlides/EditHeaderSlides';
 
 const SlidesAdminPanelPage = () => {
 	return (

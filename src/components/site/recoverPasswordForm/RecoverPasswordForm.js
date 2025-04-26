@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import CustomButton from "../../customButton/CustomButton";
 import CustomInput from "../../customInput/CustomInput";
 import styles from "./recoverPassword.module.scss";
 import Spinner from "../../spinner/Spinner";
-
+import { RecoverPasswordFormState } from "../../hooks/recoveryPasswordForm/recoveryPasswordFormState";
 const RecoverPasswordForm = ({
   activeInput,
   setActiveInput,
@@ -25,87 +25,19 @@ const RecoverPasswordForm = ({
       email: "",
     },
   });
-
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [step, setStep] = useState(1);
-  const [verificationCode, setVerificationCode] = useState("");
-  const [email, setEmail] = useState("");
+  const {
+    loading,
+    errorMessage,
+    successMessage,
+    showPassword,
+    setShowPassword,
+    showConfirmPassword,
+    setShowConfirmPassword,
+    step,
+    onSubmit,
+  } = RecoverPasswordFormState();
 
   const password = watch("password");
-
-  const onSubmit = async (data) => {
-    setLoading(true);
-    setErrorMessage("");
-    try {
-      if (step === 1) {
-        const response = await fetch(
-          `https://api.salon-era.ru/clients/recoveryPassword?send=true&email=${data.email}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: data.email }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          const statusCode = response.status;
-          if (statusCode === 409) {
-            setErrorMessage(
-              "Пользователь с таким email уже существует или запрос на восстановление уже отправлен."
-            );
-          } else {
-            throw new Error(`Ошибка: ${errorText}`);
-          }
-        } else {
-          const result = await response.text();
-          setSuccessMessage("Письмо для восстановления пароля отправлено.");
-          setStep(2);
-          setEmail(data.email);
-          setVerificationCode(result);
-        }
-      } else if (step === 2) {
-        if (data.code === verificationCode) {
-          const formData = new FormData();
-          formData.append(
-            "clientData",
-            JSON.stringify([{
-              password: data.password,
-            }])
-          );
-
-          const response = await fetch(
-            `https://api.salon-era.ru/clients/changePasswordFromEmail?email=${email}&password=${data.password}`,
-            {
-              method: "POST",
-              body: formData,
-            }
-          );
-
-          if (!response.ok) {
-            const errorText = await response.text();
-            setErrorMessage(`Ошибка при изменении пароля: ${errorText}`);
-          } else {
-            setSuccessMessage("Пароль успешно изменен.");
-            setStep(3);
-          }
-        } else {
-          setErrorMessage("Неверный код.");
-        }
-      }
-    } catch (error) {
-      setErrorMessage(`Пользователь с ${data.email} не существует`);
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <Spinner />;
@@ -162,6 +94,7 @@ const RecoverPasswordForm = ({
               label="Введите код из письма:"
               name="code"
               type="text"
+              autoComplete="new-password"
               error={errors.code}
               isActive={activeInput === "code"}
               setActiveInput={setActiveInput}
@@ -177,6 +110,7 @@ const RecoverPasswordForm = ({
               setActiveInput={setActiveInput}
               toggleHelpModal={toggleHelpModal}
               showHelpModal={showHelpModal}
+              autoComplete="new-password"
               {...register("password", {
                 required: "Это поле обязательно.",
                 minLength: {
@@ -213,6 +147,7 @@ const RecoverPasswordForm = ({
               error={errors.confirmPassword}
               isActive={activeInput === "confirmPassword"}
               setActiveInput={setActiveInput}
+              autoComplete="new-password"
               {...register("confirmPassword", {
                 required: "Это поле обязательно.",
                 validate: (value) =>

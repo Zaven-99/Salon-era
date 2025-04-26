@@ -10,8 +10,6 @@ const FilterBlock = ({
 }) => {
   return (
     <div className={styles["filter-block"]}>
-      <p className={styles["filter-title"]}>Отфильтруйте по категориям</p>
-
       <select
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}

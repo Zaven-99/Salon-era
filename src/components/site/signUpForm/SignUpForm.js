@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../store/slices/userSlice";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Spinner from "../../spinner/Spinner";
 import CustomInput from "../../customInput/CustomInput";
 import CustomButton from "../../customButton/CustomButton";
-
+import { SignUpFormState } from "../../hooks/signUpForm/SignUpFormState";
 import styles from "./signUpForm.module.scss";
 import ImagePreview from "../../imagePreview/ImagePreview";
 
@@ -37,185 +35,30 @@ const SignUpForm = ({
     },
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showHelpModal, setShowHelpModal] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errorMessages, setErrorMessages] = useState({});
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [policy, setPolicy] = useState(false);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const toggleHelpModal = () => {
-    setShowHelpModal(!showHelpModal);
-  };
-
-  const handleKeyDown = (e) => {
-    const value = e.target.value;
-
-    if (value === "+7") {
-      if (e.key === "Backspace") {
-        e.preventDefault();
-      }
-    }
-    if (!/[0-9+]/.test(e.key) && e.key !== "Backspace") {
-      e.preventDefault();
-    }
-  };
-
   const password = watch("password");
 
-  const handlePolicyChange = (e) => {
-    setPolicy(!policy);
-  };
-
-  const onSubmit = async (formValues, e) => {
-    const { confirmPassword, gender, patronymic, policy, ...dataToSend } =
-      formValues;
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify([{
-        ...dataToSend,
-        gender: parseInt(formValues.gender),
-        patronymic: "0",
-      }])
-    );
-
-    if (selectedFile) {
-      formData.append("imageData", selectedFile, selectedFile.name);
-    }
-    if (!policy) {
-      setLoading(false);
-      return;
-    } else {
-      try {
-        const response = await fetch("https://api.salon-era.ru/clients", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          const statusCode = response.status;
-          throw new Error(
-            JSON.stringify({ message: errorText, status: statusCode })
-          );
-        } else {
-          setLoading(true);
-        }
-
-        const data = await response.json();
-
-        const imageLink = data.imageLink || imagePreview;
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            id: formValues.id,
-            firstName: formValues.firstName,
-            lastName: formValues.lastName,
-            email: formValues.email,
-            phone: formValues.phone,
-            gender: formValues.gender,
-            imageLink,
-            token: true,
-          })
-        );
-
-        dispatch(
-          setUser({
-            ...formValues,
-            id: data.id,
-            gender: parseInt(formValues.gender),
-            imageLink,
-            token: true,
-          })
-        );
-
-        navigate("/");
-        toggleClose();
-        toggleShowMessage();
-      } catch (error) {
-        const errorData = JSON.parse(error.message);
-        const status = errorData.status;
-
-        if (status === 441) {
-          setErrorMessages((prev) => ({
-            ...prev,
-            login: `Пользователь с логином ${formValues.login} уже существует`,
-          }));
-        } else if (status === 442) {
-          setErrorMessages((prev) => ({
-            ...prev,
-            phone: `Пользователь с номером ${formValues.phone} уже существует`,
-          }));
-        } else if (status === 443) {
-          setErrorMessages((prev) => ({
-            ...prev,
-            email: `Клиент с указанным почтовым адресом ${formValues.email} уже существует`,
-          }));
-        } else {
-          setErrorMessages((prev) => ({
-            ...prev,
-            general:
-              "Произошла ошибка при регистрации. Пожалуйста, попробуйте позже.",
-          }));
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
-  const uploadImage = (event) => {
-    const files = event?.target?.files;
-    if (!files || files.length === 0) {
-      console.error("Файлы не найдены или пусты");
-      return;
-    }
-
-    const file = files[0];
-    setSelectedFile(file);
-
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Выберите файл изображения.");
-    }
-  };
-
-  const deletImagePreview = () => {
-    setImagePreview(null);
-  };
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    // Устанавливаем начальное состояние темы
-    setIsDarkMode(mediaQuery.matches);
-
-    // Функция для обновления состояния при смене темы
-    const handleChange = (e) => {
-      setIsDarkMode(e.matches);
-    };
-
-    // Добавляем обработчик изменений
-    mediaQuery.addEventListener("change", handleChange);
-
-    // Очистка обработчика при размонтировании компонента
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
+  const {
+    showPassword,
+    setShowPassword,
+    showConfirmPassword,
+    setShowConfirmPassword,
+    showHelpModal,
+    toggleHelpModal,
+    isDarkMode,
+    loading,
+    errorMessages,
+    policy,
+    handlePolicyChange,
+    handleKeyDown,
+    uploadImage,
+    deletImagePreview,
+    onSubmit,
+    imagePreview,
+    setErrorMessages,
+  } = SignUpFormState({
+    toggleClose,
+    toggleShowMessage,
+  });
 
   if (loading) {
     return <Spinner />;

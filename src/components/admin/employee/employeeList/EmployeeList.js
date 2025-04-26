@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import Modal from "../../../modal/Modal";
 import Spinner from "../../../spinner/Spinner";
@@ -8,6 +8,7 @@ import avatarImg from "../../../../img/icons/avatar.png";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import EditModal from "./editModal/EditModal";
 import EmployeeBlock from "./employeeBlock/EmployeeBlock";
+import { EmployeeListState } from "../../../hooks/employee/EmployeeListState";
 
 const EmployeeList = ({
   employee,
@@ -17,112 +18,36 @@ const EmployeeList = ({
   toggleOpen,
   toggleClose,
   handleKeyDown,
-  positionOptions,
+  positions,
   getPositionTextById,
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [employeeId, setEmployeeId] = useState(null);
-  const [editedEmployee, setEditedEmployee] = useState({});
-  const [confirmDeleteEmployee, setConfirmDeleteEmployee] = useState(false);
-  const [employeeToDelete, setEmployeeToDelete] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
-  const genderMap = { 0: "Женщина", 1: "Мужчина" };
+  const {
+    loading,
+    setLoading,
+    employeeId,
+    editedEmployee,
+    confirmDeleteEmployee,
+    employeeToDelete,
+    imagePreview,
+    setEmployeeId,
+    setEditedEmployee,
+    setImagePreview,
+    handleDelete,
+    handleEdit,
+    showMessageDeleteEmployee,
+    closeMessageDeleteEmployee,
+    getGenderText,
+    formatDate,
+    groupEmployeesByPosition,
+  } = EmployeeListState(setEmployee);
 
-  const getGenderText = (gender) => genderMap[gender];
+  if (loading) return <Spinner />;
 
-  const fetchEmployee = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("https://api.salon-era.ru/clients/all");
-
-      if (!response.ok) throw new Error("Ошибка при получении сотрудников");
-      const data = await response.json();
-
-      const filteredData = data.filter(
-        (employee) => employee.clientType === "employee"
-      );
-
-      // Удаляем дубликаты по id
-      const uniqueData = Array.from(
-        new Map(filteredData.map((item) => [item.id, item])).values()
-      );
-
-      setEmployee(uniqueData);
-    } catch (error) {
-      console.error("Ошибка при загрузке сотрудников");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      await fetchEmployee();
-    })();
-  }, []);
-
-  const handleDelete = async (id) => {
-    if (employeeToDelete === null) return;
-    setLoading(true);
-
-    try {
-      const response = await fetch(
-        `https://api.salon-era.ru/clients?id=${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) throw new Error("Ошибка при удалении сотрудника");
-      setEmployee((prevEmployee) =>
-        prevEmployee.filter((employee) => employee.id !== id)
-      );
-      closeMessageDeleteEmployee();
-    } catch (error) {
-      console.error("Ошибка:", error);
-    } finally {
-      setLoading(false);
-      document.body.style.overflow = "scroll";
-    }
-  };
-  const handleEdit = (employee) => {
-    setEmployeeId(employee.id);
-    setEditedEmployee(employee);
-  };
-
-  const groupedEmployee = employee.reduce((acc, employee) => {
-    const { position } = employee;
-    if (!acc[position]) acc[position] = [];
-    acc[position].push(employee);
-    return acc;
-  }, {});
+  const groupedEmployee = groupEmployeesByPosition(employee);
 
   if (!Object.keys(groupedEmployee).length) {
     return <p className={styles.message}>Список сотрудников пуст.</p>;
   }
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour12: false,
-    };
-    return date.toLocaleString("ru-RU", options);
-  };
-
-  const showMessageDeleteEmployee = (id) => {
-    setEmployeeToDelete(id);
-    setConfirmDeleteEmployee(true);
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeMessageDeleteEmployee = () => {
-    setConfirmDeleteEmployee(false);
-    setEmployeeToDelete(null);
-    document.body.style.overflow = "scroll";
-  };
-
   if (loading) {
     return <Spinner />;
   }
@@ -155,7 +80,7 @@ const EmployeeList = ({
                       toggleHelpModal={toggleHelpModal}
                       showHelpModal={showHelpModal}
                       handleKeyDown={handleKeyDown}
-                      positionOptions={positionOptions}
+                      positions={positions}
                       employee={employee}
                     />
                   </Modal>

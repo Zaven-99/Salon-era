@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React  from "react";
 import CustomButton from "../../../../customButton/CustomButton";
 import CustomInput from "../../../../customInput/CustomInput";
-import { useForm } from "react-hook-form";
+import { SignUpBlockState } from "../../../../hooks/orders/SignUpBlockState";
 
 import styles from "./signUpBlock.module.scss";
 
@@ -18,94 +18,18 @@ const SignUpBlock = ({
     register,
     handleSubmit,
     control,
-    reset,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      phone: "",
-      gender: "",
-    },
+    errors,
+    errorMessages,
+    setErrorMessages,
+    onSubmit,
+    toggleCloseOfferModal,
+  } = SignUpBlockState({
+    setSuccesSignUp,
+    setLoading,
+    setClient,
+    setOfferModal,
   });
 
-  const [errorMessages, setErrorMessages] = useState(false);
-
-  function generateRandomString(length) {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    return Array.from({ length }, () =>
-      characters.charAt(Math.floor(Math.random() * characters.length))
-    ).join("");
-  }
-
-  function generateRandomEmail() {
-    const domains = ["gmail.com", "yahoo.com", "mail.ru", "outlook.com"];
-    const username = generateRandomString(8);
-    const domain = domains[Math.floor(Math.random() * domains.length)];
-    return `${username}@${domain}`;
-  }
-
-  const onSubmit = async (formValues, e) => {
-    const { gender, patronymic, policy, ...dataToSend } = formValues;
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify([
-        {
-          ...dataToSend,
-          login: generateRandomString(5),
-          password: "Password123.",
-          email: generateRandomEmail(10),
-          gender: parseInt(formValues.gender),
-          patronymic: "0",
-        },
-      ])
-    );
-
-    try {
-      const response = await fetch("https://api.salon-era.ru/clients", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        const statusCode = response.status;
-        throw new Error(
-          JSON.stringify({ message: errorText, status: statusCode })
-        );
-      } else {
-        setLoading(true);
-        const responseData = await response.json();
-        setClient(responseData);
-      }
-      setSuccesSignUp(true);
-
-      reset();
-      toggleCloseOfferModal();
-    } catch (error) {
-      const errorData = JSON.parse(error.message);
-      const status = errorData.status;
-
-      if (status === 442) {
-        setErrorMessages((prev) => ({
-          ...prev,
-          phone: `Пользователь с номером ${formValues.phone} уже существует`,
-        }));
-      }
-    } finally {
-      setSuccesSignUp(false);
-      setLoading(false);
-    }
-  };
-
-  const toggleCloseOfferModal = () => {
-    setOfferModal(false);
-  };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles["modal-content"]}>
       <span className={styles["form-close"]} onClick={toggleCloseOfferModal}>

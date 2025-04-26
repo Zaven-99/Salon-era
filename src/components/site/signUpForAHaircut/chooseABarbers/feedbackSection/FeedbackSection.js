@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import CustomButton from "../../../../customButton/CustomButton";
-import { useAuth } from "../../../../../use-auth/use-auth";
-import { useSelector } from "react-redux";
 import BtnBlock from "../../../../btnBlock/BtnBlock";
-
+import { FeedbackSectionState } from "../../../../hooks/signUpForHaircut/FeedbackSectionState";
 import styles from "./feedBackSection.module.scss";
 
 const FeedbackSection = ({
@@ -22,221 +20,36 @@ const FeedbackSection = ({
   RatingStars,
   avatar,
 }) => {
-  const [editedFeedbackText, setEditedFeedbackText] = useState({});
-  const [editFeedbackId, setEditFeedbackId] = useState(null);
-  const [feedbackLimit, setFeedbackLimit] = useState(5);
-  const [initialHeight, setInitialHeight] = useState("25px");
-
-  const [height, setHeight] = useState(initialHeight);
-
-  const { id: clientId } = useAuth();
-  const user = useSelector((state) => state.user);
-
-  const handleEdit = (feedBack) => {
-    setEditFeedbackId(feedBack.id);
-
-    setEditedFeedbackText(feedBack);
-
-    setHeight(initialHeight);
-  };
-
-  const handleDelete = async (id) => {
-    setLoading(true);
-
-    try {
-      const response = await fetch(
-        `https://api.salon-era.ru/feedbacks?id=${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Ошибка при удалении отзыва");
-      }
-
-      setFeedbacks((prevFeedback) =>
-        prevFeedback.filter((feedback) => feedback.id !== id)
-      );
-    } catch (error) {
-      alert(`Ошибка: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSave = async (id) => {
-    setLoading(true);
-
-    const feedbackToUpdate = { ...editedFeedbackText, id };
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify([{
-        ...feedbackToUpdate,
-        createdAt: formattedDateTimeForServer(),
-      }])
-    );
-    try {
-      const response = await fetch(
-        `https://api.salon-era.ru/feedbacks/update`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      if (!response.ok) throw new Error("Ошибка при сохранении услуги");
-
-      setFeedbacks((prevFeedback) =>
-        prevFeedback.map((feedback) =>
-          feedback.id === id ? editedFeedbackText : feedback
-        )
-      );
-      setEditFeedbackId(null);
-      setEditedFeedbackText({});
-      setInitialHeight(height);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    const newText = e.target.value;
-
-    setEditedFeedbackText({
-      ...editedFeedbackText,
-      text: newText,
-    });
-
-    const textarea = e.target;
-
-    const textHeight = textarea.scrollHeight;
-
-    const maxHeight = 250;
-
-    const finalHeight = textHeight > maxHeight ? maxHeight : textHeight;
-
-    setHeight(`${finalHeight}px`);
-  };
-
-  const getBarberFeedbacks = (barberId) => {
-    return feedbacks.filter((feedback) => feedback.id_client_to === barberId);
-  };
-
-  const loadMoreFeedbacks = () => {
-    setFeedbackLimit((prevLimit) => prevLimit + 5);
-  };
-
-  const handleRate = (barberId, newRating) => {
-    setRatings((prevRatings) => ({
-      ...prevRatings,
-      [barberId]: newRating,
-    }));
-  };
-
-  const formatDate = (date) => {
-    const dateOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const timeOptions = {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    };
-
-    const formattedDate = new Date(date).toLocaleDateString(
-      "ru-RU",
-      dateOptions
-    );
-    const formattedTime = new Date(date).toLocaleTimeString(
-      "ru-RU",
-      timeOptions
-    );
-
-    return `${formattedDate}, ${formattedTime}`;
-  };
-
-  const formattedDateTimeForServer = () => {
-    const now = new Date();
-
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0"); // Получаем секунды
-    const milliseconds = String(now.getMilliseconds()).padStart(3, "0"); // Получаем миллисекунды
-
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
-  };
-
-  const handleFeedbackChange = (e) => {
-    setFeedbackText(e.target.value);
-    const newText = e.target.value;
-
-    setEditedFeedbackText(newText);
-
-    const textarea = e.target;
-
-    const textHeight = textarea.scrollHeight;
-
-    const maxHeight = 250;
-
-    const finalHeight = textHeight > maxHeight ? maxHeight : textHeight;
-
-    setHeight(`${finalHeight}px`);
-  };
-
-  const isFeedbackDisabled =
-    !feedbackText.trim() || ratings[selectedBarber?.id] === 0;
-
-  const handleSubmitFeedback = async () => {
-    setLoading(true);
-
-    const formData = new FormData();
-    const clientFirstName = user.firstName;
-    const clientLastName = user.lastName;
-
-    formData.append(
-      "clientData",
-      JSON.stringify([{
-        firstName: clientFirstName,
-        lastName: clientLastName,
-        id_client_from: clientId,
-        id_client_to: selectedBarber.id,
-        text: feedbackText,
-        value: ratings[selectedBarber.id],
-      }])
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/feedbacks`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Ошибка при отправке");
-      }
-
-      setFeedbackText("");
-      setRatings((prevRatings) => ({
-        ...prevRatings,
-        [selectedBarber.id]: 0,
-      }));
-      handleGetFeedback();
-    } catch (error) {
-      alert(`Произошла ошибка при отправке данных.`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    user,
+    clientId,
+    editedFeedbackText,
+    editFeedbackId,
+    feedbackLimit,
+    height,
+    handleEdit,
+    handleDelete,
+    handleSave,
+    handleChange,
+    handleFeedbackChange,
+    handleRate,
+    loadMoreFeedbacks,
+    formatDate,
+    getBarberFeedbacks,
+    isFeedbackDisabled,
+    handleSubmitFeedback,
+    setEditFeedbackId,
+  } = FeedbackSectionState({
+    setFeedbackText,
+    setLoading,
+    setFeedbacks,
+    feedbacks,
+    setRatings,
+    selectedBarber,
+    handleGetFeedback,
+    feedbackText,
+    ratings,
+  });
 
   return (
     <>

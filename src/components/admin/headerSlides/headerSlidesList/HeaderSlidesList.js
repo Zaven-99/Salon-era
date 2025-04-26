@@ -1,163 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Spinner from "../../../spinner/Spinner";
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
 import ImagePreview from "../../../imagePreview/ImagePreview";
 import BtnBlock from "../../../btnBlock/BtnBlock";
-
+import { HeaderSlidesListState } from "../../../hooks/headerSlides/HeaderSlidesListState";
 import styles from "./headerSlidesList.module.scss";
 
 const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
-  const [slidesId, setSlidesId] = useState(null);
-  const [editedSlides, setEditedSlides] = useState({});
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [activeInput, setActiveInput] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
-  const [slidesToDelete, setSlidesToDelete] = useState(null);
-  const [confirmDeleteSlides, setConfirmDeleteSlides] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const fetchSlides = async () => {
-    setLoading(true);
-
-    try {
-      const response = await fetch("https://api.salon-era.ru/stockfiles/all");
-
-      if (!response.ok) throw new Error("Ошибка при получении данных");
-      const data = await response.json();
-
-      const filteredAndSortedData = data
-        .filter((slides) => slides.category === "8")
-        .sort((a, b) => a.id - b.id);
-
-      setSlides(filteredAndSortedData);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchSlides();
-  }, []);
-
-  if (!slides.length) {
-    return <p className={styles.message}>Список слайдов пуст.</p>;
-  }
-
-  const handleDelete = async (id) => {
-    setLoading(true);
-    if (slidesToDelete === null) return;
-    try {
-      const response = await fetch(
-        `https://api.salon-era.ru/stockfiles?id=${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) throw new Error("Ошибка при удалении работы");
-
-      setSlides((prevSlides) => prevSlides.filter((slide) => slide.id !== id));
-      closeMessageDeleteSlide();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-      document.body.style.overflow = "scroll";
-    }
-  };
-  const handleSave = async (id) => {
-    setLoading(true);
-
-    const serviceToUpdate = { ...editedSlides, id };
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        ...serviceToUpdate,
-      })
-    );
-
-    if (selectedFile) {
-      formData.append("imageData", selectedFile, selectedFile.name);
-    }
-
-    try {
-      const response = await fetch(
-        `https://api.salon-era.ru/stockfiles/update`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        throw new Error(`Ошибка при сохранении услуги: ${errorMessage}`);
-      }
-
-      setSlides((prevSlides) =>
-        prevSlides.map((slides) => (slides.id === id ? editedSlides : slides))
-      );
-      setSlidesId(null);
-      setEditedSlides({});
-    } catch (error) {
-      console.error("Ошибка:", error);
-    } finally {
-      setLoading(false);
-      window.location.reload();
-    }
-  };
-
-  const showMessageDeleteSlide = (id) => {
-    setSlidesToDelete(id);
-    setConfirmDeleteSlides(true);
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeMessageDeleteSlide = () => {
-    setSlidesToDelete(null);
-    setConfirmDeleteSlides(false);
-    document.body.style.overflow = "scroll";
-  };
-
-  const handleEdit = (slides) => {
-    setSlidesId(slides.id);
-    setEditedSlides(slides);
-  };
-
-  const deletImagePreview = () => {
-    setImagePreview(null);
-  };
-
-  const uploadImage = (event) => {
-    const files = event?.target?.files;
-    if (!files || files.length === 0) {
-      console.error("Файлы не найдены или пусты");
-      return;
-    }
-
-    const file = files[0];
-    setSelectedFile(file);
-
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Выберите файл изображения.");
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedSlides((prev) => ({ ...prev, [name]: value }));
-  };
+  const {
+    slidesId,
+    editedSlides,
+    activeInput,
+    imagePreview,
+    slidesToDelete,
+    confirmDeleteSlides,
+    loading,
+    setSlidesId,
+    setActiveInput,
+    handleDelete,
+    handleSave,
+    handleEdit,
+    showMessageDeleteSlide,
+    closeMessageDeleteSlide,
+    deletImagePreview,
+    uploadImage,
+    handleChange,
+  } = HeaderSlidesListState(setSlides);
 
   if (loading) {
     return <Spinner />;
@@ -190,6 +59,7 @@ const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
                       onChange={handleChange}
                       className={styles["description"]}
                     />
+
                     <ImagePreview
                       deletImagePreview={deletImagePreview}
                       imagePreview={imagePreview}

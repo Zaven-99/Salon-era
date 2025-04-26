@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import CustomButton from "../../customButton/CustomButton";
 import EmployeeList from "./employeeList/EmployeeList";
 import Modal from "../../modal/Modal";
 import Spinner from "../../spinner/Spinner";
-
+import { EmployeeFieldState } from "../../hooks/employee/EmployeeFieldState";
 import styles from "./employeeField.module.scss";
 import AddEmployee from "./addEmployee/AddEmployee";
 
@@ -27,73 +27,20 @@ const EmployeeField = () => {
     },
   });
 
-  const [showHelpModal, setShowHelpModal] = useState(false);
-  const [addEmployee, setAddEmployee] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [employee, setEmployee] = useState([]);
-  const [positions, setPositions] = useState([]);
-
-  const fetchPosition = async () => {
-    try {
-      const response = await fetch("https://api.salon-era.ru/catalogs/all");
-
-      if (!response.ok) {
-        throw new Error(`Ошибка http! статус: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      setPositions(data);
-    } catch {
-      console.log("error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosition();
-  }, []);
-  const positionOptions = positions.filter(
-    (item) => item.category === "Должность"
-  );
-
-  const getPositionTextById = (id) => {
-    const categoryId = Number(id);
-    const category = positions.find((item) => item.id === categoryId);
-    return category ? category.value : "Категория не найдена";
-  };
-
-  const toggleHelpModal = () => {
-    setShowHelpModal(!showHelpModal);
-  };
-
-  const handleKeyDown = (e) => {
-    const value = e.target.value;
-
-    if (value === "+7" && e.key === "Backspace") {
-      e.preventDefault();
-      return;
-    }
-
-    if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
-      e.preventDefault();
-      return;
-    }
-
-    if (value.length >= 12 && e.key !== "Backspace") {
-      e.preventDefault();
-    }
-  };
-
-  const toggleOpen = () => {
-    setAddEmployee(true);
-    document.body.style.overflow = "hidden";
-  };
-  const toggleClose = () => {
-    setAddEmployee(false);
-    document.body.style.overflow = "scroll";
-  };
+  const {
+    showHelpModal,
+    addEmployee,
+    loading,
+    employee,
+    positions,
+    toggleHelpModal,
+    handleKeyDown,
+    toggleOpen,
+    toggleClose,
+    setEmployee,
+    setLoading,
+    getPositionTextById,
+  } = EmployeeFieldState();
 
   if (loading) {
     return <Spinner />;
@@ -116,7 +63,7 @@ const EmployeeField = () => {
             toggleHelpModal={toggleHelpModal}
             showHelpModal={showHelpModal}
             handleKeyDown={handleKeyDown}
-            positionOptions={positionOptions}
+            positions={positions}
             loading={loading}
           />
         </Modal>
@@ -132,7 +79,7 @@ const EmployeeField = () => {
         toggleOpen={toggleOpen}
         toggleClose={toggleClose}
         handleKeyDown={handleKeyDown}
-        positionOptions={positionOptions}
+        positions={positions}
         getPositionTextById={getPositionTextById}
       />
     </div>

@@ -12,7 +12,7 @@ const ImagePreview = ({ imagePreview, deletImagePreview }) => {
             <img
               src={imagePreview}
               alt="Preview"
-              style={{ width: "70px", height: "auto" }}
+              style={{ width: "70px", height: "auto", borderRadius: "4px" }}
             />
 
             <CustomButton

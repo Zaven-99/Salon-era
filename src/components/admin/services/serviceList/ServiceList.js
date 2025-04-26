@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../../modal/Modal";
 import BtnBlock from "../../../btnBlock/BtnBlock";
@@ -6,13 +6,14 @@ import EditModal from "./editModal/EditModal";
 import ServiceBlock from "./serviceBlock/ServiceBlock";
 import styles from "./servicesList.module.scss";
 import Spinner from "../../../spinner/Spinner";
+import { ServiceListState } from "../../../hooks/services/ServiceListState";
 
 const ServiceList = ({
   services,
   setServices,
   toggleClose,
   toggleOpen,
-  categoryOptions,
+  categories,
   getCategoryTextById,
   dur,
   durationToText,
@@ -31,86 +32,23 @@ const ServiceList = ({
       imageLink: "",
     },
   });
-  const [serviceId, setServiceId] = useState(null);
-  const [editedService, setEditedService] = useState({});
-  const [confirmDeleteService, setConfirmDeleteService] = useState(false);
-  const [serviceToDelete, setServiceToDelete] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const genderMap = { 0: "Женский", 1: "Мужской" };
-
-  const getGenderText = (gender) => genderMap[gender];
-
-  const fetchServices = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("https://api.salon-era.ru/services/all");
-      if (!response.ok) throw new Error("Ошибка при получении услуг");
-      const data = await response.json();
-      setServices(data);
-       
-    } catch (error) {
-      setError("Ошибка при загрузке услуг");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      await fetchServices();
-    })();
-  }, []);
-
-  const handleDelete = async (id) => {
-    setLoading(true);
-    if (serviceToDelete === null) return;
-    try {
-      const response = await fetch(
-        `https://api.salon-era.ru/services?id=${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) throw new Error("Ошибка при удалении услуги");
-      setServices((prevServices) =>
-        prevServices.filter((service) => service.id !== id)
-      );
-    } catch (error) {
-    } finally {
-      setLoading(false);
-      document.body.style.overflow = "scroll";
-    }
-  };
-
-  const handleEdit = (service) => {
-    setServiceId(service.id);
-    setEditedService(service);
-  };
-
-  const groupedServices = services.reduce((acc, service) => {
-    const { category, gender } = service;
-    if (!acc[gender]) acc[gender] = {};
-    if (!acc[gender][category]) acc[gender][category] = [];
-    acc[gender][category].push(service);
-    return acc;
-  }, {});
-
-  if (!Object.keys(groupedServices).length) {
-    return <p className={styles.message}>Список услуг пуст.</p>;
-  }
-
-  const showMessageDeleteService = (id) => {
-    setServiceToDelete(id);
-    setConfirmDeleteService(true);
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeMessageDeleteService = () => {
-    setServiceToDelete(null);
-    setConfirmDeleteService(false);
-    document.body.style.overflow = "scroll";
-  };
+  const {
+    serviceId,
+    editedService,
+    confirmDeleteService,
+    serviceToDelete,
+    loading,
+    setServiceId,
+    setEditedService,
+    getGenderText,
+    handleDelete,
+    handleEdit,
+    showMessageDeleteService,
+    closeMessageDeleteService,
+    setLoading,
+    groupedServices,
+  } = ServiceListState(setError, setServices, services);
 
   if (loading) {
     return <Spinner />;
@@ -147,7 +85,7 @@ const ServiceList = ({
                           setEditedService={setEditedService}
                           toggleClose={toggleClose}
                           service={service}
-                          categoryOptions={categoryOptions}
+                          categories={categories}
                           dur={dur}
                         />
                       </Modal>

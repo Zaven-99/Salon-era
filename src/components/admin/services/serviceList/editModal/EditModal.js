@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import CustomSelect from "../../../../customSelect/CustomSelect";
 import CustomInput from "../../../../customInput/CustomInput";
 
+import { EditModalState } from "../../../../hooks/services/editModalState";
 import styles from "./editModal.module.scss";
 import BtnBlock from "../../../../btnBlock/BtnBlock";
 const EditModal = ({
@@ -13,7 +14,7 @@ const EditModal = ({
   setServiceId,
   setEditedService,
   toggleClose,
-  categoryOptions,
+  categories,
   service,
   dur,
 }) => {
@@ -22,48 +23,17 @@ const EditModal = ({
     reset,
     formState: { errors },
   } = useForm({});
-  const [activeInput, setActiveInput] = useState("");
 
-  const handleSave = async (id) => {
-    setLoading(true);
-
-    const serviceToUpdate = { ...editedService, id };
-    const formData = new FormData();
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        ...serviceToUpdate,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/services/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Ошибка при сохранении услуги");
-
-      setServices((prevServices) =>
-        prevServices.map((service) =>
-          service.id === id ? editedService : service
-        )
-      );
-      setServiceId(null);
-      setEditedService({});
-      toggleClose();
-      reset();
-    } catch (error) {
-    } finally {
-      setLoading(false);
-      // window.location.reload();
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedService((prev) => ({ ...prev, [name]: value }));
-  };
+  const { activeInput, setActiveInput, handleSave, handleChange } =
+    EditModalState({
+      editedService,
+      setEditedService,
+      setLoading,
+      setServices,
+      setServiceId,
+      toggleClose,
+      reset,
+    });
 
   return (
     <div>
@@ -113,7 +83,7 @@ const EditModal = ({
             control={control}
             valueType="id"
             name="category"
-            map={categoryOptions}
+            map={categories}
           />
         )}
       />
