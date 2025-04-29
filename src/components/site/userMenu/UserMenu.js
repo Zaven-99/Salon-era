@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./userMenu.module.scss";
 import { useAuth } from "../../../use-auth/use-auth";
 import { NavLink } from "react-router-dom";
-import Spinner from '../../spinner/Spinner'
+import Spinner from "../../spinner/Spinner";
 import avatar from "../../../img/icons/avatar.png";
 import notification from "../../../img/icons/notifications.png";
 import CustomButton from "../../customButton/CustomButton";
@@ -11,13 +11,13 @@ import useOrders from "../../hooks/userMenu/UseOrders";
 const UserMenu = ({ openProfile }) => {
   const { id, firstName, lastName, imageLink } = useAuth();
 
-  const { handleImageChange, loading, } = useImageUpload(id, firstName);
+  const { handleImageChange, loading } = useImageUpload(id, firstName);
   const { order, toggleNotification, statusViewedCount, isOpenNotification } =
     useOrders(id);
 
-    if(loading){
-      return <Spinner/>
-    }
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className={styles["user-menu"]}>

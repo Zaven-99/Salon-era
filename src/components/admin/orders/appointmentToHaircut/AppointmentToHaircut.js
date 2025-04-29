@@ -16,9 +16,9 @@ import Spinner from "../../../spinner/Spinner";
 import styles from "./appointmentToHaircut.module.scss";
 
 const AppointmentToHaircut = ({
-  setAddOrderModal,
   toggleOpen,
   addOrderModal,
+  setAddOrderModal,
 }) => {
   useForm({
     mode: "onChange",
@@ -61,7 +61,8 @@ const AppointmentToHaircut = ({
     handleDelete,
     closeMessageDeleteClients,
     handleKeyDown,
-  } = AppointmentToHaircutState({ setAddOrderModal });
+    // addOrderModal,
+  } = AppointmentToHaircutState({ addOrderModal, setAddOrderModal });
 
   if (loading) {
     return <Spinner />;

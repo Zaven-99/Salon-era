@@ -132,6 +132,17 @@ select{
   text-align: center;
   // color:
 }
+.orders{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+.count{
+  background-color:#f63c27;
+  font-size: 25px;
+  border-radius:50%;
+  padding:5px 15px;
+}
 @keyframes clickAnimation {
   0% {
     transform: scale(1);

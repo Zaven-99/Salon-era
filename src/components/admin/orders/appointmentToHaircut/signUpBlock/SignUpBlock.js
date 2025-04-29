@@ -1,13 +1,12 @@
-import React  from "react";
+import React from "react";
 import CustomButton from "../../../../customButton/CustomButton";
 import CustomInput from "../../../../customInput/CustomInput";
 import { SignUpBlockState } from "../../../../hooks/orders/SignUpBlockState";
-
+import Spinner from "../../../../spinner/Spinner";
 import styles from "./signUpBlock.module.scss";
 
 const SignUpBlock = ({
   setSuccesSignUp,
-  setLoading,
   setClient,
   setOfferModal,
   activeInput,
@@ -23,12 +22,16 @@ const SignUpBlock = ({
     setErrorMessages,
     onSubmit,
     toggleCloseOfferModal,
+    loading,
   } = SignUpBlockState({
     setSuccesSignUp,
-    setLoading,
+
     setClient,
     setOfferModal,
   });
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles["modal-content"]}>

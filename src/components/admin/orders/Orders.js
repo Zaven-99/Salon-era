@@ -6,7 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ru } from "date-fns/locale";
 import OrderItem from "./orderItem/OrderItem.js";
 import Spinner from "../../spinner/Spinner.js";
-import { OrdersState } from "../../hooks/orders/OrdersState.js";
+import { useOrdersState } from "../../hooks/orders/OrdersState.js";
+import { ToastContainer } from "react-toastify"; // Импортируем ToastContainer
 
 import styles from "./order.module.scss";
 
@@ -22,23 +23,26 @@ const Orders = () => {
     setSelectedDate,
     addOrderModal,
     setAddOrderModal,
-    notificationVisible,
     toggleOpen,
     filterOrdersByDate,
     formatDate,
     setError,
-  } = OrdersState();
+  } = useOrdersState();
 
   if (error) return <div className={styles.error}>Ошибка: {error}</div>;
   if (loading) return <Spinner />;
   return (
     <div>
+      <ToastContainer
+        position="top-right" // Позиция уведомлений (можно изменить)
+        autoClose={5000} // Время, через которое уведомление автоматически исчезнет
+        hideProgressBar={true} // Показывать ли прогресс-бар
+        newestOnTop={false} // Уведомления сверху или снизу
+        closeOnClick // Закрытие по клику
+        rtl={false} // Для RTL языков, можно сделать true, если нужен арабский/иудейский стиль
+      />
       {error && <p>Ошибка: {error}</p>}
       <h1 className={styles["orders-today"]}>Заказы</h1>
-
-      {notificationVisible && (
-        <div className={styles.notification}>Новый заказ!</div>
-      )}
 
       <div className={styles.wrapper}>
         <DatePicker

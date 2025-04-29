@@ -38,7 +38,7 @@ export const SignInFormState = ({ toggleClose }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer true",
+          // Authorization: "Bearer true",
         },
         body: JSON.stringify(formValues),
       });

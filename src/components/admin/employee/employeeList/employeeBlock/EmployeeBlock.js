@@ -13,9 +13,9 @@ const EmployeeBlock = ({ employee, formatDate, getGenderText }) => {
         <strong>Фамилия:</strong>
         <div>{employee.lastName}</div>
       </div>
-      <div className={styles["employee-item__inner"]}>
+      {/* <div className={styles["employee-item__inner"]}>
         <strong>Логин:</strong> <div>{employee.login}</div>
-      </div>
+      </div> */}
 
       <div className={styles["employee-item__inner"]}>
         <strong>Email:</strong> <div>{employee.email}</div>
@@ -24,7 +24,7 @@ const EmployeeBlock = ({ employee, formatDate, getGenderText }) => {
         <strong>Телефон:</strong> <div>{employee.phone}</div>
       </div>
       <div className={styles["employee-item__inner"]}>
-        <strong>Дата:</strong>
+        <strong className={styles.date}>Дата:</strong>
         <div>{formatDate(employee.dateWorkIn)}</div>
       </div>
 

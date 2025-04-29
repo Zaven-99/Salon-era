@@ -1,14 +1,16 @@
 import { useMemo, useCallback, useState } from "react";
-
+import { useDispatch } from "react-redux"; // Импортируем useDispatch для отправки экшенов
+import { removeOrder } from "../../../store/slices/orderSlice";
 export const OrderItemState = ({
   filteredOrders,
   setOrders,
   setError,
   formatDate,
 }) => {
+  const dispatch = useDispatch();
   const [editingPriceId, setEditingPriceId] = useState(null);
   const [newPrice, setNewPrice] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const getHourText = useCallback((hours) => {
     if (hours === 1) return "час";
     if (hours >= 2 && hours <= 4) return "часа";
@@ -27,6 +29,20 @@ export const OrderItemState = ({
     [getHourText]
   );
 
+  const fetchOrderById = useCallback(async (id) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`https://api.salon-era.ru/records/id?id=${id}`);
+      if (!res.ok) throw new Error(await res.text());
+      return await res.json();
+    } catch (err) {
+      console.warn("Ошибка при получении заказа:", err);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const updateOrderStatus = useCallback(
     async (order, status) => {
       const formData = new FormData();
@@ -35,6 +51,7 @@ export const OrderItemState = ({
         JSON.stringify({ id: order.record.id, status })
       );
       try {
+        setLoading(true);
         const response = await fetch(
           `https://api.salon-era.ru/records/update`,
           {
@@ -43,17 +60,23 @@ export const OrderItemState = ({
           }
         );
         if (!response.ok) throw new Error(await response.text());
-        const updatedOrder = await response.json();
+
+        const updated = await fetchOrderById(order.record.id);
+        if (!updated) throw new Error("Не удалось загрузить обновлённый заказ");
+
         setOrders((prev) =>
-          prev.map((o) => (o.record.id === updatedOrder.id ? updatedOrder : o))
+          prev.map((o) =>
+            o.record.id === updated.id ? { ...o, record: updated } : o
+          )
         );
       } catch (error) {
         setError(error.message || "Неизвестная ошибка");
       } finally {
+        setLoading(false);
         window.location.reload();
       }
     },
-    [setOrders, setError]
+    [setOrders, setError, fetchOrderById]
   );
 
   const updateOrderPrice = useCallback(
@@ -61,10 +84,7 @@ export const OrderItemState = ({
       const formData = new FormData();
       formData.append(
         "clientData",
-        JSON.stringify({
-          id: orderId,
-          price: Number(price),
-        })
+        JSON.stringify({ id: orderId, price: Number(price) })
       );
       try {
         const response = await fetch(
@@ -75,12 +95,13 @@ export const OrderItemState = ({
           }
         );
         if (!response.ok) throw new Error(await response.text());
-        const updatedOrder = await response.json();
+
+        const updated = await fetchOrderById(orderId);
+        if (!updated) throw new Error("Не удалось загрузить обновлённый заказ");
+
         setOrders((prev) =>
           prev.map((o) =>
-            o.record.id === updatedOrder.id
-              ? { ...o, record: { ...o.record, price: updatedOrder.price } }
-              : o
+            o.record.id === updated.id ? { ...o, record: updated } : o
           )
         );
       } catch (error) {
@@ -90,7 +111,7 @@ export const OrderItemState = ({
         setNewPrice("");
       }
     },
-    [setOrders, setError]
+    [setOrders, setError, fetchOrderById]
   );
 
   const acceptOrder = useCallback(
@@ -99,13 +120,19 @@ export const OrderItemState = ({
   );
 
   const closeOrder = useCallback(
-    (order) => updateOrderStatus(order, 500),
-    [updateOrderStatus]
+    (order) => {
+      updateOrderStatus(order, 500);
+      dispatch(removeOrder(order.record.id)); // Удаляем заказ из Redux
+    },
+    [updateOrderStatus, dispatch]
   );
 
   const cancelOrder = useCallback(
-    (order) => updateOrderStatus(order, 400),
-    [updateOrderStatus]
+    (order) => {
+      updateOrderStatus(order, 400);
+      dispatch(removeOrder(order.record.id)); // Удаляем заказ из Redux
+    },
+    [updateOrderStatus, dispatch]
   );
 
   const groupOrdersByDate = useCallback(
@@ -137,6 +164,6 @@ export const OrderItemState = ({
     newPrice,
     setNewPrice,
     updateOrderPrice,
+    loading,
   };
 };
-

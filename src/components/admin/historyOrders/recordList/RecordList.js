@@ -70,8 +70,10 @@ const RecordList = ({ orders, formatDate }) => {
               <strong>Цена:</strong>
               <div>
                 {order.record?.price
-                  ? `${order.record.price} р.`
-                  : "Цена недоступна"}
+                  ? `${order.record.price}р.`
+                  : order.service?.priceLow
+                  ? `${order.service.priceLow}р.`
+                  : "цена недоступна"}
               </div>
             </div>
 

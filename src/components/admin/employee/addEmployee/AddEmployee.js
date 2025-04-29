@@ -49,7 +49,7 @@ const AddEmployee = ({
   } = AddEmployeeState({ setLoading, setEmployee, toggleClose });
 
   if(loading){
-    return <Spinner/>
+    return  <Spinner/>
   }
 
   return (

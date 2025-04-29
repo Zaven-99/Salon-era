@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 export const SignUpBlockState = ({
   setSuccesSignUp,
-  setLoading,
+  // setLoading,
   setClient,
   setOfferModal,
 }) => {
@@ -24,7 +24,7 @@ export const SignUpBlockState = ({
   });
 
   const [errorMessages, setErrorMessages] = useState(false);
-
+  const [loading,setLoading] = useState(false)
   const generateRandomString = (length) => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -108,5 +108,6 @@ export const SignUpBlockState = ({
     setErrorMessages,
     onSubmit,
     toggleCloseOfferModal,
+    loading,
   };
 };

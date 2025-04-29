@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 
 import styles from "./calendarBlock.module.scss";
+import Spinner from "../../../../spinner/Spinner";
 
 const CalendarBlock = ({
   setSelectedTime,
@@ -12,8 +13,10 @@ const CalendarBlock = ({
   const [date, setDate] = useState(new Date());
   const [availableSlots, setAvailableSlots] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchDate = async (selectedDate) => {
+    setLoading(true);
     if (!selectedBarber) return;
 
     const sumDuration = selectedServices.reduce(
@@ -62,6 +65,8 @@ const CalendarBlock = ({
       }
     } catch (error) {
       alert(`Произошла ошибка при получении данных. ${error}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,6 +90,10 @@ const CalendarBlock = ({
     selectedDate.setDate(fullDate.getDate());
     setSelectedTime(selectedDate);
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div>

@@ -18,10 +18,18 @@ const ServiceBlock = ({ service, durationToText, getGenderText }) => {
         </div>
       </div>
       <div className={styles["service-item__inner"]}>
-        <strong>Описание:</strong> <div>{service.description}</div>
+        <strong>Описание:</strong>{" "}
+        <div>
+          {service.description ? (
+            service.description
+          ) : (
+            <div className={styles['no-desc']}>Описание отсутствует</div>
+          )}
+        </div>
       </div>
       <div className={styles["service-item__inner"]}>
-        <strong>Продолжительность:</strong> <div>{durationToText(service.duration)}</div>
+        <strong>Продолжительность:</strong>{" "}
+        <div>{durationToText(service.duration)}</div>
       </div>
       <div className={styles["service-item__inner"]}>
         <strong>Пол:</strong>

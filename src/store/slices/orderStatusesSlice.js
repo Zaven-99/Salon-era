@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   statuses: [], 
 };
-console.log(initialState.statuses)
+
  
 const orderStatusesSlice = createSlice({
   name: "orderStatuses",

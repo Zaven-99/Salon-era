@@ -1,8 +1,6 @@
 import React from "react";
-
 import Modal from "../../../modal/Modal";
 import Spinner from "../../../spinner/Spinner";
-
 import styles from "./employeeList.module.scss";
 import avatarImg from "../../../../img/icons/avatar.png";
 import BtnBlock from "../../../btnBlock/BtnBlock";

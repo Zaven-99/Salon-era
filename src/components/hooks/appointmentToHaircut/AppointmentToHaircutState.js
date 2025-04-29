@@ -18,7 +18,7 @@ export const AppointmentToHaircutState = ({ setAddOrderModal }) => {
   const [clientToDelete, setClientToDelete] = useState(null);
   const [confirmDeleteClient, setConfirmDeleteClient] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  // const [addOrderModal, setAddOrderModal] = useState(false);
   const [categories, setCategories] = useState([]);
   const [barbers, setBarbers] = useState([]);
 
@@ -241,6 +241,5 @@ export const AppointmentToHaircutState = ({ setAddOrderModal }) => {
     handleDelete,
     closeMessageDeleteClients,
     handleKeyDown,
-    setAddOrderModal,
   };
 };

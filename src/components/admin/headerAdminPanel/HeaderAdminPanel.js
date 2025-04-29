@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 import MenuSideBtn from "../../menuSideBtn/MenuSideBtn";
 import MenuSide from "../../menuSide/MenuSide";
 import { HeaderAdminPanelState } from "../../hooks/headerAdminPanel/HeaderAdminPanelState";
@@ -15,8 +15,9 @@ const HeaderAdminPanel = () => {
     showOtherModal,
     handleOtherModal,
     handleLogout,
-    orderCount,
   } = HeaderAdminPanelState();
+
+  const orders = useSelector((state) => state.order.orders);
 
   const menuItems = [
     { path: "/adminPanel/orders", label: "Заказы" },
@@ -52,7 +53,7 @@ const HeaderAdminPanel = () => {
           <NavLink to="/adminPanel/orders">
             <li className={styles["orders"]}>
               Заказы
-              <span className={styles["create-orders"]}>{orderCount}</span>
+              <span className={styles["create-orders"]}>{orders.length}</span>
             </li>
           </NavLink>
           <NavLink to="/adminPanel/history-orders">

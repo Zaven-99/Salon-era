@@ -39,7 +39,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                     </div>
                   </div>
                   <div className={styles["record-item__inner"]}>
-                    <strong>Парикмахер:</strong>
+                    <strong>Мастер:</strong>
                     <div>
                       {order.clientTo
                         ? `${order.clientTo?.firstName} ${order.clientTo?.lastName}`
@@ -54,14 +54,7 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                         : "Неизвестная услуга"}
                     </div>
                   </div>
-                  <div className={styles["record-item__inner"]}>
-                    <strong>Описание:</strong>
-                    <div>
-                      {order.service
-                        ? order.service?.description
-                        : "Нет описания"}
-                    </div>
-                  </div>
+
                   <div className={styles["record-item__inner"]}>
                     <strong>Цена:</strong>
                     <div>

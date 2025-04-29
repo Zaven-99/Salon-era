@@ -6,7 +6,7 @@ const OrdersAdminPanelPage = () => {
   return (
     <div>
       <HeaderAdminPanel />
-      <Orders/>
+      <Orders />
     </div>
   );
 };
