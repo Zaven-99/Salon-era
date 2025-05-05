@@ -22,6 +22,7 @@ export const OurWorksState = () => {
   };
 
   const fetchCategories = async () => {
+    setLoading(true);
     try {
       const response = await fetch("https://api.salon-era.ru/catalogs/all");
 
@@ -29,29 +30,39 @@ export const OurWorksState = () => {
         throw new Error("Ошибка при получении данных категорий");
 
       const data = await response.json();
-      const categoryObj = data.reduce((acc, category) => {
+
+      const filteredCategories = data.filter((category) => category.id !== 8);
+
+      const categoryObj = filteredCategories.reduce((acc, category) => {
         acc[category.id] = category.value;
         return acc;
       }, {});
 
       setCategoryMap(categoryObj);
-      setCategories(data);
+      setCategories(filteredCategories);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const fetchWorks = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/stockfiles/all");
+      const response = await fetch(
+        "https://api.salon-era.ru/stockfiles/all",
+        {}
+      );
 
       if (!response.ok) throw new Error("Ошибка при получении данных");
 
       const data = await response.json();
-      setWorks(data);
 
-      const grouped = data.reduce((acc, work) => {
+      const filteredData = data.filter((work) => work.category !== "8");
+      setWorks(filteredData);
+
+      const grouped = filteredData.reduce((acc, work) => {
         const categoryId = work.category;
         const categoryName = categoryMap[categoryId];
 

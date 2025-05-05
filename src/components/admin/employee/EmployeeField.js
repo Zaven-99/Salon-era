@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import CustomButton from "../../customButton/CustomButton";
 import EmployeeList from "./employeeList/EmployeeList";
 import Modal from "../../modal/Modal";
-import Spinner from "../../spinner/Spinner";
 import { EmployeeFieldState } from "../../hooks/employee/EmployeeFieldState";
-import styles from "./employeeField.module.scss";
 import AddEmployee from "./addEmployee/AddEmployee";
+
+import styles from "./employeeField.module.scss";
 
 const EmployeeField = () => {
   useForm({
@@ -42,14 +42,10 @@ const EmployeeField = () => {
     getPositionTextById,
   } = EmployeeFieldState();
 
-  if (loading) {
-    return <Spinner />;
-  }
-
   return (
     <div className={styles["employee-field"]}>
       <CustomButton
-        className={styles["gr-btn"]}
+        className={styles["b-btn"]}
         label="Добавить сотрудника"
         onClick={toggleOpen}
       />

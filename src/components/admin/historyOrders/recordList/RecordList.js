@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import styles from "./recordList.module.scss";
 import CustomButton from "../../../customButton/CustomButton";
 
-const RecordList = ({ orders, formatDate }) => {
+import styles from "./recordList.module.scss";
+
+const RecordList = ({ orders, formatDate, loading }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
+
+  
 
   const sortedOrders = [...orders].sort(
     (a, b) => new Date(b.record.dateRecord) - new Date(a.record.dateRecord)

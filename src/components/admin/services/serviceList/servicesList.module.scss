@@ -22,26 +22,24 @@
 	display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #eaeef4;
+    
     padding: $sp-15;
     margin-bottom: $sp-5;
     border-radius:$br-4;
     gap: $sp-10;
     margin: $sp-10;
- 
+    border: 1px solid #00000026;
 }
-
+.service-list__item:hover{
+	 box-shadow: 0 1px 4px -2px;
+}
 .service-list__item p {
 	color: black;
     font-family: $font;
     font-size: $fz-12;
     font-weight: $light;
 }
-.service-list__item:hover{
-	 
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
+
  
 
 strong {

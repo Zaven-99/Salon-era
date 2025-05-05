@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import CryptoJS from "crypto-js";
+import { setUser } from "../../../store/slices/userSlice";
 
 export const SignUpBlockState = ({
   setSuccesSignUp,
-  // setLoading,
   setClient,
   setOfferModal,
 }) => {
@@ -24,7 +26,10 @@ export const SignUpBlockState = ({
   });
 
   const [errorMessages, setErrorMessages] = useState(false);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
   const generateRandomString = (length) => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -40,6 +45,15 @@ export const SignUpBlockState = ({
     return `${username}@${domain}`;
   };
 
+  const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU=";
+  const key = CryptoJS.enc.Base64.parse(base64Key);
+
+  const encryptField = (value) =>
+    CryptoJS.AES.encrypt(value, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7,
+    }).toString();
+
   const onSubmit = async (formValues) => {
     const { gender, patronymic, policy, ...dataToSend } = formValues;
 
@@ -50,7 +64,7 @@ export const SignUpBlockState = ({
         {
           ...dataToSend,
           login: generateRandomString(5),
-          password: "Password123.",
+          password: "Password123..",
           email: generateRandomEmail(),
           gender: parseInt(formValues.gender),
           patronymic: "0",
@@ -75,6 +89,21 @@ export const SignUpBlockState = ({
         const responseData = await response.json();
         setClient(responseData);
       }
+      const data = await response.json();
+
+      const userPayload = {
+        id: data.id,
+        firstName: encryptField(formValues.firstName),
+        lastName: encryptField(formValues.lastName),
+        login: encryptField(formValues.login),
+        email: encryptField(formValues.email),
+        phone: encryptField(formValues.phone),
+        gender: parseInt(formValues.gender),
+        token: true,
+      };
+
+      localStorage.setItem("user", JSON.stringify(userPayload));
+      dispatch(setUser(userPayload));
 
       setSuccesSignUp(true);
       reset();

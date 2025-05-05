@@ -5,9 +5,9 @@ import CustomButton from "../../customButton/CustomButton";
 import "react-datepicker/dist/react-datepicker.css";
 import { ru } from "date-fns/locale";
 import OrderItem from "./orderItem/OrderItem.js";
-import Spinner from "../../spinner/Spinner.js";
 import { useOrdersState } from "../../hooks/orders/OrdersState.js";
-import { ToastContainer } from "react-toastify"; // Импортируем ToastContainer
+import { ToastContainer } from "react-toastify";
+import GenericSkeleton from "../../../utils/Skeleton";
 
 import styles from "./order.module.scss";
 
@@ -29,19 +29,30 @@ const Orders = () => {
     setError,
   } = useOrdersState();
 
+  if (loading) {
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
+  }
+
   if (error) return <div className={styles.error}>Ошибка: {error}</div>;
-  if (loading) return <Spinner />;
+
   return (
     <div>
       <ToastContainer
-        position="top-right" // Позиция уведомлений (можно изменить)
-        autoClose={5000} // Время, через которое уведомление автоматически исчезнет
-        hideProgressBar={true} // Показывать ли прогресс-бар
-        newestOnTop={false} // Уведомления сверху или снизу
-        closeOnClick // Закрытие по клику
-        rtl={false} // Для RTL языков, можно сделать true, если нужен арабский/иудейский стиль
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
       />
-      {error && <p>Ошибка: {error}</p>}
       <h1 className={styles["orders-today"]}>Заказы</h1>
 
       <div className={styles.wrapper}>
@@ -65,7 +76,7 @@ const Orders = () => {
 
         <CustomButton
           onClick={toggleOpen}
-          className={styles["gr-btn"]}
+          className={styles["b-btn"]}
           label="Записать"
         />
       </div>

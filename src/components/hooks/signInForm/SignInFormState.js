@@ -42,7 +42,6 @@ export const SignInFormState = ({ toggleClose }) => {
         },
         body: JSON.stringify(formValues),
       });
-
       if (!response.ok) {
         const errorText = await response.text();
         const statusCode = response.status;
@@ -52,6 +51,8 @@ export const SignInFormState = ({ toggleClose }) => {
       }
 
       const data = await response.json();
+      const token = response.headers.get("Authorization");
+      localStorage.setItem("token", token);
 
       const user = {
         id: data.id,

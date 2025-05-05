@@ -111,7 +111,6 @@ export const HeaderSlidesListState = (setSlides) => {
   };
 
   const uploadImage = async (event) => {
-    console.log("File selected");
     const result = await compressAndPreviewImage(event, {}, setLoading);
     if (result) {
       console.log("Image compressed:", result);

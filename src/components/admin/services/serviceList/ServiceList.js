@@ -4,9 +4,10 @@ import Modal from "../../../modal/Modal";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import EditModal from "./editModal/EditModal";
 import ServiceBlock from "./serviceBlock/ServiceBlock";
-import styles from "./servicesList.module.scss";
-import Spinner from "../../../spinner/Spinner";
 import { ServiceListState } from "../../../hooks/services/ServiceListState";
+import GenericSkeleton from "../../../../utils/Skeleton";
+
+import styles from "./servicesList.module.scss";
 
 const ServiceList = ({
   services,
@@ -51,7 +52,15 @@ const ServiceList = ({
   } = ServiceListState(setError, setServices, services);
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
   }
 
   return (

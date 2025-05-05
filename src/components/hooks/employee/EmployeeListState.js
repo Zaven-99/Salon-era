@@ -44,8 +44,8 @@ export const EmployeeListState = (setEmployee) => {
 
       const decryptedData = uniqueData.map((employee) => {
         const fieldsToDecrypt = [
-          "lastName",
           "firstName",
+          "lastName",
           "login",
           "password",
           "email",

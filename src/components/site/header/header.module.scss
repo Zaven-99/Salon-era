@@ -1,9 +1,6 @@
 @import '../../styles/variables.scss';
 
-.header-inner{
-	background-color:rgb(0,0,0,0.05);
-}
-
+ 
 .navigation {
 	display: flex;
 	justify-content: center;
@@ -46,6 +43,10 @@
   animation:bounce-in .5s;
   margin: $sp-10;
 }
+
+
+
+
 @keyframes bounce-in {
     0%{
         opacity: 0; 

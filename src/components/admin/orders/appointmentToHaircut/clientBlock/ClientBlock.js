@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../../../modal/Modal";
 import ClientInfo from "./clientInfo/ClientInfo";
-
 import BtnBlock from "../../../../btnBlock/BtnBlock";
 import EditForm from "./editForm/EditForm";
 
 import styles from "./clientBlock.module.scss";
+
 const ClientBlock = ({
   setLoading,
   setClientToDelete,
@@ -17,6 +17,7 @@ const ClientBlock = ({
   activeInput,
   setActiveInput,
   handleKeyDown,
+  setClient,
 }) => {
   useForm({
     mode: "onChange",
@@ -61,6 +62,7 @@ const ClientBlock = ({
                 handleKeyDown={handleKeyDown}
                 setLoading={setLoading}
                 client={client}
+                setClient={setClient}
               />
             </Modal>
           ) : (

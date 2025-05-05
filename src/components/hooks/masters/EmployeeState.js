@@ -8,7 +8,7 @@ export const EmployeeState = () => {
   const [error, setError] = useState(null);
   const [positions, setPositions] = useState([]);
 
-  const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU="; 
+  const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU=";
   const key = CryptoJS.enc.Base64.parse(base64Key);
 
   const decryptField = (encryptedValue) => {
@@ -25,6 +25,8 @@ export const EmployeeState = () => {
   };
 
   const fetchPosition = async () => {
+    setLoading(true);
+
     try {
       const response = await fetch(
         "https://api.salon-era.ru/catalogs/all/filter?field=category&state=eq&value=должность"

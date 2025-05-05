@@ -15,25 +15,44 @@
     font-weight: $medium;
     color: salmon;
 }
-.gr-btn{
+.b-btn{
   position: relative;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  transition: background 0.3s;
-  background-color: #b5b5b5;
-  width: $wd-200;
-  margin-top: $sp-35;
-  padding: $sp-15 ;
   margin-left: $sp-10;
-  border-radius:$br-4;
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: max-content;
+  text-align: center;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 35px;
+  width: 200px;
 }
-.gr-btn:hover{
-  transform: scale(1.02);
-  box-shadow: $shadow-small;
-  transition: .2s;
+.b-btn:hover{
+    transform: scale(1.010);
 }
  
+.b2-btn{
+  position: relative;
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: max-content;
+  text-align: center;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 35px;
+  width: 200px;
+}
+.b2-btn:hover{
+    transform: scale(1.010);
+}
 .description{
   display: block;
   width: $wd-100p;

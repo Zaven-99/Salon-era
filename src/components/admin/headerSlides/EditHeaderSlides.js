@@ -38,7 +38,7 @@ const EditHeaderSlides = () => {
   return (
     <div className={styles["slides-field"]}>
       <CustomButton
-        className={styles["gr-btn"]}
+        className={styles["b-btn"]}
         label="Добавить слайды"
         onClick={toggleOpen}
       />
@@ -76,7 +76,7 @@ const EditHeaderSlides = () => {
               onChange={(e) => uploadImage(e, setSelectedFile, setImagePreview)}
             />
             <CustomButton
-              className={styles["gr-btn"]}
+              className={styles["b2-btn"]}
               type="submit"
               label="Добавить слайд"
             />

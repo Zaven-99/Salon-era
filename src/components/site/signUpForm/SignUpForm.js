@@ -1,10 +1,9 @@
 import React from "react";
-import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import Spinner from "../../spinner/Spinner";
 import CustomInput from "../../customInput/CustomInput";
 import CustomButton from "../../customButton/CustomButton";
-import { SignUpFormState } from "../../hooks/signUpForm/SignUpFormState";
+import { useSignUpFormState } from "../../hooks/signUpForm/SignUpFormState";
 import styles from "./signUpForm.module.scss";
 import ImagePreview from "../../imagePreview/ImagePreview";
 
@@ -14,29 +13,6 @@ const SignUpForm = ({
   activeInput,
   setActiveInput,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      login: "",
-      password: "",
-      confirmPassword: "",
-      email: "",
-      phone: "+7",
-      imageLink: "",
-      gender: "",
-    },
-  });
-
-  const password = watch("password");
-
   const {
     showPassword,
     setShowPassword,
@@ -55,7 +31,12 @@ const SignUpForm = ({
     onSubmit,
     imagePreview,
     setErrorMessages,
-  } = SignUpFormState({
+    register,
+    handleSubmit,
+    control,
+    errors,
+    password,
+  } = useSignUpFormState({
     toggleClose,
     toggleShowMessage,
   });
@@ -212,6 +193,7 @@ const SignUpForm = ({
         <ImagePreview
           deletImagePreview={deletImagePreview}
           imagePreview={imagePreview}
+          className={styles.preview}
         />
         <CustomInput
           type="file"
@@ -219,6 +201,7 @@ const SignUpForm = ({
           placeholder="Выберите изображение"
           isActive={activeInput === "imageLink"}
           setActiveInput={setActiveInput}
+          accept="image/*"
           onChange={uploadImage}
         />
 
@@ -244,11 +227,13 @@ const SignUpForm = ({
       <div className={styles["privacy-policy"]}>
         <label className={isDarkMode ? styles["darkmode"] : styles["agree"]}>
           <input
-            value=""
-            name="policy"
+            // value=""
+            // name="policy"
             type="checkbox"
-            checked={policy}
-            onClick={handlePolicyChange}
+            // checked={policy}
+            // onClick={handlePolicyChange}
+            value="true"
+            defaultChecked={false}
             {...register("policy", {
               required: "Вы должны согласиться с политикой конфиденциальности",
             })}

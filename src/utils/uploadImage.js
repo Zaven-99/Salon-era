@@ -26,6 +26,7 @@ export const compressAndPreviewImage = async (
     maxWidthOrHeight: 1920,
     useWebWorker: true,
     initialQuality: 0.8,
+    fileType: file.type,
     ...optionsOverride,
   };
 
@@ -47,3 +48,6 @@ export const compressAndPreviewImage = async (
     setLoading(false); // Прячем спиннер после завершения сжатия
   }
 };
+
+
+ 

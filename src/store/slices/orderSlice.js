@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Загружаем сохранённые заказы и номер заказа из localStorage
 const savedOrders = localStorage.getItem("orders");
 const savedOrderNumber = localStorage.getItem("orderNumber");
 
 const initialState = {
-  orders: savedOrders ? JSON.parse(savedOrders) : [], // Если в localStorage есть заказы, загружаем их
-  orderNumber: savedOrderNumber ? parseInt(savedOrderNumber) : 1, // Если в localStorage есть номер заказа, загружаем его
+  orders: savedOrders ? JSON.parse(savedOrders) : [],
+  orderNumber: savedOrderNumber ? parseInt(savedOrderNumber) : 1,
 };
 
 const orderSlice = createSlice({
@@ -16,13 +15,12 @@ const orderSlice = createSlice({
     saveOrder: (state, action) => {
       const newOrder = {
         ...action.payload,
-        number: state.orderNumber,
+        number: state.orderNumber, // текущий номер
       };
 
       state.orders.push(newOrder);
       state.orderNumber += 1;
 
-      // Сохраняем новые данные в localStorage
       localStorage.setItem("orders", JSON.stringify(state.orders));
       localStorage.setItem("orderNumber", state.orderNumber);
     },
@@ -32,12 +30,11 @@ const orderSlice = createSlice({
       localStorage.removeItem("orders");
       localStorage.removeItem("orderNumber");
     },
-    // Новый экшен для удаления заказа
     removeOrder: (state, action) => {
       state.orders = state.orders.filter(
         (order) => order.record.id !== action.payload
       );
-      localStorage.setItem("orders", JSON.stringify(state.orders)); // Обновляем localStorage
+      localStorage.setItem("orders", JSON.stringify(state.orders));
     },
   },
 });

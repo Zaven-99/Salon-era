@@ -1,10 +1,11 @@
 import React from "react";
-import Spinner from "../../../spinner/Spinner";
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
 import ImagePreview from "../../../imagePreview/ImagePreview";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import { HeaderSlidesListState } from "../../../hooks/headerSlides/HeaderSlidesListState";
+import GenericSkeleton from "../../../../utils/Skeleton";
+
 import styles from "./headerSlidesList.module.scss";
 
 const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
@@ -29,7 +30,15 @@ const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
   } = HeaderSlidesListState(setSlides);
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
   }
 
   return (

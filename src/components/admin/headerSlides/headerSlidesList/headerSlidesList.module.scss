@@ -14,21 +14,23 @@
 .slides-list__item{
   cursor: pointer;
   padding: $sp-15;
-  background: #eaeef4;
+  
   margin-bottom: $sp-5;
   border-radius: $br-4;
 	gap: $sp-10;
+  border: 1px solid #00000026;
  }
+ .slides-list__item:hover{
+  box-shadow:0 1px 4px -2px;
+	 
+}
  .slides-list__item img{
 	width: $wd-100p;
   height: $hg-200;
   object-fit: cover;
   border-radius: $br-4;
 }
-.slides-list__item:hover{
-	box-shadow: $shadow-small;
-	transition: .2s;
-}
+
  
 @keyframes bounce-in {
     0%{

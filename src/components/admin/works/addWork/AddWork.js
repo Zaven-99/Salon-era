@@ -8,9 +8,9 @@ import DeleteCategory from "../addWork/deleteCategory/DeleteCategory";
 import CustomSelect from "../../../customSelect/CustomSelect";
 import { Controller } from "react-hook-form";
 import { AddWorkState } from "../../../hooks/works/AddWorkState";
+import Spinner from "../../../spinner/Spinner";
 
 import styles from "./addWork.module.scss";
-import Spinner from "../../../spinner/Spinner";
 
 const AddWork = ({ setWorks, toggleClose, categories }) => {
   const {
@@ -118,7 +118,7 @@ const AddWork = ({ setWorks, toggleClose, categories }) => {
         )}
       />
       <CustomButton
-        className={styles["gr-btn"]}
+        className={styles["b-btn"]}
         type="submit"
         label="Добавить работу"
       />

@@ -1,12 +1,12 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-
+import { EditModalState } from "../../../../hooks/services/editModalState";
 import CustomSelect from "../../../../customSelect/CustomSelect";
 import CustomInput from "../../../../customInput/CustomInput";
-
-import { EditModalState } from "../../../../hooks/services/editModalState";
-import styles from "./editModal.module.scss";
 import BtnBlock from "../../../../btnBlock/BtnBlock";
+
+import styles from "./editModal.module.scss";
+
 const EditModal = ({
   setLoading,
   editedService,

@@ -1,7 +1,8 @@
 import React from "react";
 import Spinner from "../../../../spinner/Spinner";
+import { ServicesBlockState } from "../../../../hooks/servicesBlock/ServicesBlockState";
+
 import styles from "./servicesBlock.module.scss";
-import { ServicesBlockState } from "../../../../hooks/servicesBlock/ServicesBlockState"; // Импортируем наш хук
 
 const ServicesBlock = ({
   addOrderModal,

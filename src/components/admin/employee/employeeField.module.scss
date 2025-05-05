@@ -9,23 +9,25 @@
   width: $wd-100p;
   margin: $sp-5 auto;
 }
-.gr-btn{
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  transition: background 0.3s;
-  background-color: #b5b5b5;
-  width: $wd-200;
-  margin-top: $sp-35;
-  padding: $sp-15 ;
-  margin-left: $sp-10;
-  border-radius:$br-4;
+.b-btn{
+   
+    position: relative;
+    margin-left: $sp-10;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: $sp-35;
 }
-.gr-btn:hover{
+.b-btn:hover{
   transform: scale(1.02);
 	box-shadow: $shadow-small;
-	transition: .2s;
 }
 
  .registration{
@@ -81,3 +83,4 @@
     opacity: 0;
   }
 }
+ 

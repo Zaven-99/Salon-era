@@ -8,63 +8,45 @@
 	padding: $sp-0 $sp-150;
 }
 .navList .navList-item {
-	color: black;
-	font-size: $fz-20;
-	font-weight: $light;
-	padding: $sp-5;
-	border-radius: $br-4;
+	color:#373736;
+	font-size: 16px;
+	font-weight: 500
+}
+.navList-item.active{
+	color:#e1272b;
 }
 .navList .navList-item:hover{
- 
-	transform: scale(1.01);
-	transition: .2s;
-	opacity: .8;
-	box-shadow: $shadow-small;
+	color: #e1272b;
 }
 .logo{
 	position: absolute;
 	width: $wd-50;
 	left: $sp-140;
 	border-radius:$br-50p;
-
 }
-.logo:hover{
-	transform: scale(1.01);
-	transition: .2s;
-	opacity: .8;
-	box-shadow: $shadow-small;
-	border-radius:$br-50p;
-}
+ 
 .loginBtn{
-	color: black;
+	color: #373736;
 	cursor: pointer;
-	font-size: $fz-20;
-	font-weight: $light;
+	font-size: 16px;
+	font-weight: 500;
 	padding: $sp-15;
 	border-radius: $br-4;
-	background-color:#c9c9c936;;
+	border: 1px solid rgba(0, 0, 0, 0.149019607);
 	margin: $sp-0 $sp-55;
  }
 .loginBtn:hover{
 	transform: scale(1.01);
-	transition: .2s;
-	opacity: .8;
-	box-shadow: $shadow-small;
-
 }
 .address {
-	color: black;
-	font-family: $font;
-	font-size: $fz-20;
-	font-weight: $light;
+	color: #373736;
+	font-size: 16;
+	font-weight: 500;
 	padding: $sp-5;
 	border-radius: $br-4;
 }
 .address:hover{
-	transform: scale(1.01);
-	transition: .2s;
-	opacity: .8;
-	box-shadow: $shadow-small;
+	color: #e1272b;
 }
 
 .wrapper{

@@ -5,7 +5,7 @@ import { compressAndPreviewImage } from "../../../utils/uploadImage";
 
 const useImageUpload = (id, firstName) => {
   const [imagePreview, setImagePreview] = useState(null);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleImageChange = async (event) => {
@@ -30,11 +30,13 @@ const useImageUpload = (id, firstName) => {
       if (!response.ok) throw new Error(await response.text());
 
       const data = await response.json();
-      dispatch(setUser({ ...data.clientFrom, token: true }));
+
+      dispatch(setUser({ ...data, token: true }));
+      localStorage.setItem("user", JSON.stringify({ ...data, token: true }));
     } catch (error) {
       console.error("Ошибка при загрузке изображения:", error);
-    }finally{
-      window.location.reload()
+    } finally {
+      window.location.reload();
     }
   };
 

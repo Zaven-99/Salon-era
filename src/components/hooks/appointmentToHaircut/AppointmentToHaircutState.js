@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearBarber } from "../../../store/slices/barberSlice.js";
 import { clearServices } from "../../../store/slices/serviceSlice.js";
 import CryptoJS from "crypto-js";
+import { setUser } from "../../../store/slices/userSlice";
 
 export const AppointmentToHaircutState = ({ setAddOrderModal }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ export const AppointmentToHaircutState = ({ setAddOrderModal }) => {
   const [clientToDelete, setClientToDelete] = useState(null);
   const [confirmDeleteClient, setConfirmDeleteClient] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  // const [addOrderModal, setAddOrderModal] = useState(false);
   const [categories, setCategories] = useState([]);
   const [barbers, setBarbers] = useState([]);
 
@@ -119,6 +119,12 @@ export const AppointmentToHaircutState = ({ setAddOrderModal }) => {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
+  const encryptField = (value) =>
+    CryptoJS.AES.encrypt(value, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7,
+    }).toString();
+
   const enroll = async () => {
     setLoading(true);
     if (selectedServices.length === 0 || !selectedBarber || !selectedTime) {
@@ -151,6 +157,22 @@ export const AppointmentToHaircutState = ({ setAddOrderModal }) => {
       if (!response.ok) {
         throw new Error("Ошибка при отправке данных на сервер");
       }
+
+      const data = await response.json();
+
+      const userPayload = {
+        id: data.id,
+        firstName: encryptField(data.firstName),
+        lastName: encryptField(data.lastName),
+        login: encryptField(data.login),
+        email: encryptField(data.email),
+        phone: encryptField(data.phone),
+        gender: parseInt(data.gender),
+        token: true,
+      };
+
+      localStorage.setItem("user", JSON.stringify(userPayload));
+      dispatch(setUser(userPayload));
     } catch (error) {
       alert("Извините произошла ошибка!");
     } finally {
@@ -241,5 +263,6 @@ export const AppointmentToHaircutState = ({ setAddOrderModal }) => {
     handleDelete,
     closeMessageDeleteClients,
     handleKeyDown,
+    setLoading,
   };
 };

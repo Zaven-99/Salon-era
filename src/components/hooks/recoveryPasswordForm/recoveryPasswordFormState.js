@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import CryptoJS from "crypto-js"; // Импортируем CryptoJS
 export const RecoverPasswordFormState = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -29,9 +29,9 @@ export const RecoverPasswordFormState = () => {
         if (!response.ok) {
           const errorText = await response.text();
           const statusCode = response.status;
-          if (statusCode === 409) {
+          if (statusCode === 404) {
             setErrorMessage(
-              "Пользователь с таким email уже существует или запрос на восстановление уже отправлен."
+              "Пользователь с таким email не существует"
             );
           } else {
             throw new Error(`Ошибка: ${errorText}`);

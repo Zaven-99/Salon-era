@@ -1,0 +1,14 @@
+@import '../../../../styles/variables.scss';
+
+.news-img{
+	width: $wd-100p;
+	height: $hg-150;
+	object-fit: cover;
+}
+  .main-text{
+  margin: $sp-15 0px $sp-15 0px ;
+ }
+ 
+h2{
+	margin-top: 10px;
+}

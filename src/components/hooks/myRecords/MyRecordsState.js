@@ -1,9 +1,48 @@
 import { useState, useEffect } from "react";
+import CryptoJS from "crypto-js";
 
 export const MyRecordsState = (clientId) => {
   const [order, setOrder] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU=";
+  const key = CryptoJS.enc.Base64.parse(base64Key);
+
+  const decryptField = (encryptedValue) => {
+      try {
+        const decrypted = CryptoJS.AES.decrypt(encryptedValue, key, {
+          mode: CryptoJS.mode.ECB,
+          padding: CryptoJS.pad.Pkcs7,
+        });
+        return decrypted.toString(CryptoJS.enc.Utf8);
+      } catch (e) {
+        // console.error("Ошибка при расшифровке:", e);
+        return "Ошибка";
+      }
+    };
+
+    const decryptOrder = (order) => {
+      const decryptedOrder = { ...order };
+
+      if (order.clientFrom) {
+        decryptedOrder.clientFrom = {
+          ...order.clientFrom,
+          firstName: decryptField(order.clientFrom.firstName),
+          lastName: decryptField(order.clientFrom.lastName),
+        };
+      }
+
+      if (order.clientTo) {
+        decryptedOrder.clientTo = {
+          ...order.clientTo,
+          firstName: decryptField(order.clientTo.firstName),
+          lastName: decryptField(order.clientTo.lastName),
+        };
+      }
+
+      return decryptedOrder;
+    };
 
   const fetchData = async () => {
     setLoading(true);
@@ -21,11 +60,13 @@ export const MyRecordsState = (clientId) => {
 
       const data = await response.json();
 
-      if (!Array.isArray(data)) {
+      const decryptedData = data.map(decryptOrder);
+
+      if (!Array.isArray(decryptedData)) {
         throw new Error("Полученные данные не являются массивом");
       }
 
-      const userOrders = data.filter(
+      const userOrders = decryptedData.filter(
         (order) => order.clientFrom?.id === clientId
       );
       setOrder(userOrders);

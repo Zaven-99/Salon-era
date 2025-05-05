@@ -1,12 +1,13 @@
 import React from "react";
 import Modal from "../../../modal/Modal";
-import Spinner from "../../../spinner/Spinner";
-import styles from "./employeeList.module.scss";
-import avatarImg from "../../../../img/icons/avatar.png";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import EditModal from "./editModal/EditModal";
 import EmployeeBlock from "./employeeBlock/EmployeeBlock";
 import { EmployeeListState } from "../../../hooks/employee/EmployeeListState";
+import GenericSkeleton from "../../../../utils/Skeleton";
+
+import avatarImg from "../../../../img/icons/avatar.png";
+import styles from "./employeeList.module.scss";
 
 const EmployeeList = ({
   employee,
@@ -39,15 +40,22 @@ const EmployeeList = ({
     groupEmployeesByPosition,
   } = EmployeeListState(setEmployee);
 
-  if (loading) return <Spinner />;
-
   const groupedEmployee = groupEmployeesByPosition(employee);
+
+  if (loading) {
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
+  }
 
   if (!Object.keys(groupedEmployee).length) {
     return <p className={styles.message}>Список сотрудников пуст.</p>;
-  }
-  if (loading) {
-    return <Spinner />;
   }
 
   return (

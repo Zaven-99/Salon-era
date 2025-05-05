@@ -22,15 +22,16 @@
 .news-list__item{
   cursor: pointer;
   padding: $sp-15;
-  background: #eaeef4;
   margin-bottom: $sp-5;
   border-radius: $br-4;
 	gap: $sp-10;
   height: max-content;
+  box-shadow:0 1px 4px -2px;
+  
  }
 .news-list__item:hover{
-	box-shadow: $shadow-small;
-	transition: .2s;
+  box-shadow:0 1px 4px -2px;
+ 
 }
 .news-list__item p {
 	color: black;
@@ -38,15 +39,8 @@
   font-size: $fz-15;
   font-weight: $light;
 }
-.news-img{
-	width: $wd-100p;
-  height: $hg-150;
-  object-fit: cover;
-}
  
- .main-text{
-  margin: $sp-15 0px $sp-15 0px ;
- }
+
 
  
 @keyframes bounce-in {

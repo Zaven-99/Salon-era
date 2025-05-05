@@ -1,8 +1,9 @@
 import React from "react";
 
-import styles from "./orderItem.module.scss";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import { OrderItemState } from "../../../hooks/orders/OrderItemState";
+
+import styles from "./orderItem.module.scss";
 
 const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
   const {

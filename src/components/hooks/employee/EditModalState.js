@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { compressAndPreviewImage } from "../../../utils/uploadImage";
-
 export const EditModalState = ({
   setEmployee,
   setEmployeeId,
@@ -34,7 +33,7 @@ export const EditModalState = ({
   const [selectedFile, setSelectedFile] = useState(null);
   const [categories, setCategories] = useState([]);
   const [imagePreview, setImagePreview] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const fetchCategory = async () => {
     try {
       const response = await fetch(
@@ -69,15 +68,14 @@ export const EditModalState = ({
     }));
   };
 
- const uploadImage = async (event) => {
-   console.log("File selected");
-   const result = await compressAndPreviewImage(event, {}, setLoading);
-   if (result) {
-     console.log("Image compressed:", result);
-     setSelectedFile(result.compressedFile);
-     setImagePreview(result.dataUrl);
-   }
- };
+  const uploadImage = async (event) => {
+    const result = await compressAndPreviewImage(event, {}, setLoading);
+    if (result) {
+      console.log("Image compressed:", result);
+      setSelectedFile(result.compressedFile);
+      setImagePreview(result.dataUrl);
+    }
+  };
 
   const deletImagePreview = () => {
     setImagePreview(null);
@@ -86,12 +84,15 @@ export const EditModalState = ({
 
   const handleSave = async (id) => {
     setLoading(true);
-    const formattedDate = `${editedEmployee.dateWorkIn}`;
+
+    const serviceToUpdate = { ...editedEmployee, id };
     const formData = new FormData();
 
     formData.append(
       "clientData",
-      JSON.stringify({ ...editedEmployee, dateWorkIn: formattedDate, id })
+      JSON.stringify({
+        ...serviceToUpdate,
+      })
     );
 
     if (selectedFile) {
@@ -109,8 +110,10 @@ export const EditModalState = ({
         throw new Error(`Ошибка при сохранении: ${errorMessage}`);
       }
 
-      setEmployee((prev) =>
-        prev.map((emp) => (emp.id === id ? editedEmployee : emp))
+      setEmployee((prevEmployee) =>
+        prevEmployee.map((employee) =>
+          employee.id === id ? editedEmployee : employee
+        )
       );
 
       setEmployeeId(null);
@@ -118,8 +121,8 @@ export const EditModalState = ({
     } catch (error) {
       console.error("Ошибка при сохранении:", error);
     } finally {
-      window.location.reload();
       setLoading(false);
+      window.location.reload();
     }
   };
 

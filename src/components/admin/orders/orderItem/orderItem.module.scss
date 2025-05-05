@@ -7,11 +7,16 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-    background: #eaeef4;
+    cursor: pointer;
+    box-shadow:0 1px 4px -2px;
     padding: $sp-15;
     margin-bottom: $sp-5;
     border-radius: $br-4;
 	margin: $sp-10 $sp-10 $sp-10 $sp-10;
+    border: 1px solid #00000026;
+}
+.record-item:hover{
+    transform: scale(1.010);
 }
  
 .record-item__inner div{

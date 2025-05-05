@@ -2,8 +2,10 @@ import React from "react";
 import CustomInput from "../../../../customInput/CustomInput";
 import CustomButton from "../../../../customButton/CustomButton";
 import { SearchClient } from "../../../../hooks/appointmentToHaircut/SearchBlock";
-import styles from "./searchBlock.module.scss";
 import Spinner from "../../../../spinner/Spinner";
+
+import styles from "./searchBlock.module.scss";
+
 
 const SearchBlock = ({
   setClient,
@@ -13,7 +15,7 @@ const SearchBlock = ({
   handleKeyDown,
   setSelectedTime,
 }) => {
-  const { register, errors, loading, handleSearchClients } = SearchClient({
+  const { register, errors, loading, handleSearchClients, } = SearchClient({
     setClient,
     setOfferModal,
   });

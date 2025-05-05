@@ -2,8 +2,8 @@ import React from "react";
 import Spinner from "../../../../spinner/Spinner";
 import CustomButton from "../../../../customButton/CustomButton";
 import { DeleteCategoryState } from "../../../../hooks/works/DeleteCategoryState";
-import styles from "./deleteCategory.module.scss";
 
+import styles from "./deleteCategory.module.scss";
 const DeleteDuration = ({ toggleClose }) => {
   const { category, loading, handleDelete } = DeleteCategoryState({
     toggleClose,

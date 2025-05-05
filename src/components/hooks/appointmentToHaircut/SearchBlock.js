@@ -32,11 +32,17 @@ export const SearchClient = ({ setClient, setOfferModal }) => {
     }
   };
 
+  const token = localStorage.getItem("token");
   const handleSearchClients = async () => {
     setLoading(true);
+
     try {
       const response = await fetch("https://api.salon-era.ru/clients/all", {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -55,8 +61,8 @@ export const SearchClient = ({ setClient, setOfferModal }) => {
         const decryptedClient = { ...foundClient };
 
         fieldsToDecrypt.forEach((field) => {
-          if (decryptedClient[field]) {
-            decryptedClient[field] = decryptField(decryptedClient[field]);
+          if (foundClient[field]) {
+            decryptedClient[field] = decryptField(foundClient[field]);
           }
         });
 
@@ -79,4 +85,3 @@ export const SearchClient = ({ setClient, setOfferModal }) => {
     handleSearchClients,
   };
 };
- 

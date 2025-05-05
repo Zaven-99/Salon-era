@@ -1,14 +1,14 @@
 import React from "react";
-import Spinner from "../../../spinner/Spinner";
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../customInput/CustomInput";
 import CustomSelect from "../../../customSelect/CustomSelect";
 import { Controller, useForm } from "react-hook-form";
 import { WorkListState } from "../../../hooks/works/WorkListState";
-
 import ImagePreview from "../../../imagePreview/ImagePreview";
-import styles from "./workList.module.scss";
 import BtnBlock from "../../../btnBlock/BtnBlock";
+import GenericSkeleton from "../../../../utils/Skeleton";
+
+import styles from "./workList.module.scss";
 
 const WorkList = ({ setWorks, categories, toggleOpen, toggleClose }) => {
   const { control } = useForm({
@@ -40,10 +40,16 @@ const WorkList = ({ setWorks, categories, toggleOpen, toggleClose }) => {
     getCategoryName,
   } = WorkListState(setWorks);
 
-  
-
   if (loading) {
-    return <Spinner />;
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
   }
 
   return (
@@ -51,7 +57,7 @@ const WorkList = ({ setWorks, categories, toggleOpen, toggleClose }) => {
       <h1 className={styles.works}>Работы</h1>
       {Object.entries(groupedWorks).map(
         ([categoryId, worksInCategory], index) => (
-          <div key={index}>
+          <div className={styles.wrapper} key={index}>
             <h3>{getCategoryName(categoryId)}</h3>
             <ul className={styles["work-list__inner"]}>
               {worksInCategory.map((work, index) => (

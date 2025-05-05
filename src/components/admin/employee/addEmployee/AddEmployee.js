@@ -6,11 +6,12 @@ import CustomInput from "../../../customInput/CustomInput";
 import ImagePreview from "../../../imagePreview/ImagePreview";
 import CustomSelect from "../../../customSelect/CustomSelect";
 import { AddEmployeeState } from "../../../hooks/employee/AddEmployeeState";
-import styles from "./addEmployee.module.scss";
 import Modal from "../../../modal/Modal";
 import AddPosition from "./addPosition/AddPosition";
 import DeletePosition from "./deletePosition/DeletePosition";
-import Spinner from '../../../spinner/Spinner';
+import Spinner from "../../../spinner/Spinner";
+
+import styles from "./addEmployee.module.scss";
 
 const AddEmployee = ({
   setLoading,
@@ -48,8 +49,8 @@ const AddEmployee = ({
     loading,
   } = AddEmployeeState({ setLoading, setEmployee, toggleClose });
 
-  if(loading){
-    return  <Spinner/>
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
@@ -256,9 +257,9 @@ const AddEmployee = ({
       <ImagePreview
         deletImagePreview={deletImagePreview}
         imagePreview={imagePreview}
-        className = {styles.preview}
+        className={styles.preview}
       />
-    
+
       <CustomInput
         type="file"
         name="imageLink"
@@ -296,7 +297,7 @@ const AddEmployee = ({
         {...register("gender", { required: "Выберите пол." })}
       />
       <CustomButton
-        className={styles["gr-btn"]}
+        className={styles["b-btn"]}
         type="submit"
         label="Добавить сотрудника"
       />

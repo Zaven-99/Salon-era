@@ -35,8 +35,8 @@ export const useUserMenuState = () => {
 
       const decryptedData = filteredData.map((employee) => {
         const fieldsToDecrypt = [
-          "lastName",
           "firstName",
+          "lastName",
           "login",
           "email",
           "phone",

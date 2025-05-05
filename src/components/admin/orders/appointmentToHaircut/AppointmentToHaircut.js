@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../../../modal/Modal";
+import Modal from "../../../modal/Modal.js";
 import CustomButton from "../../../customButton/CustomButton";
 import BarbersBlock from "./barbersBlock/BarbersBlock.js";
 import ServicesBlock from "./servicesBlock/ServicesBlock.js";
@@ -9,10 +9,9 @@ import ClientBlock from "./clientBlock/ClientBlock.js";
 import SignUpBlock from "./signUpBlock/SignUpBlock.js";
 import BtnBlock from "../../../btnBlock/BtnBlock.js";
 import { useForm } from "react-hook-form";
-
 import { AppointmentToHaircutState } from "./../../../hooks/appointmentToHaircut/AppointmentToHaircutState.js";
-
 import Spinner from "../../../spinner/Spinner";
+
 import styles from "./appointmentToHaircut.module.scss";
 
 const AppointmentToHaircut = ({
@@ -61,12 +60,11 @@ const AppointmentToHaircut = ({
     handleDelete,
     closeMessageDeleteClients,
     handleKeyDown,
-    // addOrderModal,
   } = AppointmentToHaircutState({ addOrderModal, setAddOrderModal });
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <div>
@@ -84,6 +82,7 @@ const AppointmentToHaircut = ({
           <ClientBlock
             setLoading={setLoading}
             setClientToDelete={setClientToDelete}
+            setClient={setClient}
             setConfirmDeleteClient={setConfirmDeleteClient}
             client={client}
             toggleOpen={toggleOpen}

@@ -8,13 +8,17 @@ import notification from "../../../img/icons/notifications.png";
 import CustomButton from "../../customButton/CustomButton";
 import useImageUpload from "../../hooks/userMenu/UseImageUpload";
 import useOrders from "../../hooks/userMenu/UseOrders";
+import { useSelector } from "react-redux";
+ 
 const UserMenu = ({ openProfile }) => {
   const { id, firstName, lastName, imageLink } = useAuth();
+  
 
-  const { handleImageChange, loading } = useImageUpload(id, firstName);
+  const { handleImageChange, loading } = useImageUpload(id);
   const { order, toggleNotification, statusViewedCount, isOpenNotification } =
     useOrders(id);
 
+  const user = useSelector((state) => state.user);
   if (loading) {
     return <Spinner />;
   }
@@ -24,7 +28,7 @@ const UserMenu = ({ openProfile }) => {
       <div className={styles.avatar}>
         <label htmlFor="image-upload">
           <img
-            src={imageLink ? imageLink : avatar}
+            src={imageLink ? user.imageLink : avatar}
             alt="Avatar"
             className={styles.avatarImage}
           />
@@ -32,6 +36,7 @@ const UserMenu = ({ openProfile }) => {
         <input
           id="image-upload"
           type="file"
+          name="imageLink"
           className={styles.imageInput}
           onChange={handleImageChange}
           accept="image/*"

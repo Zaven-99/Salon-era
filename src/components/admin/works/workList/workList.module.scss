@@ -2,6 +2,7 @@
 
  .work-list{
   height: 100vh;
+  
  }
 
 .work-list__inner {
@@ -12,17 +13,16 @@
 }
 
 .work-list__item {
-  background-color: #f0f0f0;
+  border: 1px solid #00000026;
   padding: $sp-5;
   border-radius: $br-8;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
   cursor: pointer;
   object-fit: cover;
   width: 200px;
 }
 .work-list__item:hover{
-	box-shadow: $shadow-small;
-	transition: .2s;
+    box-shadow: 0 1px 4px -2px;
 }
 .work-list__item img{
 	width: $wd-100p;
@@ -100,7 +100,9 @@
   justify-content: space-between;
   align-items:center;
  }
-
+.wrapper{
+  margin-top: 10px;
+}
  @media(max-width:670px){
     .work-list__item{
       width: 100px;

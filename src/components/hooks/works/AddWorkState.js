@@ -63,6 +63,7 @@ export const AddWorkState = (categories, setWorks, toggleClose) => {
 
       setWorks((prevWorks) => [...prevWorks, formData]);
       toggleClose();
+      deletImagePreview()
       reset();
     } catch (error) {
       console.error("Ошибка отправки:", error);

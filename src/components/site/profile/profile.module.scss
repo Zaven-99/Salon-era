@@ -55,45 +55,50 @@
   font-size: $fz-24;
 }
 .logOut{
-	cursor: pointer;
-	text-align: center;
-	background:$bg-grey;
-	padding: $sp-10 $sp-10;
-	border-radius:$br-2;
-  font-weight: $light;
-  font-size: $fz-20;
-  color:white;
+	 
+
+  position: relative;
+  background:$bg-grey;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  padding: 15px;
+  border-radius: $br-2;
+  margin-bottom: $sp-15;
+  margin-top: $sp-10;
+  font-size: 16px;
+  border:1px solid rgba(0, 0, 0, 0.1490196078)
 }
 .logOut:hover{
   transform: scale(1.01);
-	transition: .2s;
-	opacity: .8;
-	box-shadow: $shadow-small;
 }
 
 
 
 .my-records{
-  text-align: center;
+  position: relative;
   background-color: #00aaff;
-  font-family: "Open Sans", sans-serif;
   color: white;
-  font-weight: $light;
-  padding: $sp-10 $sp-10;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  padding: 15px;
   border-radius: $br-2;
   margin-bottom: $sp-15;
   margin-top: $sp-10;
-  font-size: $fz-20;
+  font-size: 16px;
+  border:1px solid rgba(0, 0, 0, 0.1490196078)
 }
  
  .delete-account:hover{
   transform: scale(1.01);
-	opacity: .8;
 	 
  }
 .profile-close:hover {
   color: rgba(255, 0, 0, 0.274);  
-  transition: .2s;
 }
 .profile-close:active {
   color: rgba(255, 0, 0, 0.274);  
@@ -102,15 +107,12 @@
 }
 .my-records:hover{
   transform: scale(1.01);
-	transition: .2s;
-	opacity: .8;
-	box-shadow: $shadow-small;
 }
 .contact-item{
   color: black;
-    font-size: $fz-17;
-    font-weight: $regular;
-    margin-top: $sp-10;
+  font-size: $fz-17;
+  font-weight: $regular;
+  margin-top: $sp-10;
 }
  
 .modal-overlay {
@@ -139,6 +141,17 @@
 
 }
 
+.cancel-delete__clients{
+	color: black;
+  font-family: $font;
+  font-size: $fz-12;
+  font-weight: $regular;
+  padding: $sp-10;
+  height: $hg-50;
+  background-color: #f0526e;
+  border-radius: $br-4;
+  width: $wd-150;
+}
 .delete-clients{
 	color: black;
   font-family: $font;
@@ -146,8 +159,7 @@
   font-weight: $regular;
   padding: $sp-10;
   height: $hg-50;
-  box-shadow: $shadow-small;
-  background-color: #fe5440;
+  background-color: rgb(80, 200, 120);
   border-radius: $br-4;
   width: $wd-150;
 }
@@ -156,18 +168,7 @@
 	box-shadow: $shadow-small;
 	transition: .2s;
 }
-.cancel-delete__clients{
-	color: black;
-  font-family: $font;
-  font-size: $fz-12;
-  font-weight: $regular;
-  padding: $sp-10;
-  height: $hg-50;
-  box-shadow: $shadow-small;
-  background-color: rgb(15 210 15);
-  border-radius: $br-4;
-  width: $wd-150;
-}
+
 .cancel-delete__clients:hover{
 	transform: scale(1.02);
 	box-shadow: $shadow-small;

@@ -4,10 +4,9 @@ import CustomButton from "../../customButton/CustomButton";
 import Modal from "../../modal/Modal";
 import CustomInput from "../../customInput/CustomInput";
 import NewsList from "./newsList/NewsList";
-import Spinner from "../../spinner/Spinner";
 import { NewsFieldState } from "../../hooks/news/NewsFieldState";
-
 import ImagePreview from "../../imagePreview/ImagePreview";
+
 import styles from "./newsField.module.scss";
 
 const News = () => {
@@ -17,7 +16,6 @@ const News = () => {
     errors,
     news,
     setNews,
-    loading,
     addNews,
     toggleOpen,
     toggleClose,
@@ -29,14 +27,10 @@ const News = () => {
     formSubmitHandler,
   } = NewsFieldState();
 
-  if (loading) {
-    return <Spinner />;
-  }
-
   return (
     <div className={styles["news-field"]}>
       <CustomButton
-        className={styles["gr-btn"]}
+        className={styles["b-btn"]}
         label="Добавить новость"
         onClick={toggleOpen}
       />
@@ -90,9 +84,8 @@ const News = () => {
               setActiveInput={setActiveInput}
               onChange={uploadImage}
             />
-
             <CustomButton
-              className={styles["gr-btn"]}
+              className={styles["b2-btn"]}
               type="submit"
               label="Добавить новость"
             />

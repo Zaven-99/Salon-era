@@ -10,10 +10,13 @@
     width: $wd-100p;
     z-index: 25;
     position: absolute;
-    top: -$sp-140;
-    right: $sp-0;
+    // top: -$sp-140;
+    // right: $sp-0;
+    top: -100px;
+    right: 30px;
     animation:bounce-in .5s;
     box-shadow:$shadow-small;
+    
 }
 @keyframes bounce-in {
     0%{

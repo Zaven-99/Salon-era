@@ -6,8 +6,9 @@ import CustomSelect from "../../../customSelect/CustomSelect";
 import AddCategory from "./addCategory/AddCategory";
 import Modal from "../../../modal/Modal";
 import DeleteCategory from "./deleteCategory/DeleteCategory";
-import styles from "./addService.module.scss";
 import { AddServiceState } from "../../../hooks/services/addServiceState";
+
+import styles from "./addService.module.scss";
 
 const AddService = ({
   setLoading,
@@ -176,7 +177,7 @@ const AddService = ({
       />
 
       <CustomButton
-        className={styles["gr-btn"]}
+        className={styles["b-btn"]}
         type="submit"
         label="Добавить услугу"
       />

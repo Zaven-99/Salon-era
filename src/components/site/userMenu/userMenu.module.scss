@@ -2,19 +2,20 @@
 
 
 .user-menu{
-	width:$wd-300;
+	 
+	width:$wd-300;	
+	color: #373736;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
 	padding: $sp-10 $sp-10;
-    background: white;
-    font-family: $font;
-	border-radius: $br-8;
 	display: flex;
-	align-items:center;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.149019607);
 	justify-content: space-evenly;
-	cursor: pointer;
-	
+	align-items:center;
 }
 .user-menu:hover{
-	transition: .2s;
 	box-shadow: $shadow-small;
 }
 
@@ -51,8 +52,7 @@
 	border-radius: $br-50p;
 }
 .avatar:hover{
-	border-radius:$br-50p;
-	box-shadow: $shadow-small;
+	transform: scale(1.010);
 }
 .user-menu{
 	    margin: $sp-0 $sp-20;
@@ -114,22 +114,26 @@
 	background:rgba(200, 200, 15, 0.76);
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius: $br-4;
+	font-size: 15px;
 }
 .accepted{
 	background-color: rgba(15, 210, 15, 0.573);
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius: $br-4;
+	font-size: 15px;
 }
  
 .canceled{
 	background-color: salmon;
     padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius: $br-4;
+	font-size: 15px;
 }
 .closed{
 	background-color: rgb(186, 178, 177);
     padding: $sp-2 $sp-5 $sp-2 $sp-5;
 	border-radius: $br-4;
+	font-size: 15px;
 }
 .all-notifications{
 	color: white;
@@ -149,13 +153,16 @@
     box-shadow: $shadow-small;
 }
 .notifications-item__inner{
-	display: flex;
+	display: flex
+;
     align-items: center;
     gap: 10px;
     padding: 10px 10px;
     background: white;
     border-radius: 2px;
     margin: 5px auto;
+    font-size: 15px;
+    justify-content: center;
 }
 .notifications-item__inner div {
 	border-radius: $br-2;

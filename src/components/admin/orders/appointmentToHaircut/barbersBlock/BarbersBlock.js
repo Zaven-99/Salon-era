@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectChosenBarber } from "../../../../../store/slices/action";
+import Spinner from "../../../../spinner/Spinner";
 
 import styles from "./barbersBlock.module.scss";
-import Spinner from "../../../../spinner/Spinner";
 
 const BarbersBlock = ({ barbers, loading, selectedCategory }) => {
   const dispatch = useDispatch();

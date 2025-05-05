@@ -118,9 +118,14 @@
       text-align: center;
       padding-right: 0;
     }
+
+    .records-list{
+        justify-content: center;
+    }
 }
 @media(max-width:400px){
     .total{
       font-size: $fz-15;
     }
+    
 }

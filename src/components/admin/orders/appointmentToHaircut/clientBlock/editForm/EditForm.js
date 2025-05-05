@@ -1,9 +1,8 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import CustomInput from '../../../../../customInput/CustomInput';
-import BtnBlock from '../../../../../btnBlock/BtnBlock';
- 
-import styles from './editForm.module.scss'
+import CustomInput from "../../../../../customInput/CustomInput";
+import BtnBlock from "../../../../../btnBlock/BtnBlock";
+import { useEditFormState } from "../../../../../hooks/appointmentToHaircut/EditFormState";
+import styles from "./editForm.module.scss";
 
 const EditForm = ({
   setLoading,
@@ -15,59 +14,15 @@ const EditForm = ({
   handleKeyDown,
   client,
 }) => {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      phone: "",
-      gender: "",
-    },
-  });
+  const { register, control, errors, handleChange, handleSave } =
+    useEditFormState({
+      setLoading,
+      editedClient,
+      setEditedClient,
+      setClientId,
+      activeInput,
+    });
 
-  const handleSave = async (id) => {
-    setLoading(true);
-    const formattedDate = `${editedClient.dateWorkIn}`;
-
-    const formData = new FormData();
-
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        ...editedClient,
-        dateWorkIn: formattedDate,
-        id,
-      })
-    );
-
-    try {
-      const response = await fetch(`https://api.salon-era.ru/clients/update`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        throw new Error(`Ошибка при сохранении услуги: ${errorMessage}`);
-      }
-
-      setClientId(null);
-      setEditedClient({});
-    } catch (error) {
-      console.error("Ошибка:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedClient((prev) => ({ ...prev, [name]: value }));
-  };
   return (
     <div>
       <h2>Редактировать</h2>

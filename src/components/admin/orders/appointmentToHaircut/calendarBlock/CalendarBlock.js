@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
+import Spinner from "../../../../spinner/Spinner";
 
 import styles from "./calendarBlock.module.scss";
-import Spinner from "../../../../spinner/Spinner";
 
 const CalendarBlock = ({
   setSelectedTime,

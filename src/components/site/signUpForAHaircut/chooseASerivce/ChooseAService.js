@@ -48,11 +48,11 @@ const ChooseAService = () => {
             return (
               <div key={genderKey}>
                 <span data-aos="fade-right" className={styles.gender}>
-                  {genderKey === "1" ? "Мужские услуги" : "Женские услуги"}
+                  {genderKey === '1' ? "Мужские услуги" : "Женские услуги"}
                 </span>
 
                 {Object.keys(genderServices).map((category) => {
-                  // Приводим category к числу
+                  
                   const selectedInCategory = selectedServices.some(
                     (service) =>
                       Number(service.category) === Number(category) &&

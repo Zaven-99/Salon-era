@@ -6,8 +6,9 @@ import Spinner from "../../spinner/Spinner";
 import BtnBlock from "../../btnBlock/BtnBlock";
 import Modal from "../../modal/Modal";
 import { ScheduleState } from "../../hooks/schedule/ScheduleState";
-import styles from "./schedule.module.scss";
 import Table from "./table/Table";
+
+import styles from "./schedule.module.scss";
 
 const Schedule = () => {
   const {

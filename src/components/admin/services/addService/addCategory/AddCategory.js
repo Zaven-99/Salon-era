@@ -1,11 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
 import CustomInput from "../../../../customInput/CustomInput";
 import CustomButton from "../../../../customButton/CustomButton";
 import Spinner from "../../../../spinner/Spinner";
 import { AddCategoryState } from "../../../../hooks/services/addCategoryState";
+
 import styles from "./addCategory.module.scss";
+
 
 const AddCategory = ({ toggleClose, activeInput, setActiveInput }) => {
   const {

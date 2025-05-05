@@ -35,7 +35,7 @@ select{
     border-radius: $br-2;
     border: $br-1 solid;
     padding: $sp-2;
-    box-shadow: $shadow-small;
+    box-shadow: 0 1px 4px -2px;
     
 }
 .wrapper{
@@ -43,22 +43,24 @@ select{
     align-items:center;
     justify-content: space-between;
 }
-.gr-btn{
+.b-btn{
     position: relative;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    transition: background 0.3s;
-    background-color: #b5b5b5;
-    width: 200px;
-    padding: 15px;
     margin-right: 30px;
-    border-radius: 4px;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
 }
-.gr-btn:hover{
+.b-btn:hover{
   transform: scale(1.02);
 	box-shadow: $shadow-small;
-	transition: .2s;
 }
  
 .enrol-form{
@@ -85,6 +87,47 @@ select{
 }
 .service{
     height: 20px;
+}
+
+.reload{
+  width: 35px;
+  border-radius:50%;
+  padding: 5px;
+}
+.stop-reload{
+  width: 35px;
+  background:#f63c27;
+  animation: clickAnimation 0.3s ease-out;
+  border-radius:50%;
+  padding: 5px;
+}
+.notification{
+  text-align: center;
+}
+.orders{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+.count{
+  background-color:#f63c27;
+  font-size: 25px;
+  border-radius:50%;
+  padding:5px 15px;
+}
+@keyframes clickAnimation {
+  0% {
+    transform: scale(1);
+    background-color: #f63c27;
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: #f63c27;
+  }
+  100% {
+    transform: scale(1);
+    background-color: #f63c27;
+  }
 }
 @media(max-width:1400px){
     .record-list{
@@ -116,47 +159,7 @@ select{
     }
 }
  
-.reload{
-  width: 35px;
-  border-radius:50%;
-  padding: 5px;
-}
-.stop-reload{
-  width: 35px;
-  background:#f63c27;
-  animation: clickAnimation 0.3s ease-out;
-  border-radius:50%;
-  padding: 5px;
-}
-.notification{
-  text-align: center;
-  // color:
-}
-.orders{
-  display: flex;
-  align-items:center;
-  justify-content: center;
-}
-.count{
-  background-color:#f63c27;
-  font-size: 25px;
-  border-radius:50%;
-  padding:5px 15px;
-}
-@keyframes clickAnimation {
-  0% {
-    transform: scale(1);
-    background-color: #f63c27;
-  }
-  50% {
-    transform: scale(1.1);
-    background-color: #f63c27;
-  }
-  100% {
-    transform: scale(1);
-    background-color: #f63c27;
-  }
-}
+
  @media(max-width:520px){
   .orders-today{
     font-size: $fz-20;

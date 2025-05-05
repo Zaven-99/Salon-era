@@ -15,14 +15,13 @@ import HistoryOrdersAdminPanelPage from "./pages/historyOrdersAdminPanelPage/His
 import DatePage from "./pages/datePage/DatePage";
 import OurWorksAdminPanelPage from "./pages/ourWorksAdminPanelPage/OurWorksAdminPanelPage";
 import NewsAdminPanelPage from "./pages/newsAdminPanelPage/NewsAdminPanelPage";
-import ScheduleAdminPanelPage from './pages/scheduleAdminPanelPage/ScheduleAdminPanelPage'
+import ScheduleAdminPanelPage from "./pages/scheduleAdminPanelPage/ScheduleAdminPanelPage";
 import PrivacyPolicyPage from "./pages/privacyPolicyPage/PrivacyPolicyPage";
-
 
 import "./App.css";
 import "./components/styles/reset.css";
 import SlidesAdminPanelPage from "./pages/slidesAdminPanelPage/SlidesAdminPanelPage";
- function App() {
+function App() {
   const dispatch = useDispatch();
   const [openSignInForm, setOpenSignInForm] = useState(false);
   const [isClosing, setIsClosing] = useState(false);

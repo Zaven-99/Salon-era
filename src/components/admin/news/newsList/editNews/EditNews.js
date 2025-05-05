@@ -5,9 +5,9 @@ import ImagePreview from "../../../../imagePreview/ImagePreview";
 import { useForm } from "react-hook-form";
 import Modal from "../../../../modal/Modal";
 import { EditNewsState } from "../../../../hooks/news/EditNewsState";
+import Spinner from "../../../../spinner/Spinner";
 
 import styles from "./editNews.module.scss";
-import Spinner from "../../../../spinner/Spinner";
 
 const EditNews = ({
   editedNews,

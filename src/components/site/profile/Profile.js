@@ -6,6 +6,7 @@ import styles from "./profile.module.scss";
 import CustomButton from "../../customButton/CustomButton";
 import Spinner from "../../spinner/Spinner";
 import recycle from "../../../img/icons/recycle.png";
+import { useSelector } from "react-redux";
 
 const Profile = ({ closeProfile, logOut, isClosing }) => {
   const {
@@ -19,6 +20,9 @@ const Profile = ({ closeProfile, logOut, isClosing }) => {
   } = ProfileState(logOut);
 
   const { phone, email, login, id } = useAuth();
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const user = useSelector((state) => state.user);
 
   if (loading) {
     return <Spinner />;
@@ -39,15 +43,15 @@ const Profile = ({ closeProfile, logOut, isClosing }) => {
       >
         <p className={styles["contact-item"]}>
           <strong>Логин:&nbsp;</strong>
-          {login}
+          {user?.login || storedUser?.login || login}
         </p>
         <p className={styles["contact-item"]}>
           <strong>Номер телефона:&nbsp;</strong>
-          {phone}
+          {user?.phone || storedUser?.phone || phone}
         </p>
         <p className={styles["contact-item"]}>
           <strong>Почта:&nbsp;</strong>
-          {email}
+          {user?.email || storedUser?.email || email}
         </p>
         <CustomButton
           className={styles["profile-close"]}

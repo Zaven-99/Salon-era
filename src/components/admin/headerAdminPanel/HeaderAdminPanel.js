@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import MenuSideBtn from "../../menuSideBtn/MenuSideBtn";
 import MenuSide from "../../menuSide/MenuSide";
 import { HeaderAdminPanelState } from "../../hooks/headerAdminPanel/HeaderAdminPanelState";
+import CustomButton from "../../customButton/CustomButton";
 
 import styles from "./headerAdminPanel.module.scss";
 
@@ -34,9 +35,12 @@ const HeaderAdminPanel = () => {
     <div className={styles["header-admin__panel"]}>
       <div className={styles["header-top"]}>
         <p className={styles.status}>Вы вошли как {clientType}</p>
-        <p onClick={handleLogout} className={styles.logOut}>
-          Выйти
-        </p>
+
+        <CustomButton
+          label="Выйти"
+          onClick={handleLogout}
+          className={styles.logOut}
+        />
       </div>
       <div className={styles.wrapper}>
         <MenuSideBtn
@@ -50,16 +54,39 @@ const HeaderAdminPanel = () => {
           isMenuOpen={isMenuOpen}
         />
         <ul className={styles.navigation}>
-          <NavLink to="/adminPanel/orders">
+          <NavLink
+            to="/adminPanel/orders"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles["navList-item"]} ${styles.active}`
+                : styles["navList-item"]
+            }
+          >
             <li className={styles["orders"]}>
               Заказы
-              <span className={styles["create-orders"]}>{orders.length}</span>
+              <span className={styles["create-orders"]}>
+                <p className={styles["order-length"]}>{orders.length}</p>
+              </span>
             </li>
           </NavLink>
-          <NavLink to="/adminPanel/history-orders">
+          <NavLink
+            to="/adminPanel/history-orders"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles["navList-item"]} ${styles.active}`
+                : styles["navList-item"]
+            }
+          >
             <li>История заказов</li>
           </NavLink>
-          <NavLink to="/adminPanel/schedule">
+          <NavLink
+            to="/adminPanel/schedule"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles["navList-item"]} ${styles.active}`
+                : styles["navList-item"]
+            }
+          >
             <li>График</li>
           </NavLink>
 
@@ -68,19 +95,54 @@ const HeaderAdminPanel = () => {
             {showOtherModal && (
               <div className={styles["other-modal"]}>
                 <ul>
-                  <NavLink to="/adminPanel/employee">
+                  <NavLink
+                    to="/adminPanel/employee"
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${styles["navList-item"]} ${styles.active}`
+                        : styles["navList-item"]
+                    }
+                  >
                     <li>Сотрудники</li>
                   </NavLink>
-                  <NavLink to="/adminPanel/services">
+                  <NavLink
+                    to="/adminPanel/services"
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${styles["navList-item"]} ${styles.active}`
+                        : styles["navList-item"]
+                    }
+                  >
                     <li>Услуги</li>
                   </NavLink>
-                  <NavLink to="/adminPanel/our-works">
+                  <NavLink
+                    to="/adminPanel/our-works"
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${styles["navList-item"]} ${styles.active}`
+                        : styles["navList-item"]
+                    }
+                  >
                     <li>Работы</li>
                   </NavLink>
-                  <NavLink to="/adminPanel/news">
+                  <NavLink
+                    to="/adminPanel/news"
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${styles["navList-item"]} ${styles.active}`
+                        : styles["navList-item"]
+                    }
+                  >
                     <li>Новости</li>
                   </NavLink>
-                  <NavLink to="/adminPanel/slides">
+                  <NavLink
+                    to="/adminPanel/slides"
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${styles["navList-item"]} ${styles.active}`
+                        : styles["navList-item"]
+                    }
+                  >
                     <li>Слайдер</li>
                   </NavLink>
                 </ul>

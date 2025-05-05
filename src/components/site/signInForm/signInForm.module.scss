@@ -8,13 +8,49 @@
 	cursor:pointer;
 	display: flex;
     justify-content: end;
+    border: none;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: 5px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1490196078);
+    border-radius: 2px;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.signUp-btn:hover{
+    transform: scale(1.010);
 }
 .forgot-your-btn{
-    cursor:pointer;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: 5px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1490196078);
+    border-radius: 2px;
+    font-size: 16px;
+    margin-bottom: 5px;
      
+}
+.forgot-your-btn:hover{
+    transform: scale(1.010);
 }
 .back-btn{
 	cursor:pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: 5px 15px;
+    border:1px solid rgba(0, 0, 0, 0.1490196078);
+    border-radius: 2px;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.back-btn:hover{
+    transform: scale(1.010);
 }
 .form-control{
 	background-color:white;

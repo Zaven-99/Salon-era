@@ -4,30 +4,17 @@
 	display: flex;
 	justify-content: space-between;
 	padding: $sp-10 $sp-10;
-	background:#f2f2f2;
 }
  
 .navigation{
 	display: flex;
 	align-items: center;
 	justify-content: start;
-	background-color:#ddddddc7;
 	padding: $sp-10;
 	gap: 50px;
 	box-shadow:3px 1px 2px -1px;
 }
-.navigation li {
-	color:black;
-	font-family:$font;
-	font-weight: $regular;
-	padding: $sp-5;
-	
-	 
-}
-.navigation li:hover{
-	background:#ffffff;
-	transition: .2s;
-}
+
 .other-btn{
 	color:black;
 	font-family:$font;
@@ -50,11 +37,10 @@
 	border-radius:$br-4;
 	display: flex;
 	align-items:center;
+	border:1px solid rgba(0, 0, 0, 0.1490196078);
 }
 .logOut:hover{
- 
-	// transition: .1s;
-	transform: scale(1.01);
+	transform: scale(1.010);
 }
 .status{
 	color:rgb(0, 0, 0);
@@ -108,11 +94,23 @@
 }
 .create-orders{
 	background-color:#f0526e;
-	padding: $sp-0 $sp-10;
+	padding: $sp-2 $sp-10;
 	border-radius:$br-4;
 }
-
-
+.order-length{
+	color:#373736;
+}
+.navList-item {
+	color:#373736;
+	font-size: 16px;
+	font-weight: 500
+}
+.navList-item.active{
+	color:#e1272b;
+}
+.navList-item:hover{
+	color: #e1272b;
+}
 @media (max-width: 960px) {
   .navigation {
     display: none;  
@@ -129,6 +127,8 @@
   }
   
 }
+
+
 @media (max-width: 450px) {
    .status{
 	font-size: $sp-12;

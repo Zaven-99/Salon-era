@@ -1,11 +1,12 @@
 import React from "react";
-import styles from "./historyOrders.module.scss";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ru } from "date-fns/locale";
-import Spinner from "../../spinner/Spinner";
 import RecordList from "./recordList/RecordList";
 import { HistoryOrdersState } from "../../hooks/historyOrders/historyOrdersState";
+import { ru } from "date-fns/locale";
+import GenericSkeleton from "../../../utils/Skeleton";
+
+import styles from "./historyOrders.module.scss";
 
 registerLocale("ru", ru);
 
@@ -21,7 +22,15 @@ const HistoryOrders = () => {
   } = HistoryOrdersState();
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
   }
 
   return (
@@ -46,7 +55,11 @@ const HistoryOrders = () => {
           </div>
 
           {filteredOrders.length > 0 ? (
-            <RecordList orders={filteredOrders} formatDate={formatDate} />
+            <RecordList
+              orders={filteredOrders}
+              formatDate={formatDate}
+              loading={loading}
+            />
           ) : (
             <p className={styles.message}>Заказов нет</p>
           )}

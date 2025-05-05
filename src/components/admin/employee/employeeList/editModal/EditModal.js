@@ -5,6 +5,7 @@ import ImagePreview from "../../../../imagePreview/ImagePreview";
 import BtnBlock from "../../../../btnBlock/BtnBlock";
 import { Controller } from "react-hook-form";
 import { EditModalState } from "../../../../hooks/employee/EditModalState";
+
 import styles from "./editModal.module.scss";
 import Spinner from "../../../../spinner/Spinner";
 
@@ -19,6 +20,7 @@ const EditModal = ({
   handleKeyDown,
   positions,
   employee,
+  fetchEmployee,
 }) => {
   const {
     register,
@@ -43,6 +45,7 @@ const EditModal = ({
     setEditedEmployee,
     editedEmployee,
     employee,
+    fetchEmployee,
   });
 
   if (loading) {
@@ -68,6 +71,7 @@ const EditModal = ({
           },
         })}
       />
+
       <CustomInput
         label="Введите фамилию:"
         error={errors.lastName}
@@ -89,7 +93,6 @@ const EditModal = ({
         error={errors.login}
         type="text"
         name="login"
-        autoComplete="off"
         value={editedEmployee.login}
         handleChange={handleChange}
         isActive={activeInput === "login"}
@@ -173,15 +176,6 @@ const EditModal = ({
             message: "Номер телефона должен содержать 10 цифр",
           },
         })}
-      />
-      <CustomInput
-        label="Укажите дату трудоустройства"
-        type="date"
-        name="dateWorkIn"
-        value={editedEmployee.dateWorkIn.slice(0, -6) || ""}
-        handleChange={handleChange}
-        isActive={activeInput === "dateWorkIn"}
-        setActiveInput={setActiveInput}
       />
 
       <Controller

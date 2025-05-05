@@ -2,12 +2,34 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import CryptoJS from "crypto-js";
+import { compressAndPreviewImage } from "../../../utils/uploadImage";
 
-export const SignUpFormState = ({
-  toggleClose,
-  toggleShowMessage,
+export const useSignUpFormState = ({ toggleClose, toggleShowMessage }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      login: "",
+      password: "",
+      confirmPassword: "",
+      email: "",
+      phone: "+7",
+      imageLink: "",
+      gender: "",
+      policy: false,
+    },
+  });
+
   
-}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -15,15 +37,13 @@ export const SignUpFormState = ({
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
-  const [policy, setPolicy] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const password = watch("password");
 
   const toggleHelpModal = () => setShowHelpModal(!showHelpModal);
-
-  const handlePolicyChange = () => setPolicy((prev) => !prev);
 
   const handleKeyDown = (e) => {
     const value = e.target.value;
@@ -31,20 +51,26 @@ export const SignUpFormState = ({
     if (!/[0-9+]/.test(e.key) && e.key !== "Backspace") e.preventDefault();
   };
 
-  const uploadImage = (event) => {
-    const file = event?.target?.files?.[0];
-    if (!file) return;
-    setSelectedFile(file);
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
-      reader.readAsDataURL(file);
-    } else {
-      alert("Выберите файл изображения.");
+  const uploadImage = async (event) => {
+    console.log("File selected");
+    const result = await compressAndPreviewImage(event, {}, setLoading);
+    if (result) {
+      console.log("Image compressed:", result);
+      setSelectedFile(result.compressedFile);
+      setImagePreview(result.dataUrl);
     }
   };
 
   const deletImagePreview = () => setImagePreview(null);
+
+  const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU=";
+  const key = CryptoJS.enc.Base64.parse(base64Key);
+
+  const encryptField = (value) =>
+    CryptoJS.AES.encrypt(value, key, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7,
+    }).toString();
 
   const onSubmit = async (formValues) => {
     const {
@@ -54,11 +80,6 @@ export const SignUpFormState = ({
       policy: formPolicy,
       ...dataToSend
     } = formValues;
-
-    if (!policy) {
-      setLoading(false);
-      return;
-    }
 
     const formData = new FormData();
     formData.append(
@@ -93,15 +114,16 @@ export const SignUpFormState = ({
       const data = await response.json();
 
       const imageLink = data.imageLink || imagePreview;
+
       const userPayload = {
         id: data.id,
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        login: formValues.login,
-        email: formValues.email,
-        phone: formValues.phone,
+        firstName: encryptField(formValues.firstName),
+        lastName: encryptField(formValues.lastName),
+        login: encryptField(formValues.login),
+        email: encryptField(formValues.email),
+        phone: encryptField(formValues.phone),
         gender: parseInt(formValues.gender),
-        imageLink,
+        imageLink: imageLink,
         token: true,
       };
 
@@ -161,12 +183,16 @@ export const SignUpFormState = ({
     isDarkMode,
     loading,
     errorMessages,
-    policy,
-    handlePolicyChange,
     handleKeyDown,
     uploadImage,
     deletImagePreview,
     onSubmit,
     setErrorMessages,
+    register,
+    handleSubmit,
+    control,
+    errors,
+    password,
+    imagePreview,
   };
 };

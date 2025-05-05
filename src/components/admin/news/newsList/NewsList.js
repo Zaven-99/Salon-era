@@ -1,12 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Spinner from "../../../spinner/Spinner";
 import Modal from "../../../modal/Modal";
 import NewsCard from "./newsCard/NewsCard";
 import { NewsListState } from "../../../hooks/news/NewsListState";
+import EditNews from "./editNews/EditNews";
+import GenericSkeleton from "../../../../utils/Skeleton";
 
 import styles from "./newsList.module.scss";
-import EditNews from "./editNews/EditNews";
 
 const NewsList = ({ news, setNews, toggleOpen, toggleClose }) => {
   const {
@@ -18,7 +18,7 @@ const NewsList = ({ news, setNews, toggleOpen, toggleClose }) => {
     setLoading,
     handleEdit,
     formatDate,
-  } = NewsListState(setNews);  
+  } = NewsListState(setNews);
 
   useForm({
     mode: "onChange",
@@ -29,12 +29,20 @@ const NewsList = ({ news, setNews, toggleOpen, toggleClose }) => {
     },
   });
 
-  if (!news.length) {
-    return <p className={styles.message}>Список новостей пуст.</p>;
+  if (loading) {
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
   }
 
-  if (loading) {
-    return <Spinner />;
+  if (!news.length) {
+    return <p className={styles.message}>Список новостей пуст.</p>;
   }
 
   return (

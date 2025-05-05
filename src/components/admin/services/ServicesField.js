@@ -4,10 +4,10 @@ import ServiceList from "./serviceList/ServiceList";
 import Modal from "../../modal/Modal";
 import CustomButton from "../../customButton/CustomButton";
 import { ServiceFieldState } from "../../hooks/services/ServicesFieldState";
-import styles from "./servicesField.module.scss";
-import Spinner from "../../spinner/Spinner";
 import FilterBlock from "./filterBlock/FilterBlock";
 import AddService from "./addService/AddService";
+
+import styles from "./servicesField.module.scss";
 
 const ServiceField = () => {
   const {
@@ -33,16 +33,12 @@ const ServiceField = () => {
     durationToText,
   } = ServiceFieldState();
 
-  if (loading) {
-    return <Spinner />;
-  }
-
   return (
     <div className={styles["service-field"]}>
       {errorMessage && <>Что-то не так...</>}
       <div className={styles.wrapper}>
         <CustomButton
-          className={styles["gr-btn"]}
+          className={styles["b-btn"]}
           label="Добавить услугу"
           onClick={toggleOpen}
         />

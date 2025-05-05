@@ -73,6 +73,7 @@ export const EditNewsState = ({
       console.error("Ошибка:", error);
     } finally {
       setLoading(false);
+      window.location.reload()
     }
   };
 

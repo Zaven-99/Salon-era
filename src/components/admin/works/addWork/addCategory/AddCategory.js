@@ -3,6 +3,7 @@ import Spinner from "../../../../spinner/Spinner";
 import CustomButton from "../../../../customButton/CustomButton";
 import CustomInput from "../../../../customInput/CustomInput";
 import { AddCategoryState } from "../../../../hooks/works/AddCategoryState";
+
 import styles from "../addCategory/addCategory.module.scss";
 
 const AddCategoryWork = ({ toggleClose, activeInput, setActiveInput }) => {

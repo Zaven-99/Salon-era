@@ -14,7 +14,6 @@ import styles from "./header.module.scss";
 const Header = ({
   openSignInForm,
   isClosing,
-  setIsClosing,
   toggleOpen,
   toggleClose,
 }) => {

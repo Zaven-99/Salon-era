@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
 import { service } from "../../../storage/API";
-import AOS from "aos"; // импортируем AOS
+import AOS from "aos";  
 
 import styles from "./servicesSection.module.scss";
 import logo from "../../../img/logo.png";
-
-
 
 const ServicesSection = () => {
   useEffect(() => {
