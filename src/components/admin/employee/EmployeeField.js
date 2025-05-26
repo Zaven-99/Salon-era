@@ -23,7 +23,7 @@ const EmployeeField = () => {
       dateWorkIn: "",
       gender: "",
       imageLink: "",
-      clientType: "employee",
+      role: "USER",
     },
   });
 

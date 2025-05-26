@@ -4,7 +4,8 @@ import serviceReducer from "./slices/serviceSlice";
 import barberReducer from "./slices/barberSlice";
 import orderReducer from "./slices/orderSlice";
 import positionsReducer from "./slices/positionsSlices";
-import { addNotification } from "./slices/notificationSlice";
+import  notificationReducer  from "./slices/notificationSlice";
+import { orderMiddleware } from "./slices/orderMiddleware";
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +13,9 @@ export const store = configureStore({
     service: serviceReducer,
     barber: barberReducer,
     order: orderReducer,
-    notification: addNotification,
+    notification: notificationReducer,
     positions: positionsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(orderMiddleware),
 });

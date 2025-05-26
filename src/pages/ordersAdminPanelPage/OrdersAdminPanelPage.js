@@ -4,7 +4,7 @@ import Orders from "../../components/admin/orders/Orders";
 const OrdersAdminPanelPage = () => {
   return (
     <div>
-      <HeaderAdminPanel />
+      {/* <HeaderAdminPanel /> */}
       <Orders />
     </div>
   );

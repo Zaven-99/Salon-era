@@ -18,10 +18,19 @@ const ChooseAService = () => {
     filteredGroupedServices,
     navigate,
     uniqueCategories,
+    services,
   } = ChooseAServiceState();
 
   if (loading) {
     return <Spinner />;
+  }
+  if (!services.length) {
+    return (
+      <p className={styles.message}>
+        Упс! Не удалось загрузить список услуг. Мы уже работаем над этим.
+        Загляните чуть позже!
+      </p>
+    );
   }
 
   return (
@@ -48,11 +57,10 @@ const ChooseAService = () => {
             return (
               <div key={genderKey}>
                 <span data-aos="fade-right" className={styles.gender}>
-                  {genderKey === '1' ? "Мужские услуги" : "Женские услуги"}
+                  {genderKey === "1" ? "Мужские услуги" : "Женские услуги"}
                 </span>
 
                 {Object.keys(genderServices).map((category) => {
-                  
                   const selectedInCategory = selectedServices.some(
                     (service) =>
                       Number(service.category) === Number(category) &&

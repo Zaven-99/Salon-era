@@ -5,9 +5,11 @@ import Modal from "../../modal/Modal";
 import CustomInput from "../../customInput/CustomInput";
 import NewsList from "./newsList/NewsList";
 import { NewsFieldState } from "../../hooks/news/NewsFieldState";
-import ImagePreview from "../../imagePreview/ImagePreview";
+import ImagePreview from "../../uploadImage/imagePreview/ImagePreview";
+import GenericSkeleton from "../../../utils/Skeleton";
 
 import styles from "./newsField.module.scss";
+import UploadImage from "../../uploadImage/UploadImage";
 
 const News = () => {
   const {
@@ -25,7 +27,20 @@ const News = () => {
     deletImagePreview,
     uploadImage,
     formSubmitHandler,
+    loading,
   } = NewsFieldState();
+
+  if (loading) {
+    return (
+      <GenericSkeleton
+        headerCount={1}
+        headerWidths={["50%", "30%"]}
+        itemCount={10}
+        itemWidth="100%"
+        itemHeight={50}
+      />
+    );
+  }
 
   return (
     <div className={styles["news-field"]}>
@@ -76,14 +91,8 @@ const News = () => {
               imagePreview={imagePreview}
             />
 
-            <CustomInput
-              type="file"
-              name="imageLink"
-              placeholder="Выберите изображение"
-              isActive={activeInput === "imageLink"}
-              setActiveInput={setActiveInput}
-              onChange={uploadImage}
-            />
+            <UploadImage onChange={uploadImage} />
+
             <CustomButton
               className={styles["b2-btn"]}
               type="submit"

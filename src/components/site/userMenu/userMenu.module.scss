@@ -28,7 +28,7 @@
  .user-name{
 	font-family:"Open Sans", sans-serif;
     font-size:  $fz-15;
-    font-weight:  $light;
+    font-weight:  $font-weight-light;
     color: black;
     border-radius: $br-4;
  }
@@ -97,7 +97,7 @@
  
 .order-count{
 	color:black;
-	font-weight: $semiBold;
+	font-weight: $font-weight-semiBold;
 	border-radius:50%;
 	padding: $sp-5;
 	display: flex;
@@ -140,7 +140,7 @@
     background-color: #00aaff;
     font-family: "Open Sans", sans-serif;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     padding: $sp-7;
     border-radius: $br-4;
 	margin-top: $sp-10;

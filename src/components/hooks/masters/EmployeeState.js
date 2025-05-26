@@ -44,7 +44,7 @@ export const EmployeeState = () => {
   const fetchBarbers = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/clients/all");
+      const response = await fetch("https://api.salon-era.ru/employees/all");
       if (!response.ok) {
         throw new Error("Ошибка при получении барберов");
       }
@@ -78,7 +78,7 @@ export const EmployeeState = () => {
   };
 
   const filteredBarbers = useMemo(
-    () => barbers.filter((barber) => barber.clientType === "employee"),
+    () => barbers.filter((barber) => barber.login !== "admin"),
     [barbers]
   );
 

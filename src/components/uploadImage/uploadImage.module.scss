@@ -1,0 +1,26 @@
+.file-upload-wrapper {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 12px;
+  }
+  
+  .file-upload-label {
+	background-color: #444;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background 0.3s ease;
+	font-size: 14px;
+	font-weight: 500;
+  
+	&:hover {
+	  background-color: #222;
+	}
+  }
+  
+  .file-upload-input {
+	display: none;
+  }
+  

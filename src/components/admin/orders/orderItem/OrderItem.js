@@ -42,8 +42,8 @@ const OrderItem = ({ filteredOrders, setOrders, setError, formatDate }) => {
                   <div className={styles["record-item__inner"]}>
                     <strong>Мастер:</strong>
                     <div>
-                      {order.clientTo
-                        ? `${order.clientTo?.firstName} ${order.clientTo?.lastName}`
+                      {order.employeeTo
+                        ? `${order.employeeTo?.firstName} ${order.employeeTo?.lastName}`
                         : "Неизвестный парикмахер"}
                     </div>
                   </div>

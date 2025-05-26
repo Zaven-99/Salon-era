@@ -30,3 +30,17 @@ video::-webkit-media-controls-mute-button {
   display: none !important;
 }
  
+.message{
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 10%;
+}
+.text{
+  margin-top: 50px;
+  color: crimson;
+  font-family: 'nunito', Arial, sans-serif;
+  
+}
+.logo{
+  width: 100px;
+}

@@ -12,7 +12,7 @@
 	margin-top: $sp-50;
 	font-family: "Open Sans", sans-serif;
     font-size: $fz-20;
-    font-weight: $medium;
+    font-weight: $font-weight-medium;
 	color: salmon;
 }
 .employee-item{
@@ -45,7 +45,7 @@ img{
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     padding: $sp-10;
     height: $hg-50;
     background-color: #f0526e;
@@ -61,7 +61,7 @@ img{
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     padding: $sp-10;
     height: $hg-50;
     background-color: rgb(80,200,120);
@@ -77,7 +77,7 @@ img{
 	color: black;
     font-family:$font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     padding: $sp-10;
     height: $hg-50;
     background-color: rgb(165, 206, 41);
@@ -109,7 +109,7 @@ img{
     max-width: $wd-100p;
     padding: 0.706rem;
     font-style: normal;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     font-size: 1rem;
     line-height: 1.412rem;
     color: var(--input-text);
@@ -137,7 +137,7 @@ img{
     min-width: 0px;
     padding: 0.706rem;
     font-style: normal;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     font-size: 1rem;
     line-height: 1.412rem;
     color: var(--input-text);

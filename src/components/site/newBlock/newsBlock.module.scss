@@ -1,26 +1,25 @@
 @import '../../styles/variables.scss';
-
+ 
+ 
 .news-list__inner{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  // display: grid;
+  // grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: $sp-10;
   padding: $sp-50;
 }
 .news-item{
-  cursor: pointer;
-  padding: $sp-15;
-  background: rgba(230, 230, 230, 0.5411);
-  margin-bottom: $sp-5;
-  border-radius: $br-4;
-	gap: $sp-10;
-  height: max-content;
+  box-shadow: 0 1px 4px -2px;
+  padding: 50px;
+  border-radius: 15px;
+ 
  }
  
 .news-item p {
 	color: black;
   font-family: $font;
   font-size: $fz-15;
-  font-weight: $light;
+  font-weight: $font-weight-light;
 }
 .news-card{
   width: $wd-100p;
@@ -30,12 +29,16 @@
 }
 .news-img{
   width: $wd-100p;
-  height: $hg-150;
+  height: $hg-100;
   object-fit: cover;
 }
  .main-text{
   margin: $sp-15 0px $sp-15 0px ;
  }
+
+
+ 
+
 
  @media(max-width:1200px){
   .news-list__inner{

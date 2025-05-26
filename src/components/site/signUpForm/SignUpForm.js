@@ -5,7 +5,8 @@ import CustomInput from "../../customInput/CustomInput";
 import CustomButton from "../../customButton/CustomButton";
 import { useSignUpFormState } from "../../hooks/signUpForm/SignUpFormState";
 import styles from "./signUpForm.module.scss";
-import ImagePreview from "../../imagePreview/ImagePreview";
+import ImagePreview from "../../uploadImage/imagePreview/ImagePreview";
+import UploadImage from "../../uploadImage/UploadImage";
 
 const SignUpForm = ({
   toggleClose,
@@ -23,8 +24,6 @@ const SignUpForm = ({
     isDarkMode,
     loading,
     errorMessages,
-    policy,
-    handlePolicyChange,
     handleKeyDown,
     uploadImage,
     deletImagePreview,
@@ -195,15 +194,8 @@ const SignUpForm = ({
           imagePreview={imagePreview}
           className={styles.preview}
         />
-        <CustomInput
-          type="file"
-          name="imageLink"
-          placeholder="Выберите изображение"
-          isActive={activeInput === "imageLink"}
-          setActiveInput={setActiveInput}
-          accept="image/*"
-          onChange={uploadImage}
-        />
+
+        <UploadImage onChange={uploadImage} />
 
         <div>
           <CustomInput
@@ -216,22 +208,18 @@ const SignUpForm = ({
             {...register("gender", { required: "Выберите пол." })}
           />
         </div>
+
         <CustomButton
           className={styles["signUp-btn"]}
           label="Зарегистрироваться"
           type="submit"
-          // disabled={!policy}
         />
       </form>
       {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}
       <div className={styles["privacy-policy"]}>
         <label className={isDarkMode ? styles["darkmode"] : styles["agree"]}>
           <input
-            // value=""
-            // name="policy"
             type="checkbox"
-            // checked={policy}
-            // onClick={handlePolicyChange}
             value="true"
             defaultChecked={false}
             {...register("policy", {

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./imagePreview.module.scss";
-import CustomButton from "../customButton/CustomButton";
+import CustomButton from "../../customButton/CustomButton";
 
 const ImagePreview = ({ imagePreview, deletImagePreview }) => {
   return (

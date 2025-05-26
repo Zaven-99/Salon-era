@@ -6,7 +6,11 @@
 	height: $sp-100p;
 	margin: $sp-50 $sp-120;
 }
-
+.message{
+  text-align: center;
+  margin-top: 50px;
+  color:salmon;
+}
  
  .category{
 	display: flex;
@@ -14,7 +18,7 @@
 	justify-content: start;
    
   font-size: $fz-30;
-  font-weight: $medium;
+  font-weight: $font-weight-medium;
  }
  
 .selected-services__container{
@@ -31,7 +35,7 @@
   color: black;
 	font-family: $font;
 	font-size: $fz-20;
-  font-weight: $light;
+  font-weight: $font-weight-light;
 }
  
  
@@ -60,7 +64,7 @@
 	background-color:rgb(250, 128, 114);
 	font-family: $font;
 	font-size: $fz-20;
-  font-weight: $light;
+  font-weight: $font-weight-light;
   padding: $sp-10;
   border-radius: $br-4;
 }
@@ -84,7 +88,7 @@
   font-family: inherit;
   margin-top: $sp-5;
   font-size: 1rem;
-  font-weight: $regular;
+  font-weight: $font-weight-regular;
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
@@ -119,7 +123,7 @@
 }
 .gender{
   font-size: $fz-45;
-  font-weight: $light;
+  font-weight: $font-weight-light;
 }
  .price-list{
   margin-top: $sp-20;

@@ -1,11 +1,11 @@
 import React from "react";
 
-import HeaderAdminPage from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
 import News from "../../components/admin/news/NewsField";
+import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
 const NewsPage = () => {
   return (
     <div>
-      <HeaderAdminPage />
+      {/* <HeaderAdminPanel /> */}
       <News />
     </div>
   );

@@ -10,7 +10,7 @@
 	color: black;
 	text-align: center;
 	font-size: $fz-50;
-	font-weight: $light;
+	font-weight: $font-weight-light;
 	margin-top: $sp-50;
 }
 .employees{
@@ -32,7 +32,7 @@
 	text-align: center;
 	margin-top: $sp-10;
 	font-size: $sp-15;
-	font-weight: $light;
+	font-weight: $font-weight-light;
 }
 .employee-img{
     object-fit: cover;

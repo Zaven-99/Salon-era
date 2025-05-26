@@ -5,7 +5,7 @@
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     padding: $sp-10;
     height: $hg-50;
     background-color: #f0526e;
@@ -21,7 +21,7 @@
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     padding: $sp-10;
     height: $hg-50;
     background-color: rgb(80,200,120);
@@ -39,4 +39,11 @@
     display: flex;
     justify-content: space-between;
     margin-top: $sp-50;
+}
+.arrayTypeWork{
+    display: flex;
+    gap: 10px;
+}
+.choose-category{
+    margin-top: 5px;
 }

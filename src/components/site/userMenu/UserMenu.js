@@ -9,10 +9,9 @@ import CustomButton from "../../customButton/CustomButton";
 import useImageUpload from "../../hooks/userMenu/UseImageUpload";
 import useOrders from "../../hooks/userMenu/UseOrders";
 import { useSelector } from "react-redux";
- 
+
 const UserMenu = ({ openProfile }) => {
   const { id, firstName, lastName, imageLink } = useAuth();
-  
 
   const { handleImageChange, loading } = useImageUpload(id);
   const { order, toggleNotification, statusViewedCount, isOpenNotification } =
@@ -44,8 +43,8 @@ const UserMenu = ({ openProfile }) => {
       </div>
 
       <div className={styles.user} onClick={openProfile}>
-        <p className={styles["user-name"]}>{firstName}</p>
-        <p className={styles["user-name"]}>{lastName}</p>
+        <p className={styles["user-name"]}>{firstName || undefined}</p>
+        <p className={styles["user-name"]}>{lastName || undefined}</p>
       </div>
 
       <div className={styles["notifications-block"]}>

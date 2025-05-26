@@ -23,7 +23,7 @@
  .menu-side_navList__item{
 	color:white;
 	font-size: $fz-20 !important;
-	font-weight: $light;
+	font-weight: $font-weight-light;
 	padding: $sp-5;
 	border-radius: $br-4;
  }
@@ -42,7 +42,7 @@
 	display: none;
 	color: $bg-white;
 	font-size: $fz-14;
-	font-weight: $light;
+	font-weight: $font-weight-light;
 	padding: $sp-5;
 	border-radius: $br-4;
 }

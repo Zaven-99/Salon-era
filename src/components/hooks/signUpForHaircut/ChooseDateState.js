@@ -41,7 +41,7 @@ export const ChooseDateState = () => {
 
     try {
       const response = await fetch(
-        `https://api.salon-era.ru/clients/timeslot/${selectedBarber.id}/${sumDuration}`,
+        `https://api.salon-era.ru/employees/timeslot/${selectedBarber.id}/${sumDuration}`,
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
 
@@ -114,7 +114,7 @@ export const ChooseDateState = () => {
       JSON.stringify([
         {
           id_client_from: clientId,
-          id_client_to: selectedBarber.id,
+          id_employee_to: selectedBarber.id,
           id_service: selectedService.id,
           number: "",
           status: 0,

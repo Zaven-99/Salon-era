@@ -53,7 +53,7 @@ export const ChooseABarbersState = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://api.salon-era.ru/clients/all/filter?field=clientType&state=eq&value=employee"
+        "https://api.salon-era.ru/employees/role?role=USER"
       );
       if (!response.ok) {
         throw new Error("Ошибка при получении барберов");
@@ -73,6 +73,7 @@ export const ChooseABarbersState = () => {
         return decryptedEmployee;
       });
       setBarbers(decryptedData);
+     
     } catch (error) {
       setError(error.message);
     } finally {
@@ -125,7 +126,7 @@ export const ChooseABarbersState = () => {
 
   const getAverageRating = (barberId) => {
     const barberFeedbacks = feedbacks.filter(
-      (f) => f.id_client_to === barberId
+      (f) => f.id_employee_to === barberId
     );
     if (barberFeedbacks.length === 0) return 0;
     return (
@@ -135,7 +136,7 @@ export const ChooseABarbersState = () => {
   };
 
   const getFeedbackCount = (barberId) =>
-    feedbacks.filter((f) => f.id_client_to === barberId).length;
+    feedbacks.filter((f) => f.id_employee_to === barberId).length;
 
   const categoryOptions = categories.filter(
     (item) => item.category === "Должность"
@@ -154,7 +155,7 @@ export const ChooseABarbersState = () => {
         barber.arrayTypeWork.length === 0
       )
         return false;
-      if (barber.clientType !== "employee") return false;
+
       const selectedCategoryIds = selectedServices.map((s) => s.category);
       const isMatchingCategory = barber.arrayTypeWork.some((id) =>
         selectedCategoryIds.includes(id)

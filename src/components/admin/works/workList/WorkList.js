@@ -1,16 +1,16 @@
 import React from "react";
 import Modal from "../../../modal/Modal";
-import CustomInput from "../../../customInput/CustomInput";
 import CustomSelect from "../../../customSelect/CustomSelect";
 import { Controller, useForm } from "react-hook-form";
 import { WorkListState } from "../../../hooks/works/WorkListState";
-import ImagePreview from "../../../imagePreview/ImagePreview";
+import ImagePreview from "../../../uploadImage/imagePreview/ImagePreview";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import GenericSkeleton from "../../../../utils/Skeleton";
 
 import styles from "./workList.module.scss";
+import UploadImage from "../../../uploadImage/UploadImage";
 
-const WorkList = ({ setWorks, categories, toggleOpen, toggleClose }) => {
+const WorkList = ({ setWorks, categories, toggleOpen, toggleClose, works }) => {
   const { control } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -22,8 +22,6 @@ const WorkList = ({ setWorks, categories, toggleOpen, toggleClose }) => {
     worksId,
     setWorksId,
     editedWorks,
-    activeInput,
-    setActiveInput,
     imagePreview,
     groupedWorks,
     workToDelete,
@@ -50,6 +48,10 @@ const WorkList = ({ setWorks, categories, toggleOpen, toggleClose }) => {
         itemHeight={50}
       />
     );
+  }
+
+  if (!works.length) {
+    return <p className={styles.message}>Список работ пуст.</p>;
   }
 
   return (
@@ -94,14 +96,7 @@ const WorkList = ({ setWorks, categories, toggleOpen, toggleClose }) => {
                         imagePreview={imagePreview}
                       />
 
-                      <CustomInput
-                        type="file"
-                        name="imageLink"
-                        placeholder="Выберите изображение"
-                        isActive={activeInput === "imageLink"}
-                        setActiveInput={setActiveInput}
-                        onChange={uploadImage}
-                      />
+                      <UploadImage onChange={uploadImage} />
 
                       <BtnBlock
                         className1={styles["g-btn"]}

@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { compressAndPreviewImage } from "../../../utils/uploadImage";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../store/slices/userSlice";
-import CryptoJS from "crypto-js";
 
 export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
   const {
@@ -28,7 +25,7 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
       gender: "",
       imageLink: "",
       arrayTypeWork: [],
-      clientType: "employee",
+      role: "USER",
     },
   });
 
@@ -42,7 +39,6 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
   const [deletePosition, setDeletePosition] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
 
   const password = watch("password");
 
@@ -85,15 +81,6 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
     fetchCategroy();
   }, []);
 
-  const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU=";
-  const key = CryptoJS.enc.Base64.parse(base64Key);
-
-  const encryptField = (value) =>
-    CryptoJS.AES.encrypt(value, key, {
-      mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7,
-    }).toString();
-
   const onSubmit = async (formValues) => {
     const { confirmPassword, ...dataToSend } = formValues;
     const dateWorkIn = new Date(formValues.dateWorkIn);
@@ -106,7 +93,7 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
         {
           ...dataToSend,
           dateWorkIn: dateWorkIn.toISOString().slice(0, -1),
-          clientType: "employee",
+          role: "USER",
           arrayTypeWork: formValues.arrayTypeWork,
         },
       ])
@@ -117,9 +104,10 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
     }
 
     try {
-      const response = await fetch("https://api.salon-era.ru/clients", {
+      const response = await fetch("https://api.salon-era.ru/employees", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -130,30 +118,12 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
         );
       }
 
-      const data = await response.json();
-
-      const imageLink = data.imageLink || imagePreview;
-      const userPayload = {
-        id: data.id,
-        firstName: encryptField(formValues.firstName),
-        lastName: encryptField(formValues.lastName),
-        login: encryptField(formValues.login),
-        email: encryptField(formValues.email),
-        phone: encryptField(formValues.phone),
-        gender: parseInt(formValues.gender),
-        imageLink: imageLink,
-        token: true,
-      };
-
-      localStorage.setItem("user", JSON.stringify(userPayload));
-      dispatch(setUser(userPayload));
-
       setEmployee((prev) => [...prev, dataToSend]);
       toggleClose();
     } catch (error) {
       console.error("Ошибка отправки:", error);
-      const errorData = JSON.parse(error.message);
-      const errorDetails = JSON.parse(errorData.message);
+      const errorData = JSON.parse(error.message || "{}");
+      const errorDetails = JSON.parse(errorData.message || "{}");
       const errorCode = errorDetails.errorCode;
 
       if (errorCode === "204") {
@@ -182,7 +152,7 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
       setLoading(false);
       deletImagePreview();
       reset();
-      window.location.reload();
+      // window.location.reload();
     }
   };
 

@@ -5,7 +5,6 @@ $buttonCancel-color:salmon;
 $bg-grey:#a9a9a9;
 $bg-white:#e6e6e6;
 
-
 //font-size
 $fz-6:6px;
 $fz-10:10px;
@@ -38,18 +37,18 @@ $fz-50:50px;
 
 $fz-1rem:1rem;
 
-//font-wight
-$light:300;
-$regular:400;
-$medium:500;
-$semiBold:600;
-$bold:700;
-$extra-bold:800;
+//font-weight (переименованы, чтобы избежать конфликтов)
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semiBold: 600;
+$font-weight-bold: 700;
+$font-weight-extraBold: 800;
 
 //font-family
 $font:"Open Sans", sans-serif;
 
-// spacing
+//spacing
 $sp-0: 0;
 $sp-2: 2px;
 $sp-3: 3px;
@@ -142,7 +141,6 @@ $wd-100p:100%;
 $mwd-90p:90%;
 $wd-100vw:100vw;
 
-
 //height
 $hg-1:1px;
 $hg-2:2px;
@@ -172,10 +170,7 @@ $hg-100p:100%;
 $hg-100vh:100vh;
 $mhg-90p:90%;
 
- 
-
-
-// border
+//border
 $br-1: 1px;
 $br-2: 2px;
 $br-3: 3px;
@@ -187,8 +182,7 @@ $br-10:10px;
 $br-20p:20%;
 $br-50p:50%;
 
-
-// shadows
+//shadows
 $shadow-small: 0 8px 16px -8px;
 $shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
 $shadow-large: 0 8px 16px rgba(0, 0, 0, 0.2);

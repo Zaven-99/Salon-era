@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
-import { saveOrder } from "../../../store/slices/orderSlice";
+import { saveOrder, setOrder } from "../../../store/slices/orderSlice";
 
 export const useOrdersState = () => {
   const [orders, setOrders] = useState([]);
@@ -13,13 +13,12 @@ export const useOrdersState = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [addOrderModal, setAddOrderModal] = useState(false);
   const [ws, setWs] = useState(null);
+
   const hasMounted = useRef(false);
   const previousOrdersLengthRef = useRef(0);
-  const [notificationMessage, setNotificationMessage] = useState("");
-  const notificationSound = new Audio("/sound.mp3");
   const initialLoadRef = useRef(true);
-
   const dispatch = useDispatch();
+  const notificationSound = new Audio("/sound.mp3");
 
   useEffect(() => {
     const initialLoad = sessionStorage.getItem("ordersInitialLoad");
@@ -102,7 +101,7 @@ export const useOrdersState = () => {
           const updatedOrders = await Promise.all(
             data.map(async (order) => {
               const hasDecryptedClient =
-                order.clientFrom?.firstName && order.clientTo?.firstName;
+                order.clientFrom?.firstName && order.employeeTo?.firstName;
 
               if (hasDecryptedClient) {
                 return {
@@ -112,10 +111,10 @@ export const useOrdersState = () => {
                     firstName: decryptField(order.clientFrom.firstName),
                     lastName: decryptField(order.clientFrom.lastName),
                   },
-                  clientTo: {
-                    ...order.clientTo,
-                    firstName: decryptField(order.clientTo.firstName),
-                    lastName: decryptField(order.clientTo.lastName),
+                  employeeTo: {
+                    ...order.employeeTo,
+                    firstName: decryptField(order.employeeTo.firstName),
+                    lastName: decryptField(order.employeeTo.lastName),
                   },
                 };
               }
@@ -133,10 +132,10 @@ export const useOrdersState = () => {
                       firstName: decryptField(fullOrder.clientFrom?.firstName),
                       lastName: decryptField(fullOrder.clientFrom?.lastName),
                     },
-                    clientTo: {
-                      ...fullOrder.clientTo,
-                      firstName: decryptField(fullOrder.clientTo?.firstName),
-                      lastName: decryptField(fullOrder.clientTo?.lastName),
+                    employeeTo: {
+                      ...fullOrder.employeeTo,
+                      firstName: decryptField(fullOrder.employeeTo?.firstName),
+                      lastName: decryptField(fullOrder.employeeTo?.lastName),
                     },
                   };
                 } catch (apiErr) {
@@ -169,12 +168,6 @@ export const useOrdersState = () => {
             ) {
               const newOrder = updatedOrders[0];
 
-              setNotificationMessage(
-                `Новый заказ от ${newOrder.clientFrom?.firstName || "Клиент"} ${
-                  newOrder.clientFrom?.lastName || ""
-                }`
-              );
-
               toast.info(
                 `Новый заказ от ${newOrder.clientFrom?.firstName || "Клиент"} ${
                   newOrder.clientFrom?.lastName || ""
@@ -185,9 +178,10 @@ export const useOrdersState = () => {
                 .play()
                 .catch((e) => console.warn("Ошибка звука:", e));
 
-              // Сохраняем заказ в Redux
               dispatch(saveOrder(newOrder));
             }
+
+            dispatch(setOrder(newOrders));
 
             previousOrdersLengthRef.current = newOrders.length;
             hasMounted.current = true;
@@ -253,10 +247,11 @@ export const useOrdersState = () => {
     addOrderModal,
     setAddOrderModal,
     ws,
-    notificationMessage,
     toggleOpen,
     filterOrdersByDate,
     formatDate,
     setError,
   };
 };
+
+ 

@@ -1,21 +1,8 @@
 @import '../components//styles/variables.scss';
 
-.carousel {
-  position: relative;
-  width: $wd-100p;
-  max-width: $wd-600;  
-  margin: 0 auto;
-  overflow: hidden;  
-}
+ 
 
-.carousel-images {
-  display: flex;
-  transition: transform ease-out 0.45s;  
-}
-
-.slide {
-  min-width: $wd-100p;  
-}
+ 
 
 .description{
   text-align: center;

@@ -133,7 +133,7 @@ export const FeedbackSectionState = ({
   };
 
   const getBarberFeedbacks = (barberId) =>
-    feedbacks.filter((f) => f.id_client_to === barberId);
+    feedbacks.filter((f) => f.id_employee_to === barberId);
 
   const handleSubmitFeedback = async () => {
     setLoading(true);
@@ -145,7 +145,7 @@ export const FeedbackSectionState = ({
           firstName: user.firstName,
           lastName: user.lastName,
           id_client_from: clientId,
-          id_client_to: selectedBarber.id,
+          id_employee_to: selectedBarber.id,
           text: feedbackText,
           value: ratings[selectedBarber.id],
         },

@@ -53,8 +53,8 @@ const RecordList = ({ orders, formatDate, loading }) => {
             <div className={styles["record-item__inner"]}>
               <strong>Парикмахер:</strong>
               <div>
-                {order.clientTo
-                  ? `${order.clientTo.firstName} ${order.clientTo.lastName}`
+                {order.employeeTo
+                  ? `${order.employeeTo.firstName} ${order.employeeTo.lastName}`
                   : "Неизвестный парикмахер"}
               </div>
             </div>

@@ -63,6 +63,10 @@ const ServiceList = ({
     );
   }
 
+  if (!services.length) {
+    return <p className={styles.message}>Список услуг пуст.</p>;
+  }
+
   return (
     <div className={styles["service-list"]}>
       <h1 className={styles.services}>Услуги</h1>

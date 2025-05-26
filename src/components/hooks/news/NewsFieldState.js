@@ -57,24 +57,27 @@ export const NewsFieldState = () => {
       }
 
       setNews((prev) => [...prev, formData]);
+
       toggleClose();
-      reset();
+      
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
+      reset();
+      setImagePreview(null);
+      setSelectedFile(null);
+      setNews([])
     }
   };
 
   const uploadImage = async (event) => {
-      console.log("File selected");
-      const result = await compressAndPreviewImage(event, {}, setLoading);
-      if (result) {
-        console.log("Image compressed:", result);
-        setSelectedFile(result.compressedFile);
-        setImagePreview(result.dataUrl);
-      }
-    };
+    const result = await compressAndPreviewImage(event, {}, setLoading);
+    if (result) {
+      setSelectedFile(result.compressedFile);
+      setImagePreview(result.dataUrl);
+    }
+  };
 
   const deletImagePreview = () => setImagePreview(null);
 

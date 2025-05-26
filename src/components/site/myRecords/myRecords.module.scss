@@ -25,7 +25,7 @@
  
 .cancel{
 	color: black;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     font-family: "Open Sans", sans-serif;
     background-color: #fe5440;
     font-size: $fz-12;
@@ -40,7 +40,7 @@
     gap: 10px;
 }
 .empty{
-    font-weight: $light;
+    font-weight: $font-weight-light;
     color: black;
     text-align: center;
     font-size: $fz-20;

@@ -6,7 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ru } from "date-fns/locale";
 import OrderItem from "./orderItem/OrderItem.js";
 import { useOrdersState } from "../../hooks/orders/OrdersState.js";
-import { ToastContainer } from "react-toastify";
 import GenericSkeleton from "../../../utils/Skeleton";
 
 import styles from "./order.module.scss";
@@ -45,14 +44,6 @@ const Orders = () => {
 
   return (
     <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-      />
       <h1 className={styles["orders-today"]}>Заказы</h1>
 
       <div className={styles.wrapper}>

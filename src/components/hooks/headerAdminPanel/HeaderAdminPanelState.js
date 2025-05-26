@@ -12,7 +12,8 @@ export const HeaderAdminPanelState = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { clientType } = useAuth();
+  const { login,  } = useAuth();
+ 
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const handleOtherModal = () => setShowOtherModal((prev) => !prev);
@@ -22,14 +23,14 @@ export const HeaderAdminPanelState = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     dispatch(removeUser());
-    setUser(null);
+    dispatch(setUser(null));
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setLoading(false);
     navigate("/");
   };
 
   return {
-    clientType,
+    login,
     loading,
     isMenuOpen,
     toggleMenu,

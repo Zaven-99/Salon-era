@@ -1,7 +1,6 @@
 import React from "react";
-import CustomInput from "../../../customInput/CustomInput";
 import CustomButton from "../../../customButton/CustomButton";
-import ImagePreview from "../../../imagePreview/ImagePreview";
+import ImagePreview from "../../../uploadImage/imagePreview/ImagePreview";
 import Modal from "../../../modal/Modal";
 import AddCategory from "../addWork/addCategory/AddCategory";
 import DeleteCategory from "../addWork/deleteCategory/DeleteCategory";
@@ -11,6 +10,7 @@ import { AddWorkState } from "../../../hooks/works/AddWorkState";
 import Spinner from "../../../spinner/Spinner";
 
 import styles from "./addWork.module.scss";
+import UploadImage from "../../../uploadImage/UploadImage";
 
 const AddWork = ({ setWorks, toggleClose, categories }) => {
   const {
@@ -102,17 +102,11 @@ const AddWork = ({ setWorks, toggleClose, categories }) => {
             {fieldState.error && (
               <p className={styles.error}>{fieldState.error.message}</p>
             )}
-            <CustomInput
-              type="file"
-              name="imageLink"
-              placeholder="Выберите изображение"
-              isActive={activeInput === "imageLink"}
-              setActiveInput={setActiveInput}
-              onChange={(e) => {
-                uploadImage(e);
-                field.onChange(e);
+            <UploadImage
+              onChange={(event) => {
+                uploadImage(event);
+                field.onChange(event);
               }}
-              rules={{ required: "Это поле обязательно" }}
             />
           </>
         )}

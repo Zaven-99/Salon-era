@@ -50,6 +50,7 @@ const FeedbackSection = ({
     feedbackText,
     ratings,
   });
+   
 
   return (
     <>

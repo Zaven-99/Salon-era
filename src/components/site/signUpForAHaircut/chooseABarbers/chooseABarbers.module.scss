@@ -30,7 +30,7 @@
 	color: black;
 	margin-top: $sp-10;
 	font-size: $fz-16;
-	font-weight: $light;
+	font-weight: $font-weight-light;
 }
 .back{
 	background-color: $bg-white;
@@ -164,7 +164,7 @@ textarea{
     color: white;
     width: max-content;
     font-size: $fz-10;
-    font-weight: $light;
+    font-weight: $font-weight-light;
     padding: $sp-10;
     border-radius: $br-4;
     margin-top: $sp-10;

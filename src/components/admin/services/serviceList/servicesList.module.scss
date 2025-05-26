@@ -15,7 +15,7 @@
 	color: salmon;
 	margin-top: $sp-50;
     font-size: $fz-20;
-    font-weight: $medium;
+    font-weight: $font-weight-medium;
 }
 .service-list__item{
     cursor: pointer;
@@ -37,7 +37,7 @@
 	color: black;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $light;
+    font-weight: $font-weight-light;
 }
 
  
@@ -60,7 +60,7 @@ strong {
     min-width: 0px;
     padding: 0.706rem;
     font-style: normal;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
     font-size: 1rem;
     line-height: 1.412rem;
     color: var(--input-text);
@@ -97,7 +97,7 @@ strong {
 	background-color: rgb(80, 200, 120);
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height: $hg-50;
 	border-radius: $br-4;
@@ -113,7 +113,7 @@ strong {
 	background-color:#f0526e;
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height:$hg-50;
 	border-radius: $br-4;
@@ -129,7 +129,7 @@ strong {
 	background-color:rgb(165, 206, 41);
     font-family: $font;
     font-size: $fz-12;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height:$hg-50;
 	border-radius: $br-4;

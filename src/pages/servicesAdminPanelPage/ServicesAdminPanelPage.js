@@ -1,11 +1,11 @@
-import React from 'react';
-import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
+import React from "react";
 import ServicesField from "../../components/admin/services/ServicesField";
+import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
 
 const ServicesAdminPanel = () => {
-	return (
+  return (
     <div>
-      <HeaderAdminPanel />
+      {/* <HeaderAdminPanel /> */}
       <ServicesField />
     </div>
   );

@@ -28,7 +28,7 @@ const initialState = {
   email: null,
   phone: null,
   gender: null,
-  clientType: null,
+  role: null,
   imageLink: null,
   token: false,
 };
@@ -40,17 +40,19 @@ const userSlice = createSlice({
     setUser(state, action) {
       const user = action.payload;
 
+      if (!user) return;
       const fieldsToDecrypt = [
         "firstName",
         "lastName",
+        "password",
         "email",
         "phone",
-        "login",
+        "role",
       ];
       const decryptedUser = {};
 
       // Дешифруем только необходимые поля
-      fieldsToDecrypt.forEach((field) => {
+      fieldsToDecrypt?.forEach((field) => {
         if (user[field]) {
           decryptedUser[field] = decryptField(user[field]);
         }

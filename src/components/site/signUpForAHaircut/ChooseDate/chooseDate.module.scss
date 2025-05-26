@@ -6,13 +6,13 @@
   font-size: $fz-16;
   color: #d22020ad;
   margin: $sp-10 0px;
-  font-weight: $light;
+  font-weight: $font-weight-light;
 }
 
 .date-sign__up{
 	font-family: $font;
   font-size: $fz-20;
-  font-weight: $medium;
+  font-weight: $font-weight-medium;
   padding: $sp-5;
  
 }
@@ -33,7 +33,7 @@
   border-radius: $br-5;
   padding: $sp-5 $sp-10;
   font-size: $fz-20;
-  font-weight: $regular;
+  font-weight: $font-weight-regular;
 }
 .select:hover{
   transform: scale(1.05);
@@ -53,13 +53,13 @@
   padding: $sp-5 $sp-10;
   box-shadow: $shadow-small;
   font-size: $fz-20;
-  font-weight: $light;
+  font-weight: $font-weight-light;
 }
 .dataSelected{
   color: black;
   margin-bottom: $sp-10;
   font-size: $fz-20;
-  font-weight: $light;
+  font-weight: $font-weight-light;
   padding: $sp-5;
   border-radius: $br-4;
    
@@ -80,7 +80,7 @@
 .empty-slots{
   color: black;
   font-size: $fz-20;
-  font-weight: $light;
+  font-weight: $font-weight-light;
   padding: $sp-5;
   border-radius: $br-4;
 }

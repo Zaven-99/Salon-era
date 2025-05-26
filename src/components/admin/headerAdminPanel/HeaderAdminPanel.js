@@ -5,19 +5,21 @@ import MenuSideBtn from "../../menuSideBtn/MenuSideBtn";
 import MenuSide from "../../menuSide/MenuSide";
 import { HeaderAdminPanelState } from "../../hooks/headerAdminPanel/HeaderAdminPanelState";
 import CustomButton from "../../customButton/CustomButton";
+import { useOrdersState } from "../../hooks/orders/OrdersState";
+import { ToastContainer } from "react-toastify";
 
 import styles from "./headerAdminPanel.module.scss";
 
 const HeaderAdminPanel = () => {
   const {
-    clientType,
+    login,
     isMenuOpen,
     toggleMenu,
     showOtherModal,
     handleOtherModal,
     handleLogout,
   } = HeaderAdminPanelState();
-
+  useOrdersState();
   const orders = useSelector((state) => state.order.orders);
 
   const menuItems = [
@@ -33,8 +35,16 @@ const HeaderAdminPanel = () => {
 
   return (
     <div className={styles["header-admin__panel"]}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+      />
       <div className={styles["header-top"]}>
-        <p className={styles.status}>Вы вошли как {clientType}</p>
+        <p className={styles.status}>Вы вошли как {login}</p>
 
         <CustomButton
           label="Выйти"

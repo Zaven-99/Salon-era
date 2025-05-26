@@ -1,13 +1,14 @@
 import React from "react";
 import CustomInput from "../../../../customInput/CustomInput";
 import BtnBlock from "../../../../btnBlock/BtnBlock";
-import ImagePreview from "../../../../imagePreview/ImagePreview";
+import ImagePreview from "../../../../uploadImage/imagePreview/ImagePreview";
 import { useForm } from "react-hook-form";
 import Modal from "../../../../modal/Modal";
 import { EditNewsState } from "../../../../hooks/news/EditNewsState";
 import Spinner from "../../../../spinner/Spinner";
 
 import styles from "./editNews.module.scss";
+import UploadImage from "../../../../uploadImage/UploadImage";
 
 const EditNews = ({
   editedNews,
@@ -84,14 +85,7 @@ const EditNews = ({
         deletImagePreview={deletImagePreview}
         imagePreview={imagePreview}
       />
-      <CustomInput
-        type="file"
-        name="imageLink"
-        placeholder="Выберите изображение"
-        isActive={activeInput === "imageLink"}
-        setActiveInput={setActiveInput}
-        onChange={uploadImage}
-      />
+      <UploadImage onChange={uploadImage} />
 
       <BtnBlock
         className1={styles["g-btn"]}

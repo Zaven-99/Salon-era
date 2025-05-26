@@ -52,7 +52,7 @@
   color: black;
   font-family: $font;
   font-size: $fz-12;
-  font-weight: $regular;
+  font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height: $hg-50;
 	background-color: #f0526e;
@@ -68,7 +68,7 @@
   color: black;
   font-family: $font;
   font-size: $fz-12;
-  font-weight: $regular;
+  font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height: $hg-50;
 	background-color: rgb(80, 200, 120);;
@@ -86,7 +86,7 @@
 	margin-top: $sp-50;
 	font-family: "Open Sans", sans-serif;
   font-size: $fz-20;
-  font-weight: $medium;
+  font-weight: $font-weight-medium;
 	color: salmon;
 }
  
@@ -103,7 +103,7 @@
   color: black;
   font-family: "Open Sans", sans-serif;
   font-size: $fz-15;
-  font-weight: $light;
+  font-weight: $font-weight-light;
   padding: $sp-10;
 }
 .description{
@@ -114,7 +114,7 @@
   font-family: inherit;
   margin-top: 5px;
   font-size: 1rem;
-  font-weight: $regular;
+  font-weight: $font-weight-regular;
   line-height: 1.5;
   color: #212529;
   background-color: #fff;

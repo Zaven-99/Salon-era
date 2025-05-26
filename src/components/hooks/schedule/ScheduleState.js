@@ -102,7 +102,7 @@ export const ScheduleState = () => {
       "clientData",
       JSON.stringify([
         {
-          idClient: selectedCell.employeeId,
+          idEmployee: selectedCell.employeeId,
           scheludeDateStart: formattedStartTime,
           scheludeDateEnd: formattedEndTime,
         },
@@ -113,6 +113,7 @@ export const ScheduleState = () => {
       const response = await fetch("https://api.salon-era.ru/clientsschelude", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       if (!response.ok) throw new Error(await response.text());
@@ -120,7 +121,7 @@ export const ScheduleState = () => {
       setSelectedCells((prev) => ({
         ...prev,
         [`${formValues.employeeIndex}-${formValues.dayIndex}`]: {
-          clientId: formValues.clientId,
+          idEmployee: formValues.idEmployee,
           startTime: formattedStartTime,
           endTime: formattedEndTime,
         },
@@ -167,7 +168,7 @@ export const ScheduleState = () => {
   const fetchEmployee = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/clients/all");
+      const response = await fetch("https://api.salon-era.ru/employees/all");
       if (!response.ok)
         throw new Error(`Ошибка http! статус: ${response.status}`);
       const data = await response.json();
@@ -184,7 +185,7 @@ export const ScheduleState = () => {
 
         return decryptedEmployee;
       });
-      setEmployee(decryptedData.filter((e) => e.clientType === "employee"));
+      setEmployee(decryptedData.filter((e) => e.login !== "admin"));
     } catch (error) {
       console.error(error);
     } finally {
@@ -200,6 +201,7 @@ export const ScheduleState = () => {
       if (!response.ok)
         throw new Error(`Ошибка http! статус: ${response.status}`);
       const data = await response.json();
+       
       const updatedCells = {};
       data.forEach((item) => {
         const dateStart = new Date(item.scheludeDateStart);
@@ -208,8 +210,8 @@ export const ScheduleState = () => {
         });
 
         if (dayIndex !== -1) {
-          updatedCells[`${item.idClient}-${dayIndex}`] = {
-            clientId: item.id,
+          updatedCells[`${item.idEmployee}-${dayIndex}`] = {
+            idEmployee: item.id,
             startTime: item.scheludeDateStart,
             endTime: item.scheludeDateEnd,
           };
@@ -247,7 +249,7 @@ export const ScheduleState = () => {
       setSelectedCells((prev) => {
         const updated = { ...prev };
         const keyToDelete = Object.keys(updated).find(
-          (key) => updated[key]?.clientId === id
+          (key) => updated[key]?.idEmployee === id
         );
         if (keyToDelete) delete updated[keyToDelete];
         return updated;

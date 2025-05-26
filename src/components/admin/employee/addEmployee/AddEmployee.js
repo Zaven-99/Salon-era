@@ -3,14 +3,14 @@ import { Controller } from "react-hook-form";
 
 import CustomButton from "../../../customButton/CustomButton";
 import CustomInput from "../../../customInput/CustomInput";
-import ImagePreview from "../../../imagePreview/ImagePreview";
+import ImagePreview from "../../../uploadImage/imagePreview/ImagePreview";
 import CustomSelect from "../../../customSelect/CustomSelect";
 import { AddEmployeeState } from "../../../hooks/employee/AddEmployeeState";
 import Modal from "../../../modal/Modal";
 import AddPosition from "./addPosition/AddPosition";
 import DeletePosition from "./deletePosition/DeletePosition";
 import Spinner from "../../../spinner/Spinner";
-
+import UploadImage from "../../../uploadImage/UploadImage";
 import styles from "./addEmployee.module.scss";
 
 const AddEmployee = ({
@@ -260,15 +260,7 @@ const AddEmployee = ({
         className={styles.preview}
       />
 
-      <CustomInput
-        type="file"
-        name="imageLink"
-        placeholder="Выберите изображение"
-        isActive={activeInput === "imageLink"}
-        setActiveInput={setActiveInput}
-        accept="image/*"
-        onChange={uploadImage}
-      />
+      <UploadImage onChange={uploadImage} />
 
       <h5 className={styles["choose-category"]}>
         Выберите категорию услуг для мастера

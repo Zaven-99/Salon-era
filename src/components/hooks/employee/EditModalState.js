@@ -6,6 +6,7 @@ export const EditModalState = ({
   setEmployeeId,
   setEditedEmployee,
   editedEmployee,
+  employee,
 }) => {
   const {
     register,
@@ -24,7 +25,7 @@ export const EditModalState = ({
       position: "",
       dateWorkIn: "",
       gender: "",
-      clientType: "employee",
+      role: "USER",
     },
   });
 
@@ -82,28 +83,35 @@ export const EditModalState = ({
     setSelectedFile(null);
   };
 
+
+
   const handleSave = async (id) => {
     setLoading(true);
 
     const serviceToUpdate = { ...editedEmployee, id };
-    const formData = new FormData();
 
-    formData.append(
-      "clientData",
-      JSON.stringify({
-        ...serviceToUpdate,
-      })
-    );
+    // Если логин не изменился, удаляем его из отправляемого объекта
+    if (employee?.login === editedEmployee.login) {
+      delete serviceToUpdate.login;
+    }
+
+    const formData = new FormData();
+    console.log("Отправляемые данные:", serviceToUpdate);
+
+    formData.append("clientData", JSON.stringify(serviceToUpdate));
 
     if (selectedFile) {
       formData.append("imageData", selectedFile, selectedFile.name);
     }
 
     try {
-      const response = await fetch(`https://api.salon-era.ru/clients/update`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `https://api.salon-era.ru/employees/update`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         const errorMessage = await response.json();
@@ -111,9 +119,7 @@ export const EditModalState = ({
       }
 
       setEmployee((prevEmployee) =>
-        prevEmployee.map((employee) =>
-          employee.id === id ? editedEmployee : employee
-        )
+        prevEmployee.map((emp) => (emp.id === id ? editedEmployee : emp))
       );
 
       setEmployeeId(null);
@@ -122,9 +128,9 @@ export const EditModalState = ({
       console.error("Ошибка при сохранении:", error);
     } finally {
       setLoading(false);
-      window.location.reload();
     }
   };
+  
 
   return {
     register,

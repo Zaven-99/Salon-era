@@ -1,11 +1,11 @@
 import React from "react";
-import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
 import WorksField from "../../components/admin/works/WorksField";
+import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
 
 const ourWorksAdminPanelPage = () => {
   return (
     <div>
-      <HeaderAdminPanel />
+      {/* <HeaderAdminPanel /> */}
       <WorksField />
     </div>
   );

@@ -34,7 +34,6 @@
   border-radius: $br-2;
   border: $br-1 solid;
   padding: $sp-2;
-  box-shadow: $shadow-small;
 }
 .message{
   text-align: center;
@@ -42,7 +41,7 @@
 	font-family: "Open Sans", sans-serif;
 	margin-top: $sp-50;
   font-size: $fz-20;
-  font-weight: $medium;
+  font-weight: $font-weight-medium;
 }
  
 .wrapper{

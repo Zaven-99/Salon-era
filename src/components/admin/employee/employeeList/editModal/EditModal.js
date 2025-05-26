@@ -1,13 +1,14 @@
 import React from "react";
 import CustomInput from "../../../../customInput/CustomInput";
 import CustomSelect from "../../../../customSelect/CustomSelect";
-import ImagePreview from "../../../../imagePreview/ImagePreview";
+import ImagePreview from "../../../../uploadImage/imagePreview/ImagePreview";
 import BtnBlock from "../../../../btnBlock/BtnBlock";
 import { Controller } from "react-hook-form";
 import { EditModalState } from "../../../../hooks/employee/EditModalState";
 
 import styles from "./editModal.module.scss";
 import Spinner from "../../../../spinner/Spinner";
+import UploadImage from "../../../../uploadImage/UploadImage";
 
 const EditModal = ({
   setLoading,
@@ -199,32 +200,22 @@ const EditModal = ({
         deletImagePreview={deletImagePreview}
         imagePreview={imagePreview}
       />
-      <CustomInput
-        type="file"
-        name="imageLink"
-        placeholder="Выберите изображение"
-        isActive={activeInput === "imageLink"}
-        setActiveInput={setActiveInput}
-        accept="image/*"
-        onChange={uploadImage}
-      />
+      <UploadImage onChange={uploadImage} />
       <h5 className={styles["choose-category"]}>
         Выберите категорию услуг для мастера
       </h5>
-      <div className={styles["block-checkbox"]}>
+      <div className={styles.arrayTypeWork}>
         {categories.map((category) => (
-          <div key={category.id}>
-            <label className={styles.check}>
-              <input
-                type="checkbox"
-                name="arrayTypeWork"
-                value={category.id}
-                checked={editedEmployee.arrayTypeWork.includes(category.id)}
-                onChange={(e) => handleCategoryChange(e, category.id)}
-              />
-              {category.value}
-            </label>
-          </div>
+          <label key={category.id}>
+            <input
+              type="checkbox"
+              name="arrayTypeWork"
+              value={category.id}
+              checked={editedEmployee.arrayTypeWork.includes(category.id)}
+              onChange={(e) => handleCategoryChange(e, category.id)}
+            />
+            {category.value}
+          </label>
         ))}
       </div>
 

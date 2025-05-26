@@ -18,7 +18,7 @@
 .other-btn{
 	color:black;
 	font-family:$font;
-	font-weight: $regular;
+	font-weight: $font-weight-regular;
 	padding: $sp-5;;
 	cursor: pointer;
 	position: relative;
@@ -30,7 +30,7 @@
 .logOut{
 	color: black;
     font-family: $font;
-    font-weight: $regular;
+    font-weight: $font-weight-regular;
 	cursor: pointer;
 	padding: 0 $sp-5;
 	background:#ffffff;
@@ -46,7 +46,7 @@
 	color:rgb(0, 0, 0);
 	font-family: $font;
 	font-size: $fz-20;
-	font-weight: $medium;
+	font-weight: $font-weight-medium;
 }
  
  .other-modal ul li{

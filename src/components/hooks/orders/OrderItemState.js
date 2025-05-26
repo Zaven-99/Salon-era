@@ -50,8 +50,8 @@ export const OrderItemState = ({
         "clientData",
         JSON.stringify({ id: order.record.id, status })
       );
+      setLoading(true);
       try {
-        setLoading(true);
         const response = await fetch(
           `https://api.salon-era.ru/records/update`,
           {
@@ -73,6 +73,7 @@ export const OrderItemState = ({
         setError(error.message || "Неизвестная ошибка");
       } finally {
         setLoading(false);
+
         window.location.reload();
       }
     },

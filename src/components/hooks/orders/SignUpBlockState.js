@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import CryptoJS from "crypto-js";
 import { setUser } from "../../../store/slices/userSlice";
 
 export const SignUpBlockState = ({
@@ -20,6 +19,7 @@ export const SignUpBlockState = ({
     defaultValues: {
       firstName: "",
       lastName: "",
+      email: "",
       phone: "",
       gender: "",
     },
@@ -45,15 +45,6 @@ export const SignUpBlockState = ({
     return `${username}@${domain}`;
   };
 
-  const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU=";
-  const key = CryptoJS.enc.Base64.parse(base64Key);
-
-  const encryptField = (value) =>
-    CryptoJS.AES.encrypt(value, key, {
-      mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7,
-    }).toString();
-
   const onSubmit = async (formValues) => {
     const { gender, patronymic, policy, ...dataToSend } = formValues;
 
@@ -73,32 +64,31 @@ export const SignUpBlockState = ({
     );
 
     try {
+      setLoading(true);
+
       const response = await fetch("https://api.salon-era.ru/clients", {
         method: "POST",
         body: formData,
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        const statusCode = response.status;
-        throw new Error(
-          JSON.stringify({ message: errorText, status: statusCode })
-        );
-      } else {
-        setLoading(true);
-        const responseData = await response.json();
-        setClient(responseData);
-      }
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          JSON.stringify({ message: data, status: response.status })
+        );
+      }
+
+      setClient(data);
 
       const userPayload = {
         id: data.id,
-        firstName: encryptField(formValues.firstName),
-        lastName: encryptField(formValues.lastName),
-        login: encryptField(formValues.login),
-        email: encryptField(formValues.email),
-        phone: encryptField(formValues.phone),
-        gender: parseInt(formValues.gender),
+        firstName: data.firstName,
+        lastName: data.lastName,
+        login: data.login,
+        email: data.email,
+        phone: data.phone,
+        gender: data.gender,
         token: true,
       };
 
@@ -109,18 +99,30 @@ export const SignUpBlockState = ({
       reset();
       toggleCloseOfferModal();
     } catch (error) {
-      const errorData = JSON.parse(error.message);
-      const status = errorData.status;
+      let status = null;
+      let raw = error.message;
+
+      try {
+        const parsed = JSON.parse(error.message);
+        status = parsed.status;
+      } catch {
+        console.error("Ошибка запроса:", error.message);
+      }
 
       if (status === 442) {
         setErrorMessages((prev) => ({
           ...prev,
           phone: `Пользователь с номером ${formValues.phone} уже существует`,
         }));
+      } else {
+        setErrorMessages((prev) => ({
+          ...prev,
+          general: "Ошибка регистрации. Попробуйте позже.",
+        }));
       }
     } finally {
-      setSuccesSignUp(false);
       setLoading(false);
+      setSuccesSignUp(false);
     }
   };
 

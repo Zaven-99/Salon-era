@@ -29,27 +29,21 @@ export const EmployeeListState = (setEmployee) => {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://api.salon-era.ru/clients/all/filter?field=clientType&state=eq&value=employee"
+        "https://api.salon-era.ru/employees/role?role=USER",
+        {}
       );
       if (!response.ok) throw new Error("Ошибка при получении сотрудников");
 
       const data = await response.json();
-      const filteredData = data.filter(
-        (employee) => employee.clientType === "employee"
-      );
 
-      const uniqueData = Array.from(
-        new Map(filteredData.map((item) => [item.id, item])).values()
-      );
-
-      const decryptedData = uniqueData.map((employee) => {
+      const decryptedData = data.map((employee) => {
         const fieldsToDecrypt = [
           "firstName",
           "lastName",
-          "login",
           "password",
           "email",
           "phone",
+          "role",
         ];
         const decryptedEmployee = { ...employee };
 
@@ -62,7 +56,11 @@ export const EmployeeListState = (setEmployee) => {
         return decryptedEmployee;
       });
 
-      setEmployee(decryptedData);
+      const uniqueData = Array.from(
+        new Map(decryptedData.map((item) => [item.id, item])).values()
+      );
+
+      setEmployee(uniqueData);
     } catch (error) {
       console.error("Ошибка при загрузке сотрудников:", error);
     } finally {
@@ -80,9 +78,10 @@ export const EmployeeListState = (setEmployee) => {
 
     try {
       const response = await fetch(
-        `https://api.salon-era.ru/clients?id=${id}`,
+        `https://api.salon-era.ru/employees?id=${id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       if (!response.ok) throw new Error("Ошибка при удалении сотрудника");

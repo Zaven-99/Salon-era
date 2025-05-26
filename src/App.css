@@ -1,3 +1,55 @@
+
+
+
 .App{
-	font-family: 'nunito', Arial, sans-serif;;
+	font-family: 'nunito', Arial, sans-serif;
+}
+
+.modal-overlay{
+	position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 6;
+    overflow-y: scroll;
+}
+.modal-content{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  animation: modal_bounce-in__bCQtJ 0.5s;
+  margin: 10px;
+  overflow: auto;
+  max-height: 90vh;
+  text-align: center;
+}
+.b-btn{
+	position: relative;
+    margin-left: 10px;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: max-content;
+    text-align: center;
+    padding: 10px;
+    border-radius: 2px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+.spinner{
+	width: 100px;
 }

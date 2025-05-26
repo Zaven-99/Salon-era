@@ -30,6 +30,9 @@ const SignInForm = ({ toggleClose, toggleShowMessage }) => {
     register,
     errors,
     onSubmit,
+    adminCheck,
+    setAdminCheck,
+    setValue,
   } = SignInFormState({ toggleClose });
 
   if (loading) {
@@ -69,6 +72,23 @@ const SignInForm = ({ toggleClose, toggleShowMessage }) => {
             setActiveInput={setActiveInput}
             {...register("password", { required: "Это поле обязательно." })}
           />
+          <label>
+            <input
+              name="role"
+              type="checkbox"
+              className={styles.check}
+              onChange={(e) => {
+                const isAdmin = e.target.checked;
+                setAdminCheck(isAdmin);
+                setValue("role", isAdmin ? "ADMIN" : "USER");
+              }}
+              checked={adminCheck}
+            />
+            Войти как admin
+          </label>
+          <div>
+            <div id="recaptcha"></div>
+          </div>
           <CustomButton
             className={styles["signIn-btn"]}
             type="submit"

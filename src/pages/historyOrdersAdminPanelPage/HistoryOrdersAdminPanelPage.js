@@ -1,14 +1,12 @@
-import React from 'react';
-import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
+import React from "react";
 import HistoryOrders from "../../components/admin/historyOrders/HistoryOrders";
-
-
+import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
 
 const HistoryOrdersAdminPanelPage = () => {
-	return (
+  return (
     <div>
-      <HeaderAdminPanel />
-	    <HistoryOrders/>
+      {/* <HeaderAdminPanel /> */}
+      <HistoryOrders />
     </div>
   );
 };

@@ -1,24 +1,24 @@
 import React from "react";
 import Modal from "../../../modal/Modal";
-import CustomInput from "../../../customInput/CustomInput";
-import ImagePreview from "../../../imagePreview/ImagePreview";
+import ImagePreview from "../../../uploadImage/imagePreview/ImagePreview";
 import BtnBlock from "../../../btnBlock/BtnBlock";
 import { HeaderSlidesListState } from "../../../hooks/headerSlides/HeaderSlidesListState";
 import GenericSkeleton from "../../../../utils/Skeleton";
 
 import styles from "./headerSlidesList.module.scss";
+import UploadImage from "../../../uploadImage/UploadImage";
 
 const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
   const {
     slidesId,
     editedSlides,
-    activeInput,
+
     imagePreview,
     slidesToDelete,
     confirmDeleteSlides,
     loading,
     setSlidesId,
-    setActiveInput,
+
     handleDelete,
     handleSave,
     handleEdit,
@@ -39,6 +39,10 @@ const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
         itemHeight={50}
       />
     );
+  }
+
+  if (!slides.length) {
+    return <p className={styles.message}>Список слайдов пуст.</p>;
   }
 
   return (
@@ -74,14 +78,7 @@ const HeaderSlidesList = ({ setSlides, slides, toggleOpen, toggleClose }) => {
                       imagePreview={imagePreview}
                     />
 
-                    <CustomInput
-                      type="file"
-                      name="imageLink"
-                      placeholder="Выберите изображение"
-                      isActive={activeInput === "imageLink"}
-                      setActiveInput={setActiveInput}
-                      onChange={uploadImage}
-                    />
+                    <UploadImage onChange={uploadImage} />
 
                     <BtnBlock
                       className1={styles["g-btn"]}

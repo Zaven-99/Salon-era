@@ -8,6 +8,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: $sp-10;
+  margin-top:$sp-20 ;
 }
  
 
@@ -16,17 +17,14 @@
 	margin-top: $sp-50;
 	font-family: "Open Sans", sans-serif;
   font-size: $fz-20;
-  font-weight: $medium;
+  font-weight: $font-weight-medium;
 	color: salmon;
 }
 .news-list__item{
   cursor: pointer;
-  padding: $sp-15;
-  margin-bottom: $sp-5;
-  border-radius: $br-4;
-	gap: $sp-10;
-  height: max-content;
-  box-shadow:0 1px 4px -2px;
+  box-shadow: 0 1px 4px -2px;
+  padding: 50px;
+  border-radius: 15px;
   
  }
 .news-list__item:hover{
@@ -37,7 +35,7 @@
 	color: black;
   font-family: $font;
   font-size: $fz-15;
-  font-weight: $light;
+  font-weight: $font-weight-light;
 }
  
 

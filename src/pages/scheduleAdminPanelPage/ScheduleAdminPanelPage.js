@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
+import Schedule from "../../components/admin/schedule/Schedule";
 import HeaderAdminPanel from "../../components/admin/headerAdminPanel/HeaderAdminPanel";
-import Schedule from '../../components/admin/schedule/Schedule';
 
 const ScheduleAdminPanelPage = () => {
-	return (
+  return (
     <div>
-      <HeaderAdminPanel />
-	    <Schedule/>
+      {/* <HeaderAdminPanel /> */}
+      <Schedule />
     </div>
   );
 };

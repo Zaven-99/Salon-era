@@ -22,6 +22,7 @@ export const AddCategoryState = (toggleClose, reset) => {
       const response = await fetch("https://api.salon-era.ru/catalogs", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       if (!response.ok) {

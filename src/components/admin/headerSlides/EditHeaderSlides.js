@@ -2,13 +2,13 @@ import React from "react";
 
 import CustomButton from "../../customButton/CustomButton";
 import Modal from "../../modal/Modal";
-import CustomInput from "../../customInput/CustomInput";
-import ImagePreview from "../../imagePreview/ImagePreview";
+import ImagePreview from "../../uploadImage/imagePreview/ImagePreview";
 import HeaderSlidesList from "./headerSlidesList/HeaderSlidesList";
 import Spinner from "../../spinner/Spinner";
 import { EditHeaderSlidesState } from "../../hooks/headerSlides/EditHeaderSlidesState";
 
 import styles from "./editHeaderSlides.module.scss";
+import UploadImage from "../../uploadImage/UploadImage";
 
 const EditHeaderSlides = () => {
   const {
@@ -24,11 +24,7 @@ const EditHeaderSlides = () => {
     uploadImage,
     formSubmitHandler,
     loading,
-    activeInput,
-    setActiveInput,
     errorMessages,
-    setSelectedFile,
-    setImagePreview,
   } = EditHeaderSlidesState();
 
   if (loading) {
@@ -66,15 +62,8 @@ const EditHeaderSlides = () => {
               imagePreview={imagePreview}
             />
             <p className={styles.error}>{errorMessages}</p>
-            <CustomInput
-              type="file"
-              name="imageLink"
-              placeholder="Выберите изображение"
-              isActive={activeInput === "imageLink"}
-              setActiveInput={setActiveInput}
-              accept="image/*"
-              onChange={(e) => uploadImage(e, setSelectedFile, setImagePreview)}
-            />
+
+            <UploadImage onChange={uploadImage} />
             <CustomButton
               className={styles["b2-btn"]}
               type="submit"
