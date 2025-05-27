@@ -35,11 +35,7 @@ export const ProfileState = (logOut) => {
       if (!response.ok) throw new Error("Ошибка при получении клиентов");
       const data = await response.json();
 
-      const filteredData = data.filter(
-        (clients) => clients.clientType === null
-      );
-
-      const decryptedData = filteredData.map((employee) => {
+      const decryptedData = data.map((employee) => {
         const fieldsToDecrypt = ["email", "phone"];
         const decryptedEmployee = { ...employee };
 

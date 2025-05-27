@@ -6,9 +6,10 @@
   justify-content: space-between;
   align-items: center;
   padding: $sp-15;
-  background: #eaeef4;
   margin-bottom: $sp-5;
-  border-radius: $br-4;
+  box-shadow: 0 1px 6px -3px;
+  background: #f2f2f2;
+  border-radius: 15px;
   margin: $sp-10 $sp-50 $sp-10 $sp-50;
 }
 
@@ -27,14 +28,16 @@
 .order-canceled{
   background-color:salmon;
   padding: $sp-2 $sp-5 $sp-2 $sp-5;
-  border-radius:$br-4;
+  box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
   width:$wd-125;
   text-align: center;
 }
 .order-accept{
 	background-color:$buttonAccept-color;
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
-	border-radius:$br-4;
+	box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
   width:$wd-125;
   text-align: center;
 }
@@ -42,7 +45,8 @@
 	background-color:rgba(200, 200, 15, 0.76);
   text-align: center;
 	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
-	border-radius:$br-4;
+	box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
   width:$wd-125;
   text-align: center;
 }
@@ -82,6 +86,15 @@
 		display: block;
 		width: 300px;
 	}
+  .record-list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  
+  
+    margin: 20px;
+  }
+  .record-item{
+    margin: $sp-10 $sp-0 $sp-10 $sp-0;
+  }
 	
      .order-closed{
       width: auto;
@@ -97,10 +110,77 @@
      }
       
 }
+@media(max-width:1260px){
 
-@media(max-width:450px){
+ 
+  .record-item__inner{
+    width:max-content;
+  }
+  .record-item__inner div {
+    font-size: 12px;
+  }
+  .record-item{
+    width: max-content;
+  }
+  .order-canceled{
+    width: 150px;
+    font-size: 12px;
+  }
+  .order-accept{
+    width: 150px;
+    font-size: 12px;
+  }
+  .order-closed{
+    width: 150px;
+    font-size: 12px;
+  }
+  .order-created{
+    width: 150px;
+    font-size: 12px;
+  }
+
+  
+}
+@media(max-width:990px){
+  .record-list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  
+   
+   
+  }
+
+}
+@media(max-width:800px){
+  .record-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  
+   
+   
+  }
+  .pagination-btn{
+    font-size: 10px;
+  }
+
+}
+@media(max-width:600px){
+  .record-list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  
+   
+   
+  }
+
+}
+
+@media(max-width:420px){
+  .record-list{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 	 
-      .pagination-btn{
-        font-size: 10px;
-      }
+  .pagination-btn{
+    padding: 2px;
+  }
 }

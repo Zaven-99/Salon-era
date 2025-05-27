@@ -11,9 +11,10 @@
     box-shadow:0 1px 4px -2px;
     padding: $sp-15;
     margin-bottom: $sp-5;
-    border-radius: $br-4;
+    box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
 	margin: $sp-10 $sp-10 $sp-10 $sp-10;
-    border: 1px solid #00000026;
+     
 }
 .record-item:hover{
     transform: scale(1.010);
@@ -31,7 +32,8 @@
     padding: $sp-10;
     height: $hg-50;
     background-color: rgb(80, 200, 120);
-    border-radius: $br-4;
+    box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
     width: $wd-150;
 }
 .g-btn:hover{
@@ -47,7 +49,8 @@
     padding: $sp-10;
     height: $hg-50;
     background-color: #f0526e;
-    border-radius: $br-4;
+    box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
     width: $wd-150;
 }
 .r-btn:hover{
@@ -64,7 +67,8 @@
     padding: $sp-10;
     height: $hg-50;
     background-color: rgb(186, 178, 177);
-    border-radius: $br-4;
+    box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
     width: $wd-150;
 }
 .gr-btn:hover{
@@ -75,21 +79,24 @@
 .order-created{
 	background-color:rgba(200, 200, 15, 0.76);
 	padding: $sp-2 $sp-5 $sp-2 $sp-5 ;
-	border-radius:$br-4;
+	box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
     width:$wd-125;
     text-align: center;
 }
 .order-accepted{
 	background-color:$buttonAccept-color;
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
-	border-radius:$br-4;
+	box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
     width:$wd-125;
     text-align: center;
 }
 .order-canceled{
     background-color:#fe5440;
 	padding: $sp-2 $sp-5 $sp-2 $sp-5;
-	border-radius:$br-4;
+	box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
     width:$wd-125;
     text-align: center;
 

@@ -22,13 +22,13 @@
 	display: flex;
     justify-content: space-between;
     align-items: center;
-    
     padding: $sp-15;
     margin-bottom: $sp-5;
-    border-radius:$br-4;
+    box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
     gap: $sp-10;
     margin: $sp-10;
-    border: 1px solid #00000026;
+  
 }
 .service-list__item:hover{
 	 box-shadow: 0 1px 4px -2px;
@@ -100,7 +100,8 @@ strong {
     font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height: $hg-50;
-	border-radius: $br-4;
+	box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
 	width: $wd-150;
 }
 .g-btn:hover{
@@ -116,7 +117,8 @@ strong {
     font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height:$hg-50;
-	border-radius: $br-4;
+	box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
 	width: $wd-150;
 }
 .r-btn:hover{
@@ -132,7 +134,8 @@ strong {
     font-weight: $font-weight-regular;
 	padding:$sp-10;
 	height:$hg-50;
-	border-radius: $br-4;
+	box-shadow: 0 1px 6px -3px ;
+    border-radius: 15px;
 	width: $wd-150;
 }
 .y-btn:hover{

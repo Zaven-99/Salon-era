@@ -126,17 +126,17 @@ export const AddEmployeeState = ({ setEmployee, toggleClose }) => {
       const errorDetails = JSON.parse(errorData.message || "{}");
       const errorCode = errorDetails.errorCode;
 
-      if (errorCode === "204") {
+      if (errorCode === "209") {
         setErrorMessages((prev) => ({
           ...prev,
           login: `Пользователь с логином ${formValues.login} уже существует`,
         }));
-      } else if (errorCode === "306") {
+      } else if (errorCode === "207") {
         setErrorMessages((prev) => ({
           ...prev,
           phone: `Пользователь с номером ${formValues.phone} уже существует`,
         }));
-      } else if (errorCode === "307") {
+      } else if (errorCode === "208") {
         setErrorMessages((prev) => ({
           ...prev,
           email: `Клиент с указанным почтовым адресом ${formValues.email} уже существует`,

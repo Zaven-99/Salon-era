@@ -10,14 +10,13 @@
     font-weight: 500;
 	padding: $sp-10 $sp-10;
 	display: flex;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 0.149019607);
+	box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    background: #f2f2f2;
+    border-radius: 15px;
 	justify-content: space-evenly;
 	align-items:center;
 }
-.user-menu:hover{
-	box-shadow: $shadow-small;
-}
+ 
 
 .user{
 	display: flex;
@@ -26,7 +25,7 @@
 	
 }
  .user-name{
-	font-family:"Open Sans", sans-serif;
+ 
     font-size:  $fz-15;
     font-weight:  $font-weight-light;
     color: black;
@@ -63,14 +62,14 @@
 .notifications{
 	width: $wd-355;
     position: absolute;
-    background: #efeff1;
     text-align: center;
     z-index: 10;
     right: -$sp-150;
     top: $sp-40;
 	padding: $sp-15 $sp-10 ;
-	box-shadow: $shadow-small;
-	border-radius:$br-4;
+	box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    background: #f7f7f7;
+    border-radius: 15px;
 	border:transparent;
 	animation:bounce-in .5s;
 }
@@ -138,7 +137,7 @@
 .all-notifications{
 	color: white;
     background-color: #00aaff;
-    font-family: "Open Sans", sans-serif;
+ 
     font-size: $fz-12;
     font-weight: $font-weight-regular;
     padding: $sp-7;

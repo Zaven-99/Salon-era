@@ -40,8 +40,8 @@ const MyRecords = () => {
                 </div>
                 <div>
                   <strong>Парикмахер: </strong>
-                  <span>{order.clientTo?.firstName}&nbsp;</span>
-                  <span>{order.clientTo?.lastName}</span>
+                  <span>{order.employeeTo?.firstName}&nbsp;</span>
+                  <span>{order.employeeTo?.lastName}</span>
                 </div>
                 {order.record?.status === 0 ? (
                   <div className={styles.status}>

@@ -11,10 +11,12 @@
 .records-list__item{
 	display: flex;
 	align-items:center;
-    background: aliceblue;
+     
     justify-content: space-between;
 	margin-top: $sp-20;
-	border-radius:$br-5;
+	box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    background: #f2f2f2;
+    border-radius: 15px;
     margin: $sp-10 $sp-20 $sp-10 $sp-20;
     padding: $sp-10 $sp-25 $sp-10 $sp-60;
 }
@@ -30,7 +32,8 @@
     background-color: #fe5440;
     font-size: $fz-12;
     padding: $sp-10;
-    border-radius: $br-4;
+    box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
     width: $wd-150;
     color:white;
 }
@@ -55,7 +58,8 @@
     text-align: center;
     background: rgba(200, 200, 15, 0.76);
     padding: $sp-2 $sp-5 $sp-2 $sp-5;
-    border-radius:$br-4;
+    box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
     width: $wd-130;
                     
 }
@@ -64,7 +68,8 @@
     text-align: center;
     background: rgb(15 210 15);
     padding: $sp-2 $sp-5 $sp-2 $sp-5;
-    border-radius:$br-4;
+    box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
     width: $wd-130;
 }
 .canceled{
@@ -72,7 +77,8 @@
     text-align: center;
     background: #fe5440;
     padding: $sp-2 $sp-5 $sp-2 $sp-5;
-    border-radius:$br-4;
+    box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
     width: $sp-130;
 }
 .closed{
@@ -80,7 +86,8 @@
     background: rgb(186, 178, 177);
     text-align: center;
     padding: $sp-2 $sp-5 $sp-2 $sp-5;
-    border-radius:$br-4;
+    box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
     width: $sp-130;
 }
 @media(max-width:1400px){
@@ -103,7 +110,7 @@
         width: max-content ;
         font-size: $sp-15 ;
         padding: $sp-2;
-        width: 200px;
+        width: 135px;
     }
       
      
@@ -118,7 +125,7 @@
       text-align: center;
       padding-right: 0;
     }
-
+      
     .records-list{
         justify-content: center;
     }

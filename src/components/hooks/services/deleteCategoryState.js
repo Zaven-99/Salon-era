@@ -35,9 +35,10 @@ export const DeleteCategoryState = (toggleClose) => {
     try {
       const response = await fetch(
         `https://api.salon-era.ru/catalogs?id=${id}`,
-        { method: "DELETE" }
+        { method: "DELETE", credentials: "include" }
       );
       if (!response.ok) throw new Error("Ошибка при удалении категории");
+
       setCategory((prevCat) => prevCat.filter((cat) => cat.id !== id));
       toggleClose();
     } catch (error) {
@@ -45,7 +46,7 @@ export const DeleteCategoryState = (toggleClose) => {
     } finally {
       setLoading(false);
       document.body.style.overflow = "scroll";
-      window.location.reload();
+      window.location.reload(); 
     }
   };
 

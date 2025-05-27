@@ -159,7 +159,7 @@ const PrivacyPolicy = () => {
 
       <footer data-aos="fade-zoom-in">
         <p className={styles["privacy-paragraph"]}>
-          <strong>Дата последнего обновления:</strong> 11.12.2024г.
+          <strong>Дата последнего обновления:</strong> 27.05.2025г.
         </p>
       </footer>
     </div>

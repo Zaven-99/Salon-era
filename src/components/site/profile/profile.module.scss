@@ -55,21 +55,14 @@
   font-size: $fz-24;
 }
 .logOut{
-	 
-
-  position: relative;
-  background:$bg-grey;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 1px 4px -2px rgba(124, 124, 124, 0.514);
   text-align: center;
   padding: 15px;
-  border-radius: $br-2;
-  margin-bottom: $sp-15;
-  margin-top: $sp-10;
+  cursor: pointer;
+  border-radius:10px;
   font-size: 16px;
-  border:1px solid rgba(0, 0, 0, 0.1490196078)
+  background:#7e7c7ca2;
+  color:white;
 }
 .logOut:hover{
   transform: scale(1.01);
@@ -78,25 +71,20 @@
 
 
 .my-records{
-  position: relative;
-  background-color: #00aaff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+   
+  box-shadow: 0 1px 4px -2px rgba(124, 124, 124, 0.514);
   text-align: center;
   padding: 15px;
-  border-radius: $br-2;
-  margin-bottom: $sp-15;
-  margin-top: $sp-10;
+  cursor: pointer;
+  border-radius:10px;
   font-size: 16px;
-  border:1px solid rgba(0, 0, 0, 0.1490196078)
+  background:#00aaff;
+  color:white;
+  margin-top: $sp-10;
+  margin-bottom: $sp-15;
 }
  
- .delete-account:hover{
-  transform: scale(1.01);
-	 
- }
+
 .profile-close:hover {
   color: rgba(255, 0, 0, 0.274);  
 }
@@ -108,11 +96,19 @@
 .my-records:hover{
   transform: scale(1.01);
 }
-.contact-item{
-  color: black;
-  font-size: $fz-17;
-  font-weight: $font-weight-regular;
-  margin-top: $sp-10;
+.contact-item {
+  background: #f5f5f5;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  color: #333;
+
+  &:first-of-type {
+    margin-top: 25px;
+    box-shadow: 0 1px 4px -2px rgba(0, 0, 0, 0.15);
+    background: #f5f5f5;
+  }
 }
  
 .modal-overlay {
@@ -143,7 +139,6 @@
 
 .cancel-delete__clients{
 	color: black;
-  font-family: $font;
   font-size: $fz-12;
   font-weight: $font-weight-regular;
   padding: $sp-10;
@@ -154,9 +149,7 @@
 }
 .delete-clients{
 	color: black;
-  font-family: $font;
   font-size: $fz-12;
-  font-weight: $font-weight-regular;
   padding: $sp-10;
   height: $hg-50;
   background-color: rgb(80, 200, 120);
@@ -195,10 +188,14 @@
   color:black;
 }
 .btn-delete{
-  font-family: $font;
-  font-size: $fz-12;
+ 
+  font-size: $fz-10;
   font-weight: $font-weight-regular;
 }
 .recycle{
-  width: $wd-20;
+  width: $wd-15;
 }
+.delete-account:hover{
+  transform: scale(1.01);
+	 
+ }

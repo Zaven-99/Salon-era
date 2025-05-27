@@ -33,11 +33,11 @@ export const MyRecordsState = (clientId) => {
         };
       }
 
-      if (order.clientTo) {
-        decryptedOrder.clientTo = {
-          ...order.clientTo,
-          firstName: decryptField(order.clientTo.firstName),
-          lastName: decryptField(order.clientTo.lastName),
+      if (order.employeeTo) {
+        decryptedOrder.employeeTo = {
+          ...order.employeeTo,
+          firstName: decryptField(order.employeeTo.firstName),
+          lastName: decryptField(order.employeeTo.lastName),
         };
       }
 

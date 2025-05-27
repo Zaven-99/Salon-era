@@ -11,7 +11,7 @@ const NewsCard = ({ news, formatDate }) => {
         <img className={styles["news-img"]} src={news.imageLink} alt="" />
       )}
 
-      <h2>{news.name}</h2>
+      <h2 className={styles.name}>{news.name}</h2>
       <p className={styles["main-text"]}>{news.mainText}</p>
       <p>{formatDate(news.createdAt)}</p>
     </div>

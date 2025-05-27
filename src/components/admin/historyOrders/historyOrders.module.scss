@@ -53,6 +53,7 @@
 .datePickerWrapper{
   display: flex;
   justify-content: space-between;
+  align-items:center;
 }
 .total{
   margin-right: $sp-50;
@@ -82,11 +83,18 @@
        margin-top: $sp-15;
     }
 }
+@media(max-width:650px){
+  .total{
+    font-size: $fz-15;
+
+  }
+
+}
 
 @media(max-width:520px){
   .total{
     margin-right: $sp-20;
-    font-size: $fz-15;
+    
   }
   .dataPicker{
     margin-left: $sp-20;
@@ -95,4 +103,16 @@
     font-size: $fz-20;
   }
    
+}
+
+@media(max-width:520px){
+.datePickerWrapper{
+  display: block;
+  text-align: center;
+
+}
+.total{
+  margin-top: 10px;
+}
+
 }

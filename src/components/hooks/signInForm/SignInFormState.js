@@ -1,4 +1,4 @@
-// import { useState } from "react";
+// import { useState, useEffect } from "react";
 // import { useDispatch } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 // import { useForm } from "react-hook-form";
@@ -13,6 +13,7 @@
 //   const [errorMessages, setErrorMessages] = useState({});
 //   const [activeInput, setActiveInput] = useState("");
 //   const [adminCheck, setAdminCheck] = useState(false);
+
 //   const dispatch = useDispatch();
 //   const navigate = useNavigate();
 
@@ -29,26 +30,136 @@
 //     },
 //   });
 
-//   const toggleHelpModal = () => setShowHelpModal((prev) => !prev);
-//   const toggleFormSignUp = () => setShowFormSignUp((prev) => !prev);
-//   const toggleFormRecover = () => setRecoverPasswordForm((prev) => !prev);
+//   // ---- reCAPTCHA v3 ----
+//   const RECAPTCHA_SITE_KEY = "6LdB2UkrAAAAAP_7ThCEqgupd2DSaZL2xNk6bDt2";
+
+//   useEffect(() => {
+//     const scriptId = "recaptcha-v3-script";
+//     if (!document.getElementById(scriptId)) {
+//       const script = document.createElement("script");
+//       script.id = scriptId;
+//       script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+//       script.async = true;
+//       document.body.appendChild(script);
+//     }
+//   }, []);
+
+//   const loadRecaptchaScript = () => {
+//     return new Promise((resolve) => {
+//       if (window.grecaptcha) {
+//         resolve();
+//       } else {
+//         const checkInterval = setInterval(() => {
+//           if (window.grecaptcha) {
+//             clearInterval(checkInterval);
+//             resolve();
+//           }
+//         }, 100);
+//       }
+//     });
+//   };
+
+//   const fetchUserData = async () => {
+//     const url = adminCheck
+//       ? "https://api.salon-era.ru/test/bearer/getData_admin"
+//       : "https://api.salon-era.ru/test/bearer/getData";
+
+//     try {
+//       const response = await fetch(url, {
+//         method: "GET",
+//         credentials: "include",
+//       });
+
+//       if (!response.ok) {
+//         const errorText = await response.text();
+//         throw new Error(`Ошибка: ${response.status} - ${errorText}`);
+//       }
+
+//       const data = await response.json();
+//       console.log("Данные пользователя (GET):", data);
+//     } catch (error) {
+//       console.error("Ошибка при получении данных пользователя:", error);
+//     }
+//   };
+
+//   const postUserData = async () => {
+//     const url = adminCheck
+//       ? "https://api.salon-era.ru/test/bearer/postData_admin"
+//       : "https://api.salon-era.ru/test/bearer/postData";
+
+//     try {
+//       const response = await fetch(url, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         credentials: "include",
+//         body: JSON.stringify({ message: "Token verification test" }),
+//       });
+
+//       if (!response.ok) {
+//         const errorText = await response.text();
+//         throw new Error(`Ошибка: ${response.status} - ${errorText}`);
+//       }
+
+//       const data = await response.json();
+//       console.log("Ответ от bearer/postData (POST):", data);
+//     } catch (error) {
+//       console.error("Ошибка при отправке данных пользователя:", error);
+//     }
+//   };
 
 //   const onSubmit = async (formValues) => {
+//     setErrorMessages({});
+ 
+
 //     try {
-//       const isAdmin = adminCheck;
+//       await loadRecaptchaScript();
+
+//       if (!window.grecaptcha || !window.grecaptcha.execute) {
+//         setErrorMessages({
+//           general: "Не удалось загрузить reCAPTCHA. Попробуйте позже.",
+//         });
+//         return;
+//       }
+
+//       const recaptchaToken = await window.grecaptcha.execute(
+//         RECAPTCHA_SITE_KEY,
+//         {
+//           action: "submit",
+//         }
+//       );
+
+//       if (!recaptchaToken) {
+//         setErrorMessages({
+//           general: "Пожалуйста, пройдите проверку reCAPTCHA.",
+//         });
+//         return;
+//       }
+
+//       const captchaResponse = await fetch(
+//         "https://api.salon-era.ru/captcha/submit-form",
+//         {
+//           method: "POST",
+//           body: new URLSearchParams({
+//             "g-recaptcha-response": recaptchaToken,
+//           }),
+//         }
+//       );
+
+//       if (!captchaResponse.ok) {
+//         const text = await captchaResponse.text();
+//         throw new Error(`Ошибка при проверке капчи: ${text}`);
+//       }
+
 //       const url = adminCheck
 //         ? "https://api.salon-era.ru/employees/auth"
 //         : "https://api.salon-era.ru/clients/auth";
 
-//       const requestBody = isAdmin
-//         ? {
-//             login: formValues.login,
-//             password: formValues.password,
-//           }
-//         : {
-//             login: formValues.login,
-//             password: formValues.password,
-//           };
+//       const requestBody = {
+//         login: formValues.login,
+//         password: formValues.password,
+//       };
 
 //       const response = await fetch(url, {
 //         method: "POST",
@@ -68,6 +179,8 @@
 //       }
 
 //       const data = await response.json();
+//       await fetchUserData();
+//       await postUserData();
 
 //       const user = {
 //         id: data.id,
@@ -79,13 +192,13 @@
 //         gender: data.gender,
 //         imageLink: data.imageLink,
 //         token: true,
-//         ...(isAdmin ? { role: data.role } : {}),
+//         ...(adminCheck ? { role: data.role } : {}),
 //       };
 
 //       localStorage.setItem("user", JSON.stringify(user));
 //       dispatch(setUser(user));
 
-//       if (user.login === "admin") {
+//       if (adminCheck && user.login === "admin") {
 //         navigate("/adminPanel/orders");
 //       }
 
@@ -96,17 +209,32 @@
 //         const errorDetails = JSON.parse(errorData.message);
 //         const errorCode = errorDetails.errorCode;
 
-//         if (errorCode === "103") {
+//         if (errorCode === "101") {
 //           setErrorMessages((prev) => ({
 //             ...prev,
 //             login: "Неверный логин или пароль",
 //           }));
+//         } else {
+//           setErrorMessages((prev) => ({
+//             ...prev,
+//             general: "Ошибка авторизации. Попробуйте позже.",
+//           }));
 //         }
 //       } catch {
 //         console.error("Ошибка авторизации:", error);
+//         setErrorMessages((prev) => ({
+//           ...prev,
+//           general: error.message || "Неизвестная ошибка при авторизации",
+//         }));
 //       }
+//     } finally {
+//       setLoading(false);
 //     }
 //   };
+
+//   const toggleHelpModal = () => setShowHelpModal((prev) => !prev);
+//   const toggleFormSignUp = () => setShowFormSignUp((prev) => !prev);
+//   const toggleFormRecover = () => setRecoverPasswordForm((prev) => !prev);
 
 //   return {
 //     showFormSignUp,
@@ -136,7 +264,21 @@
 // };
 
 
-import { useState, useEffect } from "react";
+
+
+
+
+
+
+
+
+
+
+
+
+//test
+
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -168,93 +310,61 @@ export const SignInFormState = ({ toggleClose }) => {
     },
   });
 
-  // ---- reCAPTCHA v3 ----
-  const RECAPTCHA_SITE_KEY = "6LdB2UkrAAAAAP_7ThCEqgupd2DSaZL2xNk6bDt2";
-  useEffect(() => {
-    const scriptId = "recaptcha-v3-script";
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
+  const fetchUserData = async () => {
+    const url = adminCheck
+      ? "https://api.salon-era.ru/test/bearer/getData_admin"
+      : "https://api.salon-era.ru/test/bearer/getData";
 
-  const loadRecaptchaScript = () => {
-    return new Promise((resolve) => {
-      if (window.grecaptcha) {
-        resolve();
-      } else {
-        const scriptId = "recaptcha-v3-script";
-        if (!document.getElementById(scriptId)) {
-          const script = document.createElement("script");
-          script.id = scriptId;
-          script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-          script.async = true;
-          script.onload = () => resolve();
-          document.body.appendChild(script);
-        } else {
-          const checkInterval = setInterval(() => {
-            if (window.grecaptcha) {
-              clearInterval(checkInterval);
-              resolve();
-            }
-          }, 100);
-        }
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Ошибка: ${response.status} - ${errorText}`);
       }
-    });
+
+      const data = await response.json();
+      console.log("Данные пользователя (GET):", data);
+    } catch (error) {
+      console.error("Ошибка при получении данных пользователя:", error);
+    }
+  };
+
+  const postUserData = async () => {
+    const url = adminCheck
+      ? "https://api.salon-era.ru/test/bearer/postData_admin"
+      : "https://api.salon-era.ru/test/bearer/postData";
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ message: "Token verification test" }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Ошибка: ${response.status} - ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log("Ответ от bearer/postData (POST):", data);
+    } catch (error) {
+      console.error("Ошибка при отправке данных пользователя:", error);
+    }
   };
 
   const onSubmit = async (formValues) => {
-   
     setErrorMessages({});
 
     try {
-      await loadRecaptchaScript();
-
-      if (!window.grecaptcha || !window.grecaptcha.execute) {
-        setErrorMessages({
-          general: "Не удалось загрузить reCAPTCHA. Попробуйте позже.",
-        });
-        setLoading(false);
-        return;
-      }
-
-      const recaptchaToken = await window.grecaptcha.execute(
-        RECAPTCHA_SITE_KEY,
-        {
-          action: "submit",
-        }
-      );
-
-      if (!recaptchaToken) {
-        setErrorMessages({
-          general: "Пожалуйста, пройдите проверку reCAPTCHA.",
-        });
-        setLoading(false);
-        return;
-      }
-
-      // Отправляем токен на сервер для проверки
-      const captchaResponse = await fetch(
-        "https://api.salon-era.ru/captcha/submit-form",
-        {
-          method: "POST",
-          body: new URLSearchParams({
-            "g-recaptcha-response": recaptchaToken,
-          }),
-        }
-      );
-
-      if (!captchaResponse.ok) {
-        const text = await captchaResponse.text();
-        throw new Error(`Ошибка при проверке капчи: ${text}`);
-      }
-
-      // Далее выполняем обычную авторизацию
-      const isAdmin = adminCheck;
-      const url = isAdmin
+      const url = adminCheck
         ? "https://api.salon-era.ru/employees/auth"
         : "https://api.salon-era.ru/clients/auth";
 
@@ -281,6 +391,8 @@ export const SignInFormState = ({ toggleClose }) => {
       }
 
       const data = await response.json();
+      await fetchUserData();
+      await postUserData();
 
       const user = {
         id: data.id,
@@ -292,13 +404,13 @@ export const SignInFormState = ({ toggleClose }) => {
         gender: data.gender,
         imageLink: data.imageLink,
         token: true,
-        ...(isAdmin ? { role: data.role } : {}),
+        ...(adminCheck ? { role: data.role } : {}),
       };
 
       localStorage.setItem("user", JSON.stringify(user));
       dispatch(setUser(user));
 
-      if (user.login === "admin") {
+      if (adminCheck && user.login === "admin") {
         navigate("/adminPanel/orders");
       }
 
@@ -309,7 +421,7 @@ export const SignInFormState = ({ toggleClose }) => {
         const errorDetails = JSON.parse(errorData.message);
         const errorCode = errorDetails.errorCode;
 
-        if (errorCode === "103") {
+        if (errorCode === "101") {
           setErrorMessages((prev) => ({
             ...prev,
             login: "Неверный логин или пароль",

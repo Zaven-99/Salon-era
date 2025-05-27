@@ -86,7 +86,7 @@ export const AddServiceState = ({
       setErrorMessage(true);
     } finally {
       setLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
