@@ -1,8 +1,17 @@
+@import '../styles/variables.scss';
 
-@import '../../../../../components/styles/variables.scss';
 
 
-.select{
+.filter-block{
+  margin-top: $sp-35;
+}
+ .filter-title{
+  font-size: $fz-15;
+  margin-bottom: $sp-5;
+
+ }
+
+ .filter{
   display: block;
   width: $wd-100p;
   height: calc(2.25rem + 2px);
@@ -21,6 +30,13 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  cursor: pointer;
+ }
+
+ /*media*/
+
+ @media(max-width:465px){
+  
+  .filter-title{
+    font-size: $fz-10;
+  }
 }
- 

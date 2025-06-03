@@ -1,17 +1,16 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import AOS from "aos"; // импортируем AOS
 
 import styles from "./privacyPolicy.module.scss";
 
 const PrivacyPolicy = () => {
-
   useEffect(() => {
-      AOS.init({
-        duration: 1000,
-        once: false,
-        offset: 100,
-      });
-    }, []);
+    AOS.init({
+      duration: 1000,
+      once: false,
+      offset: 100,
+    });
+  }, []);
   return (
     <div className={styles["privacy-policy"]}>
       <header data-aos="fade-zoom-in">
@@ -39,13 +38,14 @@ const PrivacyPolicy = () => {
           <li className={styles["privacy-marker"]}>
             Имя, фамилия, контактные данные (телефон, email);
           </li>
-          <li className={styles["privacy-marker"]}>
-            Данные о предпочтениях в услугах (например, тип стрижки, стиль
-            укладки);
-          </li>
+
           <li className={styles["privacy-marker"]}>
             Данные о посещении нашего сайта (например, IP-адрес, информация о
-            браузере);
+            браузере, операционной системе);
+          </li>
+          <li className={styles["privacy-marker"]}>
+            Геолокационные данные (если вы предоставили доступ через ваш браузер
+            или устройство);
           </li>
           <li className={styles["privacy-marker"]}>
             Информация о бронированиях и посещениях нашего салона;
@@ -86,9 +86,36 @@ const PrivacyPolicy = () => {
       <section data-aos="fade-zoom-in" className={styles.section}>
         <h2>4. Хранение данных</h2>
         <p className={styles["privacy-paragraph"]}>
-          Ваши персональные данные хранятся в течение необходимого срока для
-          выполнения вышеуказанных целей, а также в рамках установленных
-          законодательством сроков хранения информации.
+          Мы храним ваши персональные данные на протяжении всего срока оказания
+          вам услуг, а также после удаления аккаунта, если это необходимо для:
+        </p>
+        <ul>
+          <li className={styles["privacy-marker"]}>
+            выполнения финансовых или договорных обязательств (например, учёта
+            оплаты, возвратов, завершения начатых процедур);
+          </li>
+          <li className={styles["privacy-marker"]}>
+            ведения истории заказов, предоставления повторных услуг,
+            использования накопленных скидок и бонусов;
+          </li>
+          <li className={styles["privacy-marker"]}>
+            соблюдения требований законодательства Российской Федерации
+            (например, в части бухгалтерского и налогового учёта);
+          </li>
+          <li className={styles["privacy-marker"]}>
+            анализа качества сервиса и улучшения клиентского опыта.
+          </li>
+        </ul>
+        <p className={styles["privacy-paragraph"]}>
+          Даже если вы удалите аккаунт, определённые данные могут быть временно
+          сохранены в целях, описанных выше. Мы прекратим использовать ваши
+          данные в маркетинговых целях после удаления аккаунта, если иное не
+          предусмотрено отдельно данным согласием.
+        </p>
+        <p className={styles["privacy-paragraph"]}>
+          По вашему запросу мы можем удалить персональные данные, за исключением
+          случаев, когда их сохранение требуется по закону или необходимо для
+          защиты наших прав и интересов.
         </p>
       </section>
 

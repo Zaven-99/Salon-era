@@ -1,65 +1,75 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../../../use-auth/use-auth";
+
 import CryptoJS from "crypto-js";
 
 export const MyRecordsState = (clientId) => {
   const [order, setOrder] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { id } = useAuth();
 
   const base64Key = "ECqDTm9UnVoFn2BD4vM2/Fgzda1470BvZo4t1PWAkuU=";
   const key = CryptoJS.enc.Base64.parse(base64Key);
 
   const decryptField = (encryptedValue) => {
-      try {
-        const decrypted = CryptoJS.AES.decrypt(encryptedValue, key, {
-          mode: CryptoJS.mode.ECB,
-          padding: CryptoJS.pad.Pkcs7,
-        });
-        return decrypted.toString(CryptoJS.enc.Utf8);
-      } catch (e) {
-        // console.error("Ошибка при расшифровке:", e);
-        return "Ошибка";
-      }
-    };
+    try {
+      const decrypted = CryptoJS.AES.decrypt(encryptedValue, key, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7,
+      });
+      return decrypted.toString(CryptoJS.enc.Utf8);
+    } catch (e) {
+      // console.error("Ошибка при расшифровке:", e);
+      return "Ошибка";
+    }
+  };
 
-    const decryptOrder = (order) => {
-      const decryptedOrder = { ...order };
+  const decryptOrder = (order) => {
+    const decryptedOrder = { ...order };
 
-      if (order.clientFrom) {
-        decryptedOrder.clientFrom = {
-          ...order.clientFrom,
-          firstName: decryptField(order.clientFrom.firstName),
-          lastName: decryptField(order.clientFrom.lastName),
-        };
-      }
+    if (order.clientFrom) {
+      decryptedOrder.clientFrom = {
+        ...order.clientFrom,
+        firstName: decryptField(order.clientFrom.firstName),
+        lastName: decryptField(order.clientFrom.lastName),
+      };
+    }
 
-      if (order.employeeTo) {
-        decryptedOrder.employeeTo = {
-          ...order.employeeTo,
-          firstName: decryptField(order.employeeTo.firstName),
-          lastName: decryptField(order.employeeTo.lastName),
-        };
-      }
+    if (order.employeeTo) {
+      decryptedOrder.employeeTo = {
+        ...order.employeeTo,
+        firstName: decryptField(order.employeeTo.firstName),
+        lastName: decryptField(order.employeeTo.lastName),
+      };
+    }
 
-      return decryptedOrder;
-    };
+    return decryptedOrder;
+  };
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/records/all", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://api.salon-era.ru/records/all`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
-        throw new Error(`http error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorText}`
+        );
       }
 
       const data = await response.json();
-
+       
       const decryptedData = data.map(decryptOrder);
 
       if (!Array.isArray(decryptedData)) {
@@ -71,7 +81,9 @@ export const MyRecordsState = (clientId) => {
       );
       setOrder(userOrders);
     } catch (error) {
-      setError(error.message);
+      console.log(error.message);
+
+      // setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -97,6 +109,7 @@ export const MyRecordsState = (clientId) => {
       const response = await fetch(`https://api.salon-era.ru/records/update`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -120,14 +133,23 @@ export const MyRecordsState = (clientId) => {
     }
   };
 
-  const formatDate = (date) => {
-    const options = {
+  const formatDate = (utcDateString) => {
+    // Если строка не содержит суффикса Z, добавим его
+    const utcStringWithZ = utcDateString.endsWith("Z")
+      ? utcDateString
+      : utcDateString + "Z";
+
+    const d = new Date(utcStringWithZ);
+
+    return `${d.toLocaleDateString("ru-RU", {
       year: "numeric",
       month: "long",
       day: "numeric",
+    })}, ${d.toLocaleTimeString("ru-RU", {
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: false,
-    };
-    return new Date(date).toLocaleString("ru-RU", options);
+    })}`;
   };
 
   const totalAllOrders = order.reduce(

@@ -125,33 +125,12 @@
 }
 .signIn-btn{
     width: $wd-100p;
-    position: relative;
+    background: #00aaff;
     cursor: pointer;
-    padding: var(--padding-main-button);
-    margin-top: 1rem;
-    font-style: normal;
-    font-weight: var(--font-weight-main-button);
-    font-size: var(--font-size-main-button);
-    line-height: var(--line-height-main-button);
-    border-radius: var(--button-border-radius, 4px);
-    border: var(--button-border);
-    outline: none;
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    text-align: center;
-    transition: background 0.3s;
-    box-shadow: var(--button-box-shadow, none);
-    --button-text-color: var(--button-text-primary);
-    color: var(--button-text-color);
-    background: var(--button-primary-background);
-    -webkit-tap-highlight-color: transparent;
-    background-color:black;
-    background-color: #b5b5b5;
-    margin: 0 auto;
-    margin-top: $sp-35;
-    padding: $sp-15;
-    margin-bottom: $sp-20;
+    padding: 15px;
+    margin:15px 0 15px 0;
+    border-radius: 10px;
+    color:white;
 }
 .signIn-btn:hover{
     transform: scale(1.01);

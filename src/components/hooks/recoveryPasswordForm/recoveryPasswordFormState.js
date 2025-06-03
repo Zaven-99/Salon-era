@@ -23,6 +23,7 @@ export const RecoverPasswordFormState = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ email: data.email }),
+            credentials: "include",
           }
         );
 
@@ -60,6 +61,7 @@ export const RecoverPasswordFormState = () => {
             {
               method: "POST",
               body: formData,
+              credentials: "include",
             }
           );
 

@@ -23,7 +23,7 @@ const UserMenu = ({ openProfile }) => {
   }
 
   return (
-    <div className={styles["user-menu"]}>
+    <div className={styles["user-menu"]} onClick={openProfile}>
       <div className={styles.avatar}>
         <label htmlFor="image-upload">
           <img
@@ -42,9 +42,15 @@ const UserMenu = ({ openProfile }) => {
         />
       </div>
 
-      <div className={styles.user} onClick={openProfile}>
-        <p className={styles["user-name"]}>{firstName || undefined}</p>
-        <p className={styles["user-name"]}>{lastName || undefined}</p>
+      <div className={styles.user}>
+        <p className={styles["user-name"]}>
+          {firstName.length > 7
+            ? firstName.slice(0, 7)
+            : firstName || undefined}
+        </p>
+        <p className={styles["user-name"]}>
+          {firstName.length > 5 ? lastName.slice(0, 5) : lastName || undefined}
+        </p>
       </div>
 
       <div className={styles["notifications-block"]}>

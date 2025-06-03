@@ -44,8 +44,27 @@ export const HeaderState = () => {
     }, 100);
   };
 
+  
   const logOut = async () => {
     setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+
+      // Отправка запроса на выход
+      await fetch("https://api.salon-era.ru/clients/onExit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Ошибка при выходе:", error);
+    }
+
+    // Очистка и редирект
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     dispatch(removeUser());

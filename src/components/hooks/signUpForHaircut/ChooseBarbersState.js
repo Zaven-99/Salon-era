@@ -53,7 +53,11 @@ export const ChooseABarbersState = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://api.salon-era.ru/employees/role?role=USER"
+        "https://api.salon-era.ru/employees/role?role=USER",
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       if (!response.ok) {
         throw new Error("Ошибка при получении барберов");
@@ -73,7 +77,6 @@ export const ChooseABarbersState = () => {
         return decryptedEmployee;
       });
       setBarbers(decryptedData);
-     
     } catch (error) {
       setError(error.message);
     } finally {
@@ -85,7 +88,10 @@ export const ChooseABarbersState = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://api.salon-era.ru/feedbacks/all");
+      const response = await fetch("https://api.salon-era.ru/feedbacks/all", {
+        method: "GET",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error("Ошибка при получении фидбеков");
       }
@@ -111,7 +117,10 @@ export const ChooseABarbersState = () => {
 
   const fetchCategory = async () => {
     try {
-      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+      const response = await fetch("https://api.salon-era.ru/catalogs/all", {
+        method: "GET",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(`Ошибка http! статус: ${response.status}`);
       }

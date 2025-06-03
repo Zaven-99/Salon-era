@@ -24,7 +24,10 @@ export const useUserMenuState = () => {
   const fetchClients = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/clients/all");
+      const response = await fetch("https://api.salon-era.ru/clients/all", {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (!response.ok) throw new Error("Ошибка при получении клиентов");
       const data = await response.json();

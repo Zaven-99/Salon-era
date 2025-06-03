@@ -123,28 +123,30 @@
   z-index: 6;
 }
 .modal-content {
-  background: #eaeef4;
+  background: #e6e6e6;
   border-radius: $br-8;
   padding: $sp-50;
   position: relative;
-  max-width: $wd-500;
+  max-width: 460px;
   width: $wd-500;
-  height: $hg-305;
+  height: $hg-230;
   z-index: 15; 
   animation:bounce-in .5s;
   text-align: center;
-  box-shadow:$shadow-small;
+  box-shadow:0 9px 12px -7px;
 
 }
-
+.choose{
+  font-size: 15px;
+}
 .cancel-delete__clients{
 	color: black;
   font-size: $fz-12;
   font-weight: $font-weight-regular;
   padding: $sp-10;
   height: $hg-50;
-  background-color: #f0526e;
-  border-radius: $br-4;
+  background-color: rgb(80, 200, 120);
+  border-radius: $br-10;
   width: $wd-150;
 }
 .delete-clients{
@@ -152,9 +154,10 @@
   font-size: $fz-12;
   padding: $sp-10;
   height: $hg-50;
-  background-color: rgb(80, 200, 120);
-  border-radius: $br-4;
+  background-color: #f0526e;
+  border-radius: $br-10;
   width: $wd-150;
+ 
 }
 .delete-clients:hover{
 	transform: scale(1.02);
@@ -188,7 +191,6 @@
   color:black;
 }
 .btn-delete{
- 
   font-size: $fz-10;
   font-weight: $font-weight-regular;
 }

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
+import { useAuth } from "../../../use-auth/use-auth";
 
 export const ProfileState = (logOut) => {
   const [loading, setLoading] = useState(false);
   const [clientToDelete, setClientToDelete] = useState(null);
   const [confirmDeleteEmployee, setConfirmDeleteEmployee] = useState(false);
   const [clients, setClients] = useState([]);
-
+  const { id: clientId } = useAuth();
   useEffect(() => {
     fetchClients();
   }, []);
@@ -30,26 +31,41 @@ export const ProfileState = (logOut) => {
   const fetchClients = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/clients/all");
+      const response = await fetch(
+        `https://api.salon-era.ru/clients/id?id=${clientId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
 
-      if (!response.ok) throw new Error("Ошибка при получении клиентов");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Ошибка при получении клиента: ${response.status} ${response.statusText} — ${errorText}`
+        );
+      }
+
       const data = await response.json();
 
-      const decryptedData = data.map((employee) => {
-        const fieldsToDecrypt = ["email", "phone"];
-        const decryptedEmployee = { ...employee };
+      const fieldsToDecrypt = [
+        "email",
+        "phone",
+        "firstName",
+        "lastName",
+        "patronymic",
+      ];
+      const decryptedClient = { ...data };
 
-        fieldsToDecrypt.forEach((field) => {
-          if (employee[field]) {
-            decryptedEmployee[field] = decryptField(employee[field]);
-          }
-        });
-
-        return decryptedEmployee;
+      fieldsToDecrypt.forEach((field) => {
+        if (data[field]) {
+          decryptedClient[field] = decryptField(data[field]);
+        }
       });
-      setClients(decryptedData);
+
+      setClients([decryptedClient]);
     } catch (error) {
-      console.error("Ошибка при загрузке клиента");
+      console.error("Ошибка при загрузке клиента:", error.message);
     } finally {
       setLoading(false);
     }
@@ -60,13 +76,14 @@ export const ProfileState = (logOut) => {
 
     try {
       const response = await fetch(
-        `https://api.salon-era.ru/clients?id=${id}`,
+        `https://api.salon-era.ru/clients/safe?id=${id}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ id }),
+          credentials: "include",
         }
       );
       if (!response.ok) throw new Error("Ошибка при удалении клиента");

@@ -24,7 +24,10 @@ export const OurWorksState = () => {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+      const response = await fetch("https://api.salon-era.ru/catalogs/all", {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (!response.ok)
         throw new Error("Ошибка при получении данных категорий");
@@ -50,10 +53,10 @@ export const OurWorksState = () => {
   const fetchWorks = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://api.salon-era.ru/stockfiles/all",
-        {}
-      );
+      const response = await fetch("https://api.salon-era.ru/stockfiles/all", {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (!response.ok) throw new Error("Ошибка при получении данных");
 
@@ -97,6 +100,9 @@ export const OurWorksState = () => {
       fetchWorks();
     }
   }, [categoryMap]);
+  // useEffect(() => {
+  //   fetchWorks();
+  // })
 
   return {
     activeCategory,

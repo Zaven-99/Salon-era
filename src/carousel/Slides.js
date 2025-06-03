@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Slider from "./Slider";
-import Spinner from "../../src/components/spinner/Spinner";
-
+import GenericSkeleton from "../utils/Skeleton";
 import styles from "./slides.module.scss";
+import Spinner from "../components/spinner/Spinner";
 
 const Slides = () => {
   const [slides, setSlides] = useState([]);
@@ -35,19 +35,29 @@ const Slides = () => {
     fetchSlides();
   }, []);
 
-  if (loading) {
-    return <Spinner />;
+  if (slides.length === 0) {
+    return (
+      <GenericSkeleton
+        headerWidths={["100%", "100%"]}
+        itemCount={1}
+        itemWidth="100%"
+        itemHeight={500}
+      />
+    );
   }
   return (
     <Slider>
       {slides.map((item) => (
         <div key={item.id} className={styles.slides}>
-          <div
-            style={{ backgroundImage: `url(${item.imageLink})` }}
-            className={styles.description}
-          >
-            <h1 className={styles.text}>{item.name}</h1>
-          </div>
+          {loading && <Spinner />}
+          {<GenericSkeleton /> && (
+            <div
+              style={{ backgroundImage: `url(${item.imageLink})` }}
+              className={styles.description}
+            >
+              <h1 className={styles.text}>{item.name}</h1>
+            </div>
+          )}
         </div>
       ))}
     </Slider>

@@ -70,7 +70,10 @@
     margin-top: $sp-10;
     gap: $sp-20;
 }
- 
+ .user-avatar{
+    width: 50px;
+    border-radius:50%;
+ }
  .feedback-text{
     display: flex;
     align-items:center;

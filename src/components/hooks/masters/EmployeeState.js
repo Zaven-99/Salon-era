@@ -29,7 +29,11 @@ export const EmployeeState = () => {
 
     try {
       const response = await fetch(
-        "https://api.salon-era.ru/catalogs/all/filter?field=category&state=eq&value=должность"
+        "https://api.salon-era.ru/catalogs/all/filter?field=category&state=eq&value=должность",
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       if (!response.ok) throw new Error("Ошибка при загрузке категорий");
       const data = await response.json();
@@ -44,7 +48,10 @@ export const EmployeeState = () => {
   const fetchBarbers = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/employees/all");
+      const response = await fetch("https://api.salon-era.ru/employees/all", {
+        method: "GET",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error("Ошибка при получении барберов");
       }

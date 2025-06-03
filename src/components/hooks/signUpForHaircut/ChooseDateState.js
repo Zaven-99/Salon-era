@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearServices } from "../../../store/slices/serviceSlice";
 import { clearBarber } from "../../../store/slices/barberSlice";
 import { useAuth } from "../../../use-auth/use-auth";
-
+import { DateTime } from "luxon";
 export const ChooseDateState = () => {
   const { id: clientId } = useAuth();
   const dispatch = useDispatch();
@@ -16,21 +16,13 @@ export const ChooseDateState = () => {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [allSlots, setAllSlots] = useState([]);
   const selectedServices = useSelector(
     (state) => state.service.selectedServices
   );
   const selectedBarber = useSelector((state) => state.barber.selectedBarber);
 
-  const handleDateChange = (newDate) => {
-    const resetTime = new Date(newDate);
-    resetTime.setHours(0, 0, 0, 0);
-    setDate(resetTime);
-    setSelectedTime(null);
-    setErrorMessage("");
-  };
-
-  const fetchDate = async (selectedDate) => {
+  const fetchSlotsOnce = async () => {
     setLoading(true);
     if (!selectedBarber) return;
 
@@ -42,42 +34,69 @@ export const ChooseDateState = () => {
     try {
       const response = await fetch(
         `https://api.salon-era.ru/employees/timeslot/${selectedBarber.id}/${sumDuration}`,
-        { method: "GET", headers: { "Content-Type": "application/json" } }
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
       );
 
       if (!response.ok)
         throw new Error("Ошибка при получении свободных слотов");
 
       const data = await response.json();
+      // const now = new Date();
 
-      const filteredSlots = data.filter((slot) => {
-        const slotDate = new Date(slot);
-        const now = new Date();
-        return (
-          slotDate >= now &&
-          slotDate.getFullYear() === selectedDate.getFullYear() &&
-          slotDate.getMonth() === selectedDate.getMonth() &&
-          slotDate.getDate() === selectedDate.getDate()
-        );
-      });
+      const upcomingSlots = data
+        .map((s) =>
+          DateTime.fromISO(s, { zone: "UTC" })  
+            .setZone("Europe/Moscow")  
+            .toJSDate()
+        )
+        .filter((slot) => slot >= new Date());
 
-      if (sumDuration > filteredSlots.length) {
-        setErrorMessage("Сегодня записаться на эту услугу невозможно");
-        setAvailableSlots([]);
-      } else {
-        setErrorMessage("");
-        setAvailableSlots(filteredSlots);
-      }
+      setAllSlots(upcomingSlots);
+      filterSlotsByDate(upcomingSlots, date);
     } catch (error) {
       alert(`Произошла ошибка при получении данных. ${error}`);
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
-    fetchDate(date);
-  }, [date]);
+    fetchSlotsOnce();
+  }, []);
+
+  const filterSlotsByDate = (slots, selectedDate) => {
+    const filtered = slots.filter(
+      (slot) =>
+        slot.getFullYear() === selectedDate.getFullYear() &&
+        slot.getMonth() === selectedDate.getMonth() &&
+        slot.getDate() === selectedDate.getDate()
+    );
+
+    const sumDuration = selectedServices.reduce(
+      (total, service) => total + service.duration,
+      0
+    );
+
+    if (sumDuration > filtered.length) {
+      setErrorMessage("Сегодня записаться на эту услугу невозможно");
+      setAvailableSlots([]);
+    } else {
+      setErrorMessage("");
+      setAvailableSlots(filtered);
+    }
+  };
+
+  const handleDateChange = (newDate) => {
+    const resetTime = new Date(newDate);
+    resetTime.setHours(0, 0, 0, 0);
+    setDate(resetTime);
+    setSelectedTime(null);
+    setErrorMessage("");
+    filterSlotsByDate(allSlots, resetTime);
+  };
 
   const handleTimeSelect = (slot) => {
     const selectedDate = new Date(slot);
@@ -127,9 +146,14 @@ export const ChooseDateState = () => {
       const response = await fetch("https://api.salon-era.ru/records", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
-      if (!response.ok) throw new Error("Ошибка при отправке данных на сервер");
+      if (!response.ok) {
+        const errText = await response.text();
+        console.error("Ошибка при отправке данных:", errText);
+        throw new Error("Ошибка при отправке данных на сервер");
+      }
 
       setSuccessMessage(true);
     } catch (error) {

@@ -4,7 +4,7 @@ import CustomButton from "../../../customButton/CustomButton";
 import Spinner from "../../../spinner/Spinner";
 import { ChooseAServiceState } from "../../../hooks/signUpForHaircut/ChooseAServiceState";
 import styles from "./chooseAService.module.scss";
-import FilterBlock from "../../../admin/services/filterBlock/FilterBlock";
+import FilterBlock from "../../../filterBlock/FilterBlock";
 
 const ChooseAService = () => {
   const {

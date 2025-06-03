@@ -25,6 +25,7 @@ const useImageUpload = (id, firstName) => {
       const response = await fetch(`https://api.salon-era.ru/clients/update`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       if (!response.ok) throw new Error(await response.text());

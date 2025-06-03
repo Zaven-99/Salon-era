@@ -35,6 +35,7 @@ export const FeedbackSectionState = ({
         `https://api.salon-era.ru/feedbacks?id=${id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       if (!response.ok) throw new Error("Ошибка при удалении отзыва");
@@ -63,6 +64,7 @@ export const FeedbackSectionState = ({
         {
           method: "POST",
           body: formData,
+          credentials: "include",
         }
       );
       if (!response.ok) throw new Error("Ошибка при сохранении услуги");
@@ -120,17 +122,27 @@ export const FeedbackSectionState = ({
     ).padStart(2, "0")}.${String(now.getMilliseconds()).padStart(3, "0")}`;
   };
 
-  const formatDate = (date) => {
-    return `${new Date(date).toLocaleDateString("ru-RU", {
+  const formatDate = (utcDateString) => {
+    
+    const utcStringWithZ = utcDateString.endsWith("Z")
+      ? utcDateString
+      : utcDateString + "Z";
+
+    const d = new Date(utcStringWithZ);
+
+    return `${d.toLocaleDateString("ru-RU", {
       year: "numeric",
       month: "long",
       day: "numeric",
-    })}, ${new Date(date).toLocaleTimeString("ru-RU", {
+    })}, ${d.toLocaleTimeString("ru-RU", {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     })}`;
   };
+  
+  
+  
 
   const getBarberFeedbacks = (barberId) =>
     feedbacks.filter((f) => f.id_employee_to === barberId);
@@ -156,6 +168,7 @@ export const FeedbackSectionState = ({
       const response = await fetch(`https://api.salon-era.ru/feedbacks`, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
       if (!response.ok) throw new Error("Ошибка при отправке");
 

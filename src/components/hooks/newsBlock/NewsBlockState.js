@@ -7,7 +7,10 @@ export const NewsBlockState = () => {
   const fetchNews = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api.salon-era.ru/news/all");
+      const response = await fetch("https://api.salon-era.ru/news/all", {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (!response.ok) throw new Error("Ошибка при получении новостей");
       const data = await response.json();
@@ -20,29 +23,25 @@ export const NewsBlockState = () => {
     }
   };
 
-  const formatDate = (date) => {
-    const dateOptions = {
+  const formatDate = (utcDateString) => {
+    // Если строка не содержит суффикса Z, добавим его
+    const utcStringWithZ = utcDateString.endsWith("Z")
+      ? utcDateString
+      : utcDateString + "Z";
+
+    const d = new Date(utcStringWithZ);
+
+    return `${d.toLocaleDateString("ru-RU", {
       year: "numeric",
       month: "long",
       day: "numeric",
-    };
-    const timeOptions = {
+    })}, ${d.toLocaleTimeString("ru-RU", {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
-    };
-
-    const formattedDate = new Date(date).toLocaleDateString(
-      "ru-RU",
-      dateOptions
-    );
-    const formattedTime = new Date(date).toLocaleTimeString(
-      "ru-RU",
-      timeOptions
-    );
-
-    return `${formattedDate}, ${formattedTime}`;
+    })}`;
   };
+  
 
   useEffect(() => {
     (async () => {

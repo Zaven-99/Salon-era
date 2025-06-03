@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import {
-  addService,
-  removeService,
-} from "../../../store/slices/serviceSlice";
+import { addService, removeService } from "../../../store/slices/serviceSlice";
 import AOS from "aos";
 
 export const ChooseAServiceState = () => {
@@ -34,7 +31,10 @@ export const ChooseAServiceState = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://api.salon-era.ru/services/all");
+      const response = await fetch("https://api.salon-era.ru/services/all", {
+        method: "GET",
+        credentials: "include",
+      });
       if (!response.ok) throw new Error("Ошибка при получении услуг");
       const data = await response.json();
       setServices(data);
@@ -47,7 +47,10 @@ export const ChooseAServiceState = () => {
 
   const fetchCategory = async () => {
     try {
-      const response = await fetch("https://api.salon-era.ru/catalogs/all");
+      const response = await fetch("https://api.salon-era.ru/catalogs/all", {
+        method: "GET",
+        credentials: "include",
+      });
       if (!response.ok) throw new Error("Ошибка при получении категорий");
       const data = await response.json();
       setCategories(data);
