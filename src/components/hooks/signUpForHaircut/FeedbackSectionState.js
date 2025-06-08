@@ -55,7 +55,7 @@ export const FeedbackSectionState = ({
       "clientData",
       JSON.stringify({
         ...feedbackToUpdate,
-        createdAt: formattedDateTimeForServer(),
+        created_at: formattedDateTimeForServer(),
       })
     );
     try {

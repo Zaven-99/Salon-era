@@ -102,7 +102,7 @@ const FeedbackSection = ({
                               ) : (
                                 "оставьте отзыв"
                               )}
-                              <p>{formatDate(feedback.createdAt)}</p>
+                              <p>{formatDate(feedback.created_at)}</p>
                             </div>
                           )}
                         </div>

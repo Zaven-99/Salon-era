@@ -23,7 +23,7 @@ const UserMenu = ({ openProfile }) => {
   }
 
   return (
-    <div className={styles["user-menu"]} onClick={openProfile}>
+    <div className={styles["user-menu"]}>
       <div className={styles.avatar}>
         <label htmlFor="image-upload">
           <img
@@ -42,14 +42,14 @@ const UserMenu = ({ openProfile }) => {
         />
       </div>
 
-      <div className={styles.user}>
+      <div className={styles.user} onClick={openProfile}>
         <p className={styles["user-name"]}>
           {firstName.length > 7
             ? firstName.slice(0, 7)
             : firstName || undefined}
         </p>
         <p className={styles["user-name"]}>
-          {firstName.length > 5 ? lastName.slice(0, 5) : lastName || undefined}
+          {firstName.length > 5 ? lastName.slice(0, 7) : lastName || undefined}
         </p>
       </div>
 
@@ -73,7 +73,7 @@ const UserMenu = ({ openProfile }) => {
           <ul className={styles.notifications}>
             {statusViewedCount > 0 ? (
               order.map((item, index) =>
-                !item.record.statusViewed ? (
+                !item.record.status_viewed ? (
                   <li className={styles["notifications-item"]} key={index}>
                     <div className={styles["notifications-item__inner"]}>
                       Запись с номером {item.record.number}

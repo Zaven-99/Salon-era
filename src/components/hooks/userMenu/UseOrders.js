@@ -55,13 +55,13 @@ const useOrders = (id) => {
     try {
       const updatedOrders = [...order];
       for (const orderItem of order) {
-        if (!orderItem.record.statusViewed) {
+        if (!orderItem.record.status_viewed) {
           const formData = new FormData();
           formData.append(
             "clientData",
             JSON.stringify({
               id: orderItem.record.id,
-              statusViewed: true,
+              status_viewed: true,
             })
           );
 
@@ -79,7 +79,7 @@ const useOrders = (id) => {
               (item) => item.record.id === orderItem.record.id
             );
             if (index !== -1) {
-              updatedOrders[index].record.statusViewed = true;
+              updatedOrders[index].record.status_viewed = true;
             }
           } else {
             const errorText = await response.text();
@@ -96,7 +96,7 @@ const useOrders = (id) => {
   };
 
   const statusViewedCount = order.reduce(
-    (count, item) => (item.record.statusViewed ? count : count + 1),
+    (count, item) => (item.record.status_viewed ? count : count + 1),
     0
   );
 

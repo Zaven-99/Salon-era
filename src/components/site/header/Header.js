@@ -11,12 +11,7 @@ import SignIn from "../signInForm/SignInForm";
 
 import styles from "./header.module.scss";
 
-const Header = ({
-  openSignInForm,
-  isClosing,
-  toggleOpen,
-  toggleClose,
-}) => {
+const Header = ({ openSignInForm, isClosing, toggleOpen, toggleClose }) => {
   const {
     showProfile,
     showMessage,

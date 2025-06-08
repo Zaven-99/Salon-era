@@ -9,6 +9,7 @@
     "@fullcalendar/react": "^6.1.15",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
+    "@react-google-maps/api": "^2.20.6",
     "@reduxjs/toolkit": "^2.2.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -50,6 +51,7 @@
     "socket.io-client": "^4.8.1",
     "use-sound": "^4.0.3",
     "web-vitals": "^2.1.4"
+   
   },
   "scripts": {
     "start": "react-scripts start --history-api-fallback",

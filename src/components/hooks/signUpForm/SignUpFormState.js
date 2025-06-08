@@ -70,51 +70,51 @@ export const useSignUpFormState = ({ toggleClose, toggleShowMessage }) => {
     }).toString();
 
   // ---- reCAPTCHA v3 ----
-  // const RECAPTCHA_SITE_KEY = "6Lc4ZFMrAAAAAD8VgxLc7E-1bhw5QArUSREEQE4U";
+  const RECAPTCHA_SITE_KEY = "6Lc4ZFMrAAAAAD8VgxLc7E-1bhw5QArUSREEQE4U";
   const onSubmit = async (formValues) => {
     setErrorMessages({});
 
     try {
       await loadRecaptchaScript();
 
-      // if (!window.grecaptcha || !window.grecaptcha.execute) {
-      //   setErrorMessages({
-      //     general: "Не удалось загрузить reCAPTCHA. Попробуйте позже.",
-      //   });
-      //   setLoading(false);
-      //   return;
-      // }
+      if (!window.grecaptcha || !window.grecaptcha.execute) {
+        setErrorMessages({
+          general: "Не удалось загрузить reCAPTCHA. Попробуйте позже.",
+        });
+        setLoading(false);
+        return;
+      }
 
-      // const recaptchaToken = await window.grecaptcha.execute(
-      //   `${RECAPTCHA_SITE_KEY}`,
-      //   { action: "submit" }
-      // );
+      const recaptchaToken = await window.grecaptcha.execute(
+        `${RECAPTCHA_SITE_KEY}`,
+        { action: "submit" }
+      );
 
-      // if (!recaptchaToken) {
-      //   setErrorMessages({
-      //     general: "Пожалуйста, пройдите проверку reCAPTCHA.",
-      //   });
-      //   setLoading(false);
-      //   return;
-      // }
+      if (!recaptchaToken) {
+        setErrorMessages({
+          general: "Пожалуйста, пройдите проверку reCAPTCHA.",
+        });
+        setLoading(false);
+        return;
+      }
 
-      // const captchaResponse = await fetch(
-      //   "https://api.salon-era.ru/captcha/submit-form",
-      //   {
-      //     method: "POST",
-      //     credentials: "include",
+      const captchaResponse = await fetch(
+        "https://api.salon-era.ru/captcha/submit-form",
+        {
+          method: "POST",
+          credentials: "include",
 
-      //     // body: new URLSearchParams({
-      //     //   "g-recaptcha-response": recaptchaToken,
-      //     // }),
-      //   }
-      // );
+          body: new URLSearchParams({
+            "g-recaptcha-response": recaptchaToken,
+          }),
+        }
+      );
 
-      // if (!captchaResponse.ok) {
-      //   const text = await captchaResponse.text();
-      //   console.error("Ошибка проверки капчи на сервере:", text);
-      //   throw new Error(`Ошибка при проверке капчи: ${text}`);
-      // }
+      if (!captchaResponse.ok) {
+        const text = await captchaResponse.text();
+        console.error("Ошибка проверки капчи на сервере:", text);
+        throw new Error(`Ошибка при проверке капчи: ${text}`);
+      }
 
       // Формируем данные для регистрации
       const {
@@ -218,16 +218,16 @@ export const useSignUpFormState = ({ toggleClose, toggleShowMessage }) => {
     }
   };
 
-  // useEffect(() => {
-  //   const scriptId = "recaptcha-v3-script";
-  //   if (!document.getElementById(scriptId)) {
-  //     const script = document.createElement("script");
-  //     script.id = scriptId;
-  //     script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-  //     script.async = true;
-  //     document.body.appendChild(script);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const scriptId = "recaptcha-v3-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
 
   const loadRecaptchaScript = () => {
     return new Promise((resolve) => {

@@ -42,7 +42,10 @@ export const SignInFormState = ({ toggleClose }) => {
   }
   const getUserLocation = () => {
     return new Promise((resolve) => {
-      if (!navigator.geolocation) return resolve(null);
+      if (!navigator.geolocation) {
+        console.warn("Геолокация не поддерживается");
+        return resolve(null);
+      }
 
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -52,10 +55,10 @@ export const SignInFormState = ({ toggleClose }) => {
           });
         },
         (err) => {
-          console.warn("Ошибка геолокации:", err.message);
+          console.warn("Ошибка геолокации:", err);
           resolve(null);
         },
-        { timeout: 5000 }
+        { timeout: 15000, maximumAge: 0, enableHighAccuracy: true }
       );
     });
   };
@@ -75,103 +78,98 @@ export const SignInFormState = ({ toggleClose }) => {
   }
 
   // ---- reCAPTCHA v3 ----
-  // const RECAPTCHA_SITE_KEY = "6Lc4ZFMrAAAAAD8VgxLc7E-1bhw5QArUSREEQE4U";
+  const RECAPTCHA_SITE_KEY = "6Lc4ZFMrAAAAAD8VgxLc7E-1bhw5QArUSREEQE4U";
 
-  // useEffect(() => {
-  //   const scriptId = "recaptcha-v3-script";
-  //   if (!document.getElementById(scriptId)) {
-  //     const script = document.createElement("script");
-  //     script.id = scriptId;
-  //     script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-  //     script.async = true;
-  //     document.body.appendChild(script);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const scriptId = "recaptcha-v3-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
 
-  // const loadRecaptchaScript = () => {
-  //   return new Promise((resolve) => {
-  //     if (window.grecaptcha) {
-  //       resolve();
-  //     } else {
-  //       const checkInterval = setInterval(() => {
-  //         if (window.grecaptcha) {
-  //           clearInterval(checkInterval);
-  //           resolve();
-  //         }
-  //       }, 100);
-  //     }
-  //   });
-  // };
+  const loadRecaptchaScript = () => {
+    return new Promise((resolve) => {
+      if (window.grecaptcha) {
+        resolve();
+      } else {
+        const checkInterval = setInterval(() => {
+          if (window.grecaptcha) {
+            clearInterval(checkInterval);
+            resolve();
+          }
+        }, 100);
+      }
+    });
+  };
 
   const onSubmit = async (formValues) => {
-    // const ip = await getUserIP();
-    // const location = await getUserLocation();
+    const ip = await getUserIP();
+    const location = await getUserLocation();
     setErrorMessages({});
 
-    // let address = null;
-    // if (location) {
-    //   address = await reverseGeocode(location.latitude, location.longitude);
-    // }
+    let address = null;
+    if (location) {
+      address = await reverseGeocode(location.latitude, location.longitude);
+    }
 
     try {
-      // await loadRecaptchaScript();
+      await loadRecaptchaScript();
 
-      // if (!window.grecaptcha || !window.grecaptcha.execute) {
-      //   setErrorMessages({
-      //     general: "Не удалось загрузить reCAPTCHA. Попробуйте позже.",
-      //   });
-      //   return;
-      // }
+      if (!window.grecaptcha || !window.grecaptcha.execute) {
+        setErrorMessages({
+          general: "Не удалось загрузить reCAPTCHA. Попробуйте позже.",
+        });
+        return;
+      }
 
-      // const recaptchaToken = await window.grecaptcha.execute(
-      //   RECAPTCHA_SITE_KEY,
-      //   {
-      //     action: "submit",
-      //   }
-      // );
+      const recaptchaToken = await window.grecaptcha.execute(
+        RECAPTCHA_SITE_KEY,
+        {
+          action: "submit",
+        }
+      );
 
-      // if (!recaptchaToken) {
-      //   setErrorMessages({
-      //     general: "Пожалуйста, пройдите проверку reCAPTCHA.",
-      //   });
-      //   return;
-      // }
+      if (!recaptchaToken) {
+        setErrorMessages({
+          general: "Пожалуйста, пройдите проверку reCAPTCHA.",
+        });
+        return;
+      }
 
-      // const captchaResponse = await fetch(
-      //   "https://api.salon-era.ru/captcha/submit-form",
-      //   {
-      //     method: "POST",
-      //     body: new URLSearchParams({
-      //       // "g-recaptcha-response": recaptchaToken,
-      //     }),
-      //   }
-      // );
+      const captchaResponse = await fetch(
+        "https://api.salon-era.ru/captcha/submit-form",
+        {
+          method: "POST",
+          body: new URLSearchParams({
+            "g-recaptcha-response": recaptchaToken,
+          }),
+        }
+      );
 
-      // if (!captchaResponse.ok) {
-      //   const text = await captchaResponse.text();
-      //   throw new Error(`Ошибка при проверке капчи: ${text}`);
-      // }
+      if (!captchaResponse.ok) {
+        const text = await captchaResponse.text();
+        throw new Error(`Ошибка при проверке капчи: ${text}`);
+      }
 
       const url = "https://api.salon-era.ru/clients/auth";
 
       const requestBody = {
         login: formValues.login,
         password: formValues.password,
-        // location: {
-        //   latitude: location?.latitude || null,
-        //   longitude: location?.longitude || null,
-        //   address: address,
-        // },
-        // ip: ip || null,
       };
 
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // "X-User-IP": ip || "",
-          // "X-User-Lat": location?.latitude?.toString() || "",
-          // "X-User-Lon": location?.longitude?.toString() || "",
+          "X-User-IP": ip || "",
+          "X-User-Lat": location?.latitude?.toString() || "",
+          "X-User-Lon": location?.longitude?.toString() || "",
+          "X-User-Geo": encodeURIComponent(address || ""),
         },
         credentials: "include",
         body: JSON.stringify(requestBody),

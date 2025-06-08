@@ -22,7 +22,7 @@ export const ChooseDateState = () => {
   );
   const selectedBarber = useSelector((state) => state.barber.selectedBarber);
 
-  const fetchSlotsOnce = async () => {
+  const fetchAllSlotsOnce = async () => {
     setLoading(true);
     if (!selectedBarber) return;
 
@@ -36,58 +36,72 @@ export const ChooseDateState = () => {
         `https://api.salon-era.ru/employees/timeslot/${selectedBarber.id}/${sumDuration}`,
         {
           method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
           credentials: "include",
-          headers: { "Content-Type": "application/json" },
         }
       );
 
-      if (!response.ok)
+      if (!response.ok) {
         throw new Error("Ошибка при получении свободных слотов");
+      }
 
       const data = await response.json();
-      // const now = new Date();
 
-      const upcomingSlots = data
-        .map((s) =>
-          DateTime.fromISO(s, { zone: "UTC" })  
-            .setZone("Europe/Moscow")  
-            .toJSDate()
-        )
-        .filter((slot) => slot >= new Date());
+      // Оставляем только будущие слоты
+      const currentDate = new Date();
+      const upcomingSlots = data.filter(
+        (slot) => new Date(slot) >= currentDate
+      );
 
       setAllSlots(upcomingSlots);
-      filterSlotsByDate(upcomingSlots, date);
     } catch (error) {
       alert(`Произошла ошибка при получении данных. ${error}`);
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchSlotsOnce();
-  }, []);
 
-  const filterSlotsByDate = (slots, selectedDate) => {
-    const filtered = slots.filter(
-      (slot) =>
-        slot.getFullYear() === selectedDate.getFullYear() &&
-        slot.getMonth() === selectedDate.getMonth() &&
-        slot.getDate() === selectedDate.getDate()
-    );
+  const filterSlotsByDate = (selectedDate) => {
+    // Преобразуем в объект Date, если это строка или другой тип
+    const dateObj =
+      selectedDate instanceof Date ? selectedDate : new Date(selectedDate);
 
     const sumDuration = selectedServices.reduce(
       (total, service) => total + service.duration,
       0
     );
 
-    if (sumDuration > filtered.length) {
+    const filteredSlots = allSlots.filter((slot) => {
+      const slotDate = new Date(slot);
+      return (
+        slotDate.getFullYear() === dateObj.getFullYear() &&
+        slotDate.getMonth() === dateObj.getMonth() &&
+        slotDate.getDate() === dateObj.getDate()
+      );
+    });
+
+    if (sumDuration > filteredSlots.length) {
       setErrorMessage("Сегодня записаться на эту услугу невозможно");
       setAvailableSlots([]);
     } else {
       setErrorMessage("");
-      setAvailableSlots(filtered);
+      setAvailableSlots(filteredSlots);
     }
   };
+
+  // Загружаем все слоты один раз при изменении selectedBarber или услуг
+  useEffect(() => {
+    fetchAllSlotsOnce();
+  }, [selectedBarber, selectedServices]);
+
+  // Фильтруем при изменении даты или списка всех слотов
+  useEffect(() => {
+    if (allSlots.length > 0) {
+      filterSlotsByDate(date);
+    }
+  }, [date, allSlots]);
 
   const handleDateChange = (newDate) => {
     const resetTime = new Date(newDate);
@@ -137,7 +151,7 @@ export const ChooseDateState = () => {
           id_service: selectedService.id,
           number: "",
           status: 0,
-          dateRecord: formattedDateTimeForServer(),
+          date_record: formattedDateTimeForServer(),
         },
       ])
     );

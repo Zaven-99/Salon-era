@@ -51,7 +51,7 @@ export const MyRecordsState = (clientId) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.salon-era.ru/records/all`,
+        `https://api.salon-era.ru/records/all/filter?field=id_client_from&state=eq&value=${id}`,
         {
           method: "GET",
           headers: {
@@ -69,7 +69,7 @@ export const MyRecordsState = (clientId) => {
       }
 
       const data = await response.json();
-       
+
       const decryptedData = data.map(decryptOrder);
 
       if (!Array.isArray(decryptedData)) {

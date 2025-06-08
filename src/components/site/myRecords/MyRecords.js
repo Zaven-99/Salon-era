@@ -66,7 +66,7 @@ const MyRecords = () => {
                 )}
                 <div>
                   <strong>Дата заказа: </strong>
-                  <span>{formatDate(order.record.dateRecord)}</span>
+                  <span>{formatDate(order.record.date_record)}</span>
                 </div>
 
                 <div>

@@ -27,7 +27,7 @@ const NewsBlock = () => {
             )}
             <h2>{newsItem.name}</h2>
             <p className={styles["main-text"]}>{newsItem.mainText}</p>
-            <p>{formatDate(newsItem.createdAt)}</p>
+            <p>{formatDate(newsItem.created_at)}</p>
           </li>
         ))}
       </ul>
