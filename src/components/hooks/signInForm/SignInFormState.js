@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { setUser } from "../../../store/slices/userSlice";
 
@@ -15,7 +14,7 @@ export const SignInFormState = ({ toggleClose }) => {
   const [adminCheck, setAdminCheck] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
 
   const {
     register,
@@ -187,13 +186,13 @@ export const SignInFormState = ({ toggleClose }) => {
 
       const user = {
         id: data.id,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        first_name: data.first_name,
+        last_name: data.last_name,
         login: data.login,
         phone: data.phone,
         email: data.email,
         gender: data.gender,
-        imageLink: data.imageLink,
+        image_link: data.image_link,
         token: true,
         role: "USER",
       };

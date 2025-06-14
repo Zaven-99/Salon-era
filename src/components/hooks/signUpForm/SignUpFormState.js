@@ -16,14 +16,14 @@ export const useSignUpFormState = ({ toggleClose, toggleShowMessage }) => {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       login: "",
       password: "",
       confirmPassword: "",
       email: "",
       phone: "+7",
-      imageLink: "",
+      image_link: "",
       gender: "",
       policy: false,
     },
@@ -156,17 +156,17 @@ export const useSignUpFormState = ({ toggleClose, toggleShowMessage }) => {
       }
 
       const data = await response.json();
-      const imageLink = data.imageLink || imagePreview;
+      const image_link = data.image_link || imagePreview;
 
       const userPayload = {
         id: data.id,
-        firstName: encryptField(formValues.firstName),
-        lastName: encryptField(formValues.lastName),
+        first_name: encryptField(formValues.first_name),
+        last_name: encryptField(formValues.last_name),
         login: formValues.login,
         email: encryptField(formValues.email),
         phone: encryptField(formValues.phone),
         gender: parseInt(formValues.gender),
-        imageLink,
+        image_link,
         token: true,
       };
 

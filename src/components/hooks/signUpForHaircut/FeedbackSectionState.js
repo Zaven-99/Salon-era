@@ -123,7 +123,6 @@ export const FeedbackSectionState = ({
   };
 
   const formatDate = (utcDateString) => {
-    
     const utcStringWithZ = utcDateString.endsWith("Z")
       ? utcDateString
       : utcDateString + "Z";
@@ -140,9 +139,6 @@ export const FeedbackSectionState = ({
       hour12: false,
     })}`;
   };
-  
-  
-  
 
   const getBarberFeedbacks = (barberId) =>
     feedbacks.filter((f) => f.id_employee_to === barberId);
@@ -154,8 +150,8 @@ export const FeedbackSectionState = ({
       "clientData",
       JSON.stringify([
         {
-          firstName: user.firstName,
-          lastName: user.lastName,
+          first_name: user.first_name,
+          last_name: user.last_name,
           id_client_from: clientId,
           id_employee_to: selectedBarber.id,
           text: feedbackText,

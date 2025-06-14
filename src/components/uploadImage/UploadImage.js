@@ -4,7 +4,7 @@ import styles from "./uploadImage.module.scss";
 const UploadImage = ({
   onChange,
   label = "Выбрать изображение",
-  name = "imageLink",
+  name = "image_link",
   accept = "image/*",
 }) => {
   return (

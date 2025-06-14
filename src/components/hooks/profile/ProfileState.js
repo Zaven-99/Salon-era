@@ -51,8 +51,8 @@ export const ProfileState = (logOut) => {
       const fieldsToDecrypt = [
         "email",
         "phone",
-        "firstName",
-        "lastName",
+        "first_name",
+        "last_name",
         "patronymic",
       ];
       const decryptedClient = { ...data };

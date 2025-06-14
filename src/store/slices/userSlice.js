@@ -22,14 +22,14 @@ const decryptField = (encryptedValue) => {
 // Начальное состояние пользователя
 const initialState = {
   id: null,
-  firstName: null,
-  lastName: null,
+  first_name: null,
+  last_name: null,
   login: null,
   email: null,
   phone: null,
   gender: null,
   role: null,
-  imageLink: null,
+  image_link: null,
   token: false,
 };
 
@@ -42,8 +42,8 @@ const userSlice = createSlice({
 
       if (!user) return;
       const fieldsToDecrypt = [
-        "firstName",
-        "lastName",
+        "first_name",
+        "last_name",
         "password",
         "email",
         "phone",
@@ -65,8 +65,8 @@ const userSlice = createSlice({
         }
       });
 
-      // Если imageLink не зашифрован, просто передаем его
-      decryptedUser.imageLink = user.imageLink;
+      // Если image_link не зашифрован, просто передаем его
+      decryptedUser.image_link = user.image_link;
 
       // Обновляем поля в состоянии
       Object.entries(decryptedUser).forEach(([key, value]) => {

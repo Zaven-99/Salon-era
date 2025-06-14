@@ -52,20 +52,17 @@ export const ChooseABarbersState = () => {
   const fetchBarbers = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://api.salon-era.ru/employees/role?role=USER",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch("https://api.salon-era.ru/employees/all", {
+        method: "GET",
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error("Ошибка при получении барберов");
       }
       const data = await response.json();
 
       const decryptedData = data.map((employee) => {
-        const fieldsToDecrypt = ["lastName", "firstName"];
+        const fieldsToDecrypt = ["last_name", "first_name"];
         const decryptedEmployee = { ...employee };
 
         fieldsToDecrypt.forEach((field) => {
@@ -160,16 +157,16 @@ export const ChooseABarbersState = () => {
     if (selectedServices.length === 0) return [];
     return barbers.filter((barber) => {
       if (
-        !Array.isArray(barber.arrayTypeWork) ||
-        barber.arrayTypeWork.length === 0
+        !Array.isArray(barber.array_type_work) ||
+        barber.array_type_work.length === 0
       )
         return false;
 
       const selectedCategoryIds = selectedServices.map((s) => s.category);
-      const isMatchingCategory = barber.arrayTypeWork.some((id) =>
+      const isMatchingCategory = barber.array_type_work.some((id) =>
         selectedCategoryIds.includes(id)
       );
-      return !isMatchingCategory;
+      return isMatchingCategory;
     });
   }, [barbers, selectedServices]);
 

@@ -11,7 +11,7 @@ import useOrders from "../../hooks/userMenu/UseOrders";
 import { useSelector } from "react-redux";
 
 const UserMenu = ({ openProfile }) => {
-  const { id, firstName, lastName, imageLink } = useAuth();
+  const { id, first_name, last_name, image_link } = useAuth();
 
   const { handleImageChange, loading } = useImageUpload(id);
   const { order, toggleNotification, statusViewedCount, isOpenNotification } =
@@ -27,7 +27,7 @@ const UserMenu = ({ openProfile }) => {
       <div className={styles.avatar}>
         <label htmlFor="image-upload">
           <img
-            src={imageLink ? user.imageLink : avatar}
+            src={image_link ? user.image_link : avatar}
             alt="Avatar"
             className={styles.avatarImage}
           />
@@ -35,7 +35,7 @@ const UserMenu = ({ openProfile }) => {
         <input
           id="image-upload"
           type="file"
-          name="imageLink"
+          name="image_link"
           className={styles.imageInput}
           onChange={handleImageChange}
           accept="image/*"
@@ -44,12 +44,14 @@ const UserMenu = ({ openProfile }) => {
 
       <div className={styles.user} onClick={openProfile}>
         <p className={styles["user-name"]}>
-          {firstName.length > 7
-            ? firstName.slice(0, 7)
-            : firstName || undefined}
+          {first_name.length > 7
+            ? first_name.slice(0, 7)
+            : first_name || undefined}
         </p>
         <p className={styles["user-name"]}>
-          {firstName.length > 5 ? lastName.slice(0, 7) : lastName || undefined}
+          {first_name.length > 5
+            ? last_name.slice(0, 7)
+            : last_name || undefined}
         </p>
       </div>
 

@@ -23,12 +23,12 @@ const Employee = () => {
           <div key={item.id} className={styles.employee} data-aos="fade-right">
             <img
               className={styles["employee-img"]}
-              src={item.imageLink || avatar}
+              src={item.image_link || avatar}
               alt=""
               data-aos="fade-right"
             />
-            <p data-aos="fade-right">{item.firstName}</p>
-            <p data-aos="fade-right">{item.lastName}</p>
+            <p data-aos="fade-right">{item.first_name}</p>
+            <p data-aos="fade-right">{item.last_name}</p>
             <p data-aos="fade-right">{getPositionTextById(item.position)}</p>
           </div>
         ))}

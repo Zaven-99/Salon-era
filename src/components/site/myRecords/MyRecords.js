@@ -40,8 +40,8 @@ const MyRecords = () => {
                 </div>
                 <div>
                   <strong>Парикмахер: </strong>
-                  <span>{order.employeeTo?.firstName}&nbsp;</span>
-                  <span>{order.employeeTo?.lastName}</span>
+                  <span>{order.employeeTo?.first_name}&nbsp;</span>
+                  <span>{order.employeeTo?.last_name}</span>
                 </div>
                 {order.record?.status === 0 ? (
                   <div className={styles.status}>
@@ -71,7 +71,7 @@ const MyRecords = () => {
 
                 <div>
                   <strong>Стоимость: </strong>
-                  <span>{order.service?.priceLow} руб.</span>
+                  <span>{order.service?.price_low} руб.</span>
                 </div>
                 {order.record?.status === 0 ? (
                   <CustomButton

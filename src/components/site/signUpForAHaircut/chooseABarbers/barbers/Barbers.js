@@ -20,13 +20,13 @@ const Barbers = ({
         <div>
           <img
             className={styles["barber-avatar"]}
-            src={item?.imageLink || avatar}
+            src={item?.image_link || avatar}
             alt=""
           />
         </div>
         <div>
-          <p className={styles["barber-item"]}>Имя: {item?.firstName}</p>
-          <p className={styles["barber-item"]}>Фамилия: {item?.lastName}</p>
+          <p className={styles["barber-item"]}>Имя: {item?.first_name}</p>
+          <p className={styles["barber-item"]}>Фамилия: {item?.last_name}</p>
           <p className={styles["barber-item"]}>
             Должность: {getCategoryTextById(item?.position)}
           </p>

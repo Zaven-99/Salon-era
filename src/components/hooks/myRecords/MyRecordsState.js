@@ -31,16 +31,16 @@ export const MyRecordsState = (clientId) => {
     if (order.clientFrom) {
       decryptedOrder.clientFrom = {
         ...order.clientFrom,
-        firstName: decryptField(order.clientFrom.firstName),
-        lastName: decryptField(order.clientFrom.lastName),
+        first_name: decryptField(order.clientFrom.first_name),
+        last_name: decryptField(order.clientFrom.last_name),
       };
     }
 
     if (order.employeeTo) {
       decryptedOrder.employeeTo = {
         ...order.employeeTo,
-        firstName: decryptField(order.employeeTo.firstName),
-        lastName: decryptField(order.employeeTo.lastName),
+        first_name: decryptField(order.employeeTo.first_name),
+        last_name: decryptField(order.employeeTo.last_name),
       };
     }
 
@@ -129,7 +129,7 @@ export const MyRecordsState = (clientId) => {
       setError(error.message || "Неизвестная ошибка");
     } finally {
       setLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -153,13 +153,13 @@ export const MyRecordsState = (clientId) => {
   };
 
   const totalAllOrders = order.reduce(
-    (acc, current) => acc + (current.service?.priceLow || 0),
+    (acc, current) => acc + (current.service?.price_low || 0),
     0
   );
 
   const totalCancelledOrders = order
     .filter((orderItem) => orderItem.record?.status === 400)
-    .reduce((acc, current) => acc + (current.service?.priceLow || 0), 0);
+    .reduce((acc, current) => acc + (current.service?.price_low || 0), 0);
 
   const total = totalAllOrders - totalCancelledOrders;
 

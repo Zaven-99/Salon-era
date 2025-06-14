@@ -50,7 +50,6 @@ const FeedbackSection = ({
     feedbackText,
     ratings,
   });
-   
 
   return (
     <>
@@ -75,15 +74,15 @@ const FeedbackSection = ({
                     <div>
                       <img
                         className={styles["user-avatar"]}
-                        src={user.imageLink || avatar}
+                        src={user.image_link || avatar}
                         alt=""
                       />
                     </div>
                     <div className={styles["user-feedback__block__inner"]}>
-                      <p className={styles["user-feedback__firstName"]}>
+                      <p className={styles["user-feedback__first_name"]}>
                         {feedback.id_client_from === clientId
                           ? "Вы"
-                          : `${feedback.firstName} ${feedback.lastName}`}
+                          : `${feedback.first_name} ${feedback.last_name}`}
                       </p>
 
                       <div className={styles["feedBack-block"]}>

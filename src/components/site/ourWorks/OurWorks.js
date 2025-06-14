@@ -72,11 +72,11 @@ const OurWorks = () => {
               <div
                 key={index}
                 className={styles["work-item"]}
-                onClick={() => handleImageClick(work.imageLink)}
+                onClick={() => handleImageClick(work.image_link)}
                 data-aos="fade-right"
               >
                 <img
-                  src={work.imageLink}
+                  src={work.image_link}
                   alt={work.title}
                   className={styles["img-work"]}
                 />

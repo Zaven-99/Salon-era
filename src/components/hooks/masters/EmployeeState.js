@@ -29,7 +29,7 @@ export const EmployeeState = () => {
 
     try {
       const response = await fetch(
-        "https://api.salon-era.ru/catalogs/all/filter?field=category&state=eq&value=должность",
+        "https://api.salon-era.ru/catalogs/all/filter?field=category&state=eq&value=Должность",
         {
           method: "GET",
           credentials: "include",
@@ -59,7 +59,7 @@ export const EmployeeState = () => {
       const data = await response.json();
 
       const decryptedData = data.map((employee) => {
-        const fieldsToDecrypt = ["lastName", "firstName"];
+        const fieldsToDecrypt = ["last_name", "first_name"];
         const decryptedEmployee = { ...employee };
 
         fieldsToDecrypt.forEach((field) => {

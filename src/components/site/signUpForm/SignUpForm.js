@@ -51,12 +51,12 @@ const SignUpForm = ({
 
         <CustomInput
           label="Введите имя:"
-          error={errors.firstName}
+          error={errors.first_name}
           type="text"
-          name="firstName"
-          isActive={activeInput === "firstName"}
+          name="first_name"
+          isActive={activeInput === "first_name"}
           setActiveInput={setActiveInput}
-          {...register("firstName", {
+          {...register("first_name", {
             required: "Это поле обязательно.",
             minLength: {
               value: 3,
@@ -66,12 +66,12 @@ const SignUpForm = ({
         />
         <CustomInput
           label="Введите фамилию:"
-          error={errors.lastName}
+          error={errors.last_name}
           type="text"
-          name="lastName"
-          isActive={activeInput === "lastName"}
+          name="last_name"
+          isActive={activeInput === "last_name"}
           setActiveInput={setActiveInput}
-          {...register("lastName", {
+          {...register("last_name", {
             required: "Это поле обязательно.",
             minLength: {
               value: 3,

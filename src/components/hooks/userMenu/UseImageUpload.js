@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/userSlice";
 import { compressAndPreviewImage } from "../../../utils/uploadImage";
 
-const useImageUpload = (id, firstName) => {
+const useImageUpload = (id, first_name) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const useImageUpload = (id, firstName) => {
   const uploadImage = async (file) => {
     try {
       const formData = new FormData();
-      formData.append("clientData", JSON.stringify({ id, firstName }));
+      formData.append("clientData", JSON.stringify({ id, first_name }));
       formData.append("imageData", file, file.name);
 
       const response = await fetch(`https://api.salon-era.ru/clients/update`, {

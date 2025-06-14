@@ -39,10 +39,10 @@ const Service = ({
             <p>Продолжительность: {getDurationText(item.duration)}</p>
             <div>
               Цена:{" "}
-              {item.priceMax === null
-                ? `${item.priceLow} руб.`
-                : `${item.priceLow} - ${item.priceMax} руб.`}
-              {item.priceLow && item.priceMax && (
+              {item.price_max === null
+                ? `${item.price_low} руб.`
+                : `${item.price_low} - ${item.price_max} руб.`}
+              {item.price_low && item.price_max && (
                 <div className={styles.clarify}>Уточнить у мастера!</div>
               )}
             </div>

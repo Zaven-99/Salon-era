@@ -52,7 +52,7 @@ const Slides = () => {
           {loading && <Spinner />}
           {<GenericSkeleton /> && (
             <div
-              style={{ backgroundImage: `url(${item.imageLink})` }}
+              style={{ backgroundImage: `url(${item.image_link})` }}
               className={styles.description}
             >
               <h1 className={styles.text}>{item.name}</h1>

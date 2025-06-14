@@ -13,8 +13,8 @@ export const OurWorksState = () => {
     setActiveCategory(category);
   };
 
-  const handleImageClick = (imageLink) => {
-    setSelectedImage(imageLink);
+  const handleImageClick = (image_link) => {
+    setSelectedImage(image_link);
   };
 
   const handleCloseModal = () => {
