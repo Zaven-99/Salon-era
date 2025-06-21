@@ -43,13 +43,13 @@ const UserMenu = ({ openProfile }) => {
       </div>
 
       <div className={styles.user} onClick={openProfile}>
-        <p className={styles["user-name"]}>
-          {first_name.length > 7
+        <p>
+          {first_name?.length > 7
             ? first_name.slice(0, 7)
             : first_name || undefined}
         </p>
         <p className={styles["user-name"]}>
-          {first_name.length > 5
+          {last_name?.length > 7
             ? last_name.slice(0, 7)
             : last_name || undefined}
         </p>

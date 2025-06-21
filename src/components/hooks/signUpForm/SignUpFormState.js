@@ -189,7 +189,7 @@ export const useSignUpFormState = ({ toggleClose, toggleShowMessage }) => {
             ...prev,
             login: `Пользователь с логином ${formValues.login} уже существует`,
           }));
-        } else if (errorCode === "207") {
+        } else if (errorCode === "206") {
           setErrorMessages((prev) => ({
             ...prev,
             phone: `Пользователь с номером ${formValues.phone} уже существует`,
